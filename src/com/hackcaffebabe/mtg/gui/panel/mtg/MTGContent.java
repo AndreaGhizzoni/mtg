@@ -4,6 +4,7 @@ import static com.hackcaffebabe.mtg.gui.GUIUtils.*;
 import net.miginfocom.swing.MigLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
@@ -84,7 +85,13 @@ public class MTGContent extends JPanel
 		} );
 		this.pnlSearch.add(this.txtSearch, "cell 0 0,growx");
 		
-		this.btnAdvanceSearch = new JButton("Advance Search");		
+		this.btnAdvanceSearch = new JButton("Advance Search");
+		this.btnAdvanceSearch.addActionListener( new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				StoreManager.getInstance().createBackup( new File( "data/bck.zip" ) );				
+			}
+		} );
 		this.pnlSearch.add(this.btnAdvanceSearch, "cell 1 0,growx");
 
 		
