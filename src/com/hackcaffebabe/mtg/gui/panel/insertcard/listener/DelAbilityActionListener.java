@@ -1,11 +1,11 @@
 package com.hackcaffebabe.mtg.gui.panel.insertcard.listener;
 
+import it.hackcaffebabe.jx.table.JXTable;
+import it.hackcaffebabe.jx.table.JXTableColumnAdjuster;
+import it.hackcaffebabe.jx.table.model.DisplayableObject;
+import it.hackcaffebabe.jx.table.model.JXObjectModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import it.hackcaffebabe.viewutils.table.JXTable;
-import it.hackcaffebabe.viewutils.table.JXTableColumnAdjuster;
-import it.hackcaffebabe.viewutils.table.model.DisplayableObject;
-import it.hackcaffebabe.viewutils.table.model.JXObjectModel;
 
 /**
  * class that describe the action on btnDelActivity in InsertCardConten.java

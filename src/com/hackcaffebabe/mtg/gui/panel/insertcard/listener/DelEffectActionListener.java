@@ -1,8 +1,8 @@
 package com.hackcaffebabe.mtg.gui.panel.insertcard.listener;
 
-import it.hackcaffebabe.viewutils.table.JXTable;
-import it.hackcaffebabe.viewutils.table.JXTableColumnAdjuster;
-import it.hackcaffebabe.viewutils.table.model.JXObjectModel;
+import it.hackcaffebabe.jx.table.JXTable;
+import it.hackcaffebabe.jx.table.JXTableColumnAdjuster;
+import it.hackcaffebabe.jx.table.model.JXObjectModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import com.hackcaffebabe.mtg.model.card.Effect;

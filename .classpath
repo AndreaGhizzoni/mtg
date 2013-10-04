@@ -3,15 +3,21 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/miglayout15-swing.jar"/>
-	<classpathentry kind="lib" path="lib/jxcomponent-1.1.jar">
+	<classpathentry kind="lib" path="lib/simple-logger-1.1.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/home/andrea/Dropbox/workspace/MTGProject/lib/jxcomponent-1.1.jar!/doc"/>
+			<attribute name="javadoc_location" value="jar:file:/home/andrea/Dropbox/workspace/MTGProject/lib/simple-logger-1.1.jar!/doc"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/gson-2.2.2.jar"/>
-	<classpathentry kind="lib" path="lib/simple-logger-1.1.jar"/>
-	<classpathentry kind="lib" path="lib/automaton.jar"/>
-	<classpathentry kind="lib" path="lib/ioutil-1.1.jar"/>
-	<classpathentry kind="lib" path="lib/xeger.jar"/>
+	<classpathentry kind="lib" path="lib/ioutil-1.2.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/home/andrea/Dropbox/workspace/IOUtil/rc/ioutil-1.2.jar!/doc"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/jxcomponents-1.2.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/home/andrea/Dropbox/workspace/JXComponent/rc/jxcomponents-1.2.jar!/doc"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/gson.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

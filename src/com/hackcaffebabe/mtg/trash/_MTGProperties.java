@@ -1,21 +1,32 @@
 package com.hackcaffebabe.mtg.trash;
 
+import it.hackcaffebabe.jx.table.JXTable;
+import it.hackcaffebabe.jx.table.JXTableColumnAdjuster;
+import it.hackcaffebabe.jx.table.model.DisplayableObject;
+import it.hackcaffebabe.jx.table.model.JXObjectModel;
 import java.util.Set;
-import it.hackcaffebabe.viewutils.table.JXTable;
-import it.hackcaffebabe.viewutils.table.JXTableColumnAdjuster;
-import it.hackcaffebabe.viewutils.table.model.DisplayableObject;
-import it.hackcaffebabe.viewutils.table.model.JXObjectModel;
-import javax.swing.JPanel;
-import javax.swing.border.TitledBorder;
+import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JButton;
-import com.hackcaffebabe.mtg.model.*;
-import com.hackcaffebabe.mtg.model.card.*;
-import com.hackcaffebabe.mtg.model.color.*;
+import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
 import net.miginfocom.swing.MigLayout;
+import com.hackcaffebabe.mtg.model.Artifact;
+import com.hackcaffebabe.mtg.model.Creature;
+import com.hackcaffebabe.mtg.model.Enchantment;
+import com.hackcaffebabe.mtg.model.Instant;
+import com.hackcaffebabe.mtg.model.MTGCard;
+import com.hackcaffebabe.mtg.model.Planeswalker;
+import com.hackcaffebabe.mtg.model.Sorcery;
+import com.hackcaffebabe.mtg.model.card.Ability;
+import com.hackcaffebabe.mtg.model.card.Effect;
+import com.hackcaffebabe.mtg.model.card.ManaCost;
+import com.hackcaffebabe.mtg.model.card.PlanesAbility;
+import com.hackcaffebabe.mtg.model.card.Rarity;
+import com.hackcaffebabe.mtg.model.card.Strength;
+import com.hackcaffebabe.mtg.model.color.CardColor;
 
 
 /**

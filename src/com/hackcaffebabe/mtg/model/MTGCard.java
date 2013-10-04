@@ -1,6 +1,6 @@
 package com.hackcaffebabe.mtg.model;
 
-import it.hackcaffebabe.viewutils.table.model.DisplayableObject;
+import it.hackcaffebabe.jx.table.model.DisplayableObject;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
