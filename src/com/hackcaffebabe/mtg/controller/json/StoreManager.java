@@ -1,33 +1,49 @@
-package com.hackcaffebabe.mtg.controller.ser;
+package com.hackcaffebabe.mtg.controller.json;
 
 import static com.hackcaffebabe.mtg.controller.DBCostants.*;
-import it.hackcaffebabe.ioutil.file.IOSerializable;
-import it.hackcaffebabe.logger.Logger;
-import it.hackcaffebabe.logger.Tag;
+import it.hackcaffebabe.logger.*;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonReader;
 import com.hackcaffebabe.mtg.controller.Criteria;
+import com.hackcaffebabe.mtg.controller.json.adapter.*;
 import com.hackcaffebabe.mtg.model.*;
-
+import com.hackcaffebabe.mtg.model.card.Ability;
+import com.hackcaffebabe.mtg.model.card.Effect;
 
 /**
- * The Store manager provide the common method to serialize the {@link MTGCard} on file.
- * 
+ * TODO add doc
+ * TODO maybe parameterize all JSON key
+ * TODO try to do an adapter for the entire class MTGCard.  
+ *  
+ * http://stackoverflow.com/questions/15731215/get-key-names-from-json-object-using-gson
+ * http://www.mkyong.com/java/gson-streaming-to-read-and-write-json/
+ * http://www.javacodegeeks.com/2012/04/json-with-gson-and-abstract-classes.html
+ * http://examples.javacodegeeks.com/core-java/gson/stream/jsonwriter/gson-streaming-to-read-and-write-json-in-java-example/
+ *  
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
- * @version 1.5
+ * @version 1.0
  */
 public class StoreManager
 {
 	private HashSet<MTGCard> mtgSet = new HashSet<>();
+	private Gson g;
 	private static StoreManager manager;
-
+	
 	private Logger log = Logger.getInstance();
-
+	
 	/**
 	 * Returns the instance of Store Manager.<br>
 	 * If there are some problems a log will be write on log file.
@@ -41,33 +57,49 @@ public class StoreManager
 		}
 		catch( Exception e ) {
 			Logger.getInstance().write( Tag.ERRORS, e.getMessage() );
+			e.printStackTrace();
 			return null;
 		}
 	}
-
-	private StoreManager() throws IOException, Exception{
+	
+	private StoreManager() throws IOException{
 		this.init();
+		this.load();
+		log.write( Tag.INFO, "Store manager initialized correctly." );
 	}
-
+	
 //===========================================================================================
 // METHOD
 //===========================================================================================
-	/** Initialize the directory and files */
-	private void init() throws IllegalArgumentException, ClassNotFoundException, IOException{
-		File store = new File( STORE_PATH );
-
+	/** Initialize the entire class **/
+	private void init() throws IOException{
+		File store = new File( JSON_PATH );
 		if(!store.exists())
 			store.mkdirs();
 		if(!store.canWrite())
 			throw new IOException( String.format( "Storage can't write on %s", store.getAbsolutePath() ) );
 		if(!store.canRead())
 			throw new IOException( String.format( "Storage can't read on %s", store.getAbsolutePath() ) );
-
-		for(File f: store.listFiles()) {
-			mtgSet.add( IOSerializable.load( MTGCard.class, f ) );
-		}
+		
+		GsonBuilder b = new GsonBuilder().setPrettyPrinting();
+		b.registerTypeAdapter(MTGCard.class, new MTGCardAdapter());// register the JSON adapter for MTGCard class
+		b.registerTypeAdapter(Effect.class, new EffectAdapter());// register the JSON adapter for Effect class
+		b.registerTypeAdapter(Ability.class, new AbilityAdapter());// register the JSON adapter for Ability class		
+		g = b.create();	
 	}
-
+	
+	/** 
+	 * Load existing JSON file 
+	 * @throws IOException 
+	 */
+	private void load() throws IOException{
+		for(File f: new File(JSON_PATH).listFiles() ){
+			JsonElement jsonelement = new JsonParser().parse( new JsonReader( new BufferedReader(new FileReader(f))) );
+			jsonelement.getAsJsonObject().remove( "type" );
+			mtgSet.add( g.fromJson( jsonelement, MTGCard.class ) );
+		}
+	}	
+	
 	/**
 	 * This method save the give {@link MTGCard} on disk.
 	 * @param c {@link MTGCard} to save
@@ -79,14 +111,18 @@ public class StoreManager
 			throw new IllegalArgumentException( "MTG card to save can not be null" );
 		if(mtgSet.contains( c ))
 			return false;
-
-		IOSerializable.save( c, new File( getStoreFileName( c ) ) );
+		
+		String json = g.toJson( c, MTGCard.class );
+		FileWriter f = new FileWriter( new File( getStoreJSONName(c)) );
+		f.write( json );
+		f.flush();
+		f.close();		
 		mtgSet.add( c );
-
-		log.write( Tag.INFO, String.format( "MTG card %s saved correctly.", c.getName() ) );
+		
+		log.write( Tag.INFO, String.format( "MTG card json file %s saved correctly.", c.getName() ) );
 		return true;
 	}
-
+	
 	/**
 	 * This method search a card with some {@link Criteria}.
 	 * @param c {@link Criteria} to search the card.
@@ -160,8 +196,9 @@ public class StoreManager
 		}
 		return set;
 	}
-
+	
 	/**
+	 * TODO maybe use the method on IOUtil ?
 	 * This method creates a backup file in .zip format of all stored card.
 	 * @param destinationFile {@link File} the file represents .zip.
 	 */
@@ -171,11 +208,9 @@ public class StoreManager
 		
 		log.write( Tag.INFO, "Backup of all stored files called." );
 		try {
-
 			if(destinationFile.exists() && !destinationFile.delete()){
 				log.write( Tag.ERRORS, "Error on delete exists backup." );
 			}
-			
 			
 			ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(destinationFile));
 			log.write( Tag.DEBUG, "Backup creation initialize." );
@@ -199,7 +234,7 @@ public class StoreManager
 			log.write( Tag.ERRORS, e.getMessage() );
 		}
 	}
-
+	
 //===========================================================================================
 // GETTER
 //===========================================================================================

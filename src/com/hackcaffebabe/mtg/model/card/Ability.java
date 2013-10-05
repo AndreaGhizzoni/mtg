@@ -63,7 +63,12 @@ public class Ability extends DisplayableObject implements Serializable
 	 * @return {@link String} the ability name.
 	 */
 	public final String getName(){ return this.name; }
-
+	
+	/**
+	 * Return the description text.
+	 * @return {@link String} the description text.
+	 */
+	public final String getDescription(){ return this.description;}
 //===========================================================================================
 // OVERRIDE
 //===========================================================================================

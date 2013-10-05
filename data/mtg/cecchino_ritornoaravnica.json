@@ -1,0 +1,28 @@
+{
+  "type": "Creature",
+  "name": "Cecchino",
+  "card_color": {
+    "colors": [
+      "RED"
+    ],
+    "type": "MONO_COLOR"
+  },
+  "rarity": "NON_COMMON",
+  "series": "ritorno a ravnica",
+  "sub_type": "Sciamano Goblin",
+  "is_artifact": false,
+  "is_legendary": false,
+  "primary_effect": "quando una stregoneria o istantaneo rosso viene lanciata, il Cecchino infligge 2 danni ad ogni avversario",
+  "effects": [],
+  "abilitis": [],
+  "mana_cost": {
+    "cost": {
+      "RED": 1,
+      "COLOR_LESS": 2
+    }
+  },
+  "streangth": {
+    "power": 2,
+    "toughness": 2
+  }
+}

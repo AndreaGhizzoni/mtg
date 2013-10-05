@@ -1,0 +1,25 @@
+{
+  "type": "Sorcery",
+  "name": "Foro del terrore",
+  "card_color": {
+    "colors": [
+      "BLACK",
+      "RED"
+    ],
+    "type": "MULTI_COLOR"
+  },
+  "rarity": "RARE",
+  "series": "ritorno a ravnica",
+  "sub_type": "",
+  "is_artifact": false,
+  "is_legendary": false,
+  "primary_effect": "Distruggi una creatura o planeswalker bersaglio",
+  "effects": [],
+  "abilitis": [],
+  "mana_cost": {
+    "cost": {
+      "BLACK": 1,
+      "RED": 1
+    }
+  }
+}

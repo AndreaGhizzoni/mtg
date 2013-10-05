@@ -34,7 +34,6 @@ public abstract class MTGCard extends DisplayableObject implements Serializable
 	private Set<Effect> effects = new HashSet<>();
 	private Set<Ability> abilitis = new HashSet<>();
 	
-	
 	/**
 	 * Creates the common information of MTG Card.
 	 * @param name {@link String} the name of card.

@@ -1,0 +1,34 @@
+{
+  "type": "Creature",
+  "name": "Giullare delle punte",
+  "card_color": {
+    "colors": [
+      "BLACK",
+      "RED"
+    ],
+    "type": "MULTI_COLOR"
+  },
+  "rarity": "NON_COMMON",
+  "series": "labirinto del drago",
+  "sub_type": "guerriero goblin",
+  "is_artifact": false,
+  "is_legendary": false,
+  "primary_effect": "",
+  "effects": [],
+  "abilitis": [
+    {
+      "name": "Rapidita",
+      "description": "la creatura puo attaccare e tappare appena entrata in campo"
+    }
+  ],
+  "mana_cost": {
+    "cost": {
+      "BLACK": 1,
+      "RED": 1
+    }
+  },
+  "streangth": {
+    "power": 3,
+    "toughness": 1
+  }
+}

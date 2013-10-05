@@ -1,4 +1,4 @@
-package com.hackcaffebabe.mtg.controller.ser;
+package com.hackcaffebabe.mtg.controller;
 
 import com.hackcaffebabe.mtg.model.MTGCard;
 import com.hackcaffebabe.mtg.model.card.Rarity;
