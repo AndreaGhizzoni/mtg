@@ -107,7 +107,7 @@ public class Artifact extends MTGCard implements Serializable
 		String pattern = "%s [%s %s %s %s - %s %s]";
 		String type = "Artifact";
 		if(isLegendary()) type+=" Legendary";
-		if(!getSubType().isEmpty()) type+=" - "+getSubType();
+		if(getSubType()!=null && !getSubType().isEmpty()) type+=" - "+getSubType();
 		return String.format( pattern, getName(), getCardColor(), getCardColor().getType(), getManaCost(), 
 							  type, getRarity(), getSeries() );
 	}

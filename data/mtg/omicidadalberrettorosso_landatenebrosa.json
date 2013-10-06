@@ -3,8 +3,8 @@
   "name": "Omicida dal berretto rosso",
   "card_color": {
     "colors": [
-      "BLACK",
-      "RED"
+      "RED",
+      "BLACK"
     ],
     "type": "IBRID"
   },

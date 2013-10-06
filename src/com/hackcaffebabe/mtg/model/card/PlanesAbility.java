@@ -58,9 +58,13 @@ public class PlanesAbility extends DisplayableObject implements Serializable
 	 * Returns the ability cost.
 	 * @return {@link Integer} the ability cost.
 	 */
-	public final int getName(){ return this.cost; }
-
+	public final int getCost(){ return this.cost; }
 	
+	/**
+	 * Return the description.
+	 * @return {@link String} the description.
+	 */
+	public final String getDesctiption(){ return this.description; }	
 
 //===========================================================================================
 // OVERRIDE

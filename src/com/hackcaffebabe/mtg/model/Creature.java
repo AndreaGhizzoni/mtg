@@ -134,7 +134,7 @@ public class Creature extends MTGCard implements Serializable
 		String type="Creature";
 		if(isArtifact()) type+=" Artifact";
 		if(isLegendary()) type+=" Legendary";
-		if(!getSubType().isEmpty()) type+=" - "+getSubType();
+		if(getSubType()!=null && !getSubType().isEmpty()) type+=" - "+getSubType();
 		return String.format( pattern, getName(), getCardColor(), getCardColor().getType(), getManaCost(), 
 							  type, getStrength(), getRarity(), getSeries() );
 	}

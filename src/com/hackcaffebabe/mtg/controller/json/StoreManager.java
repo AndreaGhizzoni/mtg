@@ -19,6 +19,9 @@ import com.hackcaffebabe.mtg.model.*;
 import com.hackcaffebabe.mtg.model.card.Ability;
 import com.hackcaffebabe.mtg.model.card.Effect;
 import com.hackcaffebabe.mtg.model.card.ManaCost;
+import com.hackcaffebabe.mtg.model.card.PlanesAbility;
+import com.hackcaffebabe.mtg.model.card.Strength;
+import com.hackcaffebabe.mtg.model.color.CardColor;
 
 /**
  * TODO add doc
@@ -79,7 +82,10 @@ public class StoreManager
 			throw new IOException( String.format( "Storage can't read on %s", store.getAbsolutePath() ) );
 		
 		GsonBuilder b = new GsonBuilder().setPrettyPrinting().enableComplexMapKeySerialization();
-		b.registerTypeAdapter(ManaCost.class, new ManaCostAdapter());
+		b.registerTypeAdapter(PlanesAbility.class, new PlanesAbilityAdapter());// register the JSON adapter for PlanesAbility class
+		b.registerTypeAdapter(Strength.class, new StrengthAdapter());// register the JSON adapter for Strength class
+		b.registerTypeAdapter(CardColor.class, new CardColorAdapter());// register the JSON adapter for CardColor class
+		b.registerTypeAdapter(ManaCost.class, new ManaCostAdapter());// register the JSON adapter for ManaCost class
 		b.registerTypeAdapter(MTGCard.class, new MTGCardAdapter());// register the JSON adapter for MTGCard class
 		b.registerTypeAdapter(Effect.class, new EffectAdapter());// register the JSON adapter for Effect class
 		b.registerTypeAdapter(Ability.class, new AbilityAdapter());// register the JSON adapter for Ability class		

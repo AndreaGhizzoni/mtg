@@ -1,6 +1,8 @@
 package com.hackcaffebabe.mtg.controller.json.adapter;
 
 import java.lang.reflect.Type;
+import java.util.HashSet;
+import java.util.Set;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -11,6 +13,7 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.hackcaffebabe.mtg.model.*;
 import com.hackcaffebabe.mtg.model.card.ManaCost;
+import com.hackcaffebabe.mtg.model.card.PlanesAbility;
 import com.hackcaffebabe.mtg.model.card.Strength;
 import com.hackcaffebabe.mtg.model.color.CardColor;
 
@@ -33,7 +36,7 @@ public class MTGCardAdapter implements JsonSerializer<MTGCard>, JsonDeserializer
 		result.add( "sub_type", new JsonPrimitive(c.getSubType()) );
 		result.add( "is_artifact", new JsonPrimitive(c.isArtifact()) );
 		result.add( "is_legendary", new JsonPrimitive(c.isLegendary()) );
-		result.add( "primary_effect", new JsonPrimitive(c.getPrimaryEffect()) );
+		result.add( "primary_effect", new JsonPrimitive(c.getPrimaryEffect()==null?"":c.getPrimaryEffect()) );
 		result.add( "effects", arg2.serialize(c.getEffects()) );
 		result.add( "abilitis", arg2.serialize(c.getAbilities()) );
 		
@@ -63,7 +66,7 @@ public class MTGCardAdapter implements JsonSerializer<MTGCard>, JsonDeserializer
 				Planeswalker x=((Planeswalker)c);
 				result.add( "mana_cost", arg2.serialize(x.getManaCost(), ManaCost.class) );
 				result.add( "life", new JsonPrimitive(x.getLife()) );
-				result.add( "planes_ability", arg2.serialize(x.getPlanesAbilities()) );// TODO maybe create an adapter for this.
+				result.add( "planes_ability", arg2.serialize(x.getPlanesAbilities()) );
 				break;
 			}
 			case "Sorcery":{
@@ -79,9 +82,35 @@ public class MTGCardAdapter implements JsonSerializer<MTGCard>, JsonDeserializer
 	@Override
 	public MTGCard deserialize(JsonElement json, Type arg1, JsonDeserializationContext context) throws JsonParseException{
 		String type = json.getAsJsonObject().get( "type" ).getAsString();
-		json.getAsJsonObject().remove( "type" );
+		json.getAsJsonObject().remove( "type" );// remove this otherwise class dosn't full fit the class.
 		try {
-			return context.deserialize(json, Class.forName("com.hackcaffebabe.mtg.model."+type));
+			MTGCard c = context.deserialize(json, Class.forName("com.hackcaffebabe.mtg.model."+type));
+			CardColor cc = context.deserialize( json.getAsJsonObject().get("card_color"), Class.forName("com.hackcaffebabe.mtg.model.color.CardColor") );
+			c.setCardColor( cc );
+			if(!type.equals("Land") ){
+				ManaCost cos = context.deserialize( json.getAsJsonObject().get("mana_cost"), Class.forName("com.hackcaffebabe.mtg.model.card.ManaCost") );
+				if(c instanceof Creature){
+					Strength s = context.deserialize( json.getAsJsonObject().get("streangth"), Class.forName("com.hackcaffebabe.mtg.model.card.Strength") );
+					((Creature)c).setManaCost( cos );
+					((Creature)c).setStrength( s );
+				}else if(c instanceof Artifact){
+					((Artifact)c).setManaCost( cos );
+				}else if(c instanceof Enchantment){
+					((Enchantment)c).setManaCost( cos );
+				}else if(c instanceof Instant){
+					((Instant)c).setManaCost( cos );
+				}else if(c instanceof Planeswalker){
+					Set<PlanesAbility> set = new HashSet<>();
+					for(JsonElement i : json.getAsJsonObject().get("planes_ability").getAsJsonArray()){
+						set.add((PlanesAbility)context.deserialize(i, Class.forName("com.hackcaffebabe.mtg.model.card.PlanesAbility")));
+					}
+					((Planeswalker)c).setPlanesAbilities( set );
+					((Planeswalker)c).setManaCost( cos );
+				}else if(c instanceof Sorcery){
+					((Sorcery)c).setManaCost( cos );
+				}
+			}
+			return c;
 		} catch (ClassNotFoundException cnfe) {
 			throw new JsonParseException("Unknown element type: MTGCard", cnfe);
 		}

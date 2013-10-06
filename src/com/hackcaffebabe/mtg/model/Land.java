@@ -99,7 +99,7 @@ public class Land extends MTGCard implements Serializable
 		String pattern = "%s [%s %s %s - %s %s]";
 		String type ="Land";
 		if(isLegendary()) type+=" Legendary";
-		if(!getSubType().isEmpty()) type+=" - "+getSubType();
+		if(getSubType()!=null && !getSubType().isEmpty()) type+=" - "+getSubType();
 		return String.format( pattern, getName(), getCardColor(), getCardColor().getType(), 
 							  type, getRarity(), getSeries() );
 	}

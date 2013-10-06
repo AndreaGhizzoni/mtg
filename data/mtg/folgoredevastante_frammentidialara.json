@@ -16,8 +16,8 @@
   "effects": [],
   "abilitis": [],
   "mana_cost": {
-    "RED": 1,
     "COLOR_LESS": 1,
+    "RED": 1,
     "BLACK": 1
   }
 }

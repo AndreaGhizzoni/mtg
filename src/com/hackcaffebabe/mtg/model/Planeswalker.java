@@ -85,6 +85,10 @@ public class Planeswalker extends MTGCard implements Serializable
 		this.life = life;
 	}
 	
+	public void setPlanesAbilities( Set<PlanesAbility> s ){
+		this.planesAbility = s;
+	}
+	
 	@Override
 	public void setArtifact( boolean isArtifact ){}
 	@Override
@@ -171,7 +175,7 @@ public class Planeswalker extends MTGCard implements Serializable
 		String pattern = "%s [%s %s %s %s - %s %s %s]";
 		String type ="Planeswalker";
 		if(isLegendary()) type+=" Legendary";
-		if(!getSubType().isEmpty()) type+=" - "+getSubType();
+		if(getSubType()!=null && !getSubType().isEmpty()) type+=" - "+getSubType();
 		return String.format( pattern, getName(), getCardColor(), getCardColor().getType(), getManaCost(), 
 							  type, getLife(), getRarity(), getSeries() );
 	}

@@ -3,8 +3,8 @@
   "name": "Giullare delle punte",
   "card_color": {
     "colors": [
-      "BLACK",
-      "RED"
+      "RED",
+      "BLACK"
     ],
     "type": "MULTI_COLOR"
   },

@@ -3,8 +3,8 @@
   "name": "Foro del terrore",
   "card_color": {
     "colors": [
-      "BLACK",
-      "RED"
+      "RED",
+      "BLACK"
     ],
     "type": "MULTI_COLOR"
   },

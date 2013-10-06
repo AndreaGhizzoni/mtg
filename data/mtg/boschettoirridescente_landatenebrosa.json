@@ -16,13 +16,13 @@
       "mana_cost": {
         "null": -1
       },
-      "text": "aggiungi un mana verde alla tua riserva"
+      "text": "rimuovi un segnalino e aggiungi un mana di qualsiasi colore alla tua riserva"
     },
     {
       "mana_cost": {
         "null": -1
       },
-      "text": "rimuovi un segnalino e aggiungi un mana di qualsiasi colore alla tua riserva"
+      "text": "aggiungi un mana verde alla tua riserva"
     }
   ],
   "abilitis": []
