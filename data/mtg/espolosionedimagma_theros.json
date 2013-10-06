@@ -21,9 +21,7 @@
     }
   ],
   "mana_cost": {
-    "cost": {
-      "RED": 1,
-      "COLOR_LESS": 1
-    }
+    "RED": 1,
+    "COLOR_LESS": 1
   }
 }

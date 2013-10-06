@@ -29,10 +29,13 @@ public class AbilityAdapter implements JsonSerializer<Ability>, JsonDeserializer
 	
 	@Override
 	public Ability deserialize(JsonElement arg0, Type arg1, JsonDeserializationContext arg2) throws JsonParseException{
-		try {
-			return arg2.deserialize(new JsonPrimitive( "Ability" ), Class.forName("com.hackcaffebabe.mtg.model.card.Ability"));
-		} catch (ClassNotFoundException e) {
-			throw new JsonParseException("Unknown element type: Effect", e);
-		}
+		Ability result = null;
+		
+		JsonObject abilityAsJsonObject = arg0.getAsJsonObject();
+		String name = abilityAsJsonObject.get( "name" ).getAsString();
+		String description = abilityAsJsonObject.get( "description" ).getAsString();
+		
+		result = new Ability( name, description );
+		return result;
 	}
 }

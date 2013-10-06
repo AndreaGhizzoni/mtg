@@ -21,10 +21,8 @@
     }
   ],
   "mana_cost": {
-    "cost": {
-      "BLACK": 2,
-      "COLOR_LESS": 2
-    }
+    "BLACK": 2,
+    "COLOR_LESS": 2
   },
   "streangth": {
     "power": 6,

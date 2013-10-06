@@ -46,7 +46,13 @@ public class ManaCost implements Comparable<ManaCost>, Serializable
 		}			
 	}
 	
-	
+	/**
+	 * TODO add doc and check condition
+	 * @param map
+	 */
+	public ManaCost( Map<BasicColors, Integer> map ){
+		this.cost = map;
+	}
 //===========================================================================================
 // GETTER
 //===========================================================================================
@@ -59,6 +65,12 @@ public class ManaCost implements Comparable<ManaCost>, Serializable
 		return this.cost;
 	}
 	
+//===========================================================================================
+// SETTER
+//===========================================================================================
+//	public void setCost( Map<BasicColors, Integer> map ){
+//		this.cost = map;
+//	}
 	
 //===========================================================================================
 // METHOD

@@ -78,21 +78,12 @@ public class MTGCardAdapter implements JsonSerializer<MTGCard>, JsonDeserializer
 	
 	@Override
 	public MTGCard deserialize(JsonElement json, Type arg1, JsonDeserializationContext context) throws JsonParseException{
+		String type = json.getAsJsonObject().get( "type" ).getAsString();
+		json.getAsJsonObject().remove( "type" );
 		try {
-			return context.deserialize(new JsonPrimitive("MTGCard"), Class.forName("com.hackcaffebabe.mtg.model.MTGCard"));
+			return context.deserialize(json, Class.forName("com.hackcaffebabe.mtg.model."+type));
 		} catch (ClassNotFoundException cnfe) {
 			throw new JsonParseException("Unknown element type: MTGCard", cnfe);
 		}
 	}
-
-	
-//	@Override
-//	public MTGCard deserialize(JsonElement json, Type arg1, JsonDeserializationContext context) throws JsonParseException{
-//		String type = json.getAsJsonObject().get("type").getAsString();
-//		try {
-//			return context.deserialize(new JsonPrimitive(type), Class.forName("com.hackcaffebabe.mtg.model."+type));
-//		} catch (ClassNotFoundException cnfe) {
-//			throw new JsonParseException("Unknown element type: "+type, cnfe);
-//		}
-//	}
 }

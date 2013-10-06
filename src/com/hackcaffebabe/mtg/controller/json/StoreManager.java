@@ -2,7 +2,6 @@ package com.hackcaffebabe.mtg.controller.json;
 
 import static com.hackcaffebabe.mtg.controller.DBCostants.*;
 import it.hackcaffebabe.logger.*;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -14,14 +13,12 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
-import com.google.gson.stream.JsonReader;
 import com.hackcaffebabe.mtg.controller.Criteria;
 import com.hackcaffebabe.mtg.controller.json.adapter.*;
 import com.hackcaffebabe.mtg.model.*;
 import com.hackcaffebabe.mtg.model.card.Ability;
 import com.hackcaffebabe.mtg.model.card.Effect;
+import com.hackcaffebabe.mtg.model.card.ManaCost;
 
 /**
  * TODO add doc
@@ -81,7 +78,8 @@ public class StoreManager
 		if(!store.canRead())
 			throw new IOException( String.format( "Storage can't read on %s", store.getAbsolutePath() ) );
 		
-		GsonBuilder b = new GsonBuilder().setPrettyPrinting();
+		GsonBuilder b = new GsonBuilder().setPrettyPrinting().enableComplexMapKeySerialization();
+		b.registerTypeAdapter(ManaCost.class, new ManaCostAdapter());
 		b.registerTypeAdapter(MTGCard.class, new MTGCardAdapter());// register the JSON adapter for MTGCard class
 		b.registerTypeAdapter(Effect.class, new EffectAdapter());// register the JSON adapter for Effect class
 		b.registerTypeAdapter(Ability.class, new AbilityAdapter());// register the JSON adapter for Ability class		
@@ -94,9 +92,9 @@ public class StoreManager
 	 */
 	private void load() throws IOException{
 		for(File f: new File(JSON_PATH).listFiles() ){
-			JsonElement jsonelement = new JsonParser().parse( new JsonReader( new BufferedReader(new FileReader(f))) );
-			jsonelement.getAsJsonObject().remove( "type" );
-			mtgSet.add( g.fromJson( jsonelement, MTGCard.class ) );
+			FileReader br = new FileReader(f);
+			mtgSet.add( g.fromJson( br, MTGCard.class ) );
+			br.close();
 		}
 	}	
 	
