@@ -1,5 +1,6 @@
 package com.hackcaffebabe.mtg.controller.json.adapter;
 
+import static com.hackcaffebabe.mtg.controller.DBCostants.*;
 import java.lang.reflect.Type;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,8 +19,7 @@ import com.hackcaffebabe.mtg.model.card.Strength;
 import com.hackcaffebabe.mtg.model.color.CardColor;
 
 /**
- * TODO add doc
- *  
+ * This is the JSON adapter for class MTGCard
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
  */
@@ -28,50 +28,50 @@ public class MTGCardAdapter implements JsonSerializer<MTGCard>, JsonDeserializer
 	@Override
 	public JsonElement serialize(MTGCard c, Type arg1, JsonSerializationContext arg2){
 		JsonObject result = new JsonObject();
-		result.add( "type", new JsonPrimitive(c.getClass().getSimpleName()) );
-		result.add( "name", new JsonPrimitive(c.getName()) );
-		result.add( "card_color", arg2.serialize(c.getCardColor(), CardColor.class ) );
-		result.add( "rarity", arg2.serialize(c.getRarity()) );
-		result.add( "series", new JsonPrimitive(c.getSeries()) );
-		result.add( "sub_type", new JsonPrimitive(c.getSubType()) );
-		result.add( "is_artifact", new JsonPrimitive(c.isArtifact()) );
-		result.add( "is_legendary", new JsonPrimitive(c.isLegendary()) );
-		result.add( "primary_effect", new JsonPrimitive(c.getPrimaryEffect()==null?"":c.getPrimaryEffect()) );
-		result.add( "effects", arg2.serialize(c.getEffects()) );
-		result.add( "abilitis", arg2.serialize(c.getAbilities()) );
+		result.add( JSON_TAG_TYPE, new JsonPrimitive(c.getClass().getSimpleName()) );
+		result.add( JSON_TAG_NAME, new JsonPrimitive(c.getName()) );
+		result.add( JSON_TAG_CARD_COLOR, arg2.serialize(c.getCardColor(), CardColor.class ) );
+		result.add( JSON_TAG_RARITY, arg2.serialize(c.getRarity()) );
+		result.add( JSON_TAG_SERIES, new JsonPrimitive(c.getSeries()) );
+		result.add( JSON_TAG_SUB_TYPE, new JsonPrimitive(c.getSubType()) );
+		result.add( JSON_TAG_IS_ARTIFACT, new JsonPrimitive(c.isArtifact()) );
+		result.add( JSON_TAG_IS_LEGENDARY, new JsonPrimitive(c.isLegendary()) );
+		result.add( JSON_TAG_PRIMARY_EFFECT, new JsonPrimitive(c.getPrimaryEffect()==null?"":c.getPrimaryEffect()) );
+		result.add( JSON_TAG_EFFECTS, arg2.serialize(c.getEffects()) );
+		result.add( JSON_TAG_ABILITIES, arg2.serialize(c.getAbilities()) );
 		
 		switch(c.getClass().getSimpleName()){
 			case "Creature":{
 				Creature x=((Creature)c);
-				result.add( "mana_cost", arg2.serialize(x.getManaCost(), ManaCost.class) );
-				result.add( "streangth", arg2.serialize(x.getStrength(), Strength.class) );
+				result.add( JSON_TAG_MANA_COST, arg2.serialize(x.getManaCost(), ManaCost.class) );
+				result.add( JSON_TAG_STRENGTH, arg2.serialize(x.getStrength(), Strength.class) );
 				break;
 			}
 			case "Artifact":{
 				Artifact x=((Artifact)c);
-				result.add( "mana_cost", arg2.serialize(x.getManaCost(), ManaCost.class) );
+				result.add( JSON_TAG_MANA_COST, arg2.serialize(x.getManaCost(), ManaCost.class) );
 				break;
 			}
 			case "Enchantment":{
 				Enchantment x=((Enchantment)c);
-				result.add( "mana_cost", arg2.serialize(x.getManaCost(), ManaCost.class) );
+				result.add( JSON_TAG_MANA_COST, arg2.serialize(x.getManaCost(), ManaCost.class) );
 				break;
 			}
 			case "Instant":{
 				Instant x=((Instant)c);
-				result.add( "mana_cost", arg2.serialize(x.getManaCost(),ManaCost.class) );
+				result.add( JSON_TAG_MANA_COST, arg2.serialize(x.getManaCost(),ManaCost.class) );
 				break;
 			}
 			case "Planeswalker":{
 				Planeswalker x=((Planeswalker)c);
-				result.add( "mana_cost", arg2.serialize(x.getManaCost(), ManaCost.class) );
-				result.add( "life", new JsonPrimitive(x.getLife()) );
-				result.add( "planes_ability", arg2.serialize(x.getPlanesAbilities()) );
+				result.add( JSON_TAG_MANA_COST, arg2.serialize(x.getManaCost(), ManaCost.class) );
+				result.add( JSON_TAG_LIFE, new JsonPrimitive(x.getLife()) );
+				result.add( JSON_TAG_PLANES_ABILITY, arg2.serialize(x.getPlanesAbilities()) );
 				break;
 			}
 			case "Sorcery":{
 				Sorcery x=((Sorcery)c);
-				result.add( "mana_cost", arg2.serialize(x.getManaCost(), ManaCost.class) );
+				result.add( JSON_TAG_MANA_COST, arg2.serialize(x.getManaCost(), ManaCost.class) );
 				break;
 			}			
 		}
@@ -81,16 +81,16 @@ public class MTGCardAdapter implements JsonSerializer<MTGCard>, JsonDeserializer
 	
 	@Override
 	public MTGCard deserialize(JsonElement json, Type arg1, JsonDeserializationContext context) throws JsonParseException{
-		String type = json.getAsJsonObject().get( "type" ).getAsString();
+		String type = json.getAsJsonObject().get( JSON_TAG_TYPE ).getAsString();
 		json.getAsJsonObject().remove( "type" );// remove this otherwise class dosn't full fit the class.
 		try {
 			MTGCard c = context.deserialize(json, Class.forName("com.hackcaffebabe.mtg.model."+type));
-			CardColor cc = context.deserialize( json.getAsJsonObject().get("card_color"), Class.forName("com.hackcaffebabe.mtg.model.color.CardColor") );
+			CardColor cc = context.deserialize( json.getAsJsonObject().get(JSON_TAG_CARD_COLOR), Class.forName("com.hackcaffebabe.mtg.model.color.CardColor") );
 			c.setCardColor( cc );
 			if(!type.equals("Land") ){
-				ManaCost cos = context.deserialize( json.getAsJsonObject().get("mana_cost"), Class.forName("com.hackcaffebabe.mtg.model.card.ManaCost") );
+				ManaCost cos = context.deserialize( json.getAsJsonObject().get(JSON_TAG_MANA_COST), Class.forName("com.hackcaffebabe.mtg.model.card.ManaCost") );
 				if(c instanceof Creature){
-					Strength s = context.deserialize( json.getAsJsonObject().get("streangth"), Class.forName("com.hackcaffebabe.mtg.model.card.Strength") );
+					Strength s = context.deserialize( json.getAsJsonObject().get(JSON_TAG_STRENGTH), Class.forName("com.hackcaffebabe.mtg.model.card.Strength") );
 					((Creature)c).setManaCost( cos );
 					((Creature)c).setStrength( s );
 				}else if(c instanceof Artifact){
@@ -101,7 +101,7 @@ public class MTGCardAdapter implements JsonSerializer<MTGCard>, JsonDeserializer
 					((Instant)c).setManaCost( cos );
 				}else if(c instanceof Planeswalker){
 					Set<PlanesAbility> set = new HashSet<>();
-					for(JsonElement i : json.getAsJsonObject().get("planes_ability").getAsJsonArray()){
+					for(JsonElement i : json.getAsJsonObject().get(JSON_TAG_PLANES_ABILITY).getAsJsonArray()){
 						set.add((PlanesAbility)context.deserialize(i, Class.forName("com.hackcaffebabe.mtg.model.card.PlanesAbility")));
 					}
 					((Planeswalker)c).setPlanesAbilities( set );

@@ -33,11 +33,10 @@ import com.hackcaffebabe.mtg.model.card.ManaCost;
 import com.hackcaffebabe.mtg.model.card.PlanesAbility;
 import com.hackcaffebabe.mtg.model.color.BasicColors;
 
+
 /**
  * Utility class that contains gui costants.
  * 
- * TODO replace all "Component c" with "Component parent"
- *  
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
  */
@@ -45,11 +44,11 @@ public class GUIUtils
 {
 	/** Current software version */
 	public static final String VERSION = "0.1.5";
-	
+
 	/** Title of main frame */
-	public static final String TITLE_MAIN_FRAME = "MTG Card Data! "+VERSION;
+	public static final String TITLE_MAIN_FRAME = "MTG Card Data! " + VERSION;
 	/** Title of insert card frame */
-	public static final String TITLE_INSERT_CARD = "MTG Insert Card! "+VERSION;
+	public static final String TITLE_INSERT_CARD = "MTG Insert Card! " + VERSION;
 
 	/** Dimension of main frame */
 	public static final Dimension DIMENSION_MAIN_FRAME = new Dimension( 1150, 640 );
@@ -64,8 +63,7 @@ public class GUIUtils
 	public static final String AC_INSTANT = "instant";
 	public static final String AC_SORCERY = "sorcery";
 	public static final String AC_ENCHANTMENT = "enchantment";
-	
-	
+
 //===========================================================================================
 // COMMON METHODS
 //===========================================================================================
@@ -74,11 +72,10 @@ public class GUIUtils
 	 * @param parent {@link Component} the parent component of error message.
 	 * @param msg {@link String} the message error.
 	 */
-	public static void displayError( Component parent, String msg ){
+	public static void displayError(Component parent, String msg){
 		JOptionPane.showMessageDialog( parent, msg, "Error", JOptionPane.ERROR_MESSAGE );
 	}
-	
-	
+
 	/**
 	 * This method show a pop up to get the chose between hybrid or multicolor.
 	 * @return
@@ -86,105 +83,116 @@ public class GUIUtils
 	public static int showHybridMulticolorDialog(){
 		JRadioButton isHybrid = new JRadioButton( "Hybrid" );
 		JRadioButton isMulticolor = new JRadioButton( "Multicolor" );
-		
+
 		ButtonGroup g = new ButtonGroup();
 		g.add( isHybrid );
 		g.add( isMulticolor );
-		
+
 		JPanel a = new JPanel();
 		a.add( isHybrid );
 		a.add( new JLabel( "or" ) );
 		a.add( isMulticolor );
-		
+
 		JComponent[] input = { new JLabel( "You have chosen two colors. Your card is:" ), a };
-		
+
 		JOptionPane.showMessageDialog( null, input, "Hybrid or Multicolor?", JOptionPane.INFORMATION_MESSAGE );
-		
-		if( isHybrid.isSelected() )
+
+		if(isHybrid.isSelected())
 			return 1;
-		else if( isMulticolor.isSelected() )
+		else if(isMulticolor.isSelected())
 			return 0;
 		else return -1;
 	}
-	
-	
+
 	/**
 	 * This method show a pop up to get the effect info.
 	 * @return {@link Effect}
 	 */
-	public static Effect showEffectDialog(final Component c){
-		class myActionListener implements ActionListener{
-			private JTextField txt; private ManaCost cost;
-			public myActionListener( JTextField t ){txt=t;}
+	public static Effect showEffectDialog(final Component parent){
+		class myActionListener implements ActionListener
+		{
+			private JTextField txt;
+			private ManaCost cost;
+
+			public myActionListener(JTextField t){
+				txt = t;
+			}
+
 			@Override
-			public void actionPerformed( ActionEvent e){
-				cost = showManaCost( c, false );
+			public void actionPerformed(ActionEvent e){
+				cost = showManaCost( parent, false );
 				txt.setText( cost.toString() );
 			}
-			public ManaCost getManaCost(){ return cost; }
+
+			public ManaCost getManaCost(){
+				return cost;
+			}
 		}
-		
-		JTextField txtMana = new JTextField(10);
+
+		JTextField txtMana = new JTextField( 10 );
 		txtMana.setEditable( false );
-		
+
 		JButton btnSetMana = new JButton( "Set effect's cost" );
 		myActionListener action = new myActionListener( txtMana );
 		btnSetMana.addActionListener( action );
-		
+
 		JTextArea txtDescription = new JTextArea( 10, 20 );
 		txtDescription.setLineWrap( true );
-		
+
 		JPanel p = new JPanel();
 		p.add( txtMana );
 		p.add( btnSetMana );
-		
-		JComponent[] input = { p, new JScrollPane(txtDescription) };
-		
-		int i = JOptionPane.showConfirmDialog( c, input, "Insert Effects", JOptionPane.OK_CANCEL_OPTION );
-		if(i==JOptionPane.CANCEL_OPTION || i==JOptionPane.CLOSED_OPTION) return null;
-		try{
-			return new Effect( action.cost, txtDescription.getText().replaceAll( "\n", " " ) );
-		}catch( Exception ex ){
+
+		JComponent[] input = { p, new JScrollPane( txtDescription ) };
+
+		int i = JOptionPane.showConfirmDialog( parent, input, "Insert Effects", JOptionPane.OK_CANCEL_OPTION );
+		if(i == JOptionPane.CANCEL_OPTION || i == JOptionPane.CLOSED_OPTION)
 			return null;
-		}		
+		try {
+			return new Effect( action.cost, txtDescription.getText().replaceAll( "\n", " " ) );
+		}
+		catch(Exception ex) {
+			return null;
+		}
 	}
-	
 
 	/**
 	 * This method show a pop up to get the ability info.
 	 * @return {@link Ability}
 	 */
-	public static Ability showAbilityDialog(Component c){
+	public static Ability showAbilityDialog(Component parent){
 		final JTextField txtAbilty = new JTextField();
 		final JTextArea txtDescription = new JTextArea( 10, 20 );
 		txtDescription.setLineWrap( true );
-		
+
 		final JCheckBox chbNewAbility = new JCheckBox( "New Ability" );
-		
+
 		final JComboBox<String> cmbAbility = new JComboBox<String>();
 		final Set<Map.Entry<String, String>> set = AbilityFactory.getInstance().getAbilities().entrySet();
-		if(set.size() == 0 ){
+		if(set.size() == 0) {
 			cmbAbility.setEnabled( false );
 			chbNewAbility.setEnabled( false );
-		}else{
+		}
+		else {
 			DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
-			for( Map.Entry<String, String> s : set ){
+			for(Map.Entry<String, String> s: set) {
 				model.addElement( s.getKey() );
 			}
 			cmbAbility.setModel( model );
-		
+
 			txtAbilty.setEnabled( false );
 			txtDescription.setEnabled( false );
 		}
-		
+
 		ActionListener l = new ActionListener(){
 			@Override
-			public void actionPerformed( ActionEvent e ){
-				if(chbNewAbility.isSelected()){
+			public void actionPerformed(ActionEvent e){
+				if(chbNewAbility.isSelected()) {
 					txtAbilty.setEnabled( true );
 					txtDescription.setEnabled( true );
 					cmbAbility.setEnabled( false );
-				}else{
+				}
+				else {
 					txtAbilty.setEnabled( false );
 					txtDescription.setEnabled( false );
 					cmbAbility.setEnabled( true );
@@ -193,148 +201,151 @@ public class GUIUtils
 		};
 		chbNewAbility.addActionListener( l );
 
-		JComponent[] input = { cmbAbility, chbNewAbility, new JLabel( "Ability name:" ), txtAbilty, 
-				               new JLabel( "Description:" ), new JScrollPane( txtDescription )  };
-		
-		int i = JOptionPane.showConfirmDialog( c, input, "Insert Ability", JOptionPane.OK_CANCEL_OPTION );
-		if(i==JOptionPane.CANCEL_OPTION || i==JOptionPane.CLOSED_OPTION) return null;
-		try{
-			if( set.isEmpty() )// no ability saved
+		JComponent[] input = { cmbAbility, chbNewAbility, new JLabel( "Ability name:" ), txtAbilty, new JLabel( "Description:" ),
+				new JScrollPane( txtDescription ) };
+
+		int i = JOptionPane.showConfirmDialog( parent, input, "Insert Ability", JOptionPane.OK_CANCEL_OPTION );
+		if(i == JOptionPane.CANCEL_OPTION || i == JOptionPane.CLOSED_OPTION)
+			return null;
+		try {
+			if(set.isEmpty())// no ability saved
 				return new Ability( txtAbilty.getText(), txtDescription.getText().replaceAll( "\n", " " ) );
-			else{
-				if(chbNewAbility.isSelected()){
+			else {
+				if(chbNewAbility.isSelected()) {
 					return new Ability( txtAbilty.getText(), txtDescription.getText().replaceAll( "\n", " " ) );
-				}else{
-					String name = (String)cmbAbility.getSelectedItem();
+				}
+				else {
+					String name = (String) cmbAbility.getSelectedItem();
 					String description = AbilityFactory.getInstance().getAbilities().get( name );
 					return new Ability( name, description );
 				}
-			}			
-		}catch( Exception e ){
+			}
+		}
+		catch(Exception e) {
 			return null;
-		}		
+		}
 	}
-	
-	
+
 	/**
 	 * This method show a pop up to get the planes walker ability info.
 	 * @return {@link PlanesAbility}
 	 */
-	public static PlanesAbility showPlanesAbilityDialog(Component c){
+	public static PlanesAbility showPlanesAbilityDialog(Component parent){
 		JSpinner spinLifeCost = new JSpinner( new SpinnerNumberModel( 0, -100, 100, 1 ) );
-		JSpinner.DefaultEditor editor = ( JSpinner.DefaultEditor ) spinLifeCost.getEditor();
+		JSpinner.DefaultEditor editor = (JSpinner.DefaultEditor) spinLifeCost.getEditor();
 		editor.getTextField().setEnabled( true );
 		editor.getTextField().setEditable( false );
-		
+
 		JTextArea txtDescription = new JTextArea( 5, 10 );
 		txtDescription.setLineWrap( true );
-		
+
 		JPanel a = new JPanel();
 		a.add( new JLabel( "Life Cost:" ) );
 		a.add( spinLifeCost );
-	
+
 		JComponent[] input = { a, new JLabel( "Description:" ), new JScrollPane( txtDescription ) };
-		
-		JOptionPane.showMessageDialog( c, input, "Insert Planes Ability", JOptionPane.INFORMATION_MESSAGE );
-		
-		try{
-			return new PlanesAbility( (Integer)spinLifeCost.getValue(), txtDescription.getText().replaceAll( "\n", " " ) );
-		}catch( Exception e ){
+
+		JOptionPane.showMessageDialog( parent, input, "Insert Planes Ability", JOptionPane.INFORMATION_MESSAGE );
+
+		try {
+			return new PlanesAbility( (Integer) spinLifeCost.getValue(), txtDescription.getText().replaceAll( "\n", " " ) );
+		}
+		catch(Exception e) {
 			return null;
 		}
 	}
-	
-	
+
 	/**
 	 * This method show a pop up to get the mana cost.
 	 * @param isForCardCost {@link Boolean} true if is for card cost, otherwise false if is for effects.
 	 * @return {@link ManaCost}
 	 */
-	public static ManaCost showManaCost(Component c, boolean isForCardCost ){
+	public static ManaCost showManaCost(Component parent, boolean isForCardCost){
 		DocumentFilter docFilter = new DocumentFilter(){
 			@Override
-			public void insertString( FilterBypass fb, int off, String str, AttributeSet attr ) throws BadLocationException {
-			    // remove non-digits
-			    fb.insertString(off, str.replaceAll("\\D++", ""), attr);
-			} 
+			public void insertString(FilterBypass fb, int off, String str, AttributeSet attr) throws BadLocationException{
+				// remove non-digits
+				fb.insertString( off, str.replaceAll( "\\D++", "" ), attr );
+			}
+
 			@Override
-			public void replace( FilterBypass fb, int off, int len, String str, AttributeSet attr ) throws BadLocationException {
-			    // remove non-digits
-			    fb.replace(off, len, str.replaceAll("\\D++", ""), attr);
+			public void replace(FilterBypass fb, int off, int len, String str, AttributeSet attr) throws BadLocationException{
+				// remove non-digits
+				fb.replace( off, len, str.replaceAll( "\\D++", "" ), attr );
 			}
 		};
-		
+
 		JTextField txtManaColorLess = new JTextField( "0" );
-		((AbstractDocument)txtManaColorLess.getDocument()).setDocumentFilter( docFilter ); 
-		
+		((AbstractDocument) txtManaColorLess.getDocument()).setDocumentFilter( docFilter );
+
 		JTextField txtManaRed = new JTextField( "0" );
-		((AbstractDocument)txtManaRed.getDocument()).setDocumentFilter( docFilter );
-		
+		((AbstractDocument) txtManaRed.getDocument()).setDocumentFilter( docFilter );
+
 		JTextField txtManaBlack = new JTextField( "0" );
-		((AbstractDocument)txtManaBlack.getDocument()).setDocumentFilter( docFilter );
-		
+		((AbstractDocument) txtManaBlack.getDocument()).setDocumentFilter( docFilter );
+
 		JTextField txtManaGreen = new JTextField( "0" );
-		((AbstractDocument)txtManaGreen.getDocument()).setDocumentFilter( docFilter );
-		
+		((AbstractDocument) txtManaGreen.getDocument()).setDocumentFilter( docFilter );
+
 		JTextField txtManaWhite = new JTextField( "0" );
-		((AbstractDocument)txtManaWhite.getDocument()).setDocumentFilter( docFilter );
-		
+		((AbstractDocument) txtManaWhite.getDocument()).setDocumentFilter( docFilter );
+
 		JTextField txtManaBlue = new JTextField( "0" );
-		((AbstractDocument)txtManaBlue.getDocument()).setDocumentFilter( docFilter );
+		((AbstractDocument) txtManaBlue.getDocument()).setDocumentFilter( docFilter );
 
 		JCheckBox chbTap = new JCheckBox( "TAP" );
 		JCheckBox chbX = new JCheckBox( "X" );
-		
+
 		JComponent[] input;
-		if( isForCardCost ){
-			input = new JComponent[]{ new JLabel("Color Less:"), txtManaColorLess, new JLabel("Red:"), txtManaRed, 
-	                  new JLabel("Black:"), txtManaBlack, new JLabel("Green:"), txtManaGreen, 
-					  new JLabel("White:"), txtManaWhite, new JLabel("Blue:"), txtManaBlue, chbX };
-		}else{
-			input = new JComponent[]{ new JLabel("Color Less:"), txtManaColorLess, new JLabel("Red:"), txtManaRed, 
-	                  new JLabel("Black:"), txtManaBlack, new JLabel("Green:"), txtManaGreen, 
-					  new JLabel("White:"), txtManaWhite, new JLabel("Blue:"), txtManaBlue, chbTap, chbX };
+		if(isForCardCost) {
+			input = new JComponent[] { new JLabel( "Color Less:" ), txtManaColorLess, new JLabel( "Red:" ), txtManaRed, new JLabel( "Black:" ),
+					txtManaBlack, new JLabel( "Green:" ), txtManaGreen, new JLabel( "White:" ), txtManaWhite, new JLabel( "Blue:" ), txtManaBlue,
+					chbX };
 		}
-		
-		JOptionPane.showMessageDialog( c, input, "Insert Mana Cost", JOptionPane.INFORMATION_MESSAGE );
-		
+		else {
+			input = new JComponent[] { new JLabel( "Color Less:" ), txtManaColorLess, new JLabel( "Red:" ), txtManaRed, new JLabel( "Black:" ),
+					txtManaBlack, new JLabel( "Green:" ), txtManaGreen, new JLabel( "White:" ), txtManaWhite, new JLabel( "Blue:" ), txtManaBlue,
+					chbTap, chbX };
+		}
+
+		JOptionPane.showMessageDialog( parent, input, "Insert Mana Cost", JOptionPane.INFORMATION_MESSAGE );
+
 		Integer manaColorLess = Integer.parseInt( txtManaColorLess.getText() );
 		Integer manaRed = Integer.parseInt( txtManaRed.getText() );
 		Integer manaBlack = Integer.parseInt( txtManaBlack.getText() );
 		Integer manaGreen = Integer.parseInt( txtManaGreen.getText() );
 		Integer manaWhite = Integer.parseInt( txtManaWhite.getText() );
 		Integer manaBlue = Integer.parseInt( txtManaBlue.getText() );
-		
+
 		Map.Entry<BasicColors, Integer> cl = new AbstractMap.SimpleEntry<BasicColors, Integer>( BasicColors.COLOR_LESS, manaColorLess );
 		Map.Entry<BasicColors, Integer> red = new AbstractMap.SimpleEntry<BasicColors, Integer>( BasicColors.RED, manaRed );
 		Map.Entry<BasicColors, Integer> bck = new AbstractMap.SimpleEntry<BasicColors, Integer>( BasicColors.BLACK, manaBlack );
 		Map.Entry<BasicColors, Integer> green = new AbstractMap.SimpleEntry<BasicColors, Integer>( BasicColors.GREEN, manaGreen );
 		Map.Entry<BasicColors, Integer> white = new AbstractMap.SimpleEntry<BasicColors, Integer>( BasicColors.WHITE, manaWhite );
 		Map.Entry<BasicColors, Integer> blue = new AbstractMap.SimpleEntry<BasicColors, Integer>( BasicColors.BLUE, manaBlue );
-		
+
 		Map.Entry<BasicColors, Integer> x = null;
-		if( chbX.isSelected() )
+		if(chbX.isSelected())
 			x = new AbstractMap.SimpleEntry<BasicColors, Integer>( BasicColors.COLOR_LESS, -1 );
-		
-		if( isForCardCost ){
-			if( chbX.isSelected() )
+
+		if(isForCardCost) {
+			if(chbX.isSelected())
 				return new ManaCost( cl, red, bck, green, white, blue, x );
-			else
-				return new ManaCost( cl, red, bck, green, white, blue );
-		}else{
+			else return new ManaCost( cl, red, bck, green, white, blue );
+		}
+		else {
 			Map.Entry<BasicColors, Integer> tap = null;
 
-			if( chbTap.isSelected() )
+			if(chbTap.isSelected())
 				tap = new AbstractMap.SimpleEntry<BasicColors, Integer>( null, -1 );
-				
-			if( chbTap.isSelected() && chbX.isSelected() )
+
+			if(chbTap.isSelected() && chbX.isSelected())
 				return new ManaCost( cl, red, bck, green, white, blue, tap, x );
-			else if( chbTap.isSelected() )
+			else if(chbTap.isSelected())
 				return new ManaCost( cl, red, bck, green, white, blue, tap );
-			else if( chbX.isSelected() )
+			else if(chbX.isSelected())
 				return new ManaCost( cl, red, bck, green, white, blue, x );
 			else return new ManaCost( cl, red, bck, green, white, blue );
 		}
 	}
 }
-

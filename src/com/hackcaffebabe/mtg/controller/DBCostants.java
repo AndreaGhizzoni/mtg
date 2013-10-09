@@ -17,12 +17,33 @@ public class DBCostants
 	public static final boolean DB_LOG_ON_FILE = false;
 	public static final String LOG_PATH = "data/log";
 
+	/** JSON tag */
+	public static final String JSON_TAG_NAME = "type";
+	public static final String JSON_TAG_TYPE = "name";
+	public static final String JSON_TAG_CARD_COLOR = "card_color";
+	public static final String JSON_TAG_RARITY = "rarity";
+	public static final String JSON_TAG_SERIES = "series";
+	public static final String JSON_TAG_SUB_TYPE = "sub_type";
+	public static final String JSON_TAG_IS_ARTIFACT = "is_artifact";
+	public static final String JSON_TAG_IS_LEGENDARY = "is_legendary";
+	public static final String JSON_TAG_PRIMARY_EFFECT = "primary_effect";
+	public static final String JSON_TAG_EFFECTS = "effects";
+	public static final String JSON_TAG_ABILITIES = "abilitis";
+	public static final String JSON_TAG_MANA_COST = "mana_cost";
+	public static final String JSON_TAG_STRENGTH = "strength";
+	public static final String JSON_TAG_LIFE = "life";
+	public static final String JSON_TAG_PLANES_ABILITY = "planes_ability";
+	public static final String JSON_TAG_DESCRIPTION = "description";
+	public static final String JSON_TAG_COLORS = "colors";
+	public static final String JSON_TAG_TEXT = "text";
+	public static final String JSON_TAG_COST = "cost";
+	public static final String JSON_TAG_POWER = "power";
+	public static final String JSON_TAG_TOUGHNESS = "toughness";
+
 //===========================================================================================
 // COMMON METHODS
 //===========================================================================================
 	/**
-	 * TODO remove this when completely switch on JSON.
-	 * 
 	 * This method returns the name of stored file of {@link MTGCard} in format name_series.
 	 * @param c {@link MTGCard}
 	 * @return {@link String} in format name_series.
@@ -41,7 +62,7 @@ public class DBCostants
 
 		return r.toString();
 	}
-	
+
 	/**
 	 * This method returns the name of stored file of {@link MTGCard} in format name_series.json
 	 * @param c {@link MTGCard}

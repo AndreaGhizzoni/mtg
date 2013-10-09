@@ -1,18 +1,23 @@
 package com.hackcaffebabe.mtg.gui.panel.insertcard;
 
+import com.hackcaffebabe.mtg.model.card.Strength;
+import net.miginfocom.swing.MigLayout;
 import java.awt.Component;
+import javax.swing.text.AttributeSet;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
-import com.hackcaffebabe.mtg.model.card.Strength;
-import net.miginfocom.swing.MigLayout;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
 import javax.swing.SwingConstants;
 
 /**
  * Panel to get the MTG Card creature info.
  *  
- * TODO find a regex that allows the digits and "X", "x", "*" 
+ * TODO when is finished add a tool trip that alerts the user that strength like *//*+X 
+ * can't be done but he must specify it on primary effect.
  *  
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
@@ -37,29 +42,26 @@ public class CreatureInfo extends JPanel
 		add( new JLabel("Power:"), "cell 0 0,alignx left");
 		add( new JLabel("Toughness:"), "cell 2 0,alignx left");
 		
-//		DocumentFilter docFilter = new DocumentFilter(){
-//			@Override
-//			public void insertString( FilterBypass fb, int off, String str, AttributeSet attr ) throws BadLocationException {
-//			    // remove non-digits
-//			    fb.insertString(off, str.replaceAll("\\D++", ""), attr);
-//			    
-//			} 
-//			@Override
-//			public void replace( FilterBypass fb, int off, int len, String str, AttributeSet attr ) throws BadLocationException {
-//			    // remove non-digits
-//			    fb.replace(off, len, str.replaceAll("\\D++", ""), attr);
-//			}
-//		};
+		DocumentFilter docFilter = new DocumentFilter(){
+			@Override //TODO find a regular expression to avoid "***" or "XXXX" or "xxxx"
+			public void insertString( FilterBypass fb, int off, String str, AttributeSet attr ) throws BadLocationException {
+				fb.insertString(off, str.replaceAll("[^0-9 X x *]", ""), attr);
+			} 
+			@Override
+			public void replace( FilterBypass fb, int off, int len, String str, AttributeSet attr ) throws BadLocationException {
+			    fb.replace(off, len, str.replaceAll("[^0-9 X x *]",""), attr);
+			}
+		};
 		
 		this.txtPower = new JTextField();
 		this.txtPower.setHorizontalAlignment(SwingConstants.CENTER);
-//		((AbstractDocument)this.txtPower.getDocument()).setDocumentFilter( docFilter );
+		((AbstractDocument)this.txtPower.getDocument()).setDocumentFilter( docFilter );
 		add( this.txtPower, "cell 1 0,growx");
 		
 		
 		this.txtToughness = new JTextField();
 		this.txtToughness.setHorizontalAlignment(SwingConstants.CENTER);
-//		((AbstractDocument)this.txtToughness.getDocument()).setDocumentFilter( docFilter );
+		((AbstractDocument)this.txtToughness.getDocument()).setDocumentFilter( docFilter );
 		add( this.txtToughness, "cell 3 0,growx");
 	
 	}

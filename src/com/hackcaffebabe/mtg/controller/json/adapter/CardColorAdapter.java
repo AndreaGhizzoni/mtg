@@ -1,5 +1,6 @@
 package com.hackcaffebabe.mtg.controller.json.adapter;
 
+import static com.hackcaffebabe.mtg.controller.DBCostants.*;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import com.google.gson.JsonArray;
@@ -16,8 +17,7 @@ import com.hackcaffebabe.mtg.model.color.CardColor;
 import com.hackcaffebabe.mtg.model.color.TypeColor;
 
 /**
- * TODO add doc
- *  
+ * This is the JSON adapter for class CardColor 
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
  */
@@ -29,8 +29,8 @@ public class CardColorAdapter implements JsonSerializer<CardColor>, JsonDeserial
 		JsonArray colors = new JsonArray();
 		for( BasicColors i : arg0.getBasicColors() )
 			colors.add( new JsonPrimitive( i == null ?"null":i.toString() ) );
-		result.add( "colors", colors );
-		result.add( "type", new JsonPrimitive(arg0.getType().toString()) );
+		result.add( JSON_TAG_COLORS, colors );
+		result.add( JSON_TAG_TYPE, new JsonPrimitive(arg0.getType().toString()) );
 		return result;
 	}
 	
@@ -40,12 +40,12 @@ public class CardColorAdapter implements JsonSerializer<CardColor>, JsonDeserial
 		CardColor result = null;
 		
 		JsonObject cardColorAdJsonObject = arg0.getAsJsonObject();
-		JsonArray colors = cardColorAdJsonObject.get( "colors" ).getAsJsonArray();
+		JsonArray colors = cardColorAdJsonObject.get( JSON_TAG_COLORS ).getAsJsonArray();
 		ArrayList<BasicColors> list = new ArrayList<>();
 		for( JsonElement i : colors )
 			list.add( BasicColors.valueOf(i.getAsString()) );
 		
-		TypeColor type = TypeColor.valueOf( cardColorAdJsonObject.get("type").getAsString() );
+		TypeColor type = TypeColor.valueOf( cardColorAdJsonObject.get(JSON_TAG_TYPE).getAsString() );
 		switch(type){
 			case COLOR_LESS:{
 				result = new CardColor();

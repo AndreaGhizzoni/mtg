@@ -159,8 +159,6 @@ public class _MTGProperties extends JPanel
 // SETTER
 //===========================================================================================
 	/**
-	 * TODO first version. MAKE THIS BETTER!
-	 * 
 	 * Set the {@link MTGCard} to view.
 	 * @param c {@link MTGCard} to view
 	 * @throws IllegalArgumentException if argument given is null.

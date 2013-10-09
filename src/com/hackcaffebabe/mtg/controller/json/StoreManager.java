@@ -1,16 +1,13 @@
 package com.hackcaffebabe.mtg.controller.json;
 
 import static com.hackcaffebabe.mtg.controller.DBCostants.*;
+import it.hackcaffebabe.ioutil.file.PathUtil;
 import it.hackcaffebabe.logger.*;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.hackcaffebabe.mtg.controller.Criteria;
@@ -26,7 +23,6 @@ import com.hackcaffebabe.mtg.model.color.CardColor;
 /**
  * TODO add doc
  * TODO maybe parameterize all JSON key
- * TODO try to do an adapter for the entire class MTGCard.  
  *  
  * http://stackoverflow.com/questions/15731215/get-key-names-from-json-object-using-gson
  * http://www.mkyong.com/java/gson-streaming-to-read-and-write-json/
@@ -92,10 +88,7 @@ public class StoreManager
 		g = b.create();	
 	}
 	
-	/** 
-	 * Load existing JSON file 
-	 * @throws IOException 
-	 */
+	/* Load existing JSON file */
 	private void load() throws IOException{
 		for(File f: new File(JSON_PATH).listFiles() ){
 			FileReader br = new FileReader(f);
@@ -128,6 +121,7 @@ public class StoreManager
 	}
 	
 	/**
+	 * TODO maybe return a List ?
 	 * This method search a card with some {@link Criteria}.
 	 * @param c {@link Criteria} to search the card.
 	 * @return {@link HashSet} of {@link MTGCard}
@@ -202,7 +196,6 @@ public class StoreManager
 	}
 	
 	/**
-	 * TODO maybe use the method on IOUtil ?
 	 * This method creates a backup file in .zip format of all stored card.
 	 * @param destinationFile {@link File} the file represents .zip.
 	 */
@@ -216,23 +209,26 @@ public class StoreManager
 				log.write( Tag.ERRORS, "Error on delete exists backup." );
 			}
 			
-			ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(destinationFile));
-			log.write( Tag.DEBUG, "Backup creation initialize." );
-			for(File f : new File( STORE_PATH ).listFiles()){
-				zos.putNextEntry( new ZipEntry(f.getName()) );
-				
-				FileInputStream in = new FileInputStream(f);
-				byte[] buffer = new byte[1024];
-				int len;
-	    		while ((len = in.read(buffer)) > 0) {
-	    			zos.write(buffer, 0, len);
-	    		}
-	    		in.close();
-	    		zos.closeEntry();
-			}
-			log.write( Tag.DEBUG, "Files loaded on backup completely." );
-			zos.close();
-			log.write( Tag.DEBUG, "Backup closed correctly." );
+//			ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(destinationFile));
+//			log.write( Tag.DEBUG, "Backup creation initialize." );
+//			for(File f : new File( STORE_PATH ).listFiles()){
+//				zos.putNextEntry( new ZipEntry(f.getName()) );
+//				
+//				FileInputStream in = new FileInputStream(f);
+//				byte[] buffer = new byte[1024];
+//				int len;
+//	    		while ((len = in.read(buffer)) > 0) {
+//	    			zos.write(buffer, 0, len);
+//	    		}
+//	    		in.close();
+//	    		zos.closeEntry();
+//			}
+//			log.write( Tag.DEBUG, "Files loaded on backup completely." );
+//			zos.close();
+//			log.write( Tag.DEBUG, "Backup closed correctly." );
+			
+			PathUtil.makeZip( destinationFile, new File( STORE_PATH ).listFiles() );
+			log.write( Tag.DEBUG, "Backup closed and create correctly." );
 		}
 		catch( IOException e ) {
 			log.write( Tag.ERRORS, e.getMessage() );
