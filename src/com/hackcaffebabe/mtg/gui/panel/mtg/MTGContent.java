@@ -8,7 +8,6 @@ import it.hackcaffebabe.logger.Logger;
 import it.hackcaffebabe.logger.Tag;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -25,7 +24,6 @@ import net.miginfocom.swing.MigLayout;
 import com.hackcaffebabe.mtg.gui.frame.InsertCard;
 import com.hackcaffebabe.mtg.gui.frame.MTG;
 import com.hackcaffebabe.mtg.model.MTGCard;
-import com.hackcaffebabe.mtg.controller.DBCostants;
 import com.hackcaffebabe.mtg.controller.json.StoreManager;
 
 
@@ -90,12 +88,6 @@ public class MTGContent extends JPanel
 		this.pnlSearch.add( this.txtSearch, "cell 0 0,growx" );
 
 		this.btnAdvanceSearch = new JButton( "Advance Search" );
-		this.btnAdvanceSearch.addActionListener( new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e){
-				StoreManager.getInstance().createBackup( new File( DBCostants.BACKUP_PATH ) );
-			}
-		} );
 		this.pnlSearch.add( this.btnAdvanceSearch, "cell 1 0,growx" );
 
 		// MTG list panel

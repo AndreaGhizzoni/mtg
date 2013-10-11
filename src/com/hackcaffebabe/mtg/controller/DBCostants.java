@@ -1,5 +1,6 @@
 package com.hackcaffebabe.mtg.controller;
 
+import it.hackcaffebabe.ioutil.file.PathUtil;
 import com.hackcaffebabe.mtg.model.MTGCard;
 
 
@@ -11,11 +12,11 @@ import com.hackcaffebabe.mtg.model.MTGCard;
 public class DBCostants
 {
 	/** The storing data Path */
-	public static final String JSON_PATH = "data/mtg";
-	public static final String BACKUP_PATH = "data/bck.zip";
+	public static final String JSON_PATH = "data"+PathUtil.FILE_SEPARATOR+"mtg";
+	public static final String BACKUP_PATH = "data"+PathUtil.FILE_SEPARATOR+"bck.zip";
 	/** Flag for logging on file */
 	public static final boolean DB_LOG_ON_FILE = false;
-	public static final String LOG_PATH = "data/log";
+	public static final String LOG_PATH = "data"+PathUtil.FILE_SEPARATOR+"log";
 
 	/** JSON tag */
 	public static final String JSON_TAG_NAME = "name";
