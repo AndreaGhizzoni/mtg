@@ -22,10 +22,11 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableRowSorter;
 import net.miginfocom.swing.MigLayout;
-import com.hackcaffebabe.mtg.controller.ser.StoreManager;
 import com.hackcaffebabe.mtg.gui.frame.InsertCard;
 import com.hackcaffebabe.mtg.gui.frame.MTG;
 import com.hackcaffebabe.mtg.model.MTGCard;
+import com.hackcaffebabe.mtg.controller.DBCostants;
+import com.hackcaffebabe.mtg.controller.json.StoreManager;
 
 
 /**
@@ -92,7 +93,7 @@ public class MTGContent extends JPanel
 		this.btnAdvanceSearch.addActionListener( new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e){
-				StoreManager.getInstance().createBackup( new File( "data/bck.zip" ) );
+				StoreManager.getInstance().createBackup( new File( DBCostants.BACKUP_PATH ) );
 			}
 		} );
 		this.pnlSearch.add( this.btnAdvanceSearch, "cell 1 0,growx" );
@@ -102,7 +103,7 @@ public class MTGContent extends JPanel
 		this.pnlMTGList.setLayout( new MigLayout( "", "[grow]", "[grow]" ) );
 		add( this.pnlMTGList, "cell 0 0 1 1,grow" );
 
-		this.tableMTG = new JXTable( new JXObjectModel<MTGCard>() );
+		this.tableMTG = new JXTable( new JXObjectModel<>() );
 		this.tableMTG.setFillsViewportHeight( true );
 		this.tableMTG.setShowVerticalLines( false );
 		this.tableMTG.getSelectionModel().setSelectionMode( ListSelectionModel.SINGLE_SELECTION );
@@ -138,27 +139,25 @@ public class MTGContent extends JPanel
 	 */
 	public void refreshMTGTable(){
 		SwingUtilities.invokeLater( new Runnable(){
-			@Override
 			public void run(){
+		
 				log.write( Tag.DEBUG, "Refreshing mtg card list" );
 				JXObjectModel<MTGCard> model = new JXObjectModel<MTGCard>();
-				for(MTGCard c: StoreManager.getInstance().getAllCards())
+				for( MTGCard c: StoreManager.getInstance().getAllCards() ){
 					model.addObject( c );
-				tableMTG.setModel( model );
+				}
+				tableMTG.setModel(model);
 
 				//update sorter and text search
-				tableSorter = new TableRowSorter<JXObjectModel<MTGCard>>( model );
+				tableSorter = new TableRowSorter<JXObjectModel<MTGCard>>(model);
 				tableMTG.setRowSorter( tableSorter );
 				tableMTG.setRowSorter( txtSearch );
 				tableAdjuster.adjustColumns();
+				
 			}
 		} );
 	}
-
-//===========================================================================================
-// GETTER
-//===========================================================================================
-
+	
 //===========================================================================================
 // INNER CLASS
 //===========================================================================================

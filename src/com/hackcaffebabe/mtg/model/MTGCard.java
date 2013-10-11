@@ -182,27 +182,27 @@ public abstract class MTGCard extends DisplayableObject implements Serializable
 	/**
 	 * @return {@link String} the name of MTG Card.
 	 */
-	public final String getName(){ return name; }
+	public String getName(){ return name; }
 
 	/**
 	 * @return {@link CardColor} the color of MTG Card.
 	 */
-	public final CardColor getCardColor(){ return color; }
+	public CardColor getCardColor(){ return color; }
 
 	/**
 	 * @return {@link Rarity} the rarity of MTG Card.
 	 */
-	public final Rarity getRarity(){ return rarity; }
+	public Rarity getRarity(){ return rarity; }
 	
 	/**
 	 * @return {@link String} the series of MTG card.
 	 */
-	public final String getSeries(){ return this.series; }
+	public String getSeries(){ return this.series; }
 	
 	/**
 	 * @return {@link String} the sub type of MTG Card.
 	 */
-	public final String getSubType(){ return this.subType; }
+	public String getSubType(){ return this.subType; }
 	
 	/**
 	 * @return {@link Set} the set of ability.
@@ -212,12 +212,12 @@ public abstract class MTGCard extends DisplayableObject implements Serializable
 	/**
 	 * @return {@link Set} the set of effects.
 	 */
-	public final Set<Effect> getEffects(){ return this.effects; }
+	public Set<Effect> getEffects(){ return this.effects; }
 	
 	/**
 	 * @return {@link String} the primary effect of MTG Card. This is always null on {@link Planeswalker} object.
 	 */
-	public final String getPrimaryEffect(){ return this.primaryEffect; }
+	public String getPrimaryEffect(){ return this.primaryEffect; }
 	
 	/**
 	 * Check if the creature is legendary.

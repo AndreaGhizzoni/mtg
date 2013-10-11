@@ -61,7 +61,7 @@ public class Artifact extends MTGCard implements Serializable
 	 * Returns the mana cost of Artifact.
 	 * @return {@link ManaCost} the mana cost of Artifact.
 	 */
-	public final ManaCost getManaCost(){ return this.cost; }
+	public ManaCost getManaCost(){ return this.cost; }
 	
 	@Override
 	public boolean isArtifact(){ return true; }
@@ -99,7 +99,7 @@ public class Artifact extends MTGCard implements Serializable
 		String color = String.format( "%s %s", getCardColor(), getCardColor().getType() );
 		String type = "Artifact";
 		if(isLegendary()) type+=" Leg.";
-		return new Object[]{getName(), color, type, getSubType(), getRarity()};
+		return new Object[]{getName(), color, type, getSubType()==null?"":getSubType(), getRarity().toString()};
 	}
 
 	@Override

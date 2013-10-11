@@ -1,4 +1,4 @@
-package com.hackcaffebabe.mtg.controller.ser;
+package com.hackcaffebabe.mtg.trash.ser;
 
 import static com.hackcaffebabe.mtg.controller.DBCostants.*;
 import it.hackcaffebabe.ioutil.file.IOSerializable;
@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
-import com.hackcaffebabe.mtg.controller.Criteria;
+import com.hackcaffebabe.mtg.controller.json.Criteria;
 import com.hackcaffebabe.mtg.model.*;
 
 
@@ -21,22 +21,22 @@ import com.hackcaffebabe.mtg.model.*;
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.5
  */
-public class StoreManager
+public class _StoreManager
 {
 	private HashSet<MTGCard> mtgSet = new HashSet<>();
-	private static StoreManager manager;
+	private static _StoreManager manager;
 
 	private Logger log = Logger.getInstance();
 
 	/**
 	 * Returns the instance of Store Manager.<br>
 	 * If there are some problems a log will be write on log file.
-	 * @return {@link StoreManager} or null if is not open correctly.
+	 * @return {@link _StoreManager} or null if is not open correctly.
 	 */
-	public static StoreManager getInstance(){
+	public static _StoreManager getInstance(){
 		try {
 			if(manager == null)
-				manager = new StoreManager();
+				manager = new _StoreManager();
 			return manager;
 		}
 		catch( Exception e ) {
@@ -45,7 +45,7 @@ public class StoreManager
 		}
 	}
 
-	private StoreManager() throws IOException, Exception{
+	private _StoreManager() throws IOException, Exception{
 		this.init();
 	}
 
@@ -80,7 +80,7 @@ public class StoreManager
 		if(mtgSet.contains( c ))
 			return false;
 
-		IOSerializable.save( c, new File( getStoreFileName( c ) ) );
+		IOSerializable.save( c, new File( /*getStoreFileName( c )*/"asd" ) );
 		mtgSet.add( c );
 
 		log.write( Tag.INFO, String.format( "MTG card %s saved correctly.", c.getName() ) );

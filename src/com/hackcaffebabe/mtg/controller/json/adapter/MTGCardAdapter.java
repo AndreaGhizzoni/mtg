@@ -82,11 +82,18 @@ public class MTGCardAdapter implements JsonSerializer<MTGCard>, JsonDeserializer
 	@Override
 	public MTGCard deserialize(JsonElement json, Type arg1, JsonDeserializationContext context) throws JsonParseException{
 		String type = json.getAsJsonObject().get( JSON_TAG_TYPE ).getAsString();
-		json.getAsJsonObject().remove( "type" );// remove this otherwise class dosn't full fit the class.
+		json.getAsJsonObject().remove( JSON_TAG_TYPE );// remove this otherwise class dosn't full fit the class.
 		try {
 			MTGCard c = context.deserialize(json, Class.forName("com.hackcaffebabe.mtg.model."+type));
 			CardColor cc = context.deserialize( json.getAsJsonObject().get(JSON_TAG_CARD_COLOR), Class.forName("com.hackcaffebabe.mtg.model.color.CardColor") );
 			c.setCardColor( cc );
+			c.setColumnNames( new String[]{"Name", "Card Color", "Type", "Sub Type", "Rarity"} );
+			String subType = json.getAsJsonObject().get( JSON_TAG_SUB_TYPE ).getAsString();
+			if( subType != null )
+				c.setSubType( subType );
+			String pe = json.getAsJsonObject().get( JSON_TAG_PRIMARY_EFFECT ).getAsString();
+			if( c != null )
+				c.setPrimaryEffect( pe );
 			if(!type.equals("Land") ){
 				ManaCost cos = context.deserialize( json.getAsJsonObject().get(JSON_TAG_MANA_COST), Class.forName("com.hackcaffebabe.mtg.model.card.ManaCost") );
 				if(c instanceof Creature){

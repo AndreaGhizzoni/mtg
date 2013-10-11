@@ -91,7 +91,7 @@ public class Land extends MTGCard implements Serializable
 		String color = String.format( "%s %s", getCardColor(), getCardColor().getType() );
 		String type ="Land";
 		if(isLegendary()) type+=" Leg.";
-		return new Object[]{getName(), color, type, getSubType(), getRarity()};
+		return new Object[]{getName(), color, type, getSubType()==null?"":getSubType(), getRarity().toString()};
 	}
 	
 	@Override

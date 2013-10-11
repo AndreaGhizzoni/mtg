@@ -1,4 +1,4 @@
-package com.hackcaffebabe.mtg.controller;
+package com.hackcaffebabe.mtg.controller.json;
 
 import java.util.HashMap;
 import java.util.HashSet;

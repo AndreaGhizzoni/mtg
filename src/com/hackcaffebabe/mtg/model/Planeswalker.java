@@ -101,7 +101,7 @@ public class Planeswalker extends MTGCard implements Serializable
 	 * Returns the mana cost of Planes walker.
 	 * @return {@link ManaCost} the mana cost of Planes walker.
 	 */
-	public final ManaCost getManaCost(){ return this.cost; }
+	public ManaCost getManaCost(){ return this.cost; }
 
 	/**
 	 * Returns a {@link Set} of planes walker ability.
@@ -113,7 +113,7 @@ public class Planeswalker extends MTGCard implements Serializable
 	 * Returns the life of planes walker.
 	 * @return {@link Integer} the life of planes walker.
 	 */
-	public final int getLife(){ return this.life; }
+	public int getLife(){ return this.life; }
 	
 	@Override
 	public boolean isArtifact(){ return false; }
@@ -167,7 +167,7 @@ public class Planeswalker extends MTGCard implements Serializable
 		String color = String.format( "%s %s", getCardColor(), getCardColor().getType() );
 		String type ="Planeswalker";
 		if(isLegendary()) type+=" Leg.";
-		return new Object[]{getName(), color, type, getSubType(), getRarity()};
+		return new Object[]{getName(), color, type, getSubType()==null?"":getSubType(), getRarity().toString()};
 	}
 	
 	@Override

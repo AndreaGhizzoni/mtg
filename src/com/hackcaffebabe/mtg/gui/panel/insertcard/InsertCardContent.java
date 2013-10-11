@@ -20,7 +20,7 @@ import it.hackcaffebabe.jx.table.JXTableColumnAdjuster;
 import it.hackcaffebabe.jx.table.model.JXObjectModel;
 import it.hackcaffebabe.logger.Logger;
 import it.hackcaffebabe.logger.Tag;
-import com.hackcaffebabe.mtg.controller.ser.StoreManager;
+import com.hackcaffebabe.mtg.controller.json.StoreManager;
 import com.hackcaffebabe.mtg.gui.panel.insertcard.listener.*;
 import com.hackcaffebabe.mtg.gui.panel.mtg.MTGContent;
 import com.hackcaffebabe.mtg.model.*;

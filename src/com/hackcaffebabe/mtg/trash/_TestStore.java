@@ -3,7 +3,6 @@ package com.hackcaffebabe.mtg.trash;
 import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.Map;
-import com.hackcaffebabe.mtg.controller.ser.StoreManager;
 import com.hackcaffebabe.mtg.model.Creature;
 import com.hackcaffebabe.mtg.model.card.Ability;
 import com.hackcaffebabe.mtg.model.card.AbilityFactory;
@@ -12,6 +11,7 @@ import com.hackcaffebabe.mtg.model.card.Rarity;
 import com.hackcaffebabe.mtg.model.card.Strength;
 import com.hackcaffebabe.mtg.model.color.BasicColors;
 import com.hackcaffebabe.mtg.model.color.CardColor;
+import com.hackcaffebabe.mtg.trash.ser._StoreManager;
 import it.hackcaffebabe.logger.Logger;
 import it.hackcaffebabe.logger.Tag;
 
@@ -26,7 +26,7 @@ public class _TestStore
 	public static void main( String[] args ){
 		try{
 			initLogger();
-			StoreManager s=initDB();
+			_StoreManager s=initDB();
 			
 			//s.store( getCreature( "LOL", "2/2", "Goblin" ) );
 			System.out.println( s.getAllCards().toString() );
@@ -40,8 +40,8 @@ public class _TestStore
 	
 	private static void initLogger(){ Logger.getInstance(); }
 	
-	private static StoreManager initDB() throws Exception{
-		StoreManager d = StoreManager.getInstance();
+	private static _StoreManager initDB() throws Exception{
+		_StoreManager d = _StoreManager.getInstance();
 		if( d == null ) throw new Exception( "Error to open database" );
 		Logger.getInstance().write( Tag.INFO, "Database opened and initialized correctly" );
 		return d;

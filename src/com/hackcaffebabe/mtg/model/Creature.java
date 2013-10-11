@@ -76,13 +76,13 @@ public class Creature extends MTGCard implements Serializable
 	 * Returns the mana cost of creature.
 	 * @return {@link ManaCost} the mana cost of creature.
 	 */
-	public final ManaCost getManaCost(){ return this.cost; }
+	public ManaCost getManaCost(){ return this.cost; }
 	
 	/**
 	 * Returns the creature's strength.
 	 * @return {@link Strength} the creature's strength.
 	 */
-	public final Strength getStrength(){ return this.strength; }
+	public Strength getStrength(){ return this.strength; }
 	
 //===========================================================================================
 // OVERRIDE
@@ -125,7 +125,7 @@ public class Creature extends MTGCard implements Serializable
 		String type="Creature";
 		if(isArtifact()) type+=" Art.";
 		if(isLegendary()) type+=" Leg.";
-		return new Object[]{getName(), color, type, getSubType(), getRarity()};
+		return new Object[]{getName(), color, type, getSubType()==null?"":getSubType(), getRarity().toString()};
 	}
 	
 	@Override

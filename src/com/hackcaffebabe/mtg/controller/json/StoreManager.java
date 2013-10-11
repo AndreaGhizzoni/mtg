@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.HashSet;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.hackcaffebabe.mtg.controller.Criteria;
 import com.hackcaffebabe.mtg.controller.json.adapter.*;
 import com.hackcaffebabe.mtg.model.*;
 import com.hackcaffebabe.mtg.model.card.Ability;
@@ -61,7 +60,6 @@ public class StoreManager
 	private StoreManager() throws IOException{
 		this.init();
 		this.load();
-		log.write( Tag.INFO, "Store manager initialized correctly." );
 	}
 	
 //===========================================================================================
@@ -241,7 +239,7 @@ public class StoreManager
 	/**
 	 * @return {@link HashSet} of all saved card.
 	 */
-	public final HashSet<MTGCard> getAllCards(){
+	public HashSet<MTGCard> getAllCards(){
 		return this.mtgSet;
-	}
+	}	
 }

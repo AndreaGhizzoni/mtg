@@ -8,8 +8,8 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import com.hackcaffebabe.mtg.controller.DBCostants;
-import com.hackcaffebabe.mtg.controller.ser.StoreManager;
 import com.hackcaffebabe.mtg.gui.frame.*;
+import com.hackcaffebabe.mtg.controller.json.StoreManager;
 
 
 /**
@@ -52,7 +52,7 @@ public class LauncherMTG
 		StoreManager d = StoreManager.getInstance();
 		if(d == null)
 			throw new Exception( "Error to open database" );
-		Logger.getInstance().write( Tag.INFO, "Database opened and initialized correctly" );
+		Logger.getInstance().write( Tag.INFO, "Store manager initialized correctly." );
 	}
 
 	private static void initUIManager(){

@@ -59,7 +59,7 @@ public class Instant extends MTGCard implements Serializable
 	 * Returns the mana cost of Instant.
 	 * @return {@link ManaCost} the mana cost of Instant.
 	 */
-	public final ManaCost getManaCost(){ return this.cost; }
+	public ManaCost getManaCost(){ return this.cost; }
 	
 	@Override
 	public boolean isArtifact(){ return false; }
@@ -98,7 +98,7 @@ public class Instant extends MTGCard implements Serializable
 		String color = String.format( "%s %s", getCardColor(), getCardColor().getType() );
 		String type ="Instant";
 		if(isLegendary()) type+=" Leg.";
-		return new Object[]{getName(), color, type, getSubType(), getRarity()};
+		return new Object[]{getName(), color, type, getSubType()==null?"":getSubType(), getRarity().toString()};
 	}
 	
 	@Override

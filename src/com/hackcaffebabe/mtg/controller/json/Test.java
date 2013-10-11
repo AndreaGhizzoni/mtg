@@ -11,23 +11,10 @@ import com.hackcaffebabe.mtg.model.MTGCard;
 import com.hackcaffebabe.mtg.model.Planeswalker;
 import com.hackcaffebabe.mtg.model.Sorcery;
 
-import java.io.File;
-import it.hackcaffebabe.ioutil.file.IOSerializable;
-import it.hackcaffebabe.logger.Logger;
-import it.hackcaffebabe.logger.Tag;
-import com.hackcaffebabe.mtg.controller.DBCostants;
-import com.hackcaffebabe.mtg.model.MTGCard;
-
 public class Test
 {
 	public static void main(String...args){
 		try{
-//			for(File f: new File(DBCostants.STORE_PATH).listFiles()){
-//				Logger.getInstance().write( Tag.DEBUG, f.getName() );
-//				MTGCard c1 = IOSerializable.load( MTGCard.class, f );
-//				StoreManager.getInstance().store( c1 );
-//			}		
-			
 			for( MTGCard c : StoreManager.getInstance().getAllCards() ){
 				String log = "";
 				String eff = "";
@@ -61,9 +48,8 @@ public class Test
 					eff = ((Sorcery)c).getEffects().toString();
 					abb = ((Sorcery)c).getAbilities().toString();
 				}								
-				Logger.getInstance().write( Tag.DEBUG, log+" "+eff+" "+abb);			
+				Logger.getInstance().write( Tag.DEBUG, log+" "+eff+" "+abb);
 			}
-			
 		}catch(Exception e){
 			e.printStackTrace();
 		}

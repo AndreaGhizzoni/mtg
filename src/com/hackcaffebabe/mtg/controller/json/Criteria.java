@@ -1,4 +1,4 @@
-package com.hackcaffebabe.mtg.controller;
+package com.hackcaffebabe.mtg.controller.json;
 
 import com.hackcaffebabe.mtg.model.MTGCard;
 import com.hackcaffebabe.mtg.model.card.Rarity;

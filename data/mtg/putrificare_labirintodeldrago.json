@@ -1,0 +1,24 @@
+{
+  "type": "Instant",
+  "name": "Putrificare",
+  "card_color": {
+    "colors": [
+      "GREEN",
+      "BLACK"
+    ],
+    "type": "MULTI_COLOR"
+  },
+  "rarity": "NON_COMMON",
+  "series": "labirinto del drago",
+  "sub_type": "",
+  "is_artifact": false,
+  "is_legendary": false,
+  "primary_effect": "distruggi una creatura o un\u0027artefatto bersaglio",
+  "effects": [],
+  "abilitis": [],
+  "mana_cost": {
+    "COLOR_LESS": 1,
+    "GREEN": 1,
+    "BLACK": 1
+  }
+}
