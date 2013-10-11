@@ -1,6 +1,5 @@
 package com.hackcaffebabe.mtg.trash.ser;
 
-import static com.hackcaffebabe.mtg.controller.DBCostants.*;
 import it.hackcaffebabe.ioutil.file.IOSerializable;
 import it.hackcaffebabe.logger.Logger;
 import it.hackcaffebabe.logger.Tag;
@@ -54,7 +53,7 @@ public class _StoreManager
 //===========================================================================================
 	/** Initialize the directory and files */
 	private void init() throws IllegalArgumentException, ClassNotFoundException, IOException{
-		File store = new File( STORE_PATH );
+		File store = new File( "data/store" );
 
 		if(!store.exists())
 			store.mkdirs();
@@ -179,7 +178,7 @@ public class _StoreManager
 			
 			ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(destinationFile));
 			log.write( Tag.DEBUG, "Backup creation initialize." );
-			for(File f : new File( STORE_PATH ).listFiles()){
+			for(File f : new File( "data/store" ).listFiles()){
 				zos.putNextEntry( new ZipEntry(f.getName()) );
 				
 				FileInputStream in = new FileInputStream(f);

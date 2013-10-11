@@ -11,7 +11,6 @@ import com.hackcaffebabe.mtg.model.MTGCard;
 public class DBCostants
 {
 	/** The storing data Path */
-	public static final String STORE_PATH = "data/store";
 	public static final String JSON_PATH = "data/mtg";
 	public static final String BACKUP_PATH = "data/bck.zip";
 	/** Flag for logging on file */
@@ -44,26 +43,6 @@ public class DBCostants
 //===========================================================================================
 // COMMON METHODS
 //===========================================================================================
-//	/**
-//	 * This method returns the name of stored file of {@link MTGCard} in format name_series.
-//	 * @param c {@link MTGCard}
-//	 * @return {@link String} in format name_series.
-//	 */
-//	public static String getStoreFileName(MTGCard c){
-//		if(c == null)
-//			return "";
-//
-//		StringBuilder r = new StringBuilder();
-//		String name = c.getName().replaceAll( " ", "" ).toLowerCase();
-//		String series = c.getSeries().replaceAll( " ", "" ).toLowerCase();
-//		String name_series = String.format( "%s_%s", name, series );
-//		r.append( STORE_PATH );
-//		r.append( System.getProperties().getProperty( "file.separator" ) );
-//		r.append( name_series );
-//
-//		return r.toString();
-//	}
-
 	/**
 	 * This method returns the name of stored file of {@link MTGCard} in format name_series.json
 	 * @param c {@link MTGCard}

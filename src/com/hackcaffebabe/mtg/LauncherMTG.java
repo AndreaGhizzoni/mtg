@@ -34,7 +34,7 @@ public class LauncherMTG
 					String s = String.format( "%s\nLog is reported.", e.getMessage() );
 					Logger.getInstance().write( Tag.ERRORS, e.getMessage() );
 					JOptionPane.showMessageDialog( null, s, "Error", JOptionPane.ERROR_MESSAGE );
-					e.printStackTrace();
+					e.printStackTrace(Logger.getInstance().getPrintStream());
 				}
 			}
 		} );
@@ -46,6 +46,7 @@ public class LauncherMTG
 			Logger.getInstance().setPrintStream( new PrintStream( new File( DBCostants.LOG_PATH ) ) );
 			Logger.getInstance().disableTag( Tag.DEBUG );
 		}
+		Logger.getInstance().write( Tag.INFO, "Logger initialized correctly." );
 	}
 
 	private static void initDB() throws Exception{

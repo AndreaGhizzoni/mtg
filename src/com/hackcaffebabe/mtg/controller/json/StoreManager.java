@@ -225,7 +225,7 @@ public class StoreManager
 //			zos.close();
 //			log.write( Tag.DEBUG, "Backup closed correctly." );
 			
-			PathUtil.makeZip( destinationFile, new File( STORE_PATH ).listFiles() );
+			PathUtil.makeZip( destinationFile, new File( BACKUP_PATH ).listFiles() );
 			log.write( Tag.DEBUG, "Backup closed and create correctly." );
 		}
 		catch( IOException e ) {
