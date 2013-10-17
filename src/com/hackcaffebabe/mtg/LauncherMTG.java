@@ -14,9 +14,9 @@ import com.hackcaffebabe.mtg.controller.json.StoreManager;
 
 /**
  * Class to launch the program
- * 
+ *  
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
- *
+ * @version 1.0
  */
 public class LauncherMTG
 {

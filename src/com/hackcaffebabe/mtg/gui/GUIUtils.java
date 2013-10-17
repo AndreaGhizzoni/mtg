@@ -46,12 +46,12 @@ public class GUIUtils
 	public static final String VERSION = "0.1.5";
 
 	/** Title of main frame */
-	public static final String TITLE_MAIN_FRAME = "MTG Card Data! " + VERSION;
+	public static final String TITLE_MAIN_FRAME = "MTG Card Manager!";
 	/** Title of insert card frame */
-	public static final String TITLE_INSERT_CARD = "MTG Insert Card! " + VERSION;
+	public static final String TITLE_INSERT_CARD = "MTG Insert Card!";
 
 	/** Dimension of main frame */
-	public static final Dimension DIMENSION_MAIN_FRAME = new Dimension( 1150, 640 );
+	public static final Dimension DIMENSION_MAIN_FRAME = new Dimension( 1150, 655 );
 	/** Dimension of insert card frame */
 	public static final Dimension DIMENSION_INSERT_CARD = new Dimension( 660, 700 );
 
@@ -63,6 +63,9 @@ public class GUIUtils
 	public static final String AC_INSTANT = "instant";
 	public static final String AC_SORCERY = "sorcery";
 	public static final String AC_ENCHANTMENT = "enchantment";
+
+	/** Tool Tip */
+	public static final String TP_PANEL_CREATURE_INFO = "Creature strength like \"2/2\". Use * to indicate \"*/*\" or \"X/X\".";
 
 //===========================================================================================
 // COMMON METHODS

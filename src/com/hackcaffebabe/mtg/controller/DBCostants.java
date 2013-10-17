@@ -11,14 +11,14 @@ import com.hackcaffebabe.mtg.model.MTGCard;
  */
 public class DBCostants
 {
-	/** The storing data Path */
+	/* The storing data Path */
 	public static final String JSON_PATH = "data"+PathUtil.FILE_SEPARATOR+"mtg";
-	public static final String BACKUP_PATH = "data"+PathUtil.FILE_SEPARATOR+"bck.zip";
-	/** Flag for logging on file */
+	public static final String BACKUP_FILE_NAME = "bck.zip";// TODO maybe the name could be bck_<current_date_and_hours>.zip
+	/* Flag for logging on file */
 	public static final boolean DB_LOG_ON_FILE = false;
 	public static final String LOG_PATH = "data"+PathUtil.FILE_SEPARATOR+"log";
 
-	/** JSON tag */
+	/* JSON tag */
 	public static final String JSON_TAG_NAME = "name";
 	public static final String JSON_TAG_TYPE = "type";
 	public static final String JSON_TAG_CARD_COLOR = "card_color";

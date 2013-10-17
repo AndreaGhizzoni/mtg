@@ -22,7 +22,6 @@ import javax.swing.table.TableCellRenderer;
 import net.miginfocom.swing.MigLayout;
 import com.hackcaffebabe.mtg.model.*;
 import com.hackcaffebabe.mtg.model.card.*;
-import com.hackcaffebabe.mtg.model.color.CardColor;
 
 
 /**
@@ -214,8 +213,6 @@ public class MTGPropertiesV2 extends JPanel
 // SETTER
 //===========================================================================================
 	/**
-	 * TODO first version. MAKE THIS BETTER!
-	 * 
 	 * Set the {@link MTGCard} to view.
 	 * @param c {@link MTGCard} to view
 	 * @throws IllegalArgumentException if argument given is null.
@@ -226,7 +223,6 @@ public class MTGPropertiesV2 extends JPanel
 
 		this.clearAll();// reset the form from the previous MTG card view
 
-		String name = c.getName();
 		Strength creatureStrength = null;
 		Integer planeswalkerLife = -1;
 		ManaCost manaCost = null;
@@ -276,32 +272,32 @@ public class MTGPropertiesV2 extends JPanel
 			if(c.isLegendary())
 				type += " Legendary";
 		}
-		CardColor color = c.getCardColor();
-		String series = c.getSeries();
-		Rarity rarity = c.getRarity();
-		String subType = c.getSubType();
-		String primaryEffects = c.getPrimaryEffect();
 
-		this.txtName.setText( name );
+		
+		this.txtName.setText( c.getName() );
+		this.txtSubType.setText( c.getSubType() );
+		this.txtSeries.setText( c.getSeries() );
+		this.txtRarity.setText( c.getRarity().toString() );
+		this.txtCardColor.setText( String.format( "%s %s", c.getCardColor().toString(), c.getCardColor().getType() ) );
+		this.textPrimaryEffects.setText( c.getPrimaryEffect() );
+		this.txtType.setText( type );
 		if(manaCost == null)
 			this.txtManaCost.setEnabled( false );
-		else this.txtManaCost.setText( manaCost.toString() );
-		this.txtSeries.setText( series );
-		this.txtCardColor.setText( String.format( "%s %s", color.toString(), color.getType() ) );
-		this.txtRarity.setText( rarity.toString() );
-		this.txtType.setText( type );
-		this.txtSubType.setText( subType );
-		this.textPrimaryEffects.setText( primaryEffects );
+		else 
+			this.txtManaCost.setText( manaCost.toString() );
 		if(creatureStrength == null)
 			this.txtStrenght.setEnabled( false );
-		else this.txtStrenght.setText( creatureStrength.toString() );
+		else 
+			this.txtStrenght.setText( creatureStrength.toString() );
 		if(planeswalkerLife == -1)
 			this.txtPlaneswalkerLife.setEnabled( false );
-		else this.txtPlaneswalkerLife.setText( planeswalkerLife.toString() );
+		else 
+			this.txtPlaneswalkerLife.setText( planeswalkerLife.toString() );
 
 		if(type.equals( Planeswalker.class.getSimpleName() ))
 			populateTables( PlanesAbility.class, ((Planeswalker) c).getPlanesAbilities(), c.getEffects() );
-		else populateTables( Ability.class, c.getAbilities(), c.getEffects() );
+		else 
+			populateTables( Ability.class, c.getAbilities(), c.getEffects() );
 
 		this.btnAddAbility.setEnabled( true );
 		this.btnAddEffect.setEnabled( true );

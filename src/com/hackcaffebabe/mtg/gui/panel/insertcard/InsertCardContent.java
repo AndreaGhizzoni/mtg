@@ -135,8 +135,7 @@ public class InsertCardContent extends JPanel
 
 		// =========================== MTG PANEL ===========================
 		pnlMTG.setBorder( new TitledBorder( null, "Card Info", TitledBorder.LEADING, TitledBorder.TOP, null, null ) );
-		pnlMTG.setLayout( new MigLayout( "", "[grow][grow][grow][grow][grow][grow][100px:n,grow][29.00px:n]",
-				"[grow][][][][32!][32!][28!][][32!][32!][][grow][grow]" ) );
+		pnlMTG.setLayout( new MigLayout("", "[grow][grow][grow][grow][grow][grow][100px:n,grow][29.00px:n]", "[][][][][::100,grow][::100,grow][28!][][::100,grow][::100,grow][][][grow]") );
 
 		pnlMTG.add( this.pnlMTGBasicInfo, "cell 0 0 8 3,grow" );
 

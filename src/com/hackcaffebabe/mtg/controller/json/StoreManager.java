@@ -7,29 +7,21 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.hackcaffebabe.mtg.controller.json.adapter.*;
 import com.hackcaffebabe.mtg.model.*;
-import com.hackcaffebabe.mtg.model.card.Ability;
-import com.hackcaffebabe.mtg.model.card.Effect;
-import com.hackcaffebabe.mtg.model.card.ManaCost;
-import com.hackcaffebabe.mtg.model.card.PlanesAbility;
-import com.hackcaffebabe.mtg.model.card.Strength;
+import com.hackcaffebabe.mtg.model.card.*;
 import com.hackcaffebabe.mtg.model.color.CardColor;
 
 /**
- * TODO add doc
- * TODO maybe parameterize all JSON key
- *  
- * http://stackoverflow.com/questions/15731215/get-key-names-from-json-object-using-gson
- * http://www.mkyong.com/java/gson-streaming-to-read-and-write-json/
- * http://www.javacodegeeks.com/2012/04/json-with-gson-and-abstract-classes.html
- * http://examples.javacodegeeks.com/core-java/gson/stream/jsonwriter/gson-streaming-to-read-and-write-json-in-java-example/
+ * Class that provide to store all {@link MTGCard} on the disk in JSON format.
  *  
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
- * @version 1.0
+ * @version 2.0
  */
 public class StoreManager
 {
@@ -51,8 +43,7 @@ public class StoreManager
 			return manager;
 		}
 		catch( Exception e ) {
-			Logger.getInstance().write( Tag.ERRORS, e.getMessage() );
-			e.printStackTrace();
+			e.printStackTrace(Logger.getInstance().getPrintStream());
 			return null;
 		}
 	}
@@ -93,7 +84,23 @@ public class StoreManager
 			mtgSet.add( g.fromJson( br, MTGCard.class ) );
 			br.close();
 		}
-	}	
+	}
+	
+	/**
+	 * This method read a single file and cast it in {@link MTGCard}.
+	 * @param jsonMTGFile {@link File} a JSON file represents the {@link MTGCard}.
+	 * @return {@link MTGCard} or null if file is not a MTGCard.
+	 */
+	public MTGCard loadFile( File jsonMTGFile ){
+		try{ 
+			FileReader f = new FileReader( jsonMTGFile );
+			MTGCard toReturn = g.fromJson( f, MTGCard.class );
+			f.close();
+			return toReturn;
+		}catch(Exception e){
+			return null;
+		}
+	}
 	
 	/**
 	 * This method save the give {@link MTGCard} on disk.
@@ -119,14 +126,22 @@ public class StoreManager
 	}
 	
 	/**
-	 * TODO maybe return a List ?
+	 * This method read all files into data/mtg.
+	 * @throws IOException if read all files fail.
+	 */
+	public void refresh() throws IOException{
+		this.mtgSet.clear();
+		this.load();
+	}
+	
+	/**
 	 * This method search a card with some {@link Criteria}.
 	 * @param c {@link Criteria} to search the card.
-	 * @return {@link HashSet} of {@link MTGCard}
+	 * @return {@link List} of {@link MTGCard}
 	 */
-	public HashSet<MTGCard> searchBy(Criteria c){
+	public List<MTGCard> searchBy(Criteria c){
 		if(c == null)
-			return getAllCards();
+			return getAllCardsAsList();
 
 		HashSet<MTGCard> set = new HashSet<>();
 		for(MTGCard m: this.mtgSet) {
@@ -190,7 +205,7 @@ public class StoreManager
 					set.add( m );
 			}
 		}
-		return set;
+		return new ArrayList<>(set);
 	}
 	
 	/**
@@ -201,31 +216,13 @@ public class StoreManager
 		if(destinationFile == null)
 			return;
 		
-		log.write( Tag.INFO, "Backup of all stored files called." );
+		log.write( Tag.INFO, String.format( "%s %s", "Try to backup of all stored files on", destinationFile.getAbsolutePath()) );
 		try {
 			if(destinationFile.exists() && !destinationFile.delete()){
 				log.write( Tag.ERRORS, "Error on delete exists backup." );
 			}
 			
-//			ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(destinationFile));
-//			log.write( Tag.DEBUG, "Backup creation initialize." );
-//			for(File f : new File( STORE_PATH ).listFiles()){
-//				zos.putNextEntry( new ZipEntry(f.getName()) );
-//				
-//				FileInputStream in = new FileInputStream(f);
-//				byte[] buffer = new byte[1024];
-//				int len;
-//	    		while ((len = in.read(buffer)) > 0) {
-//	    			zos.write(buffer, 0, len);
-//	    		}
-//	    		in.close();
-//	    		zos.closeEntry();
-//			}
-//			log.write( Tag.DEBUG, "Files loaded on backup completely." );
-//			zos.close();
-//			log.write( Tag.DEBUG, "Backup closed correctly." );
-			
-			PathUtil.makeZip( destinationFile, new File( BACKUP_PATH ).listFiles() );
+			PathUtil.makeZip( destinationFile, new File( JSON_PATH ).listFiles() );
 			log.write( Tag.DEBUG, "Backup closed and create correctly." );
 		}
 		catch( IOException e ) {
@@ -241,5 +238,12 @@ public class StoreManager
 	 */
 	public HashSet<MTGCard> getAllCards(){
 		return this.mtgSet;
-	}	
+	}
+	
+	/**
+	 * @return {@link List} of all saved card.
+	 */
+	public List<MTGCard> getAllCardsAsList(){
+		return new ArrayList<>(this.mtgSet);
+	}
 }

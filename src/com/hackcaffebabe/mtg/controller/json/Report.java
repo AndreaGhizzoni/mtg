@@ -9,10 +9,9 @@ import com.hackcaffebabe.mtg.model.MTGCard;
 /**
  * This represents a report of all data saved on the disk.
  * 
+ * TODO finish the report with new ideas.
  * TODO maybe write an utility class that calculate the union, intersection, and difference of two Collection<T>. 
  * 
- * TODO on Logger: the init string on standard out -> must be on file in production mode
- *  
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
  */
