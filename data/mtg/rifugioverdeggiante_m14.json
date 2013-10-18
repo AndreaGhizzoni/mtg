@@ -1,0 +1,27 @@
+{
+  "type": "Enchantment",
+  "name": "Rifugio Verdeggiante",
+  "card_color": {
+    "colors": [
+      "GREEN"
+    ],
+    "type": "MONO_COLOR"
+  },
+  "rarity": "COMMON",
+  "series": "m14",
+  "sub_type": "Aura",
+  "is_artifact": false,
+  "is_legendary": false,
+  "primary_effect": "Quando il Rifugio Verdeggiante entra sul campo di battaglia guadagni 2 punti vita. Ogni qualvolta tappi la terra per aggiungere mana, il suo controllore aggiunge un mana di qualsiasi colore alla sua riserva, in agiunta ai suoi altri tipi.",
+  "effects": [],
+  "abilitis": [
+    {
+      "name": "Incanta Terra",
+      "description": "questo incantesimo può essere incantato solo ad una terra"
+    }
+  ],
+  "mana_cost": {
+    "COLOR_LESS": 2,
+    "GREEN": 1
+  }
+}

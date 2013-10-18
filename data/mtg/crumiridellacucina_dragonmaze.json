@@ -1,0 +1,32 @@
+{
+  "type": "Creature",
+  "name": "Crumiri della Cucina",
+  "card_color": {
+    "colors": [
+      "GREEN",
+      "WHITE"
+    ],
+    "type": "IBRID"
+  },
+  "rarity": "NON_COMMON",
+  "series": "dragon maze",
+  "sub_type": "Ouphe",
+  "is_artifact": false,
+  "is_legendary": false,
+  "primary_effect": "Quando i Crumiri della Cucina entrano nel campo di battaglia guadagni 2 punti vita.",
+  "effects": [],
+  "abilitis": [
+    {
+      "name": "Persistere",
+      "description": "quando questa creatura muore, se non aveva segnalini -1/-1 su di essa, falla ritornare sul campo di battaglia con un segnalino -1/-1 su di essa"
+    }
+  ],
+  "mana_cost": {
+    "GREEN": 2,
+    "COLOR_LESS": 1
+  },
+  "strength": {
+    "power": 3,
+    "toughness": 2
+  }
+}

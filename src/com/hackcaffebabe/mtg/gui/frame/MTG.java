@@ -4,6 +4,7 @@ import static com.hackcaffebabe.mtg.gui.GUIUtils.*;
 import it.hackcaffebabe.ioutil.file.PathUtil;
 import it.hackcaffebabe.jx.statusbar.JXStatusBar;
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,7 +34,6 @@ public class MTG extends JFrame
 {
 	private static final long serialVersionUID = 1L;
 	private MTGContent content;
-	private JXStatusBar statusBar;
 
 	/**
 	 * Create the frame.
@@ -54,10 +54,11 @@ public class MTG extends JFrame
 //===========================================================================================
 	/* initialize all content */
 	private void initContent(){
+		STATUS_BAR_MAIN_FRAME = new JXStatusBar( this, "Ready!", VERSION, 10 );
+		STATUS_BAR_MAIN_FRAME.setTextFont( new Font( Font.MONOSPACED, Font.PLAIN, 11 ) );
 		this.content = new MTGContent();
 		setContentPane( this.content );
-		this.statusBar = new JXStatusBar( this, "Ready!", VERSION, 10 );
-		this.content.add( this.statusBar, BorderLayout.SOUTH );
+		add( STATUS_BAR_MAIN_FRAME, BorderLayout.SOUTH );
 	}
 
 	/* initialize all menu bar */

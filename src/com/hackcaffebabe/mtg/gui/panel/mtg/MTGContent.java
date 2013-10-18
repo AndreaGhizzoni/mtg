@@ -21,11 +21,9 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import net.miginfocom.swing.MigLayout;
+import com.hackcaffebabe.mtg.gui.frame.AdvanceSearch;
 import com.hackcaffebabe.mtg.gui.frame.InsertCard;
 import com.hackcaffebabe.mtg.model.MTGCard;
-import com.hackcaffebabe.mtg.model.color.BasicColors;
-import com.hackcaffebabe.mtg.model.color.CardColor;
-import com.hackcaffebabe.mtg.controller.json.Criteria;
 import com.hackcaffebabe.mtg.controller.json.StoreManager;
 
 
@@ -87,7 +85,7 @@ public class MTGContent extends JPanel
 				txtSearch.setText( "" );
 			}
 		} );
-		this.pnlSearch.add( this.txtSearch, "cell 0 0,grow" );
+		this.pnlSearch.add( this.txtSearch, "cell 0 0,growx,aligny center" );
 
 		this.btnAdvanceSearch = new JButton( "Advance Search" );
 		this.btnAdvanceSearch.addActionListener( new AdvanceSearchActionListener() );
@@ -114,7 +112,7 @@ public class MTGContent extends JPanel
 
 		// button
 		this.btnNewCard = new JButton( "New Card" );
-		this.btnNewCard.addActionListener( new NewClassActionListener() );
+		this.btnNewCard.addActionListener( new NewCardActionListener() );
 		add( this.btnNewCard, "cell 1 1,grow" );
 
 		this.btnDeleteCard = new JButton( "Delete Card" );
@@ -122,16 +120,12 @@ public class MTGContent extends JPanel
 		add( this.btnDeleteCard, "cell 2 1,grow" );		
 	}
 
-//	/* This method call a method that take the frame which is in and close it. */
-//	private void close(){
-//		((MTG) SwingUtilities.getWindowAncestor( this )).close();
-//	}
-
 	/**
 	 * Refresh the MTG card list
 	 */
 	public void refreshMTGTable(){
 		log.write( Tag.DEBUG, "Refreshing mtg card list" );
+		STATUS_BAR_MAIN_FRAME.setStatus( "Refreshing mtg card list..." );
 		SwingUtilities.invokeLater( new Runnable(){
 			public void run(){
 				List<MTGCard> lst = StoreManager.getInstance().getAllCardsAsList();
@@ -142,7 +136,8 @@ public class MTGContent extends JPanel
 					tableMTG.refreshRowSorter();
 					tableAdjuster.adjustColumns();
 				}
-			}
+				STATUS_BAR_MAIN_FRAME.setStatus( "Ready!" );
+			}			
 		} );
 	}
 
@@ -154,25 +149,7 @@ public class MTGContent extends JPanel
 	{
 		@Override
 		public void actionPerformed(ActionEvent e){
-			try {
-				//TODO finish to check Criteria
-				Criteria c = new Criteria();
-				c.byColor( new CardColor( BasicColors.RED ) );
-				c.byLegendary( true );
-
-				JXObjectModel<MTGCard> model = new JXObjectModel<>();
-				for(MTGCard i: StoreManager.getInstance().searchBy( c )) {
-					model.addObject( i );
-				}
-				tableMTG.setModel( model );
-
-				//update sorter and text search
-				tableMTG.refreshRowSorter();
-				tableAdjuster.adjustColumns();
-			}
-			catch(Exception ex) {
-				ex.printStackTrace( log.getPrintStream() );
-			}
+			new AdvanceSearch(tableMTG).setVisible( true );
 		}
 	}
 
@@ -200,7 +177,7 @@ public class MTGContent extends JPanel
 	}
 
 	/* Event handle on button btnNewCard */
-	private class NewClassActionListener implements ActionListener
+	private class NewCardActionListener implements ActionListener
 	{
 		private InsertCard frame;
 

@@ -1,0 +1,26 @@
+{
+  "type": "Creature",
+  "name": "Behmoth delle Foreste",
+  "card_color": {
+    "colors": [
+      "GREEN"
+    ],
+    "type": "MONO_COLOR"
+  },
+  "rarity": "NON_COMMON",
+  "series": "m14",
+  "sub_type": "Elementale",
+  "is_artifact": false,
+  "is_legendary": false,
+  "primary_effect": "Fintanto che controlli otto o più terre il Behmoth delle Foreste prende +4/+4 e ha travolgere",
+  "effects": [],
+  "abilitis": [],
+  "mana_cost": {
+    "COLOR_LESS": 3,
+    "GREEN": 2
+  },
+  "strength": {
+    "power": 4,
+    "toughness": 4
+  }
+}

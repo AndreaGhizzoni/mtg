@@ -1,0 +1,22 @@
+{
+  "type": "Instant",
+  "name": "Lama del Fato",
+  "card_color": {
+    "colors": [
+      "BLACK"
+    ],
+    "type": "MONO_COLOR"
+  },
+  "rarity": "NON_COMMON",
+  "series": "m14",
+  "sub_type": "",
+  "is_artifact": false,
+  "is_legendary": false,
+  "primary_effect": "Distruggi una creatura non-nera bersaglio",
+  "effects": [],
+  "abilitis": [],
+  "mana_cost": {
+    "COLOR_LESS": 1,
+    "BLACK": 1
+  }
+}

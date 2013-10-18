@@ -1,0 +1,34 @@
+{
+  "type": "Creature",
+  "name": "Nemesi Mortali",
+  "card_color": {
+    "colors": [
+      "GREEN"
+    ],
+    "type": "MONO_COLOR"
+  },
+  "rarity": "NON_COMMON",
+  "series": "theros",
+  "sub_type": "Serpente",
+  "is_artifact": false,
+  "is_legendary": false,
+  "primary_effect": "La Nemesi Mortali costa 1 incolore in meno per essere lanciata pari al numero di carte creatura nel tuo cimitero",
+  "effects": [
+    {
+      "mana_cost": {
+        "COLOR_LESS": 7,
+        "GREEN": 2
+      },
+      "text": "Mostruosità 5:  Questa abilità costa 1 incolore per essere lanciata pari al numero di carte creatura nel tuo cimitero."
+    }
+  ],
+  "abilitis": [],
+  "mana_cost": {
+    "COLOR_LESS": 4,
+    "GREEN": 2
+  },
+  "strength": {
+    "power": 5,
+    "toughness": 5
+  }
+}

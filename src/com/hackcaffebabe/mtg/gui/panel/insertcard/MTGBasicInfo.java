@@ -1,10 +1,5 @@
 package com.hackcaffebabe.mtg.gui.panel.insertcard;
 
-import static com.hackcaffebabe.mtg.gui.GUIUtils.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 import net.miginfocom.swing.MigLayout;
@@ -12,6 +7,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
+import com.hackcaffebabe.mtg.gui.panel.insertcard.listener.BasicColorActionListener;
 import com.hackcaffebabe.mtg.model.card.Rarity;
 import com.hackcaffebabe.mtg.model.color.BasicColors;
 import com.hackcaffebabe.mtg.model.color.CardColor;
@@ -181,17 +177,18 @@ public class MTGBasicInfo extends JPanel
 	 * @return {@link CardColor}
 	 */
 	public CardColor getCardColor(){
-		CardColor mtgCardColor = null;
-		if( basicColorActionListener.isHybrid == 0 ){ // multicolor card
-			mtgCardColor = new CardColor( basicColorActionListener.colors );
-		}else if( basicColorActionListener.isHybrid == 1 ){ // hybrid card
-			mtgCardColor = new CardColor( basicColorActionListener.colors.get( 0 ), basicColorActionListener.colors.get( 1 ) );
-		}else if( basicColorActionListener.isHybrid == 2 ){ // mono color card
-			mtgCardColor = new CardColor( basicColorActionListener.colors.get( 0 ) );
-		}else{ // color less card
-			mtgCardColor = new CardColor();
-		}
-		return mtgCardColor;
+//		CardColor mtgCardColor = null;
+//		if( basicColorActionListener.isHybrid() == 0 ){ // multicolor card
+//			mtgCardColor = new CardColor( basicColorActionListener.getColors() );
+//		}else if( basicColorActionListener.isHybrid() == 1 ){ // hybrid card
+//			mtgCardColor = new CardColor( basicColorActionListener.getColors().get( 0 ), basicColorActionListener.getColors().get( 1 ) );
+//		}else if( basicColorActionListener.isHybrid() == 2 ){ // mono color card
+//			mtgCardColor = new CardColor( basicColorActionListener.getColors().get( 0 ) );
+//		}else{ // color less card
+//			mtgCardColor = new CardColor();
+//		}
+//		return mtgCardColor;ù
+		return basicColorActionListener.getCardColor();
 	}
 
 	/**
@@ -223,50 +220,4 @@ public class MTGBasicInfo extends JPanel
 	 * @return {@link Boolean} if is artifact is selected.
 	 */
 	public boolean isArtifactSelected(){ return this.chbIsArtifact.isSelected(); }
-	
-//===========================================================================================
-// INNER CLASS
-//===========================================================================================
-	/**
-     * inner class that describe the action on change chbSomeColor
-     */
-    private class BasicColorActionListener implements ActionListener
-    {
-    	List<BasicColors> colors = new ArrayList<>();
-    	int isHybrid = -1;
-    	
-    	@Override
-		public void actionPerformed( ActionEvent e ){
-    		String command = e.getActionCommand();
-    		doEqualsAndCheck( command, BasicColors.RED );
-    		doEqualsAndCheck( command, BasicColors.BLACK );
-    		doEqualsAndCheck( command, BasicColors.GREEN );
-    		doEqualsAndCheck( command, BasicColors.WHITE );
-    		doEqualsAndCheck( command, BasicColors.BLUE );
-    	
-    		if( colors.size() == 0 ) isHybrid = -1;// color less
-    		if( colors.size() == 1 ) isHybrid =  2;// mono color
-    		if( colors.size()  > 2 ) isHybrid =  0;// multicolor
-    		
-    		if( colors.size() == 2 ){// hybrid o multicolor
-    			int i;
-    			do{
-    				i = showHybridMulticolorDialog();
-    			}while(i == -1);
-    			isHybrid = i;
-    		}
-    	}
-    	
-    	private void doEqualsAndCheck( String command, BasicColors b ){
-    		if( command.equals( BasicColors.getAbbraviation( b ) ) ){
-    			if( colors.contains( b ) ) colors.remove( b );
-    			else colors.add( b );
-    		}
-    	}
-    	
-    	public void reset(){
-    		isHybrid = -1;
-    		colors = new ArrayList<>();
-    	}
-    }
 }

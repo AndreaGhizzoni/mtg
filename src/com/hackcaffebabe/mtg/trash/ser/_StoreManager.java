@@ -122,10 +122,10 @@ public class _StoreManager
 				}
 			}
 
-			if(c.getType() != null) {
-				if(c.getType().isInstance( m ))
-					set.add( m );
-			}
+//			if(c.getType() != null) {
+//				if(c.getType().isInstance( m ))
+//					set.add( m );
+//			}
 
 			if(c.getSubType() != null) {
 				if(c.getSubType().replaceAll( " ", "" ).toLowerCase().equals( m.getSubType().replaceAll( " ", "" ).toLowerCase() ))
@@ -137,15 +137,15 @@ public class _StoreManager
 					set.add( m );
 			}
 
-			if(c.getTypeColor() != null) {
-				if(c.getTypeColor().equals( m.getCardColor().getType() ))
-					set.add( m );
-			}
-
-			if(c.getColor() != null) {
-				if(c.getColor().equals( m.getCardColor() ))
-					set.add( m );
-			}
+//			if(c.getTypeColor() != null) {
+//				if(c.getTypeColor().equals( m.getCardColor().getType() ))
+//					set.add( m );
+//			}
+//
+//			if(c.getColor() != null) {
+//				if(c.getColor().equals( m.getCardColor() ))
+//					set.add( m );
+//			}
 
 			if(c.getRarity() != null) {
 				if(c.getRarity().equals( m.getRarity() ))

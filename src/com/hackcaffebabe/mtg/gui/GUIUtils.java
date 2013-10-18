@@ -1,5 +1,6 @@
 package com.hackcaffebabe.mtg.gui;
 
+import it.hackcaffebabe.jx.statusbar.JXStatusBar;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -49,11 +50,15 @@ public class GUIUtils
 	public static final String TITLE_MAIN_FRAME = "MTG Card Manager!";
 	/** Title of insert card frame */
 	public static final String TITLE_INSERT_CARD = "MTG Insert Card!";
-
+	/** Title of advance search frame */
+	public static final String TITLE_ADVANCE_SEARCH = "Advance Search";
+	
 	/** Dimension of main frame */
 	public static final Dimension DIMENSION_MAIN_FRAME = new Dimension( 1150, 655 );
 	/** Dimension of insert card frame */
 	public static final Dimension DIMENSION_INSERT_CARD = new Dimension( 660, 700 );
+	/** Dimension of advance search frame */
+	public static final Dimension DIMENSION_ADVANCE_SEARCH = new Dimension( 485, 190 );
 
 	/** Action Command */
 	public static final String AC_CREATURE = "creature";
@@ -67,6 +72,9 @@ public class GUIUtils
 	/** Tool Tip */
 	public static final String TP_PANEL_CREATURE_INFO = "Creature strength like \"2/2\". Use * to indicate \"*/*\" or \"X/X\".";
 
+	/** Public access of JXStatsBar of Main frame */
+	public static JXStatusBar STATUS_BAR_MAIN_FRAME;
+	
 //===========================================================================================
 // COMMON METHODS
 //===========================================================================================

@@ -4,10 +4,10 @@ import java.io.File;
 import java.io.PrintStream;
 import it.hackcaffebabe.logger.Logger;
 import it.hackcaffebabe.logger.Tag;
-import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import com.hackcaffebabe.mtg.controller.DBCostants;
+import com.hackcaffebabe.mtg.gui.GUIUtils;
 import com.hackcaffebabe.mtg.gui.frame.*;
 import com.hackcaffebabe.mtg.controller.json.StoreManager;
 
@@ -33,7 +33,7 @@ public class LauncherMTG
 				catch(Exception e) {
 					String s = String.format( "%s\nLog is reported.", e.getMessage() );
 					Logger.getInstance().write( Tag.ERRORS, e.getMessage() );
-					JOptionPane.showMessageDialog( null, s, "Error", JOptionPane.ERROR_MESSAGE );
+					GUIUtils.displayError( null, s );
 					e.printStackTrace(Logger.getInstance().getPrintStream());
 				}
 			}

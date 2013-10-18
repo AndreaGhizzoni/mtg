@@ -1,0 +1,31 @@
+{
+  "type": "Creature",
+  "name": "Ragno Gigante",
+  "card_color": {
+    "colors": [
+      "GREEN"
+    ],
+    "type": "MONO_COLOR"
+  },
+  "rarity": "COMMON",
+  "series": "m14",
+  "sub_type": "Ragno",
+  "is_artifact": false,
+  "is_legendary": false,
+  "primary_effect": "",
+  "effects": [],
+  "abilitis": [
+    {
+      "name": "Raggiungere",
+      "description": "puo bloccare le creature con volare"
+    }
+  ],
+  "mana_cost": {
+    "GREEN": 1,
+    "COLOR_LESS": 3
+  },
+  "strength": {
+    "power": 2,
+    "toughness": 4
+  }
+}

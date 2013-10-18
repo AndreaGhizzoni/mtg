@@ -1,0 +1,28 @@
+{
+  "type": "Creature",
+  "name": "Varolz, lo Sfregiato",
+  "card_color": {
+    "colors": [
+      "BLACK",
+      "GREEN"
+    ],
+    "type": "MULTI_COLOR"
+  },
+  "rarity": "RARE",
+  "series": "labirinto del drago",
+  "sub_type": "Guerriero Troll",
+  "is_artifact": false,
+  "is_legendary": true,
+  "primary_effect": "Ogni carta nel tuo cimitero guadagna Mangiacarogne. Sacrifica un\u0027altra creatura: rigenera Varolz, lo Sfregiato",
+  "effects": [],
+  "abilitis": [],
+  "mana_cost": {
+    "COLOR_LESS": 1,
+    "BLACK": 1,
+    "GREEN": 1
+  },
+  "strength": {
+    "power": 2,
+    "toughness": 2
+  }
+}

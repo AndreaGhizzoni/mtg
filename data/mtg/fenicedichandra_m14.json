@@ -1,0 +1,35 @@
+{
+  "type": "Creature",
+  "name": "Fenice di Chandra",
+  "card_color": {
+    "colors": [
+      "RED"
+    ],
+    "type": "MONO_COLOR"
+  },
+  "rarity": "RARE",
+  "series": "m14",
+  "sub_type": "Fenice",
+  "is_artifact": false,
+  "is_legendary": false,
+  "primary_effect": "Ogniqualvolta a una avversario viene inflitto danno da una magia istanteneo o stregoneria rossa che controllo o da un planeswalker rosso che controlli, riprende in mano la Fenice di Chandra dal tuo cimitero",
+  "effects": [],
+  "abilitis": [
+    {
+      "name": "Rapidita",
+      "description": "la creatura puo attaccare e tappare appena entrata in campo"
+    },
+    {
+      "name": "Volare",
+      "description": "puo essere bloccato solo da creature con volare o raggiungere"
+    }
+  ],
+  "mana_cost": {
+    "RED": 2,
+    "COLOR_LESS": 1
+  },
+  "strength": {
+    "power": 2,
+    "toughness": 2
+  }
+}

@@ -23,17 +23,17 @@ public class PlaneswalkerInfo extends JPanel
 	/**
 	 * Create the panel.
 	 */
-	public PlaneswalkerInfo(){
+	public PlaneswalkerInfo(int start){
 		super();
 		setBorder(new TitledBorder(null, "Planeswalker Info", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		setLayout(new MigLayout("", "[][grow]", "[]"));
-		this.initContent();
+		this.initContent(start);
 	}
 	
-	private void initContent(){
+	private void initContent(int s){
 		add( new JLabel("Life:"), "cell 0 0,alignx trailing");
 
-		this.spinLife = new JSpinner( new SpinnerNumberModel( 1, 1, 100, 1 ) );
+		this.spinLife = new JSpinner( new SpinnerNumberModel( s, s, 100, 1 ) );
 		JSpinner.DefaultEditor editor = ( JSpinner.DefaultEditor ) this.spinLife.getEditor();
 		editor.getTextField().setEnabled( true );
 		editor.getTextField().setEditable( false );

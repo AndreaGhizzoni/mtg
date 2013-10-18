@@ -1,0 +1,35 @@
+{
+  "type": "Creature",
+  "name": "Eremita Letale",
+  "card_color": {
+    "colors": [
+      "GREEN"
+    ],
+    "type": "MONO_COLOR"
+  },
+  "rarity": "COMMON",
+  "series": "m14",
+  "sub_type": "Ragno",
+  "is_artifact": false,
+  "is_legendary": false,
+  "primary_effect": "",
+  "effects": [],
+  "abilitis": [
+    {
+      "name": "Raggiungere",
+      "description": "puo bloccare le creature con volare"
+    },
+    {
+      "name": "Tocco Letale",
+      "description": "basta un danno alla creatura in difesa per distruggerla"
+    }
+  ],
+  "mana_cost": {
+    "GREEN": 1,
+    "COLOR_LESS": 1
+  },
+  "strength": {
+    "power": 1,
+    "toughness": 2
+  }
+}

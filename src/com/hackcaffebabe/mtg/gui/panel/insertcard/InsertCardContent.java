@@ -57,7 +57,7 @@ public class InsertCardContent extends JPanel
 
 	private ManaCostInfo pnlManaCost = new ManaCostInfo();
 	private CreatureInfo pnlCreatureInfo = new CreatureInfo();
-	private PlaneswalkerInfo pnlPlaneswalkerInfo = new PlaneswalkerInfo();
+	private PlaneswalkerInfo pnlPlaneswalkerInfo = new PlaneswalkerInfo(1);
 
 	private JButton btnSave;
 	private JButton btnClear;

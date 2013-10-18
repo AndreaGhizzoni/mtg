@@ -1,5 +1,6 @@
 package com.hackcaffebabe.mtg.gui.panel.mtg;
 
+import static com.hackcaffebabe.mtg.gui.GUIUtils.STATUS_BAR_MAIN_FRAME;
 import it.hackcaffebabe.jx.table.JXTable;
 import it.hackcaffebabe.jx.table.JXTableColumnAdjuster;
 import it.hackcaffebabe.jx.table.model.DisplayableObject;
@@ -22,6 +23,7 @@ import javax.swing.table.TableCellRenderer;
 import net.miginfocom.swing.MigLayout;
 import com.hackcaffebabe.mtg.model.*;
 import com.hackcaffebabe.mtg.model.card.*;
+
 
 
 /**
@@ -302,6 +304,7 @@ public class MTGPropertiesV2 extends JPanel
 		this.btnAddAbility.setEnabled( true );
 		this.btnAddEffect.setEnabled( true );
 		this.displayedMTGCard = c;// this is necessary for all the documents listener.
+		STATUS_BAR_MAIN_FRAME.setStatus( c.getName() );
 	}
 
 //===========================================================================================
