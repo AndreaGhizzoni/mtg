@@ -2,8 +2,6 @@ package com.hackcaffebabe.mtg.gui.panel.advancesearch;
 
 import it.hackcaffebabe.jx.table.JXTable;
 import it.hackcaffebabe.jx.table.model.JXObjectModel;
-import it.hackcaffebabe.logger.Logger;
-import it.hackcaffebabe.logger.Tag;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -12,12 +10,15 @@ import java.util.List;
 import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.SpinnerNumberModel;
 import com.hackcaffebabe.mtg.controller.json.Criteria;
 import com.hackcaffebabe.mtg.controller.json.StoreManager;
+import com.hackcaffebabe.mtg.gui.frame.AdvanceSearch;
 import com.hackcaffebabe.mtg.model.*;
 import com.hackcaffebabe.mtg.model.card.Rarity;
 import com.hackcaffebabe.mtg.model.color.BasicColors;
@@ -26,7 +27,7 @@ import javax.swing.JTextField;
 import javax.swing.JSpinner;
 
 /**
- * TODO add doc
+ * Content of {@link AdvanceSearch}.
  *  
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
@@ -143,6 +144,7 @@ public class AdvanceSearchContent extends JPanel
 		add(pnlConvertedManaCost, "cell 4 2 1 2,grow");
 		
 		this.spinManaCost = new JSpinner( new SpinnerNumberModel( 0, 0, 100, 1 ) );
+		this.spinManaCost.addChangeListener( new ManaCostChangeListener() );
 		JSpinner.DefaultEditor editor = ( JSpinner.DefaultEditor ) this.spinManaCost.getEditor();
 		editor.getTextField().setEnabled( true );
 		editor.getTextField().setEditable( false );
@@ -228,7 +230,6 @@ public class AdvanceSearchContent extends JPanel
 		public void actionPerformed(ActionEvent e){
 			String ac = e.getActionCommand();
 			if( ac.equals(BasicColors.getAbbraviation(BasicColors.RED)) ){
-				Logger.getInstance().write( Tag.DEBUG, "Color action" );
 				criteria = criteria.byBasiColors(BasicColors.RED);
 			}else if( ac.equals(BasicColors.getAbbraviation(BasicColors.BLACK)) ){
 				criteria = criteria.byBasiColors(BasicColors.BLACK);
@@ -260,6 +261,18 @@ public class AdvanceSearchContent extends JPanel
 			}else{// "--------"
 				criteria = criteria.byRarity(null);
 			}
+			applyCriteriaChanges();
+		}
+	}
+
+	/* event on change mana cost */
+	private class ManaCostChangeListener implements ChangeListener
+	{
+		@Override
+		public void stateChanged(ChangeEvent e){
+			JSpinner s = (JSpinner)e.getSource();
+			int val = (Integer)s.getValue();
+			criteria = criteria.byConvertedManaCost( val==0?null:val );
 			applyCriteriaChanges();
 		}
 	}

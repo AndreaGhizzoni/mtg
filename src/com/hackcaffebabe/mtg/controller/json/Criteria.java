@@ -53,9 +53,15 @@ public class Criteria
 	 * @param c {@link Integer} the converted mana cost to search.
 	 * @return {@link Criteria} with the converted mana cost flag set.
 	 */
-	public Criteria byConvertedManaCost(int c){
-		if(c>=0) this.convertedManaCost = c;
-		return this;
+	public Criteria byConvertedManaCost(Integer c){
+		if(c==null){
+			this.convertedManaCost = null;
+			return this;
+		}else{
+			if(c>=0) 
+				this.convertedManaCost = c;
+			return this;
+		}
 	}
 	
 //	/**
@@ -136,7 +142,7 @@ public class Criteria
 	
 	/**
 	 * This method set the criteria by legendary card. Set to null to cancel the isLegendary criteria.
-	 * @param n {@link Boolean} the legendary card to search.
+	 * @param isLegendary {@link Boolean}.
 	 * @return {@link Criteria} with the legendary flag set.
 	 */
 	public Criteria byIsLegendary(Boolean isLegendary){
@@ -145,10 +151,10 @@ public class Criteria
 	}
 	
 	/**
+	 * This method set the criteria by if has a primary effect.<br>
 	 * Set to null to cancel the has primary effect criteria.
-	 * TODO add doc
-	 * @param hasPrimaryEffect
-	 * @return
+	 * @param hasPrimaryEffect {@link Boolean} .
+	 * @return {@link Criteria} with has primary effect flag set.
 	 */
 	public Criteria byHasPrimaryEffect(Boolean hasPrimaryEffect){
 		this.hasPrimaryEffect = hasPrimaryEffect;
@@ -156,10 +162,10 @@ public class Criteria
 	}
 	
 	/**
+	 * This method set the criteria by if has at least one effect.<br>
 	 * Set to null to cancel the has effect criteria.
-	 * TODO add doc
-	 * @param hasEffect
-	 * @return
+	 * @param hasEffect {@link Boolean}.
+	 * @return {@link Criteria} with has at least one effect flag set.
 	 */
 	public Criteria byHasEffect(Boolean hasEffect){
 		this.hasEffect = hasEffect;
@@ -167,10 +173,10 @@ public class Criteria
 	}
 	
 	/**
+	 * This method set the criteria by if has at least one ability.<br>
 	 * Set to null to cancel the has ability criteria.
-	 * TODO add doc
-	 * @param hasAblility
-	 * @return
+	 * @param hasAblility {@link Boolean}.
+	 * @return {@link Criteria} with has at least one ability flag set.
 	 */
 	public Criteria byHasAbility(Boolean hasAblility){
 		this.hasAbility = hasAblility;

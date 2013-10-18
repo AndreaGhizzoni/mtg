@@ -7,8 +7,7 @@ import javax.swing.JFrame;
 import com.hackcaffebabe.mtg.gui.panel.advancesearch.AdvanceSearchContent;
 
 /**
- * TODO add doc
- *  
+ * This is the frame to show advance search on {@link JXTable}. 
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
  */

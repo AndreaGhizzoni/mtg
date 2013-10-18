@@ -4,13 +4,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JComboBox;
 import com.hackcaffebabe.mtg.gui.GUIUtils;
 import com.hackcaffebabe.mtg.model.color.BasicColors;
 import com.hackcaffebabe.mtg.model.color.CardColor;
 
 /**
- * TODO add doc
- *  
+ * This action listener is used to get the {@link CardColor} from the user.<br>
+ * Add this listener for each {@link JComboBox} of {@link BasicColors}.
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
  */
