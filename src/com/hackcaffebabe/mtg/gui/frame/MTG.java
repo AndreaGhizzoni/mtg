@@ -18,6 +18,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
+import javax.swing.KeyStroke;
 import com.hackcaffebabe.about.About;
 import com.hackcaffebabe.mtg.controller.DBCostants;
 import com.hackcaffebabe.mtg.controller.json.StoreManager;
@@ -87,6 +88,15 @@ public class MTG extends JFrame
 		file.add( fileExport );		
 		
 		JMenu edit = new JMenu( "Edit" );
+		JMenuItem editRefresh = new JMenuItem( "Refresh" );
+		editRefresh.setAccelerator( KeyStroke.getKeyStroke( "F5" ) );
+		editRefresh.addActionListener( new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				content.refreshMTGTable();
+			}
+		} );
+		edit.add( editRefresh );
 		
 		JMenu help = new JMenu( "Help" );
 		JMenuItem helpAbout = new JMenuItem( "About" );
@@ -101,7 +111,8 @@ public class MTG extends JFrame
 	
 	/* Close the frame */
 	public void close(){ 
-		dispose(); 
+		dispose(); //TODO maybe log the exit
+		System.exit( 0 );		
 	}
 	
 //===========================================================================================

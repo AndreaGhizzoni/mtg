@@ -2,12 +2,8 @@ package com.hackcaffebabe.mtg.gui.panel.advancesearch;
 
 import it.hackcaffebabe.jx.table.JXTable;
 import it.hackcaffebabe.jx.table.model.JXObjectModel;
-import it.hackcaffebabe.jx.typeahead.CommitAction;
-import it.hackcaffebabe.jx.typeahead.JXAutocomplete;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.util.List;
 import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
@@ -17,7 +13,6 @@ import javax.swing.event.ChangeListener;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.KeyStroke;
 import javax.swing.SpinnerNumberModel;
 import com.hackcaffebabe.mtg.controller.json.Criteria;
 import com.hackcaffebabe.mtg.controller.json.StoreManager;
@@ -27,7 +22,6 @@ import com.hackcaffebabe.mtg.model.*;
 import com.hackcaffebabe.mtg.model.card.Rarity;
 import com.hackcaffebabe.mtg.model.color.BasicColors;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
 import javax.swing.JSpinner;
 import java.awt.Component;
 
@@ -53,8 +47,7 @@ public class AdvanceSearchContent extends JPanel
 
 	private JComboBox<String> cmbRarity;
 
-	private JTextField txtSeries;
-	private JXAutocomplete txtSeriesAutocomplete;
+	private JComboBox<String> cmbSeries;
 
 	private JSpinner spinManaCost;
 
@@ -73,7 +66,7 @@ public class AdvanceSearchContent extends JPanel
 		this.table = t;
 		setLayout( new MigLayout( "", "[52.00][100.00][83.00][27.00][190.00]", "[][][][]" ) );
 		this.initContent();
-		setFocusTraversalPolicy( new FocusTraversalOnArray( new Component[] { chbBlack, chbGreen, chbRed, chbBlue, chbWhite, cmbRarity, txtSeries,
+		setFocusTraversalPolicy( new FocusTraversalOnArray( new Component[] { chbBlack, chbGreen, chbRed, chbBlue, chbWhite, cmbRarity, cmbSeries,
 				chbIsLegendary, chbHasPrimaryeffect, chbHasEffect, chbHasAbility, spinManaCost } ) );//TODO this doesn't work properly
 	}
 
@@ -125,27 +118,10 @@ public class AdvanceSearchContent extends JPanel
 		pnlRarity.add( this.cmbRarity, "cell 0 0,growx" );
 
 		// Series
-		JLabel label = new JLabel( "Series:" );
-		add( label, "cell 0 1,alignx trailing" );
-		this.txtSeries = new JTextField();
-		this.txtSeriesAutocomplete = new JXAutocomplete( this.txtSeries, StoreManager.getInstance().getInsertedSeries() );
-//		this.txtSeries.getInputMap().put( KeyStroke.getKeyStroke( "TAB" ), "commit" );
-		this.txtSeries.getInputMap().put( KeyStroke.getKeyStroke( "ENTER" ), "commit" );
-		this.txtSeries.getActionMap().put( "commit", new CommitAction( this.txtSeriesAutocomplete ) );
-		this.txtSeries.addFocusListener( new FocusListener(){
-			@Override
-			public void focusLost(FocusEvent e){
-				if(!txtSeries.getText().isEmpty()) {
-					criteria = criteria.bySeries( txtSeries.getText() );
-					applyCriteriaChanges();
-				}
-			}
-
-			@Override
-			public void focusGained(FocusEvent e){
-			}
-		} );
-		add( this.txtSeries, "cell 1 1 2 1,growx" );
+		add( new JLabel( "Series:" ), "cell 0 1,alignx trailing" );
+		this.cmbSeries = new JComboBox<String>(getSeriesCB());
+		this.cmbSeries.addActionListener( new SeriesActionListener() );
+		add( this.cmbSeries, "cell 1 1 2 1,growx" );
 
 		// Type
 //		add(new JLabel("Type:"), "cell 3 1,alignx trailing");
@@ -168,6 +144,13 @@ public class AdvanceSearchContent extends JPanel
 
 		// Flag
 		this.chbIsLegendary = new JCheckBox( "Is Legendary?" );
+		this.chbIsLegendary.addActionListener( new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				criteria = criteria.byIsLegendary( chbIsLegendary.isSelected() ? true : null );
+				applyCriteriaChanges();
+			}
+		} );
 		add( this.chbIsLegendary, "cell 0 2 2 1" );
 
 		this.chbHasPrimaryeffect = new JCheckBox( "Has Primary Effect?" );
@@ -210,19 +193,28 @@ public class AdvanceSearchContent extends JPanel
 		return s;
 	}
 
-	/* return the type as combo box model. */
-	private DefaultComboBoxModel<String> getTypeCB(){
+	/* return the series as combo box model. */
+	private DefaultComboBoxModel<String> getSeriesCB(){
 		DefaultComboBoxModel<String> s = new DefaultComboBoxModel<>();
 		s.addElement( "-------------" );
-		s.addElement( Creature.class.getSimpleName() );
-		s.addElement( Artifact.class.getSimpleName() );
-		s.addElement( Instant.class.getSimpleName() );
-		s.addElement( Sorcery.class.getSimpleName() );
-		s.addElement( Enchantment.class.getSimpleName() );
-		s.addElement( Land.class.getSimpleName() );
-		s.addElement( Planeswalker.class.getSimpleName() );
+		for(String a : StoreManager.getInstance().getInsertedSeries() )
+			s.addElement( a );
 		return s;
 	}
+	
+//	/* return the type as combo box model. */
+//	private DefaultComboBoxModel<String> getTypeCB(){
+//		DefaultComboBoxModel<String> s = new DefaultComboBoxModel<>();
+//		s.addElement( "-------------" );
+//		s.addElement( Creature.class.getSimpleName() );
+//		s.addElement( Artifact.class.getSimpleName() );
+//		s.addElement( Instant.class.getSimpleName() );
+//		s.addElement( Sorcery.class.getSimpleName() );
+//		s.addElement( Enchantment.class.getSimpleName() );
+//		s.addElement( Land.class.getSimpleName() );
+//		s.addElement( Planeswalker.class.getSimpleName() );
+//		return s;
+//	}
 
 	/* apply on the table the criteria */
 	@SuppressWarnings("unchecked")
@@ -233,6 +225,9 @@ public class AdvanceSearchContent extends JPanel
 			model.removeAll();
 			model.addObjects( lst );
 			this.table.setModel( model );
+		}
+		else {
+			((JXObjectModel<MTGCard>) this.table.getModel()).removeAll();
 		}
 	}
 
@@ -264,6 +259,17 @@ public class AdvanceSearchContent extends JPanel
 		}
 	}
 
+	/* event on click on Series */
+	private class SeriesActionListener implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent e){
+			String sel = (String) cmbSeries.getSelectedItem();
+			criteria = criteria.bySeries( sel.equals( "-------------" )?null:sel );
+			applyCriteriaChanges();
+		}
+	}
+	
 	/* event on change the rarity */
 	private class RarityActionListener implements ActionListener
 	{

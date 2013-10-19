@@ -321,7 +321,7 @@ public class InsertCardContent extends JPanel
 			clearEffectsAndAbilityTable();
 			mtgCardType.clearSelection();
 			MTGTypeListener.lastActionCommand = "";
-			mtgList.refreshMTGTable();
+//			mtgList.refreshMTGTable();
 		}
 	}
 

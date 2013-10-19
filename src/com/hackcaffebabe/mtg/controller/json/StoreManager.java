@@ -224,7 +224,7 @@ public class StoreManager
 			}
 
 			if(c.getIsLegendary() != null) {
-				if(c.getIsLegendary() == m.isLegendary())
+				if(c.getIsLegendary() && m.isLegendary())
 					set.add( m );
 			}
 			

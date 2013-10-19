@@ -85,12 +85,13 @@ public class Criteria
 	}
 	
 	/**
-	 * This method set the criteria by series.
+	 * This method set the criteria by series.<br>
+	 * Set to null to cancel the series criteria.
 	 * @param s {@link String} the series to search.
 	 * @return {@link Criteria} with the series flag set.
 	 */
 	public Criteria bySeries(String s){
-		if(s!=null&&!s.isEmpty()) this.series = s;
+		this.series = s;
 		return this;
 	}
 	
@@ -141,7 +142,8 @@ public class Criteria
 	}
 	
 	/**
-	 * This method set the criteria by legendary card. Set to null to cancel the isLegendary criteria.
+	 * This method set the criteria by legendary card.<br>
+	 * Set to null to cancel the isLegendary criteria.
 	 * @param isLegendary {@link Boolean}.
 	 * @return {@link Criteria} with the legendary flag set.
 	 */
