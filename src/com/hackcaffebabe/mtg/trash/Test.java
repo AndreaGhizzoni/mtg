@@ -1,7 +1,8 @@
-package com.hackcaffebabe.mtg.controller.json;
+package com.hackcaffebabe.mtg.trash;
 
 import it.hackcaffebabe.logger.Logger;
 import it.hackcaffebabe.logger.Tag;
+import com.hackcaffebabe.mtg.controller.json.StoreManager;
 import com.hackcaffebabe.mtg.model.Artifact;
 import com.hackcaffebabe.mtg.model.Creature;
 import com.hackcaffebabe.mtg.model.Enchantment;

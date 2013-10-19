@@ -57,7 +57,7 @@ public class InsertCardContent extends JPanel
 
 	private ManaCostInfo pnlManaCost = new ManaCostInfo();
 	private CreatureInfo pnlCreatureInfo = new CreatureInfo();
-	private PlaneswalkerInfo pnlPlaneswalkerInfo = new PlaneswalkerInfo(1);
+	private PlaneswalkerInfo pnlPlaneswalkerInfo = new PlaneswalkerInfo( 1 );
 
 	private JButton btnSave;
 	private JButton btnClear;
@@ -135,7 +135,8 @@ public class InsertCardContent extends JPanel
 
 		// =========================== MTG PANEL ===========================
 		pnlMTG.setBorder( new TitledBorder( null, "Card Info", TitledBorder.LEADING, TitledBorder.TOP, null, null ) );
-		pnlMTG.setLayout( new MigLayout("", "[grow][grow][grow][grow][grow][grow][100px:n,grow][29.00px:n]", "[][][][][::100,grow][::100,grow][28!][][::100,grow][::100,grow][][][grow]") );
+		pnlMTG.setLayout( new MigLayout( "", "[grow][grow][grow][grow][grow][grow][100px:n,grow][29.00px:n]",
+				"[][][][][::100,grow][::100,grow][28!][][::100,grow][::100,grow][][][grow]" ) );
 
 		pnlMTG.add( this.pnlMTGBasicInfo, "cell 0 0 8 3,grow" );
 
@@ -227,7 +228,7 @@ public class InsertCardContent extends JPanel
 				JOptionPane.showMessageDialog( pnlMTG, "Card is already saved!", "Bad Luck!", JOptionPane.INFORMATION_MESSAGE );
 			}
 		}
-		catch( Exception e ) {
+		catch(Exception e) {
 			String s = String.format( "%s\nLog is reported.", e.getMessage() );
 			log.write( Tag.ERRORS, e.getMessage() );
 			displayError( pnlMTG, s );

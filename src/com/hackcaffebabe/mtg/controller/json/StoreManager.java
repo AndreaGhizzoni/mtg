@@ -28,6 +28,8 @@ import com.hackcaffebabe.mtg.model.color.CardColor;
 public class StoreManager
 {
 	private HashSet<MTGCard> mtgSet = new HashSet<>();
+	private ArrayList<String> lstSeries = new ArrayList<>();
+	
 	private Gson g;
 	private static StoreManager manager;
 
@@ -83,7 +85,9 @@ public class StoreManager
 	private void load() throws IOException{
 		for(File f: new File( JSON_PATH ).listFiles()) {
 			FileReader br = new FileReader( f );
-			mtgSet.add( g.fromJson( br, MTGCard.class ) );
+			MTGCard c = g.fromJson( br, MTGCard.class );
+			mtgSet.add( c );
+			addSeriesToList( c );
 			br.close();
 		}
 	}
@@ -123,9 +127,18 @@ public class StoreManager
 		f.flush();
 		f.close();
 		mtgSet.add( c );
+		addSeriesToList( c );
 
 		log.write( Tag.INFO, String.format( "MTG card json file %s saved correctly.", c.getName() ) );
 		return true;
+	}
+	
+	/* TODO add doc and improve the contains criteria*/
+	private void addSeriesToList( MTGCard c ){
+		if(c!=null){
+			if( !this.lstSeries.contains(c.getSeries()) )
+				this.lstSeries.add( c.getSeries() );
+		}
 	}
 
 	/**
@@ -270,5 +283,12 @@ public class StoreManager
 	 */
 	public List<MTGCard> getAllCardsAsList(){
 		return new ArrayList<>( this.mtgSet );
+	}
+	
+	/**
+	 * @return {@link List} list of inserted series.
+	 */
+	public List<String> getInsertedSeries(){
+		return this.lstSeries;
 	}
 }
