@@ -28,8 +28,8 @@ import com.hackcaffebabe.mtg.model.color.CardColor;
 public class StoreManager
 {
 	private HashSet<MTGCard> mtgSet = new HashSet<>();
-	private ArrayList<String> lstSeries = new ArrayList<>();
-	
+	private List<String> lstSeries = new ArrayList<>();
+
 	private Gson g;
 	private static StoreManager manager;
 
@@ -132,12 +132,20 @@ public class StoreManager
 		log.write( Tag.INFO, String.format( "MTG card json file %s saved correctly.", c.getName() ) );
 		return true;
 	}
-	
-	/* TODO add doc and improve the contains criteria*/
-	private void addSeriesToList( MTGCard c ){
-		if(c!=null){
-			if( !this.lstSeries.contains(c.getSeries()) )
+
+	/* this method add the series string if and only if isn't already inserted into this.lstSeries 
+	 * TODO maybe implement this with a bynary search. */
+	private void addSeriesToList(MTGCard c){
+		if(c != null) {
+			if(this.lstSeries.isEmpty()) {
 				this.lstSeries.add( c.getSeries() );
+			}else{
+//				int r = Collections.binarySearch( this.lstSeries, c.getSeries() );
+//				if(r<0)
+//					this.lstSeries.add( c.getSeries() );
+				if( !this.lstSeries.contains( c.getSeries() ) )
+					this.lstSeries.add( c.getSeries() );
+			}
 		}
 	}
 
@@ -147,6 +155,7 @@ public class StoreManager
 	 */
 	public void refresh() throws IOException{
 		this.mtgSet.clear();
+		this.lstSeries.clear();
 		this.load();
 	}
 
@@ -227,19 +236,19 @@ public class StoreManager
 				if(c.getIsLegendary() && m.isLegendary())
 					set.add( m );
 			}
-			
-			if(c.getHasPrimaryEffect() != null && c.getHasPrimaryEffect() ){
-				if( m.getPrimaryEffect()!=null && !m.getPrimaryEffect().isEmpty() )
+
+			if(c.getHasPrimaryEffect() != null && c.getHasPrimaryEffect()) {
+				if(m.getPrimaryEffect() != null && !m.getPrimaryEffect().isEmpty())
 					set.add( m );
 			}
-			
-			if(c.getHasEffect() != null && c.getHasEffect() ){
-				if( !m.getEffects().isEmpty() )
+
+			if(c.getHasEffect() != null && c.getHasEffect()) {
+				if(!m.getEffects().isEmpty())
 					set.add( m );
 			}
-			
-			if(c.getHasAbility() != null && c.getHasAbility() ){
-				if( !m.getAbilities().isEmpty() )
+
+			if(c.getHasAbility() != null && c.getHasAbility()) {
+				if(!m.getAbilities().isEmpty())
 					set.add( m );
 			}
 		}
@@ -284,7 +293,7 @@ public class StoreManager
 	public List<MTGCard> getAllCardsAsList(){
 		return new ArrayList<>( this.mtgSet );
 	}
-	
+
 	/**
 	 * @return {@link List} list of inserted series.
 	 */

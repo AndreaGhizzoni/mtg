@@ -1,0 +1,47 @@
+{
+  "type": "Creature",
+  "name": "Drago Soffio di Tempesta",
+  "card_color": {
+    "colors": [
+      "RED"
+    ],
+    "type": "MONO_COLOR"
+  },
+  "rarity": "MYTHIC",
+  "series": "theros",
+  "sub_type": "Drago",
+  "is_artifact": false,
+  "is_legendary": false,
+  "primary_effect": "Quando il Drago Soffio di Tempesta diventa mostruoso, infligge danno ad ogni avversario pari al numero di carte in mano a quel giocatore.",
+  "effects": [
+    {
+      "mana_cost": {
+        "COLOR_LESS": 5,
+        "RED": 2
+      },
+      "text": "Mostruosità 3"
+    }
+  ],
+  "abilitis": [
+    {
+      "name": "Rapidita",
+      "description": "la creatura puo attaccare e tappare appena entrata in campo"
+    },
+    {
+      "name": "Volare",
+      "description": "puo essere bloccato solo da creature con volare o raggiungere"
+    },
+    {
+      "name": "Protezione dal Bianco",
+      "description": "Gli effetti o il danno da una magia bianca non hanno effetto su questa carta"
+    }
+  ],
+  "mana_cost": {
+    "COLOR_LESS": 3,
+    "RED": 2
+  },
+  "strength": {
+    "power": 4,
+    "toughness": 4
+  }
+}

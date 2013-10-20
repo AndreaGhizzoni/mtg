@@ -1,0 +1,33 @@
+{
+  "type": "Creature",
+  "name": "Titano dell\u0027inferno",
+  "card_color": {
+    "colors": [
+      "RED"
+    ],
+    "type": "MONO_COLOR"
+  },
+  "rarity": "MYTHIC",
+  "series": "m12",
+  "sub_type": "Gigante",
+  "is_artifact": false,
+  "is_legendary": false,
+  "primary_effect": "Ogniqualvolta il Titano dell\u0027inferno entra nel campo di battagliao attacca, infligge 3 danni suddivisi a tua scelta tra una, due o tre creature e/o giocatori bersaglio.",
+  "effects": [
+    {
+      "mana_cost": {
+        "RED": 1
+      },
+      "text": "Il Titano dell Inferno prende +1/+0 fino alla fine del turno"
+    }
+  ],
+  "abilitis": [],
+  "mana_cost": {
+    "COLOR_LESS": 4,
+    "RED": 2
+  },
+  "strength": {
+    "power": 6,
+    "toughness": 6
+  }
+}

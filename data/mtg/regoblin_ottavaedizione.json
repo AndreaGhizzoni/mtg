@@ -1,0 +1,26 @@
+{
+  "type": "Creature",
+  "name": "Re Goblin",
+  "card_color": {
+    "colors": [
+      "RED"
+    ],
+    "type": "MONO_COLOR"
+  },
+  "rarity": "RARE",
+  "series": "ottava edizione",
+  "sub_type": "Signore",
+  "is_artifact": false,
+  "is_legendary": false,
+  "primary_effect": "Tutti i goblin prendono +1/+1 e guadagnano passa-montagne",
+  "effects": [],
+  "abilitis": [],
+  "mana_cost": {
+    "COLOR_LESS": 1,
+    "RED": 2
+  },
+  "strength": {
+    "power": 2,
+    "toughness": 2
+  }
+}

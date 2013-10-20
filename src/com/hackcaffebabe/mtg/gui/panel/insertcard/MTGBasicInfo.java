@@ -204,7 +204,7 @@ public class MTGBasicInfo extends JPanel
 //		}else{ // color less card
 //			mtgCardColor = new CardColor();
 //		}
-//		return mtgCardColor;ù
+//		return mtgCardColor;
 		return basicColorActionListener.getCardColor();
 	}
 
@@ -216,7 +216,7 @@ public class MTGBasicInfo extends JPanel
 		String s = this.txtSeries.getText();
 		if(s == null)
 			return "";
-		else return s;
+		else return s.replaceAll( "\t", "" );
 	}
 
 	/**

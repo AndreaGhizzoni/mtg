@@ -1,0 +1,39 @@
+{
+  "type": "Creature",
+  "name": "Fenice di Fiamma",
+  "card_color": {
+    "colors": [
+      "RED"
+    ],
+    "type": "MONO_COLOR"
+  },
+  "rarity": "RARE",
+  "series": "m13",
+  "sub_type": "Fenice",
+  "is_artifact": false,
+  "is_legendary": false,
+  "primary_effect": "",
+  "effects": [
+    {
+      "mana_cost": {
+        "COLOR_LESS": 1,
+        "RED": 3
+      },
+      "text": "Riprendi in mano la Fenice di Fiamma dal tuo cimitero"
+    }
+  ],
+  "abilitis": [
+    {
+      "name": "Volare",
+      "description": "puo essere bloccato solo da creature con volare o raggiungere"
+    }
+  ],
+  "mana_cost": {
+    "COLOR_LESS": 3,
+    "RED": 1
+  },
+  "strength": {
+    "power": 4,
+    "toughness": 2
+  }
+}

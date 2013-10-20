@@ -1,0 +1,22 @@
+{
+  "type": "Sorcery",
+  "name": "Marchio dell\u0027Ammutinamento",
+  "card_color": {
+    "colors": [
+      "RED"
+    ],
+    "type": "MONO_COLOR"
+  },
+  "rarity": "NON_COMMON",
+  "series": "m13",
+  "sub_type": "",
+  "is_artifact": false,
+  "is_legendary": false,
+  "primary_effect": "Prendi il controllo di una creatura bersaglio fino alla fine del turno. Metti un segnalino +1/+1 su di essa, STAPpala e guadagna rapidità fino alla fine del turno",
+  "effects": [],
+  "abilitis": [],
+  "mana_cost": {
+    "COLOR_LESS": 2,
+    "RED": 1
+  }
+}

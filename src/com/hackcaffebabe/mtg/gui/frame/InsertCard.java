@@ -63,13 +63,8 @@ public class InsertCard extends JFrame
 		
 		JMenu edit = new JMenu( "Edit" );
 		
-		JMenu help = new JMenu( "Help" );
-		JMenuItem helpAbout = new JMenuItem( "About" );
-		help.add( helpAbout );
-		
 		bar.add( file );
 		bar.add( edit );
-		bar.add( help );
 		setJMenuBar( bar );
 	}
 	

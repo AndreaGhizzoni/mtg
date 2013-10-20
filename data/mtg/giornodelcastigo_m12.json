@@ -1,0 +1,22 @@
+{
+  "type": "Sorcery",
+  "name": "Giorno del Castigo",
+  "card_color": {
+    "colors": [
+      "WHITE"
+    ],
+    "type": "MONO_COLOR"
+  },
+  "rarity": "RARE",
+  "series": "m12",
+  "sub_type": "",
+  "is_artifact": false,
+  "is_legendary": false,
+  "primary_effect": "Distruggi tutte le creature",
+  "effects": [],
+  "abilitis": [],
+  "mana_cost": {
+    "WHITE": 2,
+    "COLOR_LESS": 2
+  }
+}

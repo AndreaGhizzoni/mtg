@@ -1,0 +1,43 @@
+{
+  "type": "Creature",
+  "name": "Arconte Celeste",
+  "card_color": {
+    "colors": [
+      "WHITE"
+    ],
+    "type": "MONO_COLOR"
+  },
+  "rarity": "RARE",
+  "series": "theros",
+  "sub_type": "Incantesimo Arcomante",
+  "is_artifact": false,
+  "is_legendary": false,
+  "primary_effect": "La creatura incantata prende +4/+4 e ha volare e attacco improvviso",
+  "effects": [
+    {
+      "mana_cost": {
+        "WHITE": 2,
+        "COLOR_LESS": 5
+      },
+      "text": "Conferire: se lanci questa carta con il costo di conferirie è una magia Aura con incanta creatura. Diventa una creatura se non assegnata ad una creatura."
+    }
+  ],
+  "abilitis": [
+    {
+      "name": "Attacco Improvviso",
+      "description": "infligge danno prima della creatura in difesa"
+    },
+    {
+      "name": "Volare",
+      "description": "puo essere bloccato solo da creature con volare o raggiungere"
+    }
+  ],
+  "mana_cost": {
+    "WHITE": 2,
+    "COLOR_LESS": 3
+  },
+  "strength": {
+    "power": 4,
+    "toughness": 4
+  }
+}
