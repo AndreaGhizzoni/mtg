@@ -1,0 +1,41 @@
+{
+  "type": "Creature",
+  "name": "Aurelia, la Condottiera",
+  "card_color": {
+    "colors": [
+      "WHITE",
+      "RED"
+    ],
+    "type": "MULTI_COLOR"
+  },
+  "rarity": "MYTHIC",
+  "series": "labirinto del drago",
+  "sub_type": "Angelo",
+  "is_artifact": false,
+  "is_legendary": true,
+  "primary_effect": "Ogniqualvolta Aurelia, la Condottiera attacca per la prima volta in un turno, STAPpa tutte le creature che controlli. Dopo questa fase, c\u0027è una fase di combattimanto addizzionale.",
+  "effects": [],
+  "abilitis": [
+    {
+      "name": "Rapidita",
+      "description": "la creatura puo attaccare e tappare appena entrata in campo"
+    },
+    {
+      "name": "Volare",
+      "description": "puo essere bloccato solo da creature con volare o raggiungere"
+    },
+    {
+      "name": "Cautela",
+      "description": "La creatura non TAPpa quando attacca."
+    }
+  ],
+  "mana_cost": {
+    "WHITE": 2,
+    "COLOR_LESS": 2,
+    "RED": 2
+  },
+  "strength": {
+    "power": 3,
+    "toughness": 4
+  }
+}

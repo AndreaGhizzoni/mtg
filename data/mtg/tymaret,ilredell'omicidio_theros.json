@@ -1,0 +1,42 @@
+{
+  "type": "Creature",
+  "name": "Tymaret, il Re dell\u0027Omicidio",
+  "card_color": {
+    "colors": [
+      "BLACK",
+      "RED"
+    ],
+    "type": "MULTI_COLOR"
+  },
+  "rarity": "RARE",
+  "series": "theros",
+  "sub_type": "Guerriero Zombie",
+  "is_artifact": false,
+  "is_legendary": true,
+  "primary_effect": "",
+  "effects": [
+    {
+      "mana_cost": {
+        "BLACK": 1,
+        "COLOR_LESS": 1
+      },
+      "text": "Sacrifica un\u0027altra creatura: Riprendi in mano Tymaret dal tuo cimitero."
+    },
+    {
+      "mana_cost": {
+        "COLOR_LESS": 1,
+        "RED": 1
+      },
+      "text": "Sacrifica un\u0027altra creatura: Tymaret, il Redell\u0027Omicidio infligge 2 danni ad un giocatore bersaglio."
+    }
+  ],
+  "abilitis": [],
+  "mana_cost": {
+    "BLACK": 1,
+    "RED": 1
+  },
+  "strength": {
+    "power": 2,
+    "toughness": 2
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "type": "Enchantment",
+  "name": "Iniziativa della Legione",
+  "card_color": {
+    "colors": [
+      "WHITE",
+      "RED"
+    ],
+    "type": "MULTI_COLOR"
+  },
+  "rarity": "MYTHIC",
+  "series": "labirinto del drago",
+  "sub_type": "",
+  "is_artifact": false,
+  "is_legendary": false,
+  "primary_effect": "Le creature rosse che controlli prendono +1/+0. Le creature bianche che controlli prendono +0/+1.",
+  "effects": [
+    {
+      "mana_cost": {
+        "WHITE": 1,
+        "RED": 1
+      },
+      "text": "Esilia L\u0027iniziativa della Legione: esislia tutte le creature che controlli. All\u0027inizio del tuo prossimo combattimento, rimetti quelle creature sul campo di battaglia sotto il controllo dei rispettivi proprietari e quelle creature hanno rapidità fino alla fine del turno."
+    }
+  ],
+  "abilitis": [],
+  "mana_cost": {
+    "WHITE": 1,
+    "RED": 1
+  }
+}

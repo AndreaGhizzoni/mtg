@@ -1,13 +1,13 @@
 package com.hackcaffebabe.mtg;
 
+import static com.hackcaffebabe.mtg.gui.GUIUtils.displayError;
 import java.io.File;
 import java.io.PrintStream;
-import it.hackcaffebabe.logger.Logger;
-import it.hackcaffebabe.logger.Tag;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import it.hackcaffebabe.logger.Logger;
+import it.hackcaffebabe.logger.Tag;
 import com.hackcaffebabe.mtg.controller.DBCostants;
-import com.hackcaffebabe.mtg.gui.GUIUtils;
 import com.hackcaffebabe.mtg.gui.frame.*;
 import com.hackcaffebabe.mtg.controller.json.StoreManager;
 
@@ -21,23 +21,24 @@ import com.hackcaffebabe.mtg.controller.json.StoreManager;
 public class LauncherMTG
 {
 	public static void main(String... args){
-		SwingUtilities.invokeLater( new Runnable(){
-			@Override
-			public void run(){
-				try {
-					initLogger();
-					initDB();
-					initUIManager();
+		try {
+			initLogger();
+			initDB();
+			initUIManager();
+			SwingUtilities.invokeLater( new Runnable(){
+				@Override
+				public void run(){
 					new MTG().setVisible( true );
 				}
-				catch(Exception e) {
-					String s = String.format( "%s\nLog is reported.", e.getMessage() );
-					Logger.getInstance().write( Tag.ERRORS, e.getMessage() );
-					GUIUtils.displayError( null, s );
-					e.printStackTrace(Logger.getInstance().getPrintStream());
-				}
-			}
-		} );
+			} );
+			
+		}
+		catch(Exception e) {
+			String s = String.format( "%s\nLog is reported.", e.getMessage() );
+			Logger.getInstance().write( Tag.ERRORS, e.getMessage() );
+			displayError( null, s );
+			e.printStackTrace(Logger.getInstance().getPrintStream());
+		}
 	}
 
 	private static void initLogger() throws Exception{

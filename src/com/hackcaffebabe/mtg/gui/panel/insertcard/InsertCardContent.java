@@ -83,7 +83,7 @@ public class InsertCardContent extends JPanel
 
 		// =========================== TYPE CARD PANEL ===========================
 		JPanel pnlTypeCard = new JPanel();
-		pnlTypeCard.setBorder( new TitledBorder( null, "Type", TitledBorder.LEADING, TitledBorder.TOP, null, null ) );
+		pnlTypeCard.setBorder( new TitledBorder( "Type" ) );
 		pnlTypeCard.setLayout( new MigLayout( "", "[grow][grow][grow][grow][grow][grow][grow]", "[]" ) );
 		add( pnlTypeCard, "cell 0 0 2 1,grow" );
 
@@ -134,7 +134,7 @@ public class InsertCardContent extends JPanel
 		mtgCardType.add( rdbInstant );
 
 		// =========================== MTG PANEL ===========================
-		pnlMTG.setBorder( new TitledBorder( null, "Card Info", TitledBorder.LEADING, TitledBorder.TOP, null, null ) );
+		pnlMTG.setBorder( new TitledBorder( "Card Info" ) );
 		pnlMTG.setLayout( new MigLayout( "", "[grow][grow][grow][grow][grow][grow][100px:n,grow][29.00px:n]",
 				"[][][][][::100,grow][::100,grow][28!][][::100,grow][::100,grow][][][grow]" ) );
 
@@ -174,7 +174,6 @@ public class InsertCardContent extends JPanel
 		add( pnlMTG, "cell 0 1 2 1,grow" );
 
 		JPanel pnlOptions = new JPanel();
-		pnlOptions.setBorder( new TitledBorder( null, "Options", TitledBorder.LEADING, TitledBorder.TOP, null, null ) );
 		pnlOptions.setLayout( new MigLayout( "", "[grow][][grow]", "[]" ) );
 
 		this.btnClear = new JButton( "Clear" );

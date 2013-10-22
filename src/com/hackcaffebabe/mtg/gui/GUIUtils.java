@@ -60,7 +60,7 @@ public class GUIUtils
 	/** Dimension of advance search frame */
 	public static final Dimension DIMENSION_ADVANCE_SEARCH = new Dimension( 485, 190 );
 
-	/** Action Command */
+	/* Action Command */
 	public static final String AC_CREATURE = "creature";
 	public static final String AC_ARTIFACT = "artifact";
 	public static final String AC_PLANESWALKER = "planeswalker";
@@ -69,7 +69,19 @@ public class GUIUtils
 	public static final String AC_SORCERY = "sorcery";
 	public static final String AC_ENCHANTMENT = "enchantment";
 
-	/** Tool Tip */
+	/* Some document property used in MTGProperties */
+	public static final String DP_NAME = "name";
+	public static final String DP_MANA_COST = "mana_cost";
+	public static final String DP_CARD_COLOR = "card_color";
+	public static final String DP_RARITY = "rarity";
+	public static final String DP_PLANESWALKER_LIFE = "planeswalker_file";
+	public static final String DP_SERIES = "series";
+	public static final String DP_STRENGTH = "strength";
+	public static final String DP_TYPE = "type";
+	public static final String DP_SUB_TYPE = "sub_type";
+	public static final String DP_PRIMARY_EFFECT = "primary_effect";
+	
+	/* Tool Tip TODO maybe add some TP around the program */
 	public static final String TP_PANEL_CREATURE_INFO = "Creature strength like \"2/2\". Use * to indicate \"*/*\" or \"X/X\".";
 
 	/** Public access of JXStatsBar of Main frame */

@@ -1,0 +1,22 @@
+{
+  "type": "Instant",
+  "name": "Sdegno di Chandra",
+  "card_color": {
+    "colors": [
+      "RED"
+    ],
+    "type": "MONO_COLOR"
+  },
+  "rarity": "COMMON",
+  "series": "m14",
+  "sub_type": "",
+  "is_artifact": false,
+  "is_legendary": false,
+  "primary_effect": "Lo sdegno di chandra infligge 4 danni ad una creatura bersaglio e 2 danni al suo controllore.",
+  "effects": [],
+  "abilitis": [],
+  "mana_cost": {
+    "COLOR_LESS": 2,
+    "RED": 2
+  }
+}

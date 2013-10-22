@@ -1,6 +1,5 @@
 package com.hackcaffebabe.mtg.gui.panel.mtg;
 
-import static com.hackcaffebabe.mtg.gui.GUIUtils.STATUS_BAR_MAIN_FRAME;
 import it.hackcaffebabe.jx.table.JXTable;
 import it.hackcaffebabe.jx.table.JXTableColumnAdjuster;
 import it.hackcaffebabe.jx.table.model.DisplayableObject;
@@ -21,6 +20,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.TableCellRenderer;
 import net.miginfocom.swing.MigLayout;
+import com.hackcaffebabe.mtg.gui.GUIUtils;
 import com.hackcaffebabe.mtg.model.*;
 import com.hackcaffebabe.mtg.model.card.*;
 
@@ -34,9 +34,11 @@ import com.hackcaffebabe.mtg.model.card.*;
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.3
  */
-public class MTGPropertiesV2 extends JPanel
+public class MTGProperties extends JPanel
 {
 	private static final long serialVersionUID = 1L;
+	
+	private CheckerCard checkerCardDL = new CheckerCard();
 
 	private JTextField txtName = new JTextField();
 	private JTextField txtManaCost = new JTextField();
@@ -68,9 +70,9 @@ public class MTGPropertiesV2 extends JPanel
 	/**
 	 * Create the panel.
 	 */
-	public MTGPropertiesV2(){
+	public MTGProperties(){
 		super();
-		setBorder( new TitledBorder( null, "MTG Properties", TitledBorder.LEADING, TitledBorder.TOP, null, null ) );
+		setBorder( new TitledBorder( "MTG Properties" ) );
 		setLayout( new MigLayout( "", "[44.00][38.00][180.00][100.00][grow]", "[][][][][][][][150px,grow][][:96.00:100,grow][150px][]" ) );
 		this.initContent();
 	}
@@ -81,52 +83,52 @@ public class MTGPropertiesV2 extends JPanel
 	/* initialize all the content */
 	private void initContent(){
 		add( new JLabel( "Name:" ), "cell 0 0,alignx right" );
-		this.txtName.getDocument().addDocumentListener( new CheckerCard() );
-		this.txtName.getDocument().putProperty( CheckerCard.DOCUMENT_NAME, "name" );
+		this.txtName.getDocument().addDocumentListener( this.checkerCardDL );
+		this.txtName.getDocument().putProperty( CheckerCard.DOCUMENT_NAME, GUIUtils.DP_NAME );
 		add( this.txtName, "cell 1 0 4 1,growx" );
 
 		add( new JLabel( "Mana Cost:" ), "cell 0 1,alignx right" );
-		this.txtManaCost.getDocument().addDocumentListener( new CheckerCard() );
-		this.txtManaCost.getDocument().putProperty( CheckerCard.DOCUMENT_NAME, "mana_cost" );
+		this.txtManaCost.getDocument().addDocumentListener( this.checkerCardDL );
+		this.txtManaCost.getDocument().putProperty( CheckerCard.DOCUMENT_NAME, GUIUtils.DP_MANA_COST );
 		add( this.txtManaCost, "cell 1 1 3 1,growx" );
 
 		add( new JLabel( "Card Color:" ), "cell 0 2,alignx right" );
-		this.txtCardColor.getDocument().addDocumentListener( new CheckerCard() );
-		this.txtCardColor.getDocument().putProperty( CheckerCard.DOCUMENT_NAME, "card_color" );
+		this.txtCardColor.getDocument().addDocumentListener( this.checkerCardDL );
+		this.txtCardColor.getDocument().putProperty( CheckerCard.DOCUMENT_NAME, GUIUtils.DP_MANA_COST );
 		add( this.txtCardColor, "cell 1 2 3 1,growx" );
 
 		add( new JLabel( "Rarity:" ), "cell 0 3,alignx right" );
-		this.txtRarity.getDocument().addDocumentListener( new CheckerCard() );
-		this.txtRarity.getDocument().putProperty( CheckerCard.DOCUMENT_NAME, "rarity" );
+		this.txtRarity.getDocument().addDocumentListener( this.checkerCardDL );
+		this.txtRarity.getDocument().putProperty( CheckerCard.DOCUMENT_NAME, GUIUtils.DP_RARITY );
 		add( this.txtRarity, "cell 1 3 2 1,growx" );
 
 		add( new JLabel( "PW Life:" ), "cell 3 3,alignx trailing" );
-		this.txtPlaneswalkerLife.getDocument().addDocumentListener( new CheckerCard() );
-		this.txtPlaneswalkerLife.getDocument().putProperty( CheckerCard.DOCUMENT_NAME, "planeswalker_file" );
+		this.txtPlaneswalkerLife.getDocument().addDocumentListener( this.checkerCardDL );
+		this.txtPlaneswalkerLife.getDocument().putProperty( CheckerCard.DOCUMENT_NAME, GUIUtils.DP_PLANESWALKER_LIFE );
 		add( this.txtPlaneswalkerLife, "cell 4 3,growx" );
 
 		add( new JLabel( "Series:" ), "cell 0 4,alignx trailing" );
-		this.txtSeries.getDocument().addDocumentListener( new CheckerCard() );
-		this.txtSeries.getDocument().putProperty( CheckerCard.DOCUMENT_NAME, "series" );
+		this.txtSeries.getDocument().addDocumentListener( this.checkerCardDL );
+		this.txtSeries.getDocument().putProperty( CheckerCard.DOCUMENT_NAME, GUIUtils.DP_SERIES );
 		add( this.txtSeries, "cell 1 4 2 1,growx" );
 
 		add( new JLabel( "Strength:" ), "cell 3 4,alignx trailing" );
-		this.txtStrenght.getDocument().addDocumentListener( new CheckerCard() );
-		this.txtStrenght.getDocument().putProperty( CheckerCard.DOCUMENT_NAME, "strength" );
+		this.txtStrenght.getDocument().addDocumentListener( this.checkerCardDL );
+		this.txtStrenght.getDocument().putProperty( CheckerCard.DOCUMENT_NAME, GUIUtils.DP_STRENGTH );
 		add( this.txtStrenght, "cell 4 4,growx" );
 
 		add( new JLabel( "Type:" ), "cell 0 5,alignx right" );
-		this.txtType.getDocument().addDocumentListener( new CheckerCard() );
-		this.txtType.getDocument().putProperty( CheckerCard.DOCUMENT_NAME, "type" );
+		this.txtType.getDocument().addDocumentListener( this.checkerCardDL );
+		this.txtType.getDocument().putProperty( CheckerCard.DOCUMENT_NAME, GUIUtils.DP_TYPE );
 		add( this.txtType, "cell 1 5 3 1,growx" );
 
 		add( new JLabel( "Sub Type:" ), "cell 0 6,alignx right" );
-		this.txtSubType.getDocument().addDocumentListener( new CheckerCard() );
-		this.txtSubType.getDocument().putProperty( CheckerCard.DOCUMENT_NAME, "sub_type" );
+		this.txtSubType.getDocument().addDocumentListener( this.checkerCardDL );
+		this.txtSubType.getDocument().putProperty( CheckerCard.DOCUMENT_NAME, GUIUtils.DP_SUB_TYPE );
 		add( this.txtSubType, "cell 1 6 3 1,growx" );
 
 		JPanel pnlAbility = new JPanel();
-		pnlAbility.setBorder( new TitledBorder( null, "Ability:", TitledBorder.LEADING, TitledBorder.TOP, null, null ) );
+		pnlAbility.setBorder( new TitledBorder( "Ability:" ) );
 		pnlAbility.setLayout( new MigLayout( "", "[grow][50!]", "[grow][grow]" ) );
 		this.tableAbility = new JXTable( new JXObjectModel<DisplayableObject>() );
 		this.tableColumnAdjusterAbility = new JXTableColumnAdjuster( this.tableAbility );
@@ -142,14 +144,13 @@ public class MTGPropertiesV2 extends JPanel
 		pnlAbility.add( this.btnDelAbility, "cell 1 1,growx,aligny center" );
 
 		add( new JLabel( "Primary Effect:" ), "cell 0 8 2 1" );
-		this.textPrimaryEffects.getDocument().addDocumentListener( new CheckerCard() );
-		this.textPrimaryEffects.getDocument().putProperty( CheckerCard.DOCUMENT_NAME, "primary_effect" );
+		this.textPrimaryEffects.getDocument().addDocumentListener( this.checkerCardDL );
+		this.textPrimaryEffects.getDocument().putProperty( CheckerCard.DOCUMENT_NAME, GUIUtils.DP_PRIMARY_EFFECT );
 		this.textPrimaryEffects.setLineWrap( true );
-		JScrollPane scrollPane = new JScrollPane( this.textPrimaryEffects );
-		add( scrollPane, "cell 2 8 3 2,grow" );
+		add( new JScrollPane( this.textPrimaryEffects ), "cell 2 8 3 2,grow" );
 
 		JPanel pnlOtherEffects = new JPanel();
-		pnlOtherEffects.setBorder( new TitledBorder( null, "Other Effects:", TitledBorder.LEADING, TitledBorder.TOP, null, null ) );
+		pnlOtherEffects.setBorder( new TitledBorder( "Other Effects:" ) );
 		pnlOtherEffects.setLayout( new MigLayout( "", "[grow][50!]", "[grow][grow]" ) );
 		this.tableEffects = new JXTable( new JXObjectModel<Effect>() );
 		this.tableColumnAdjusterEffects = new JXTableColumnAdjuster( this.tableEffects );
@@ -304,13 +305,17 @@ public class MTGPropertiesV2 extends JPanel
 		this.btnAddAbility.setEnabled( true );
 		this.btnAddEffect.setEnabled( true );
 		this.displayedMTGCard = c;// this is necessary for all the documents listener.
-		STATUS_BAR_MAIN_FRAME.setStatus( c.getName() );
+		GUIUtils.STATUS_BAR_MAIN_FRAME.setStatus( c.getName() );
 	}
 
 //===========================================================================================
 // INNER CLASS
 //===========================================================================================
-	/* Document that listen on all JTextField in the panel */
+	/* 
+	 * Document that listen on all JTextField in the panel 
+	 * TODO maybe this Document Listener can moved on separate file? 
+	 * TODO maybe this class can implements ActionListener too. In this way i can add this btnApplyUpdate and manage the update here.
+	 */
 	private class CheckerCard implements DocumentListener
 	{
 		public static final String DOCUMENT_NAME = "name";

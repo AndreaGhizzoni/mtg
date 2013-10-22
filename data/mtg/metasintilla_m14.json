@@ -1,0 +1,31 @@
+{
+  "type": "Creature",
+  "name": "Metasintilla",
+  "card_color": {
+    "colors": [
+      "RED"
+    ],
+    "type": "MONO_COLOR"
+  },
+  "rarity": "RARE",
+  "series": "m14",
+  "sub_type": "Elementale",
+  "is_artifact": false,
+  "is_legendary": false,
+  "primary_effect": "Ogniqualvolta un avversario lancia una magia istantaneo o stregoneria bianca o blu, il Metascintilla infligge 2 danni a quel giocatore.",
+  "effects": [],
+  "abilitis": [
+    {
+      "name": "Attacco Improvviso",
+      "description": "infligge danno prima della creatura in difesa"
+    }
+  ],
+  "mana_cost": {
+    "COLOR_LESS": 1,
+    "RED": 2
+  },
+  "strength": {
+    "power": 3,
+    "toughness": 2
+  }
+}

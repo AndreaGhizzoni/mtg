@@ -1,0 +1,21 @@
+{
+  "type": "Sorcery",
+  "name": "Granata Goblin",
+  "card_color": {
+    "colors": [
+      "RED"
+    ],
+    "type": "MONO_COLOR"
+  },
+  "rarity": "NON_COMMON",
+  "series": "m12",
+  "sub_type": "",
+  "is_artifact": false,
+  "is_legendary": false,
+  "primary_effect": "Come costo addizionale per lanciare la Granata Goblin sacrifica un Goblin.\nLa granata goblin infligge 5 danni ad una creatura o ad un giocatore bersaglio.",
+  "effects": [],
+  "abilitis": [],
+  "mana_cost": {
+    "RED": 1
+  }
+}

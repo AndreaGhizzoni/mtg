@@ -43,7 +43,7 @@ public class MTGContent extends JPanel
 	private JXTableColumnAdjuster tableAdjuster;
 	private MTGCardListSelectionListener tableSelectionListener = new MTGCardListSelectionListener();
 
-	private MTGPropertiesV2 pnlMTGPropreties;
+	private MTGProperties pnlMTGPropreties;
 
 	private JPanel pnlSearch;
 	private JTextField txtSearch;
@@ -72,7 +72,7 @@ public class MTGContent extends JPanel
 	private void initContent(){
 		// MTG search
 		this.pnlSearch = new JPanel();
-		this.pnlSearch.setBorder( new TitledBorder( null, "Card Search by String:", TitledBorder.LEADING, TitledBorder.TOP, null, null ) );
+		this.pnlSearch.setBorder( new TitledBorder( "Card Search by String:" ) );
 		this.pnlSearch.setLayout( new MigLayout( "", "[grow][150!]", "[]" ) );
 		add( this.pnlSearch, "cell 0 1,grow" );
 
@@ -92,7 +92,7 @@ public class MTGContent extends JPanel
 		this.pnlSearch.add( this.btnAdvanceSearch, "cell 1 0,growx,aligny top" );
 
 		// MTG list panel
-		this.pnlMTGList.setBorder( new TitledBorder( null, "MTG Cards", TitledBorder.LEADING, TitledBorder.TOP, null, null ) );
+		this.pnlMTGList.setBorder( new TitledBorder( "MTG Cards" ) );
 		this.pnlMTGList.setLayout( new MigLayout( "", "[grow]", "[grow]" ) );
 		add( this.pnlMTGList, "cell 0 0 1 1,grow" );
 
@@ -106,8 +106,8 @@ public class MTGContent extends JPanel
 		pnlMTGList.add( new JScrollPane( this.tableMTG ), "cell 0 0,grow" );
 
 		// MTG card properties
-		this.pnlMTGPropreties = new MTGPropertiesV2();
-		this.pnlMTGPropreties.setBorder( new TitledBorder( null, "MTG Properties", TitledBorder.LEADING, TitledBorder.TOP, null, null ) );
+		this.pnlMTGPropreties = new MTGProperties();
+		this.pnlMTGPropreties.setBorder( new TitledBorder( "MTG Properties" ) );
 		add( this.pnlMTGPropreties, "cell 1 0 2 1,grow" );
 
 		// button

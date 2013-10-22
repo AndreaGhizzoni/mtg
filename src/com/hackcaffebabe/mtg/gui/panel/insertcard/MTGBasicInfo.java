@@ -50,7 +50,7 @@ public class MTGBasicInfo extends JPanel
 	 */
 	public MTGBasicInfo(){
 		super();
-		setBorder( new TitledBorder( null, "Basic Info", TitledBorder.LEADING, TitledBorder.TOP, null, null ) );
+		setBorder( new TitledBorder( "Basic Info" ) );
 		setLayout( new MigLayout( "", "[][][][][][grow][][47.00,grow][grow]", "[][][]" ) );
 		this.initContent();
 	}

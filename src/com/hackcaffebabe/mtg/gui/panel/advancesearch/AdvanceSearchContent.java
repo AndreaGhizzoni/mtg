@@ -67,7 +67,7 @@ public class AdvanceSearchContent extends JPanel
 		setLayout( new MigLayout( "", "[52.00][100.00][83.00][27.00][190.00]", "[][][][]" ) );
 		this.initContent();
 		setFocusTraversalPolicy( new FocusTraversalOnArray( new Component[] { chbBlack, chbGreen, chbRed, chbBlue, chbWhite, cmbRarity, cmbSeries,
-				chbIsLegendary, chbHasPrimaryeffect, chbHasEffect, chbHasAbility, spinManaCost } ) );//TODO this doesn't work properly
+				chbIsLegendary, chbHasPrimaryeffect, chbHasEffect, chbHasAbility, spinManaCost } ) );
 	}
 
 //===========================================================================================
@@ -77,7 +77,7 @@ public class AdvanceSearchContent extends JPanel
 	private void initContent(){
 		// Color
 		JPanel pnlCardColor = new JPanel();
-		pnlCardColor.setBorder( new TitledBorder( null, "Color", TitledBorder.LEADING, TitledBorder.TOP, null, null ) );
+		pnlCardColor.setBorder( new TitledBorder( "Color" ) );
 		pnlCardColor.setLayout( new MigLayout( "", "[][][][][]", "[]" ) );
 		add( pnlCardColor, "cell 0 0 4 1,grow" );
 
@@ -109,7 +109,7 @@ public class AdvanceSearchContent extends JPanel
 
 		// Rarity
 		JPanel pnlRarity = new JPanel();
-		pnlRarity.setBorder( new TitledBorder( null, "Rarity", TitledBorder.LEADING, TitledBorder.TOP, null, null ) );
+		pnlRarity.setBorder( new TitledBorder( "Rarity" ) );
 		pnlRarity.setLayout( new MigLayout( "", "[]", "[]" ) );
 		add( pnlRarity, "cell 4 0,grow" );
 
@@ -119,7 +119,7 @@ public class AdvanceSearchContent extends JPanel
 
 		// Series
 		add( new JLabel( "Series:" ), "cell 0 1,alignx trailing" );
-		this.cmbSeries = new JComboBox<String>(getSeriesCB());
+		this.cmbSeries = new JComboBox<String>( getSeriesCB() );
 		this.cmbSeries.addActionListener( new SeriesActionListener() );
 		add( this.cmbSeries, "cell 1 1 2 1,growx" );
 
@@ -131,7 +131,7 @@ public class AdvanceSearchContent extends JPanel
 
 		// Converted Mana Cost
 		JPanel pnlConvertedManaCost = new JPanel();
-		pnlConvertedManaCost.setBorder( new TitledBorder( null, "Conv. Mana Cost", TitledBorder.LEADING, TitledBorder.TOP, null, null ) );
+		pnlConvertedManaCost.setBorder( new TitledBorder( "Conv. Mana Cost" ) );
 		pnlConvertedManaCost.setLayout( new MigLayout( "", "[168.00]", "[]" ) );
 		add( pnlConvertedManaCost, "cell 4 2 1 2,grow" );
 
@@ -197,11 +197,11 @@ public class AdvanceSearchContent extends JPanel
 	private DefaultComboBoxModel<String> getSeriesCB(){
 		DefaultComboBoxModel<String> s = new DefaultComboBoxModel<>();
 		s.addElement( "-------------" );
-		for(String a : StoreManager.getInstance().getInsertedSeries() )
+		for(String a: StoreManager.getInstance().getInsertedSeries())
 			s.addElement( a );
 		return s;
 	}
-	
+
 //	/* return the type as combo box model. */
 //	private DefaultComboBoxModel<String> getTypeCB(){
 //		DefaultComboBoxModel<String> s = new DefaultComboBoxModel<>();
@@ -265,11 +265,11 @@ public class AdvanceSearchContent extends JPanel
 		@Override
 		public void actionPerformed(ActionEvent e){
 			String sel = (String) cmbSeries.getSelectedItem();
-			criteria = criteria.bySeries( sel.equals( "-------------" )?null:sel );
+			criteria = criteria.bySeries( sel.equals( "-------------" ) ? null : sel );
 			applyCriteriaChanges();
 		}
 	}
-	
+
 	/* event on change the rarity */
 	private class RarityActionListener implements ActionListener
 	{

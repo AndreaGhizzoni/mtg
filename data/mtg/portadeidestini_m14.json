@@ -1,0 +1,19 @@
+{
+  "type": "Artifact",
+  "name": "Porta dei destini",
+  "card_color": {
+    "colors": [],
+    "type": "COLOR_LESS"
+  },
+  "rarity": "RARE",
+  "series": "m14",
+  "sub_type": "",
+  "is_artifact": true,
+  "is_legendary": false,
+  "primary_effect": "Mentre la Porta dei destini entre nel campo di battaglia dichiara un tipo di creatura. Ogniqualvolta lanci una magia di quel tipo metti un segnalino carica. Le creature che controlli del tipo scelto prendono +1/+1 pre ogni segnalino carica sulla Porta dei destini.",
+  "effects": [],
+  "abilitis": [],
+  "mana_cost": {
+    "COLOR_LESS": 4
+  }
+}

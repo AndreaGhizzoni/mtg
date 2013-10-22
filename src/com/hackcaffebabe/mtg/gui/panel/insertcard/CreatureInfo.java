@@ -32,7 +32,7 @@ public class CreatureInfo extends JPanel
 	 */
 	public CreatureInfo(){
 		super();
-		setBorder( new TitledBorder( null, "Creature Info", TitledBorder.LEADING, TitledBorder.TOP, null, null ) );
+		setBorder( new TitledBorder( "Creature Info" ) );
 		setLayout( new MigLayout( "", "[][grow][][grow]", "[pref!]" ) );
 		setToolTipText( GUIUtils.TP_PANEL_CREATURE_INFO );
 		this.initContent();
