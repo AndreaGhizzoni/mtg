@@ -25,12 +25,9 @@ import com.hackcaffebabe.mtg.model.*;
 import com.hackcaffebabe.mtg.model.card.*;
 
 
-
 /**
  * This panel shows the {@link MTGCard} properties.
  * 
- * TODO maybe replace txtRarity with a combo box
- *  
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.3
  */

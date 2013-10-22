@@ -3,6 +3,7 @@ package com.hackcaffebabe.mtg.model.card;
 import java.util.Arrays;
 import java.util.List;
 
+
 /**
  * Represents the rarity of MTG card.
  *   
@@ -12,33 +13,41 @@ import java.util.List;
 public enum Rarity
 {
 	/**The MTG Common Rarity*/
-	COMMON( 0 ),
+	COMMON(0),
 	/**The MTG Non-Common Rarity*/
-	NON_COMMON( 1 ),
+	NON_COMMON(1),
 	/**The MTG Rare Rarity*/
-	RARE( 2 ),
+	RARE(2),
 	/**The MTG Mythic Rarity*/
-	MYTHIC( 3 );
-	
+	MYTHIC(3);
+
 	private int value;
-	
-	Rarity( int i ){
+
+	Rarity(int i){
 		this.value = i;
 	}
-	
-	
+
 	/**
 	 * Returns the amount of Rarity.
 	 * @return {@link Integer} the amount value.
 	 */
-	public int getValue(){ return this.value; }
-	
-	
+	public int getValue(){
+		return this.value;
+	}
+
 	/**
 	 * Return all the Rarity of MTG cards. 
 	 * @return {@link List} of the Rarity of MTG card.
 	 */
 	public static List<Rarity> getAllRarity(){
-		return Arrays.asList( COMMON, NON_COMMON, RARE , MYTHIC );
+		return Arrays.asList( COMMON, NON_COMMON, RARE, MYTHIC );
+	}
+
+	/**
+	 * Return all the Rarity of MTG cards as a list of Strings.
+	 * @return {@link List} of the Rarity of MTG card.
+	 */
+	public static List<String> getAllRarityAsStrings(){
+		return Arrays.asList( COMMON.toString(), NON_COMMON.toString(), RARE.toString(), MYTHIC.toString() );
 	}
 }

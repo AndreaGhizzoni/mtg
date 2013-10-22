@@ -3,6 +3,8 @@ package com.hackcaffebabe.mtg.gui.frame;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.*;
 import it.hackcaffebabe.ioutil.file.PathUtil;
 import it.hackcaffebabe.jx.statusbar.JXStatusBar;
+import it.hackcaffebabe.logger.Logger;
+import it.hackcaffebabe.logger.Tag;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -111,8 +113,9 @@ public class MTG extends JFrame
 	
 	/* Close the frame */
 	public void close(){ 
-		dispose(); //TODO maybe log the exit
-		System.exit( 0 );		
+		dispose();
+		Logger.getInstance().write( Tag.INFO, "Program will exit." );
+		System.exit( 0 );
 	}
 	
 //===========================================================================================
