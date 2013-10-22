@@ -13,7 +13,6 @@ import com.hackcaffebabe.mtg.controller.json.StoreManager;
 
 
 /**
- * asd
  * Class to launch the program
  *  
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com

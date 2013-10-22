@@ -1,4 +1,4 @@
-package com.hackcaffebabe.mtg.gui.panel.listener;
+package com.hackcaffebabe.mtg.gui.listener;
 
 import static com.hackcaffebabe.mtg.gui.GUIUtils.showEffectDialog;
 import it.hackcaffebabe.jx.table.JXTable;

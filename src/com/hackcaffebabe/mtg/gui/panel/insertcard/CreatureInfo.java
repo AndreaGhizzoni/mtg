@@ -38,6 +38,7 @@ public class CreatureInfo extends JPanel
 		this.initContent();
 	}
 
+	/* initialize all components */
 	private void initContent(){
 		add( new JLabel( "Power:" ), "cell 0 0,alignx left" );
 		add( new JLabel( "Toughness:" ), "cell 2 0,alignx left" );

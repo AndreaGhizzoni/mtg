@@ -11,7 +11,7 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.KeyStroke;
 import com.hackcaffebabe.mtg.controller.json.StoreManager;
-import com.hackcaffebabe.mtg.gui.panel.listener.BasicColorActionListener;
+import com.hackcaffebabe.mtg.gui.listener.BasicColorActionListener;
 import com.hackcaffebabe.mtg.model.card.Rarity;
 import com.hackcaffebabe.mtg.model.color.BasicColors;
 import com.hackcaffebabe.mtg.model.color.CardColor;
@@ -55,6 +55,7 @@ public class MTGBasicInfo extends JPanel
 		this.initContent();
 	}
 
+	/* initialize all components */
 	private void initContent(){
 		add( new JLabel( "Name:" ), "cell 0 0,alignx trailing" );
 		this.txtName = new JTextField();

@@ -1,4 +1,4 @@
-package com.hackcaffebabe.mtg.gui.panel.listener;
+package com.hackcaffebabe.mtg.gui.listener;
 
 import it.hackcaffebabe.jx.table.JXTable;
 import it.hackcaffebabe.jx.table.JXTableColumnAdjuster;

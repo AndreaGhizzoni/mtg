@@ -25,14 +25,18 @@ public class ManaCostInfo extends JPanel
 
 	private ManaCost viewManaCost = null;
 
+	/**
+	 * Create the Panel to get {@link ManaCost} from user.
+	 */
 	public ManaCostInfo(){
 		super();
 		setBorder( new TitledBorder( "Mana Cost Info" ) );
 		setLayout( new MigLayout( "", "[grow][]", "[]" ) );
-		this.initConten();
+		this.initContent();
 	}
 
-	private void initConten(){
+	/* initialize all components */
+	private void initContent(){
 		this.txtManaCost = new JTextField();
 		this.txtManaCost.setEditable( false );
 		add( txtManaCost, "cell 0 0,growx" );

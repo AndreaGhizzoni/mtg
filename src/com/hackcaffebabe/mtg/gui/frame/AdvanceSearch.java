@@ -32,9 +32,10 @@ public class AdvanceSearch extends JFrame
 //===========================================================================================
 // METHOD
 //===========================================================================================
-	/* Initialize the content */
+	/* initialize all components */
 	private void initContent(JXTable t){
 		this.contentPane = new AdvanceSearchContent(t);
+		this.contentPane.setOpaque( true );
 		setContentPane( this.contentPane );
 	}
 }

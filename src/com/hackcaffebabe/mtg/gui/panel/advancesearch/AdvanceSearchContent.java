@@ -73,7 +73,7 @@ public class AdvanceSearchContent extends JPanel
 //===========================================================================================
 // METHOD
 //===========================================================================================
-	/* Initialize the content */
+	/* initialize all components */
 	private void initContent(){
 		// Color
 		JPanel pnlCardColor = new JPanel();

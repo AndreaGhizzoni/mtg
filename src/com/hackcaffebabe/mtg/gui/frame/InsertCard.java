@@ -38,17 +38,14 @@ public class InsertCard extends JFrame
 //===========================================================================================
 // METHOD
 //===========================================================================================
-	/*
-	 * Initialize the content
-	 */
+	/* initialize all components */
 	private void initContent(MTGContent c){
 		this.content = new InsertCardContent(c);
+		this.content.setOpaque( true );
 		setContentPane( this.content );
 	}
 	
-	/*
-	 * Initialize the menu bar
-	 */
+	/* Initialize the menu bar */
 	private void initMenuBar(){
 		JMenuBar bar = new JMenuBar();
 		

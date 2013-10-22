@@ -21,8 +21,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.TableCellRenderer;
 import net.miginfocom.swing.MigLayout;
 import com.hackcaffebabe.mtg.gui.GUIUtils;
-import com.hackcaffebabe.mtg.gui.panel.listener.DelAbilityActionListener;
-import com.hackcaffebabe.mtg.gui.panel.listener.DelEffectActionListener;
+import com.hackcaffebabe.mtg.gui.listener.*;
 import com.hackcaffebabe.mtg.model.*;
 import com.hackcaffebabe.mtg.model.card.*;
 
@@ -73,13 +72,14 @@ public class MTGProperties extends JPanel
 		super();
 		setBorder( new TitledBorder( "MTG Properties" ) );
 		setLayout( new MigLayout( "", "[44.00][38.00][180.00][100.00][grow]", "[][][][][][][][150px,grow][][:96.00:100,grow][150px][]" ) );
+		setOpaque( true );
 		this.initContent();
 	}
 
 //===========================================================================================
 // METHOD
 //===========================================================================================
-	/* initialize all the content */
+	/* initialize all components */
 	private void initContent(){
 		add( new JLabel( "Name:" ), "cell 0 0,alignx right" );
 		this.txtName.getDocument().addDocumentListener( this.checkerCardDL );
@@ -158,6 +158,7 @@ public class MTGProperties extends JPanel
 		add( pnlOtherEffects, "cell 0 10 5 1,grow" );
 
 		this.btnAddEffect = new JButton( "+" );
+		this.btnAddEffect.addActionListener( new AddEffectActionListener( this, tableEffects, tableColumnAdjusterEffects ) );
 		this.btnAddEffect.setEnabled( false );
 		pnlOtherEffects.add( this.btnAddEffect, "cell 1 0,growx,aligny center" );
 

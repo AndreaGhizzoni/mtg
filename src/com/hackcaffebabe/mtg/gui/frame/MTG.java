@@ -55,11 +55,12 @@ public class MTG extends JFrame
 //===========================================================================================
 // METHOD
 //===========================================================================================
-	/* initialize all content */
+	/* initialize all components */
 	private void initContent(){
 		STATUS_BAR_MAIN_FRAME = new JXStatusBar( this, "Ready!", VERSION, 10 );
 		STATUS_BAR_MAIN_FRAME.setTextFont( new Font( Font.MONOSPACED, Font.PLAIN, 11 ) );
 		this.content = new MTGContent();
+		this.content.setOpaque( true );
 		setContentPane( this.content );
 		add( STATUS_BAR_MAIN_FRAME, BorderLayout.SOUTH );
 	}

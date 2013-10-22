@@ -28,9 +28,11 @@ public class PlaneswalkerInfo extends JPanel
 		super();
 		setBorder( new TitledBorder( "Planeswalker Info" ) );
 		setLayout( new MigLayout( "", "[][grow]", "[]" ) );
+		setOpaque( true );
 		this.initContent( start );
 	}
 
+	/* initialize all components */
 	private void initContent(int s){
 		add( new JLabel( "Life:" ), "cell 0 0,alignx trailing" );
 
