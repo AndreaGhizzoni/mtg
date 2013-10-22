@@ -21,7 +21,7 @@ import it.hackcaffebabe.jx.table.model.JXObjectModel;
 import it.hackcaffebabe.logger.Logger;
 import it.hackcaffebabe.logger.Tag;
 import com.hackcaffebabe.mtg.controller.json.StoreManager;
-import com.hackcaffebabe.mtg.gui.panel.insertcard.listener.*;
+import com.hackcaffebabe.mtg.gui.panel.listener.*;
 import com.hackcaffebabe.mtg.gui.panel.mtg.MTGContent;
 import com.hackcaffebabe.mtg.model.*;
 import com.hackcaffebabe.mtg.model.card.*;
@@ -161,7 +161,7 @@ public class InsertCardContent extends JPanel
 		this.tableEffectsColumnAdjuster = new JXTableColumnAdjuster( this.tableEffects );
 		pnlMTG.add( new JScrollPane( this.tableEffects ), "cell 0 8 7 2,grow" );
 		this.btnAddEffect = new JButton( "+" );
-		this.btnAddEffect.addActionListener( new AddEffectActionListener() );
+		this.btnAddEffect.addActionListener( new AddEffectActionListener( this, tableEffects, tableEffectsColumnAdjuster ) );
 		pnlMTG.add( this.btnAddEffect, "cell 7 8,alignx center,growy" );
 		this.btnDelEffect = new JButton( "X" );
 		this.btnDelEffect.addActionListener( new DelEffectActionListener( tableEffects, tableEffectsColumnAdjuster ) );
@@ -642,28 +642,6 @@ public class InsertCardContent extends JPanel
 					}
 					tableAbilityColumnAdjuster.adjustColumns();
 				}
-			}
-		}
-	}
-
-	/**
-	 * inner class that describe the action on btnAddEffect;
-	 */
-	public class AddEffectActionListener implements ActionListener
-	{
-		@Override
-		@SuppressWarnings("unchecked")
-		public void actionPerformed(ActionEvent e){
-			Effect ef = showEffectDialog( pnlMTG );
-			if(ef != null) {
-				JXObjectModel<Effect> model = (JXObjectModel<Effect>) tableEffects.getModel();
-				if(model.getRowCount() == 0) {
-					tableEffects.setModel( new JXObjectModel<Effect>( Arrays.asList( ef ) ) );
-				}
-				else {
-					model.addObject( ef );
-				}
-				tableEffectsColumnAdjuster.adjustColumns();
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-package com.hackcaffebabe.mtg.gui.panel.insertcard.listener;
+package com.hackcaffebabe.mtg.gui.panel.listener;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

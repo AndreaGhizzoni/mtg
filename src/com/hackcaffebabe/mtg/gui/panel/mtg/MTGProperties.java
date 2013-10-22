@@ -21,6 +21,8 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.TableCellRenderer;
 import net.miginfocom.swing.MigLayout;
 import com.hackcaffebabe.mtg.gui.GUIUtils;
+import com.hackcaffebabe.mtg.gui.panel.listener.DelAbilityActionListener;
+import com.hackcaffebabe.mtg.gui.panel.listener.DelEffectActionListener;
 import com.hackcaffebabe.mtg.model.*;
 import com.hackcaffebabe.mtg.model.card.*;
 
@@ -40,7 +42,7 @@ public class MTGProperties extends JPanel
 	private JTextField txtName = new JTextField();
 	private JTextField txtManaCost = new JTextField();
 	private JTextField txtCardColor = new JTextField();
-	private JTextField txtRarity = new JTextField();
+	private JTextField txtRarity = new JTextField();// TODO for rarity and series find a way to add multiple Document Listener
 	private JTextField txtType = new JTextField();
 	private JTextField txtSubType = new JTextField();
 	private JTextField txtPlaneswalkerLife = new JTextField();
@@ -138,6 +140,7 @@ public class MTGProperties extends JPanel
 
 		this.btnDelAbility = new JButton( "X" );
 		this.btnDelAbility.setEnabled( false );
+		this.btnDelAbility.addActionListener( new DelAbilityActionListener( this.tableAbility, this.tableColumnAdjusterAbility ) );
 		pnlAbility.add( this.btnDelAbility, "cell 1 1,growx,aligny center" );
 
 		add( new JLabel( "Primary Effect:" ), "cell 0 8 2 1" );
@@ -160,6 +163,7 @@ public class MTGProperties extends JPanel
 
 		this.btnDelEffect = new JButton( "X" );
 		this.btnDelEffect.setEnabled( false );
+		this.btnDelEffect.addActionListener( new DelEffectActionListener( this.tableEffects, this.tableColumnAdjusterEffects ) );
 		pnlOtherEffects.add( this.btnDelEffect, "cell 1 1,growx,aligny center" );
 
 		this.btnApplyUpdate = new JButton( "Apply Update" );

@@ -3,6 +3,7 @@ package com.hackcaffebabe.mtg.controller.json;
 import static com.hackcaffebabe.mtg.controller.DBCostants.*;
 import it.hackcaffebabe.ioutil.file.PathUtil;
 import it.hackcaffebabe.logger.*;
+import java.awt.EventQueue;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -82,14 +83,21 @@ public class StoreManager
 	}
 
 	/* Load existing JSON file */
-	private void load() throws IOException{
-		for(File f: new File( JSON_PATH ).listFiles()) {
-			FileReader br = new FileReader( f );
-			MTGCard c = g.fromJson( br, MTGCard.class );
-			mtgSet.add( c );
-			addSeriesToList( c );
-			br.close();
-		}
+	private void load(){
+		EventQueue.invokeLater( new Runnable(){
+			@Override
+			public void run(){
+				try{
+					for(File f: new File( JSON_PATH ).listFiles()) {
+						FileReader br = new FileReader( f );
+						MTGCard c = g.fromJson( br, MTGCard.class );
+						mtgSet.add( c );
+						addSeriesToList( c );
+						br.close();
+					}
+				}catch(IOException e){}//if throw continue
+			}
+		} );
 	}
 
 	/**

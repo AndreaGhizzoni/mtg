@@ -16,7 +16,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
-import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -126,19 +125,15 @@ public class MTGContent extends JPanel
 	public void refreshMTGTable(){
 		log.write( Tag.DEBUG, "Refreshing mtg card list" );
 		STATUS_BAR_MAIN_FRAME.setStatus( "Refreshing mtg card list..." );
-		SwingUtilities.invokeLater( new Runnable(){
-			public void run(){
-				List<MTGCard> lst = StoreManager.getInstance().getAllCardsAsList();
-				if(!lst.isEmpty()){
-					tableMTG.setModel( new JXObjectModel<MTGCard>( lst ) );
-	
-					//update sorter and text search
-					tableMTG.refreshRowSorter();
-					tableAdjuster.adjustColumns();
-				}
-				STATUS_BAR_MAIN_FRAME.setStatus( "Ready!" );
-			}			
-		} );
+		List<MTGCard> lst = StoreManager.getInstance().getAllCardsAsList();
+		if(!lst.isEmpty()){
+			tableMTG.setModel( new JXObjectModel<MTGCard>( lst ) );
+
+			//update sorter and text search
+			tableMTG.refreshRowSorter();
+			tableAdjuster.adjustColumns();
+		}
+		STATUS_BAR_MAIN_FRAME.setStatus( "Ready!" );
 	}
 
 //===========================================================================================

@@ -11,7 +11,7 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.KeyStroke;
 import com.hackcaffebabe.mtg.controller.json.StoreManager;
-import com.hackcaffebabe.mtg.gui.panel.insertcard.listener.BasicColorActionListener;
+import com.hackcaffebabe.mtg.gui.panel.listener.BasicColorActionListener;
 import com.hackcaffebabe.mtg.model.card.Rarity;
 import com.hackcaffebabe.mtg.model.color.BasicColors;
 import com.hackcaffebabe.mtg.model.color.CardColor;
