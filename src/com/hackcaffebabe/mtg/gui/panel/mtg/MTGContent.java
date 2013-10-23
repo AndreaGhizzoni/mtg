@@ -102,7 +102,8 @@ public class MTGContent extends JPanel
 		this.tableMTG.getSelectionModel().setSelectionMode( ListSelectionModel.SINGLE_SELECTION );
 		this.tableMTG.getSelectionModel().addListSelectionListener( this.tableSelectionListener );
 		this.tableAdjuster = new JXTableColumnAdjuster( this.tableMTG );
-		pnlMTGList.add( new JScrollPane( this.tableMTG ), "cell 0 0,grow" );
+		pnlMTGList.add( new JScrollPane( this.tableMTG, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED ), "cell 0 0,grow" );//TODO do this for each JScrollPane
 
 		// MTG card properties
 		this.pnlMTGPropreties = new MTGProperties();
@@ -133,7 +134,7 @@ public class MTGContent extends JPanel
 			tableMTG.refreshRowSorter();
 			tableAdjuster.adjustColumns();
 		}
-		STATUS_BAR_MAIN_FRAME.setStatus( "Ready!" );
+		STATUS_BAR_MAIN_FRAME.setStatus( "MTG Cards list refreshed correctly!" );
 	}
 
 //===========================================================================================
