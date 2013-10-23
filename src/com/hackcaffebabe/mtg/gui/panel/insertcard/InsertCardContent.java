@@ -29,6 +29,12 @@ import com.hackcaffebabe.mtg.model.card.*;
 
 
 /**
+ * TODO DO THIS CHANGES: == but before to do this to all other TODOs ==
+ * 	- this (and sub) content has double purpose: 
+ * 		1) create new MTGCard and save it 
+ * 		2) View passed MTGCard, user update it and click on Apply Update (Save button in case 1). 
+ * 		   Now this frame validate the user data and if is different from data displayed, update it.
+ * 
  * The Insertion Card Content.
  *  
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com

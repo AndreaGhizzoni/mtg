@@ -1,32 +1,31 @@
 package com.hackcaffebabe.mtg.gui.panel.mtg;
 
+import static com.hackcaffebabe.mtg.gui.GUIUtils.*;
 import it.hackcaffebabe.jx.table.JXTable;
 import it.hackcaffebabe.jx.table.JXTableColumnAdjuster;
 import it.hackcaffebabe.jx.table.model.DisplayableObject;
 import it.hackcaffebabe.jx.table.model.JXObjectModel;
 import it.hackcaffebabe.logger.Logger;
 import it.hackcaffebabe.logger.Tag;
-import java.awt.Component;
 import java.util.Set;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.table.TableCellRenderer;
 import net.miginfocom.swing.MigLayout;
-import com.hackcaffebabe.mtg.gui.GUIUtils;
 import com.hackcaffebabe.mtg.gui.listener.*;
 import com.hackcaffebabe.mtg.model.*;
 import com.hackcaffebabe.mtg.model.card.*;
 
 
 /**
+ * TODO change all the text field with label and button "apply update" in "update"
+ * 
  * This panel shows the {@link MTGCard} properties.
  * 
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
@@ -72,7 +71,6 @@ public class MTGProperties extends JPanel
 		super();
 		setBorder( new TitledBorder( "MTG Properties" ) );
 		setLayout( new MigLayout( "", "[44.00][38.00][180.00][100.00][grow]", "[][][][][][][][150px,grow][][:96.00:100,grow][150px][]" ) );
-		setOpaque( true );
 		this.initContent();
 	}
 
@@ -83,47 +81,47 @@ public class MTGProperties extends JPanel
 	private void initContent(){
 		add( new JLabel( "Name:" ), "cell 0 0,alignx right" );
 		this.txtName.getDocument().addDocumentListener( this.checkerCardDL );
-		this.txtName.getDocument().putProperty( CheckerCard.DOCUMENT_NAME, GUIUtils.DP_NAME );
+		this.txtName.getDocument().putProperty( CheckerCard.DOCUMENT_NAME, DP_NAME );
 		add( this.txtName, "cell 1 0 4 1,growx" );
 
 		add( new JLabel( "Mana Cost:" ), "cell 0 1,alignx right" );
 		this.txtManaCost.getDocument().addDocumentListener( this.checkerCardDL );
-		this.txtManaCost.getDocument().putProperty( CheckerCard.DOCUMENT_NAME, GUIUtils.DP_MANA_COST );
+		this.txtManaCost.getDocument().putProperty( CheckerCard.DOCUMENT_NAME, DP_MANA_COST );
 		add( this.txtManaCost, "cell 1 1 3 1,growx" );
 
 		add( new JLabel( "Card Color:" ), "cell 0 2,alignx right" );
 		this.txtCardColor.getDocument().addDocumentListener( this.checkerCardDL );
-		this.txtCardColor.getDocument().putProperty( CheckerCard.DOCUMENT_NAME, GUIUtils.DP_MANA_COST );
+		this.txtCardColor.getDocument().putProperty( CheckerCard.DOCUMENT_NAME, DP_MANA_COST );
 		add( this.txtCardColor, "cell 1 2 3 1,growx" );
 
 		add( new JLabel( "Rarity:" ), "cell 0 3,alignx right" );
 		this.txtRarity.getDocument().addDocumentListener( this.checkerCardDL );
-		this.txtRarity.getDocument().putProperty( CheckerCard.DOCUMENT_NAME, GUIUtils.DP_RARITY );
+		this.txtRarity.getDocument().putProperty( CheckerCard.DOCUMENT_NAME, DP_RARITY );
 		add( this.txtRarity, "cell 1 3 2 1,growx" );
 
 		add( new JLabel( "PW Life:" ), "cell 3 3,alignx trailing" );
 		this.txtPlaneswalkerLife.getDocument().addDocumentListener( this.checkerCardDL );
-		this.txtPlaneswalkerLife.getDocument().putProperty( CheckerCard.DOCUMENT_NAME, GUIUtils.DP_PLANESWALKER_LIFE );
+		this.txtPlaneswalkerLife.getDocument().putProperty( CheckerCard.DOCUMENT_NAME, DP_PLANESWALKER_LIFE );
 		add( this.txtPlaneswalkerLife, "cell 4 3,growx" );
 
 		add( new JLabel( "Series:" ), "cell 0 4,alignx trailing" );
 		this.txtSeries.getDocument().addDocumentListener( this.checkerCardDL );
-		this.txtSeries.getDocument().putProperty( CheckerCard.DOCUMENT_NAME, GUIUtils.DP_SERIES );
+		this.txtSeries.getDocument().putProperty( CheckerCard.DOCUMENT_NAME, DP_SERIES );
 		add( this.txtSeries, "cell 1 4 2 1,growx" );
 
 		add( new JLabel( "Strength:" ), "cell 3 4,alignx trailing" );
 		this.txtStrenght.getDocument().addDocumentListener( this.checkerCardDL );
-		this.txtStrenght.getDocument().putProperty( CheckerCard.DOCUMENT_NAME, GUIUtils.DP_STRENGTH );
+		this.txtStrenght.getDocument().putProperty( CheckerCard.DOCUMENT_NAME, DP_STRENGTH );
 		add( this.txtStrenght, "cell 4 4,growx" );
 
 		add( new JLabel( "Type:" ), "cell 0 5,alignx right" );
 		this.txtType.getDocument().addDocumentListener( this.checkerCardDL );
-		this.txtType.getDocument().putProperty( CheckerCard.DOCUMENT_NAME, GUIUtils.DP_TYPE );
+		this.txtType.getDocument().putProperty( CheckerCard.DOCUMENT_NAME, DP_TYPE );
 		add( this.txtType, "cell 1 5 3 1,growx" );
 
 		add( new JLabel( "Sub Type:" ), "cell 0 6,alignx right" );
 		this.txtSubType.getDocument().addDocumentListener( this.checkerCardDL );
-		this.txtSubType.getDocument().putProperty( CheckerCard.DOCUMENT_NAME, GUIUtils.DP_SUB_TYPE );
+		this.txtSubType.getDocument().putProperty( CheckerCard.DOCUMENT_NAME, DP_SUB_TYPE );
 		add( this.txtSubType, "cell 1 6 3 1,growx" );
 
 		JPanel pnlAbility = new JPanel();
@@ -145,7 +143,7 @@ public class MTGProperties extends JPanel
 
 		add( new JLabel( "Primary Effect:" ), "cell 0 8 2 1" );
 		this.textPrimaryEffects.getDocument().addDocumentListener( this.checkerCardDL );
-		this.textPrimaryEffects.getDocument().putProperty( CheckerCard.DOCUMENT_NAME, GUIUtils.DP_PRIMARY_EFFECT );
+		this.textPrimaryEffects.getDocument().putProperty( CheckerCard.DOCUMENT_NAME, DP_PRIMARY_EFFECT );
 		this.textPrimaryEffects.setLineWrap( true );
 		add( new JScrollPane( this.textPrimaryEffects ), "cell 2 8 3 2,grow" );
 
@@ -307,7 +305,7 @@ public class MTGProperties extends JPanel
 		this.btnAddAbility.setEnabled( true );
 		this.btnAddEffect.setEnabled( true );
 		this.displayedMTGCard = c;// this is necessary for all the documents listener.
-		GUIUtils.STATUS_BAR_MAIN_FRAME.setStatus( c.getName() );
+		STATUS_BAR_MAIN_FRAME.setStatus( c.getName() );
 	}
 
 //===========================================================================================
@@ -342,25 +340,6 @@ public class MTGProperties extends JPanel
 			if(displayedMTGCard!=null){
 				log.write( Tag.DEBUG, String.format( "changedUpdate() called on %s", e.getDocument().getProperty( DOCUMENT_NAME ) ) );
 			}
-		}
-	}
-
-	/* inner class that wrap the lines into description column of table ability and effects */
-	public class CellRendererAsTextArea extends JTextArea implements TableCellRenderer
-	{
-		private static final long serialVersionUID = 1L;
-
-		public CellRendererAsTextArea(){
-			setLineWrap( true );
-			setWrapStyleWord( true );
-		}
-
-		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column){
-			setText( (String) value );
-			setSize( table.getColumnModel().getColumn( column ).getWidth(), getPreferredSize().height );
-			if(table.getRowHeight( row ) != getPreferredSize().height)
-				table.setRowHeight( row, getPreferredSize().height );
-			return this;
 		}
 	}
 }
