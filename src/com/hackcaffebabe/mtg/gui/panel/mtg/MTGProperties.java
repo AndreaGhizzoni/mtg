@@ -113,14 +113,16 @@ public class MTGProperties extends JPanel
 		add( new JLabel( "Primary Effect:" ), "cell 0 8 2 1" );
 		this.textPrimaryEffects.setLineWrap( true );
 		this.textPrimaryEffects.setEditable( false );
-		add( new JScrollPane( this.textPrimaryEffects ), "cell 2 8 3 2,grow" );
+		add( new JScrollPane( this.textPrimaryEffects, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				                                       JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED), "cell 2 8 3 2,grow" );
 
 		JPanel pnlOtherEffects = new JPanel();
 		pnlOtherEffects.setBorder( new TitledBorder( "Other Effects:" ) );
 		pnlOtherEffects.setLayout( new MigLayout("", "[grow]", "[grow][grow]") );
 		this.tableEffects = new JXTable( new JXObjectModel<Effect>() );
 		this.tableColumnAdjusterEffects = new JXTableColumnAdjuster( this.tableEffects );
-		pnlOtherEffects.add( new JScrollPane( this.tableEffects ), "cell 0 0 1 2,grow" );
+		pnlOtherEffects.add( new JScrollPane( this.tableEffects, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				                                                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED ), "cell 0 0 1 2,grow" );
 		add( pnlOtherEffects, "cell 0 10 5 1,grow" );
 
 		this.btnUpdate = new JButton( "Update MTG Card" );

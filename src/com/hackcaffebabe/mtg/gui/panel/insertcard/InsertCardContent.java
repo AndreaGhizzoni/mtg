@@ -43,7 +43,7 @@ public class InsertCardContent extends JPanel
 {
 	private static final long serialVersionUID = 1L;
 	private JPanel pnlMTG = new JPanel();
-	private MTGTypeCardActionListener MTGTypeListener;
+	private TypeCardActionListener MTGTypeListener;
 	private ButtonGroup mtgCardType;
 
 	private MTGBasicInfo pnlMTGBasicInfo = new MTGBasicInfo();
@@ -91,7 +91,7 @@ public class InsertCardContent extends JPanel
 		pnlTypeCard.setLayout( new MigLayout( "", "[grow][grow][grow][grow][grow][grow][grow]", "[]" ) );
 		add( pnlTypeCard, "cell 0 0 2 1,grow" );
 
-		this.MTGTypeListener = new MTGTypeCardActionListener();
+		this.MTGTypeListener = new TypeCardActionListener();
 
 		JRadioButton rdbCreature = new JRadioButton( "Creature" );
 		rdbCreature.setActionCommand( AC_CREATURE );
@@ -158,12 +158,14 @@ public class InsertCardContent extends JPanel
 		pnlMTG.add( new JLabel( "Primary Effect:" ), "cell 0 6" );
 		this.txtPrimaryEffect = new JTextArea();
 		this.txtPrimaryEffect.setLineWrap( true );
-		pnlMTG.add( new JScrollPane( txtPrimaryEffect ), "cell 1 6 6 2,grow" );
+		pnlMTG.add( new JScrollPane( txtPrimaryEffect, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				                                       JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED ), "cell 1 6 6 2,grow" );
 
 		pnlMTG.add( new JLabel( "Other Effects:" ), "cell 0 7" );
 		this.tableEffects = new JXTable( new JXObjectModel<>() );
 		this.tableEffectsColumnAdjuster = new JXTableColumnAdjuster( this.tableEffects );
-		pnlMTG.add( new JScrollPane( this.tableEffects ), "cell 0 8 7 2,grow" );
+		pnlMTG.add( new JScrollPane( this.tableEffects, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				                                        JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED ), "cell 0 8 7 2,grow" );
 		this.btnAddEffect = new JButton( "+" );
 		this.btnAddEffect.addActionListener( new AddEffectActionListener( this, tableEffects, tableEffectsColumnAdjuster ) );
 		pnlMTG.add( this.btnAddEffect, "cell 7 8,alignx center,growy" );
@@ -179,7 +181,7 @@ public class InsertCardContent extends JPanel
 
 		JPanel pnlOptions = new JPanel();
 		pnlOptions.setLayout( new MigLayout( "", "[grow][][grow]", "[]" ) );
-
+		pnlOptions.setBorder( new TitledBorder( "Options:" ) );
 		this.btnClear = new JButton( "Clear" );
 		this.btnClear.addActionListener( new ClearActionListener() );
 		pnlOptions.add( this.btnClear, "cell 0 0,growx" );
@@ -241,10 +243,8 @@ public class InsertCardContent extends JPanel
 //===========================================================================================
 // INNER CLASS
 //===========================================================================================
-	/**
-	 * inner class that describe the action on change mtgType;
-	 */
-	private class MTGTypeCardActionListener implements ActionListener
+	/* inner class that describe the action on change mtgType; */
+	private class TypeCardActionListener implements ActionListener
 	{
 		private String lastActionCommand = "";
 
@@ -312,9 +312,7 @@ public class InsertCardContent extends JPanel
 		}
 	}
 
-	/**
-	 * inner class that describe the action on btnClear
-	 */
+	/* inner class that describe the action on btnClear */
 	private class ClearActionListener implements ActionListener
 	{
 		@Override
@@ -327,9 +325,7 @@ public class InsertCardContent extends JPanel
 		}
 	}
 
-	/**
-	 * inner class that describe the action on btnSave
-	 */
+	/* inner class that describe the action on btnSave */
 	private class SaveActionListener implements ActionListener
 	{
 		@SuppressWarnings("unchecked")
@@ -380,17 +376,20 @@ public class InsertCardContent extends JPanel
 			List<Effect> mtgEffects = ((JXObjectModel<Effect>) tableEffects.getModel()).getObjects();
 			log.write( Tag.DEBUG, "effects = " + mtgEffects.toString() );
 
+			ManaCost mtgManaCost = null;
+			if(!mtgCardType.equals( AC_LAND )) {
+				mtgManaCost = pnlManaCost.getManaCost();
+				if(mtgManaCost == null) {
+					displayError( pnlMTG, "Mana cost of MTG Card can not be void." );
+					log.write( Tag.ERRORS, "Mana cost of MTG card missing." );
+					pnlManaCost.requestFocus();
+					return;
+				}
+				log.write( Tag.DEBUG, "mana cost = " + mtgManaCost );
+			}
+
 			switch( mtgCardType ) {
 				case AC_CREATURE: {
-					ManaCost mtgManaCost = pnlManaCost.getManaCost();
-					if(mtgManaCost == null) {
-						displayError( pnlMTG, "Mana cost of MTG Card can not be void." );
-						log.write( Tag.ERRORS, "Mana cost of MTG card missing." );
-						pnlManaCost.requestFocus();
-						return;
-					}
-					log.write( Tag.DEBUG, "mana cost = " + mtgManaCost );
-
 					Strength creatureStrength = pnlCreatureInfo.getStrength();
 					if(creatureStrength == null) {
 						displayError( pnlMTG, "Creature info missing." );
@@ -425,15 +424,6 @@ public class InsertCardContent extends JPanel
 					break;
 				}
 				case AC_ARTIFACT: {
-					ManaCost mtgManaCost = pnlManaCost.getManaCost();
-					if(mtgManaCost == null) {
-						displayError( pnlMTG, "Mana cost of MTG Card can not be void." );
-						log.write( Tag.ERRORS, "Mana cost of MTG card missing." );
-						pnlManaCost.requestFocus();
-						return;
-					}
-					log.write( Tag.DEBUG, "mana cost = " + mtgManaCost );
-
 					List<Ability> mtgAbility = ((JXObjectModel<Ability>) tableAbility.getModel()).getObjects();
 					log.write( Tag.DEBUG, "ability = " + mtgAbility.toString() );
 
@@ -455,15 +445,6 @@ public class InsertCardContent extends JPanel
 					break;
 				}
 				case AC_PLANESWALKER: {
-					ManaCost mtgManaCost = pnlManaCost.getManaCost();
-					if(mtgManaCost == null) {
-						displayError( pnlMTG, "Mana cost of MTG Card can not be void." );
-						log.write( Tag.ERRORS, "Mana cost of MTG card missing." );
-						pnlManaCost.requestFocus();
-						return;
-					}
-					log.write( Tag.DEBUG, "mana cost = " + mtgManaCost );
-
 					int mtgLife = pnlPlaneswalkerInfo.getPlaneswalkerLife();
 					log.write( Tag.DEBUG, "planeswalker life = " + mtgLife );
 
@@ -483,15 +464,6 @@ public class InsertCardContent extends JPanel
 					break;
 				}
 				case AC_INSTANT: {
-					ManaCost mtgManaCost = pnlManaCost.getManaCost();
-					if(mtgManaCost == null) {
-						displayError( pnlMTG, "Mana cost of MTG Card can not be void." );
-						log.write( Tag.ERRORS, "Mana cost of MTG card missing." );
-						pnlManaCost.requestFocus();
-						return;
-					}
-					log.write( Tag.DEBUG, "mana cost = " + mtgManaCost );
-
 					if(mtgPrimaryEffect == null) {
 						displayError( pnlMTG, "Instant must have a primary effect." );
 						log.write( Tag.ERRORS, "Instant primary effect of MTG card missing." );
@@ -517,15 +489,6 @@ public class InsertCardContent extends JPanel
 					break;
 				}
 				case AC_SORCERY: {
-					ManaCost mtgManaCost = pnlManaCost.getManaCost();
-					if(mtgManaCost == null) {
-						displayError( pnlMTG, "Mana cost of MTG Card can not be void." );
-						log.write( Tag.ERRORS, "Mana cost of MTG card missing." );
-						pnlManaCost.requestFocus();
-						return;
-					}
-					log.write( Tag.DEBUG, "mana cost = " + mtgManaCost );
-
 					if(mtgPrimaryEffect == null) {
 						displayError( pnlMTG, "Sorcery must have a primary effect." );
 						log.write( Tag.ERRORS, "Sorcery primary effect of MTG card missing." );
@@ -551,15 +514,6 @@ public class InsertCardContent extends JPanel
 					break;
 				}
 				case AC_ENCHANTMENT: {
-					ManaCost mtgManaCost = pnlManaCost.getManaCost();
-					if(mtgManaCost == null) {
-						displayError( pnlMTG, "Mana cost of MTG Card can not be void." );
-						log.write( Tag.ERRORS, "Mana cost of MTG card missing." );
-						pnlManaCost.requestFocus();
-						return;
-					}
-					log.write( Tag.DEBUG, "mana cost = " + mtgManaCost );
-
 					if(mtgPrimaryEffect == null) {
 						displayError( pnlMTG, "Enchantment must have a primary effect." );
 						log.write( Tag.ERRORS, "Enchantment primary effect of MTG card missing." );
@@ -612,9 +566,7 @@ public class InsertCardContent extends JPanel
 		}
 	}
 
-	/**
-	 * inner class that describe the action on btnAddActivity;
-	 */
+	/* inner class that describe the action on btnAddActivity; */
 	private class AddAbilityActionListener implements ActionListener
 	{
 		@SuppressWarnings("unchecked")

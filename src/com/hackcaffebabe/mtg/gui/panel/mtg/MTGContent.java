@@ -101,7 +101,7 @@ public class MTGContent extends JPanel
 		JXTABLE_MTG.getSelectionModel().addListSelectionListener( this.tableSelectionListener );
 		JXTABLE_MTG_COLUMN_ADJUSTER = new JXTableColumnAdjuster( JXTABLE_MTG );
 		pnlMTGList.add( new JScrollPane( JXTABLE_MTG, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED ), "cell 0 0,grow" );//TODO do this for each JScrollPane
+				                                      JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED ), "cell 0 0,grow" );
 
 		// MTG card properties
 		this.pnlMTGPropreties = new MTGProperties();

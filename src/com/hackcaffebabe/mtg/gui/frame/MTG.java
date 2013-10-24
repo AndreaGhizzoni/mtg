@@ -104,6 +104,7 @@ public class MTG extends JFrame
 		JMenu help = new JMenu( "Help" );
 		JMenuItem helpAbout = new JMenuItem( "About" );
 		helpAbout.addActionListener( new HelpActionListener() );
+		helpAbout.setAccelerator( KeyStroke.getKeyStroke( "F1" ) );
 		help.add( helpAbout );
 
 		bar.add( file );

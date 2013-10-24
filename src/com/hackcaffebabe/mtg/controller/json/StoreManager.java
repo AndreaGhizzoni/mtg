@@ -53,6 +53,7 @@ public class StoreManager
 		}
 	}
 
+	/* initialize all the type adapter and load from JSON_PATH all json files */
 	private StoreManager() throws IOException{
 		this.init();
 		this.load();
@@ -130,7 +131,7 @@ public class StoreManager
 			return false;
 
 		String json = g.toJson( c, MTGCard.class );
-		FileWriter f = new FileWriter( new File( getStoreJSONName( c ) ) );
+		FileWriter f = new FileWriter( new File( getJSONFileName( c ) ) );
 		f.write( json );
 		f.flush();
 		f.close();

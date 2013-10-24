@@ -98,7 +98,7 @@ public class GUIUtils
 // COMMON METHODS
 //===========================================================================================
 	/**
-	 * TODO Add doc
+	 * This method refresh the JXTABLE_MTG of Main frame
 	 */
 	public static void refreshMTGTable(){
 		Logger.getInstance().write( Tag.DEBUG, "Refreshing mtg card list" );;

@@ -49,7 +49,7 @@ public class DBCostants
 	 * @param c {@link MTGCard}
 	 * @return {@link String} in format name_series.json
 	 */
-	public static String getStoreJSONName(MTGCard c){
+	public static String getJSONFileName(MTGCard c){
 		if(c == null)
 			return "";
 

@@ -12,22 +12,23 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.hackcaffebabe.mtg.model.card.Ability;
 
+
 /**
  * This is the JSON adapter for class Ability
  *  
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
  */
-public class AbilityAdapter implements JsonSerializer<Ability>, JsonDeserializer<Ability> 
+public class AbilityAdapter implements JsonSerializer<Ability>, JsonDeserializer<Ability>
 {
 	@Override
 	public JsonElement serialize(Ability arg0, Type arg1, JsonSerializationContext arg2){
 		JsonObject result = new JsonObject();
-		result.add( JSON_TAG_NAME, new JsonPrimitive( arg0.getName()) );
-		result.add( JSON_TAG_DESCRIPTION, new JsonPrimitive( arg0.getDescription()) );
+		result.add( JSON_TAG_NAME, new JsonPrimitive( arg0.getName() ) );
+		result.add( JSON_TAG_DESCRIPTION, new JsonPrimitive( arg0.getDescription() ) );
 		return result;
 	}
-	
+
 	@Override
 	public Ability deserialize(JsonElement arg0, Type arg1, JsonDeserializationContext arg2) throws JsonParseException{
 		Ability result = null;

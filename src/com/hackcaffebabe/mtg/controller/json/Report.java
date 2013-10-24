@@ -11,7 +11,6 @@ import com.hackcaffebabe.mtg.model.card.Rarity;
  * This represents a report of all data saved on the disk.
  * 
  * TODO finish the report with new ideas.
- * TODO maybe write an utility class that calculate the union, intersection, and difference of two Collection<T>. 
  * 
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
@@ -61,5 +60,5 @@ public class Report
 //===========================================================================================
 // GETTER
 //===========================================================================================
-	//TODO maybe return a JOptionPane with all data
+	//maybe return a JOptionPane with all data
 }
