@@ -1,4 +1,4 @@
-package com.hackcaffebabe.mtg.gui.panel.insertcard;
+package com.hackcaffebabe.mtg.gui.panel.insertupdatecard;
 
 import com.hackcaffebabe.mtg.gui.GUIUtils;
 import com.hackcaffebabe.mtg.model.Creature;

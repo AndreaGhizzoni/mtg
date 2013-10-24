@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import com.hackcaffebabe.mtg.gui.panel.insertcard.InsertCardContent;
+import com.hackcaffebabe.mtg.gui.panel.insertupdatecard.InsertUpdateCardContent;
 import com.hackcaffebabe.mtg.model.MTGCard;
 
 
@@ -21,7 +21,7 @@ import com.hackcaffebabe.mtg.model.MTGCard;
 public class InsertCard extends JFrame
 {
 	private static final long serialVersionUID = 1L;
-	private InsertCardContent content;
+	private InsertUpdateCardContent content;
 
 	/**
 	 * Instance a frame to view or update a {@link MTGCard}
@@ -41,7 +41,7 @@ public class InsertCard extends JFrame
 //===========================================================================================
 	/* initialize all components */
 	private void initContent(MTGCard cardToView){
-		this.content = new InsertCardContent(cardToView);
+		this.content = new InsertUpdateCardContent(cardToView);
 		this.content.setOpaque( true );
 		setContentPane( this.content );
 	}

@@ -1,4 +1,4 @@
-package com.hackcaffebabe.mtg.gui.panel.insertcard;
+package com.hackcaffebabe.mtg.gui.panel.insertupdatecard;
 
 import java.awt.Component;
 import javax.swing.JPanel;

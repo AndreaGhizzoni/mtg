@@ -1,4 +1,4 @@
-package com.hackcaffebabe.mtg.gui.panel.insertcard;
+package com.hackcaffebabe.mtg.gui.panel.insertupdatecard;
 
 import static com.hackcaffebabe.mtg.gui.GUIUtils.*;
 import net.miginfocom.swing.MigLayout;
@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -41,13 +42,21 @@ import com.hackcaffebabe.mtg.model.card.*;
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 2.1
  */
-public class InsertCardContent extends JPanel
+public class InsertUpdateCardContent extends JPanel
 {
 	private static final long serialVersionUID = 1L;
 	private JPanel pnlMTG = new JPanel();
 	private TypeCardActionListener MTGTypeListener;
 
-	private ButtonGroup mtgCardType;
+	private ButtonGroup mtgCardType = new ButtonGroup();
+	private JRadioButton rdbCreature = new JRadioButton( "Creature" );
+	private JRadioButton rdbArtifact = new JRadioButton( "Artifact" );
+	private JRadioButton rdbPlanedwalker = new JRadioButton( "PW" );
+	private JRadioButton rdbLand = new JRadioButton( "Land" );
+	private JRadioButton rdbEnchantment = new JRadioButton( "Enchantment" );
+	private JRadioButton rdbSorcery = new JRadioButton( "Sorcery" );
+	private JRadioButton rdbInstant = new JRadioButton( "Instant" );
+	
 	private MTGBasicInfo pnlMTGBasicInfo;
 
 	private JXTable tableAbility;
@@ -77,23 +86,32 @@ public class InsertCardContent extends JPanel
 	 * TODO add doc.
 	 * @param cardToUpdate
 	 */
-	public InsertCardContent( MTGCard cardToUpdate ){
+	public InsertUpdateCardContent( MTGCard cardToUpdate ){
 		super();
 		setSize( DIMENSION_INSERT_CARD );
 		setLayout( new MigLayout( "", "[grow][grow]", "[60!][grow][60!]" ) );
 		this.cardToUpdate = cardToUpdate;
 		this.initContent();
-		
-		//if card to update is null, user want to insert new card TODO maybe this in invokeLater()
-		if(this.cardToUpdate==null){
-			this.disableAllInPanel();
-			this.btnSaveOrUpdate.addActionListener( new SaveActionListener() );
-			this.btnSaveOrUpdate.setText( "Save" );
-		}else{// otherwise user want to update passing card
-			this.populateContent();
-			// add action listener on btnSave to update card
-			this.btnSaveOrUpdate.setText( "Update" );
-		}		
+		this.chois();
+	}
+	
+	private void chois(){
+		SwingUtilities.invokeLater( new Runnable(){
+			@Override
+			public void run(){
+				//if card to update is null, user want to insert new card TODO maybe this in invokeLater()
+				if(cardToUpdate==null){
+					disableAllInPanel();
+					btnSaveOrUpdate.addActionListener( new SaveActionListener() );
+					btnSaveOrUpdate.setText( "Save" );
+				}else{// otherwise user want to update passing card
+					populateContent();
+					// add action listener on btnSave to update card
+					btnSaveOrUpdate.setText( "Update" );
+					disableUnnecessaryComponentsForUpdates();
+				}		
+			}
+		} );
 	}
 
 //===========================================================================================
@@ -108,49 +126,41 @@ public class InsertCardContent extends JPanel
 		add( pnlTypeCard, "cell 0 0 2 1,grow" );
 
 		this.MTGTypeListener = new TypeCardActionListener();
-		JRadioButton rdbCreature = new JRadioButton( "Creature" );
-		rdbCreature.setActionCommand( AC_CREATURE );
-		rdbCreature.addActionListener( MTGTypeListener );
-		pnlTypeCard.add( rdbCreature, "cell 0 0" );
+		this.rdbCreature.setActionCommand( AC_CREATURE );
+		this.rdbCreature.addActionListener( MTGTypeListener );
+		pnlTypeCard.add( this.rdbCreature, "cell 0 0" );
 
-		JRadioButton rdbArtifact = new JRadioButton( "Artifact" );
-		rdbArtifact.setActionCommand( AC_ARTIFACT );
-		rdbArtifact.addActionListener( MTGTypeListener );
-		pnlTypeCard.add( rdbArtifact, "cell 1 0" );
+		this.rdbArtifact.setActionCommand( AC_ARTIFACT );
+		this.rdbArtifact.addActionListener( MTGTypeListener );
+		pnlTypeCard.add( this.rdbArtifact, "cell 1 0" );
 
-		JRadioButton rdbPlanedwalker = new JRadioButton( "PW" );
-		rdbPlanedwalker.setActionCommand( AC_PLANESWALKER );
-		rdbPlanedwalker.addActionListener( MTGTypeListener );
-		pnlTypeCard.add( rdbPlanedwalker, "cell 2 0" );
+		this.rdbPlanedwalker.setActionCommand( AC_PLANESWALKER );
+		this.rdbPlanedwalker.addActionListener( MTGTypeListener );
+		pnlTypeCard.add( this.rdbPlanedwalker, "cell 2 0" );
 
-		JRadioButton rdbLand = new JRadioButton( "Land" );
-		rdbLand.setActionCommand( AC_LAND );
-		rdbLand.addActionListener( MTGTypeListener );
-		pnlTypeCard.add( rdbLand, "cell 3 0" );
+		this.rdbLand.setActionCommand( AC_LAND );
+		this.rdbLand.addActionListener( MTGTypeListener );
+		pnlTypeCard.add( this.rdbLand, "cell 3 0" );
 
-		JRadioButton rdbEnchantment = new JRadioButton( "Enchantment" );
-		rdbEnchantment.setActionCommand( AC_ENCHANTMENT );
-		rdbEnchantment.addActionListener( MTGTypeListener );
-		pnlTypeCard.add( rdbEnchantment, "cell 4 0" );
+		this.rdbEnchantment.setActionCommand( AC_ENCHANTMENT );
+		this.rdbEnchantment.addActionListener( MTGTypeListener );
+		pnlTypeCard.add( this.rdbEnchantment, "cell 4 0" );
 
-		JRadioButton rdbSorcery = new JRadioButton( "Sorcery" );
-		rdbSorcery.setActionCommand( AC_SORCERY );
-		rdbSorcery.addActionListener( MTGTypeListener );
-		pnlTypeCard.add( rdbSorcery, "cell 5 0" );
+		this.rdbSorcery.setActionCommand( AC_SORCERY );
+		this.rdbSorcery.addActionListener( MTGTypeListener );
+		pnlTypeCard.add( this.rdbSorcery, "cell 5 0" );
 
-		JRadioButton rdbInstant = new JRadioButton( "Instant" );
-		rdbInstant.setActionCommand( AC_INSTANT );
-		rdbInstant.addActionListener( MTGTypeListener );
-		pnlTypeCard.add( rdbInstant, "cell 6 0" );
+		this.rdbInstant.setActionCommand( AC_INSTANT );
+		this.rdbInstant.addActionListener( MTGTypeListener );
+		pnlTypeCard.add( this.rdbInstant, "cell 6 0" );
 
-		this.mtgCardType = new ButtonGroup();
-		mtgCardType.add( rdbCreature );
-		mtgCardType.add( rdbArtifact );
-		mtgCardType.add( rdbPlanedwalker );
-		mtgCardType.add( rdbLand );
-		mtgCardType.add( rdbEnchantment );
-		mtgCardType.add( rdbSorcery );
-		mtgCardType.add( rdbInstant );
+		mtgCardType.add( this.rdbCreature );
+		mtgCardType.add( this.rdbArtifact );
+		mtgCardType.add( this.rdbPlanedwalker );
+		mtgCardType.add( this.rdbLand );
+		mtgCardType.add( this.rdbEnchantment );
+		mtgCardType.add( this.rdbSorcery );
+		mtgCardType.add( this.rdbInstant );
 
 		// =========================== MTG PANEL ===========================
 		pnlMTG.setBorder( new TitledBorder( "Card Info" ) );
@@ -210,7 +220,7 @@ public class InsertCardContent extends JPanel
 		this.btnClear.addActionListener( new ClearActionListener() );
 		pnlOptions.add( this.btnClear, "cell 0 0,growx" );
 
-		this.btnSaveOrUpdate = new JButton();
+		this.btnSaveOrUpdate = new JButton();// strings of button is set later than initContent
 		pnlOptions.add( this.btnSaveOrUpdate, "cell 2 0,growx" );
 
 		add( pnlOptions, "cell 0 2 2 1,grow" );
@@ -219,6 +229,18 @@ public class InsertCardContent extends JPanel
 //===========================================================================================
 // METHOD
 //===========================================================================================
+	/* in the case of cardToUpdate != null, selection card type MUST be disable */
+	private void disableUnnecessaryComponentsForUpdates(){
+		this.rdbCreature.setEnabled( false );
+		this.rdbArtifact.setEnabled( false );
+		this.rdbInstant.setEnabled( false );
+		this.rdbSorcery.setEnabled( false );
+		this.rdbEnchantment.setEnabled( false );
+		this.rdbLand.setEnabled( false );
+		this.rdbPlanedwalker.setEnabled( false );
+		this.btnClear.setEnabled( false );
+	}
+	
 	/* Reset all the panel and components into the panel */
 	private void disableAllInPanel(){
 		this.pnlMTGBasicInfo.reset();
@@ -241,23 +263,55 @@ public class InsertCardContent extends JPanel
 
 	/* TODO add doc */
 	private void populateContent(){
-		this.MTGTypeListener.actionPerformed( new ActionEvent( new Object(), 1, this.cardToUpdate.getClass().getSimpleName() ) );
+		//this stuff is for select appropriate mtgType button
+		switch(cardToUpdate.getClass().getSimpleName()){
+			case AC_CREATURE:{
+				rdbCreature.setSelected( true );
+				break;
+			}
+			case AC_ARTIFACT:{
+				rdbArtifact.setSelected( true );
+				break;
+			}
+			case AC_INSTANT:{
+				rdbInstant.setSelected( true );
+				break;
+			}
+			case AC_SORCERY:{
+				rdbSorcery.setSelected( true );
+				break;
+			}
+			case AC_ENCHANTMENT:{
+				rdbEnchantment.setSelected( true );
+				break;
+			}
+			case AC_LAND:{
+				rdbLand.setSelected( true );
+				break;
+			}
+			case AC_PLANESWALKER:{
+				rdbPlanedwalker.setSelected( true );
+				break;
+			}
+		}
+		//this is to call action event
+		this.MTGTypeListener.actionPerformed( new ActionEvent( new Object(), 1, cardToUpdate.getClass().getSimpleName() ) );
 		
 		this.pnlMTGBasicInfo.setData( cardToUpdate );
-		this.txtPrimaryEffect.setText( this.cardToUpdate.getPrimaryEffect() );
+		this.txtPrimaryEffect.setText( cardToUpdate.getPrimaryEffect() );
 		
-		if(this.cardToUpdate instanceof Creature){
-			this.pnlCreatureInfo.setData( this.cardToUpdate );
-			populateTables( Ability.class, this.cardToUpdate.getAbilities(), this.cardToUpdate.getEffects() );
+		if(cardToUpdate instanceof Creature){
+			this.pnlCreatureInfo.setData( cardToUpdate );
+			populateTables( Ability.class, cardToUpdate.getAbilities(), cardToUpdate.getEffects() );
 		}
 		
-		if(!(this.cardToUpdate instanceof Land)){
+		if(!(cardToUpdate instanceof Land)){
 			this.pnlManaCost.setData( this.cardToUpdate );
 		}
 		
-		if(this.cardToUpdate instanceof Planeswalker){
-			populateTables( PlanesAbility.class, ((Planeswalker) this.cardToUpdate).getPlanesAbilities(), this.cardToUpdate.getEffects() );
-			this.pnlPlaneswalkerInfo.setData( this.cardToUpdate );
+		if(cardToUpdate instanceof Planeswalker){
+			populateTables( PlanesAbility.class, ((Planeswalker) cardToUpdate).getPlanesAbilities(), cardToUpdate.getEffects() );
+			this.pnlPlaneswalkerInfo.setData( cardToUpdate );
 		}
 	}
 	

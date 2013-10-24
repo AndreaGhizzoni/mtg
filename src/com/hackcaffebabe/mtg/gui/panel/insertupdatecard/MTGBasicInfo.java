@@ -1,4 +1,4 @@
-package com.hackcaffebabe.mtg.gui.panel.insertcard;
+package com.hackcaffebabe.mtg.gui.panel.insertupdatecard;
 
 import it.hackcaffebabe.jx.typeahead.CommitAction;
 import it.hackcaffebabe.jx.typeahead.JXAutocomplete;
