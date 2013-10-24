@@ -96,7 +96,7 @@ public class MTG extends JFrame
 		editRefresh.addActionListener( new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e){
-				content.refreshMTGTable();
+				refreshMTGTable();
 			}
 		} );
 		edit.add( editRefresh );

@@ -5,6 +5,8 @@ import it.hackcaffebabe.jx.table.JXTable;
 import it.hackcaffebabe.jx.table.JXTableColumnAdjuster;
 import it.hackcaffebabe.jx.table.model.DisplayableObject;
 import it.hackcaffebabe.jx.table.model.JXObjectModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Set;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -19,8 +21,6 @@ import com.hackcaffebabe.mtg.model.card.*;
 
 
 /**
- * TODO change all the text field with label and button "apply update" in "update"
- * 
  * This panel shows the {@link MTGCard} properties.
  * 
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
@@ -47,7 +47,7 @@ public class MTGProperties extends JPanel
 	private JXTable tableEffects;
 	private JXTableColumnAdjuster tableColumnAdjusterEffects;
 
-	private JButton btnApplyUpdate;
+	private JButton btnUpdate;
 
 	private MTGCard displayedMTGCard = null;
 	
@@ -123,9 +123,15 @@ public class MTGProperties extends JPanel
 		pnlOtherEffects.add( new JScrollPane( this.tableEffects ), "cell 0 0 1 2,grow" );
 		add( pnlOtherEffects, "cell 0 10 5 1,grow" );
 
-		this.btnApplyUpdate = new JButton( "Apply Update" );
-		this.btnApplyUpdate.setEnabled( false );
-		add( this.btnApplyUpdate, "cell 0 11 5 1,grow" );
+		this.btnUpdate = new JButton( "Update MTG Card" );
+		this.btnUpdate.setEnabled( false );
+		this.btnUpdate.addActionListener( new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				
+			}
+		} );
+		add( this.btnUpdate, "cell 0 11 5 1,grow" );
 	}
 
 	/* Clear all the form */
@@ -156,8 +162,8 @@ public class MTGProperties extends JPanel
 			for(T a: setOfAbilityClaxx)
 				model.addObject( a );
 			this.tableAbility.setModel( model );
-			this.tableAbility.getColumnModel().getColumn( 1 ).setCellRenderer( new CellRendererAsTextArea() );
 			this.tableColumnAdjusterAbility.adjustColumns();
+			this.tableAbility.getColumnModel().getColumn( 1 ).setCellRenderer( new CellRendererAsTextArea() );
 		}
 
 		if(!setOfEffects.isEmpty()) {
@@ -165,8 +171,8 @@ public class MTGProperties extends JPanel
 			for(Effect e: setOfEffects)
 				model.addObject( e );
 			this.tableEffects.setModel( model );
-			this.tableEffects.getColumnModel().getColumn( 1 ).setCellRenderer( new CellRendererAsTextArea() );
 			this.tableColumnAdjusterEffects.adjustColumns();
+			this.tableEffects.getColumnModel().getColumn( 1 ).setCellRenderer( new CellRendererAsTextArea() );
 		}
 	}
 
@@ -262,5 +268,6 @@ public class MTGProperties extends JPanel
 
 		this.displayedMTGCard = c;// this is necessary for all the documents listener.
 		STATUS_BAR_MAIN_FRAME.setStatus( c.getName() );
+		this.btnUpdate.setEnabled( true );
 	}
 }

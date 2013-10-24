@@ -21,7 +21,6 @@ import it.hackcaffebabe.jx.table.model.JXObjectModel;
 import it.hackcaffebabe.logger.Logger;
 import it.hackcaffebabe.logger.Tag;
 import com.hackcaffebabe.mtg.controller.json.StoreManager;
-import com.hackcaffebabe.mtg.gui.panel.mtg.MTGContent;
 import com.hackcaffebabe.mtg.model.color.CardColor;
 import com.hackcaffebabe.mtg.gui.listener.*;
 import com.hackcaffebabe.mtg.model.*;
@@ -69,18 +68,16 @@ public class InsertCardContent extends JPanel
 	private JButton btnClear;
 
 	private Logger log = Logger.getInstance();
-	private MTGContent mtgList;
 
 	/**
 	 * Create the panel.
 	 */
-	public InsertCardContent(MTGContent c){
+	public InsertCardContent(){
 		super();
 		setSize( DIMENSION_INSERT_CARD );
 		setLayout( new MigLayout( "", "[grow][grow]", "[60!][grow][60!]" ) );
 		this.initContent();
 		this.disableAllInPanel();
-		mtgList = c;
 	}
 
 //===========================================================================================
@@ -226,7 +223,7 @@ public class InsertCardContent extends JPanel
 				clearEffectsAndAbilityTable();
 				mtgCardType.clearSelection();
 				MTGTypeListener.lastActionCommand = "";
-				mtgList.refreshMTGTable();
+				refreshMTGTable();
 
 				JOptionPane.showMessageDialog( pnlMTG, "Card saved correctly!", "Succes!", JOptionPane.INFORMATION_MESSAGE );
 			}
@@ -327,7 +324,6 @@ public class InsertCardContent extends JPanel
 			clearEffectsAndAbilityTable();
 			mtgCardType.clearSelection();
 			MTGTypeListener.lastActionCommand = "";
-//			mtgList.refreshMTGTable();
 		}
 	}
 

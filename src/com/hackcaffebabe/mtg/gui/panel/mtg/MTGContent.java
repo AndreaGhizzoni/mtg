@@ -8,7 +8,6 @@ import it.hackcaffebabe.logger.Logger;
 import it.hackcaffebabe.logger.Tag;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -23,7 +22,6 @@ import net.miginfocom.swing.MigLayout;
 import com.hackcaffebabe.mtg.gui.frame.AdvanceSearch;
 import com.hackcaffebabe.mtg.gui.frame.InsertCard;
 import com.hackcaffebabe.mtg.model.MTGCard;
-import com.hackcaffebabe.mtg.controller.json.StoreManager;
 
 
 /**
@@ -38,8 +36,8 @@ public class MTGContent extends JPanel
 
 	private JPanel pnlMTGList = new JPanel();
 
-	private JXTable tableMTG;
-	private JXTableColumnAdjuster tableAdjuster;
+//	private JXTable tableMTG;
+//	private JXTableColumnAdjuster tableAdjuster;
 	private MTGCardListSelectionListener tableSelectionListener = new MTGCardListSelectionListener();
 
 	private MTGProperties pnlMTGPropreties;
@@ -61,7 +59,7 @@ public class MTGContent extends JPanel
 		setSize( DIMENSION_MAIN_FRAME );
 		setLayout( new MigLayout("", "[698.00,grow][190!][190!]", "[grow][60!]") );
 		this.initContent();
-		this.refreshMTGTable();
+		refreshMTGTable();
 	}
 
 //===========================================================================================
@@ -71,7 +69,7 @@ public class MTGContent extends JPanel
 	private void initContent(){
 		// MTG search
 		this.pnlSearch = new JPanel();
-		this.pnlSearch.setBorder( new TitledBorder( "Card Search by String:" ) );
+		this.pnlSearch.setBorder( new TitledBorder( "Search by String:" ) );
 		this.pnlSearch.setLayout( new MigLayout( "", "[grow][150!]", "[]" ) );
 		add( this.pnlSearch, "cell 0 1,grow" );
 
@@ -95,14 +93,14 @@ public class MTGContent extends JPanel
 		this.pnlMTGList.setLayout( new MigLayout( "", "[grow]", "[grow]" ) );
 		add( this.pnlMTGList, "cell 0 0 1 1,grow" );
 
-		this.tableMTG = new JXTable( new JXObjectModel<MTGCard>() );
-		this.tableMTG.setFillsViewportHeight( true );
-		this.tableMTG.setShowVerticalLines( false );
-		this.tableMTG.setRowSorter( this.txtSearch );
-		this.tableMTG.getSelectionModel().setSelectionMode( ListSelectionModel.SINGLE_SELECTION );
-		this.tableMTG.getSelectionModel().addListSelectionListener( this.tableSelectionListener );
-		this.tableAdjuster = new JXTableColumnAdjuster( this.tableMTG );
-		pnlMTGList.add( new JScrollPane( this.tableMTG, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+		JXTABLE_MTG = new JXTable( new JXObjectModel<MTGCard>() );
+		JXTABLE_MTG.setFillsViewportHeight( true );
+		JXTABLE_MTG.setShowVerticalLines( false );
+		JXTABLE_MTG.setRowSorter( this.txtSearch );
+		JXTABLE_MTG.getSelectionModel().setSelectionMode( ListSelectionModel.SINGLE_SELECTION );
+		JXTABLE_MTG.getSelectionModel().addListSelectionListener( this.tableSelectionListener );
+		JXTABLE_MTG_COLUMN_ADJUSTER = new JXTableColumnAdjuster( JXTABLE_MTG );
+		pnlMTGList.add( new JScrollPane( JXTABLE_MTG, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED ), "cell 0 0,grow" );//TODO do this for each JScrollPane
 
 		// MTG card properties
@@ -113,29 +111,31 @@ public class MTGContent extends JPanel
 		// button
 		this.btnNewCard = new JButton( "New Card" );
 		this.btnNewCard.addActionListener( new NewCardActionListener() );
-		add( this.btnNewCard, "cell 1 1,grow" );
+		add( this.btnNewCard, "cell 1 1,alignx center,aligny center" );
 
 		this.btnDeleteCard = new JButton( "Delete Card" );
 		this.btnDeleteCard.setEnabled( false );
-		add( this.btnDeleteCard, "cell 2 1,grow" );		
+		add( this.btnDeleteCard, "cell 2 1,alignx center,aligny center" );		
 	}
 
-	/**
-	 * Refresh the MTG card list
-	 */
-	public void refreshMTGTable(){
-		log.write( Tag.DEBUG, "Refreshing mtg card list" );
-		STATUS_BAR_MAIN_FRAME.setStatus( "Refreshing mtg card list..." );
-		List<MTGCard> lst = StoreManager.getInstance().getAllCardsAsList();
-		if(!lst.isEmpty()){
-			tableMTG.setModel( new JXObjectModel<MTGCard>( lst ) );
-
-			//update sorter and text search
-			tableMTG.refreshRowSorter();
-			tableAdjuster.adjustColumns();
-		}
-		STATUS_BAR_MAIN_FRAME.setStatus( "MTG Cards list refreshed correctly!" );
-	}
+//	/**
+//	 * Refresh the MTG card list
+//	 */
+//	public void refreshMTGTable(){
+//		log.write( Tag.DEBUG, "Refreshing mtg card list" );
+//		STATUS_BAR_MAIN_FRAME.setStatus( "Refreshing mtg card list..." );
+//		setCursor( Cursor.getPredefinedCursor( Cursor.WAIT_CURSOR ) );
+//		List<MTGCard> lst = StoreManager.getInstance().getAllCardsAsList();
+//		if(!lst.isEmpty()){
+//			tableMTG.setModel( new JXObjectModel<MTGCard>( lst ) );
+//
+//			//update sorter and text search
+//			tableMTG.refreshRowSorter();
+//			tableAdjuster.adjustColumns();
+//		}
+//		STATUS_BAR_MAIN_FRAME.setStatus( "MTG Cards list refreshed correctly!" );
+//		setCursor( null );
+//	}
 
 //===========================================================================================
 // INNER CLASS
@@ -145,7 +145,7 @@ public class MTGContent extends JPanel
 	{
 		@Override
 		public void actionPerformed(ActionEvent e){
-			new AdvanceSearch(tableMTG).setVisible( true );
+			new AdvanceSearch(JXTABLE_MTG).setVisible( true );
 		}
 	}
 
@@ -160,9 +160,9 @@ public class MTGContent extends JPanel
 		@Override
 		@SuppressWarnings("unchecked")
 		public void valueChanged(ListSelectionEvent e){
-			int selRow = tableMTG.getSelectedModelRow();
+			int selRow = JXTABLE_MTG.getSelectedModelRow();
 			if(selRow != -1 && selRow != prevIndex) {
-				selCard = ((JXObjectModel<MTGCard>) tableMTG.getModel()).getObject( selRow );
+				selCard = ((JXObjectModel<MTGCard>) JXTABLE_MTG.getModel()).getObject( selRow );
 				pnlMTGPropreties.setMTGCardToView( selCard );
 				btnDeleteCard.setEnabled( true );
 				log.write( Tag.DEBUG, selCard.toString() );
@@ -180,7 +180,7 @@ public class MTGContent extends JPanel
 		@Override
 		public void actionPerformed(ActionEvent e){
 			if(frame == null) {
-				InsertCard card = new InsertCard( MTGContent.this );
+				InsertCard card = new InsertCard();
 				card.setVisible( true );
 				card.toFront();
 				frame = card;

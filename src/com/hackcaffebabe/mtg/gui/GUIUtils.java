@@ -1,11 +1,17 @@
 package com.hackcaffebabe.mtg.gui;
 
 import it.hackcaffebabe.jx.statusbar.JXStatusBar;
+import it.hackcaffebabe.jx.table.JXTable;
+import it.hackcaffebabe.jx.table.JXTableColumnAdjuster;
+import it.hackcaffebabe.jx.table.model.JXObjectModel;
+import it.hackcaffebabe.logger.Logger;
+import it.hackcaffebabe.logger.Tag;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.AbstractMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.swing.ButtonGroup;
@@ -27,11 +33,9 @@ import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
-import com.hackcaffebabe.mtg.model.card.Ability;
-import com.hackcaffebabe.mtg.model.card.AbilityFactory;
-import com.hackcaffebabe.mtg.model.card.Effect;
-import com.hackcaffebabe.mtg.model.card.ManaCost;
-import com.hackcaffebabe.mtg.model.card.PlanesAbility;
+import com.hackcaffebabe.mtg.controller.json.StoreManager;
+import com.hackcaffebabe.mtg.model.MTGCard;
+import com.hackcaffebabe.mtg.model.card.*;
 import com.hackcaffebabe.mtg.model.color.BasicColors;
 
 
@@ -70,26 +74,46 @@ public class GUIUtils
 	public static final String AC_ENCHANTMENT = "enchantment";
 
 	/* Some document property used in MTGProperties */
-	public static final String DP_NAME = "name";
-	public static final String DP_MANA_COST = "mana_cost";
-	public static final String DP_CARD_COLOR = "card_color";
-	public static final String DP_RARITY = "rarity";
-	public static final String DP_PLANESWALKER_LIFE = "planeswalker_file";
-	public static final String DP_SERIES = "series";
-	public static final String DP_STRENGTH = "strength";
-	public static final String DP_TYPE = "type";
-	public static final String DP_SUB_TYPE = "sub_type";
-	public static final String DP_PRIMARY_EFFECT = "primary_effect";
+//	public static final String DP_NAME = "name";
+//	public static final String DP_MANA_COST = "mana_cost";
+//	public static final String DP_CARD_COLOR = "card_color";
+//	public static final String DP_RARITY = "rarity";
+//	public static final String DP_PLANESWALKER_LIFE = "planeswalker_file";
+//	public static final String DP_SERIES = "series";
+//	public static final String DP_STRENGTH = "strength";
+//	public static final String DP_TYPE = "type";
+//	public static final String DP_SUB_TYPE = "sub_type";
+//	public static final String DP_PRIMARY_EFFECT = "primary_effect";
 	
 	/* Tool Tip TODO maybe add some TP around the program */
 	public static final String TP_PANEL_CREATURE_INFO = "Creature strength like \"2/2\". Use * to indicate \"*/*\" or \"X/X\".";
 
 	/** Public access of JXStatsBar of Main frame */
 	public static JXStatusBar STATUS_BAR_MAIN_FRAME;
+	/** Public access of JXTable of Main frame */
+	public static JXTable JXTABLE_MTG;
+	public static JXTableColumnAdjuster JXTABLE_MTG_COLUMN_ADJUSTER;
 	
 //===========================================================================================
 // COMMON METHODS
 //===========================================================================================
+	/**
+	 * TODO Add doc
+	 */
+	public static void refreshMTGTable(){
+		Logger.getInstance().write( Tag.DEBUG, "Refreshing mtg card list" );;
+		STATUS_BAR_MAIN_FRAME.setStatus( "Refreshing mtg card list..." );
+		List<MTGCard> lst = StoreManager.getInstance().getAllCardsAsList();
+		if(!lst.isEmpty()){
+			JXTABLE_MTG.setModel( new JXObjectModel<MTGCard>( lst ) );
+
+			//update sorter and text search
+			JXTABLE_MTG.refreshRowSorter();
+			JXTABLE_MTG_COLUMN_ADJUSTER.adjustColumns();
+		}
+		STATUS_BAR_MAIN_FRAME.setStatus( "MTG Cards list refreshed correctly!" );
+	}
+	
 	/**
 	 * Display an error message.
 	 * @param parent {@link Component} the parent component of error message.
