@@ -1,6 +1,14 @@
 package com.hackcaffebabe.mtg.gui.panel.insertcard;
 
 import static com.hackcaffebabe.mtg.gui.GUIUtils.*;
+import com.hackcaffebabe.mtg.model.Artifact;
+import com.hackcaffebabe.mtg.model.Creature;
+import com.hackcaffebabe.mtg.model.Enchantment;
+import com.hackcaffebabe.mtg.model.Instant;
+import com.hackcaffebabe.mtg.model.Land;
+import com.hackcaffebabe.mtg.model.MTGCard;
+import com.hackcaffebabe.mtg.model.Planeswalker;
+import com.hackcaffebabe.mtg.model.Sorcery;
 import com.hackcaffebabe.mtg.model.card.ManaCost;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -49,6 +57,28 @@ public class ManaCostInfo extends JPanel
 //===========================================================================================
 // METHOD
 //===========================================================================================
+	/**
+	 * TODO add doc
+	 * @param c
+	 */
+	public void setData(MTGCard c){
+		if(c!=null&&!(c instanceof Land)){
+			if(c instanceof Creature)
+				this.viewManaCost = ((Creature)c).getManaCost();
+			else if(c instanceof Artifact)
+				this.viewManaCost = ((Artifact)c).getManaCost();
+			else if(c instanceof Instant)
+				this.viewManaCost = ((Instant)c).getManaCost();
+			else if(c instanceof Sorcery)
+				this.viewManaCost = ((Sorcery)c).getManaCost();
+			else if(c instanceof Enchantment)
+				this.viewManaCost = ((Enchantment)c).getManaCost();
+			else if(c instanceof Planeswalker)
+				this.viewManaCost = ((Planeswalker)c).getManaCost();
+			this.txtManaCost.setText( this.viewManaCost.toString() );
+		}
+	}
+	
 	/**
 	 * Disable all components
 	 */

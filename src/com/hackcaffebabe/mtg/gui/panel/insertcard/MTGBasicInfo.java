@@ -12,6 +12,7 @@ import javax.swing.JComboBox;
 import javax.swing.KeyStroke;
 import com.hackcaffebabe.mtg.controller.json.StoreManager;
 import com.hackcaffebabe.mtg.gui.listener.BasicColorActionListener;
+import com.hackcaffebabe.mtg.model.MTGCard;
 import com.hackcaffebabe.mtg.model.card.Rarity;
 import com.hackcaffebabe.mtg.model.color.BasicColors;
 import com.hackcaffebabe.mtg.model.color.CardColor;
@@ -144,6 +145,33 @@ public class MTGBasicInfo extends JPanel
 // SETTER
 //===========================================================================================
 	/**
+	 * TODO add doc
+	 * @param c
+	 */
+	public void setData(MTGCard c){
+		if(c!=null){
+			this.txtName.setText( c.getName() );
+			this.cmbRarity.setSelectedItem( c.getRarity() );
+			this.txtSeries.setText( c.getSeries() );
+			this.txtSubType.setText( c.getSubType() );
+			for( BasicColors s : c.getCardColor().getBasicColors() ){
+				if(s.equals(BasicColors.RED))
+					chbRed.setSelected( true );
+				else if(s.equals(BasicColors.BLACK))
+					chbBlack.setSelected( true );
+				else if(s.equals(BasicColors.BLUE))
+					chbBlue.setSelected( true );
+				else if(s.equals(BasicColors.GREEN))
+					chbGreen.setSelected( true );
+				else if(s.equals(BasicColors.WHITE))
+					chbWhite.setSelected( true );
+			}
+			this.chbIsLegendary.setSelected( c.isLegendary() );
+			this.chbIsArtifact.setSelected( c.isArtifact() );
+		}
+	}
+	
+	/**
 	 * Set the component enable or not
 	 */
 	public void setIsLegendaryEnable(boolean t){
@@ -195,17 +223,6 @@ public class MTGBasicInfo extends JPanel
 	 * @return {@link CardColor}
 	 */
 	public CardColor getCardColor(){
-//		CardColor mtgCardColor = null;
-//		if( basicColorActionListener.isHybrid() == 0 ){ // multicolor card
-//			mtgCardColor = new CardColor( basicColorActionListener.getColors() );
-//		}else if( basicColorActionListener.isHybrid() == 1 ){ // hybrid card
-//			mtgCardColor = new CardColor( basicColorActionListener.getColors().get( 0 ), basicColorActionListener.getColors().get( 1 ) );
-//		}else if( basicColorActionListener.isHybrid() == 2 ){ // mono color card
-//			mtgCardColor = new CardColor( basicColorActionListener.getColors().get( 0 ) );
-//		}else{ // color less card
-//			mtgCardColor = new CardColor();
-//		}
-//		return mtgCardColor;
 		return basicColorActionListener.getCardColor();
 	}
 

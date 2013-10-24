@@ -180,7 +180,7 @@ public class MTGContent extends JPanel
 		@Override
 		public void actionPerformed(ActionEvent e){
 			if(frame == null) {
-				InsertCard card = new InsertCard();
+				InsertCard card = new InsertCard(null);
 				card.setVisible( true );
 				card.toFront();
 				frame = card;

@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import net.miginfocom.swing.MigLayout;
+import com.hackcaffebabe.mtg.model.MTGCard;
 import com.hackcaffebabe.mtg.model.Planeswalker;
 
 
@@ -46,6 +47,16 @@ public class PlaneswalkerInfo extends JPanel
 //===========================================================================================
 // METHOD
 //===========================================================================================
+	/**
+	 * TODO add doc
+	 * @param c
+	 */
+	public void setData(MTGCard c){
+		if(c!=null&&c instanceof Planeswalker){
+			this.spinLife.setValue( ((Planeswalker)c).getLife() );
+		}
+	}
+	
 	/**
 	 * Disable all components
 	 */

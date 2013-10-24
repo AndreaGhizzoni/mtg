@@ -1,6 +1,8 @@
 package com.hackcaffebabe.mtg.gui.panel.insertcard;
 
 import com.hackcaffebabe.mtg.gui.GUIUtils;
+import com.hackcaffebabe.mtg.model.Creature;
+import com.hackcaffebabe.mtg.model.MTGCard;
 import com.hackcaffebabe.mtg.model.card.Strength;
 import net.miginfocom.swing.MigLayout;
 import java.awt.Component;
@@ -71,6 +73,18 @@ public class CreatureInfo extends JPanel
 //===========================================================================================
 // METHOD
 //===========================================================================================
+	/**
+	 * TODO add doc
+	 * @param c
+	 */
+	public void setData(MTGCard c){
+		if(c!=null&&c instanceof Creature){
+			Creature creature = ((Creature)c);
+			this.txtPower.setText( String.valueOf( creature.getStrength().getPower() ) );
+			this.txtToughness.setText( String.valueOf( creature.getStrength().getToughness() ) );
+		}
+	}
+	
 	/**
 	 * Disable all components
 	 */

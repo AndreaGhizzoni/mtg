@@ -9,6 +9,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import com.hackcaffebabe.mtg.gui.panel.insertcard.InsertCardContent;
+import com.hackcaffebabe.mtg.model.MTGCard;
 
 
 /**
@@ -21,16 +22,17 @@ public class InsertCard extends JFrame
 {
 	private static final long serialVersionUID = 1L;
 	private InsertCardContent content;
-	
+
 	/**
-	 * Create the frame.
+	 * Instance a frame to view or update a {@link MTGCard}
+	 * @param cardToView {@link MTG} or null if user want to insert a card.
 	 */
-	public InsertCard(){
-		super( TITLE_INSERT_CARD );
+	public InsertCard( MTGCard cardToView ){
+		super( cardToView==null?TITLE_INSERT_CARD:TITLE_UPDATE_CARD );
 		setMinimumSize( DIMENSION_INSERT_CARD );
 		setLocation( (Toolkit.getDefaultToolkit().getScreenSize().width/2)-(DIMENSION_INSERT_CARD.width/2),
 				     (Toolkit.getDefaultToolkit().getScreenSize().height/2)-(DIMENSION_INSERT_CARD.height/2));
-		this.initContent();
+		this.initContent(cardToView);
 		this.initMenuBar();
 	}
 	
@@ -38,8 +40,8 @@ public class InsertCard extends JFrame
 // METHOD
 //===========================================================================================
 	/* initialize all components */
-	private void initContent(){
-		this.content = new InsertCardContent();
+	private void initContent(MTGCard cardToView){
+		this.content = new InsertCardContent(cardToView);
 		this.content.setOpaque( true );
 		setContentPane( this.content );
 	}

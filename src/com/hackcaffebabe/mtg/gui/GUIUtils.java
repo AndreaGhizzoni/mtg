@@ -54,6 +54,8 @@ public class GUIUtils
 	public static final String TITLE_MAIN_FRAME = "MTG Card Manager!";
 	/** Title of insert card frame */
 	public static final String TITLE_INSERT_CARD = "MTG Insert Card!";
+	/** Title of update card frame */
+	public static final String TITLE_UPDATE_CARD = "MTG Update Card!";
 	/** Title of advance search frame */
 	public static final String TITLE_ADVANCE_SEARCH = "Advance Search";
 	
@@ -65,13 +67,13 @@ public class GUIUtils
 	public static final Dimension DIMENSION_ADVANCE_SEARCH = new Dimension( 485, 190 );
 
 	/* Action Command */
-	public static final String AC_CREATURE = "creature";
-	public static final String AC_ARTIFACT = "artifact";
-	public static final String AC_PLANESWALKER = "planeswalker";
-	public static final String AC_LAND = "land";
-	public static final String AC_INSTANT = "instant";
-	public static final String AC_SORCERY = "sorcery";
-	public static final String AC_ENCHANTMENT = "enchantment";
+	public static final String AC_CREATURE = "Creature";
+	public static final String AC_ARTIFACT = "Artifact";
+	public static final String AC_PLANESWALKER = "Planeswalker";
+	public static final String AC_LAND = "Land";
+	public static final String AC_INSTANT = "Instant";
+	public static final String AC_SORCERY = "Sorcery";
+	public static final String AC_ENCHANTMENT = "Enchantment";
 
 	/* Some document property used in MTGProperties */
 //	public static final String DP_NAME = "name";

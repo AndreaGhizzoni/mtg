@@ -15,8 +15,10 @@ import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import it.hackcaffebabe.jx.table.JXTable;
 import it.hackcaffebabe.jx.table.JXTableColumnAdjuster;
+import it.hackcaffebabe.jx.table.model.DisplayableObject;
 import it.hackcaffebabe.jx.table.model.JXObjectModel;
 import it.hackcaffebabe.logger.Logger;
 import it.hackcaffebabe.logger.Tag;
@@ -46,7 +48,7 @@ public class InsertCardContent extends JPanel
 	private TypeCardActionListener MTGTypeListener;
 
 	private ButtonGroup mtgCardType;
-	private MTGBasicInfo pnlMTGBasicInfo = new MTGBasicInfo();
+	private MTGBasicInfo pnlMTGBasicInfo;
 
 	private JXTable tableAbility;
 	private JXTableColumnAdjuster tableAbilityColumnAdjuster;
@@ -60,24 +62,38 @@ public class InsertCardContent extends JPanel
 	private JButton btnAddEffect;
 	private JButton btnDelEffect;
 
-	private ManaCostInfo pnlManaCost = new ManaCostInfo();
-	private CreatureInfo pnlCreatureInfo = new CreatureInfo();
-	private PlaneswalkerInfo pnlPlaneswalkerInfo = new PlaneswalkerInfo( 1 );
+	private ManaCostInfo pnlManaCost;
+	private CreatureInfo pnlCreatureInfo;
+	private PlaneswalkerInfo pnlPlaneswalkerInfo;
 
-	private JButton btnSave;
+	private JButton btnSaveOrUpdate;
 	private JButton btnClear;
 
 	private Logger log = Logger.getInstance();
 
+	private MTGCard cardToUpdate;
+	
 	/**
-	 * Create the panel.
+	 * TODO add doc.
+	 * @param cardToUpdate
 	 */
-	public InsertCardContent(){
+	public InsertCardContent( MTGCard cardToUpdate ){
 		super();
 		setSize( DIMENSION_INSERT_CARD );
 		setLayout( new MigLayout( "", "[grow][grow]", "[60!][grow][60!]" ) );
+		this.cardToUpdate = cardToUpdate;
 		this.initContent();
-		this.disableAllInPanel();
+		
+		//if card to update is null, user want to insert new card TODO maybe this in invokeLater()
+		if(this.cardToUpdate==null){
+			this.disableAllInPanel();
+			this.btnSaveOrUpdate.addActionListener( new SaveActionListener() );
+			this.btnSaveOrUpdate.setText( "Save" );
+		}else{// otherwise user want to update passing card
+			this.populateContent();
+			// add action listener on btnSave to update card
+			this.btnSaveOrUpdate.setText( "Update" );
+		}		
 	}
 
 //===========================================================================================
@@ -92,7 +108,6 @@ public class InsertCardContent extends JPanel
 		add( pnlTypeCard, "cell 0 0 2 1,grow" );
 
 		this.MTGTypeListener = new TypeCardActionListener();
-
 		JRadioButton rdbCreature = new JRadioButton( "Creature" );
 		rdbCreature.setActionCommand( AC_CREATURE );
 		rdbCreature.addActionListener( MTGTypeListener );
@@ -142,6 +157,7 @@ public class InsertCardContent extends JPanel
 		pnlMTG.setLayout( new MigLayout( "", "[grow][grow][grow][grow][grow][grow][100px:n,grow][29.00px:n]",
 				"[][][][][::100,grow][::100,grow][28!][][::100,grow][::100,grow][][][grow]" ) );
 
+		this.pnlMTGBasicInfo = new MTGBasicInfo();
 		pnlMTG.add( this.pnlMTGBasicInfo, "cell 0 0 8 3,grow" );
 
 		//================== Table Ability
@@ -178,8 +194,11 @@ public class InsertCardContent extends JPanel
 		pnlMTG.add( this.btnDelEffect, "cell 7 9,alignx center,growy" );
 
 		//================== Other Panels
+		this.pnlManaCost = new ManaCostInfo();
 		pnlMTG.add( this.pnlManaCost, "cell 0 10 8 1,grow" );
+		this.pnlCreatureInfo = new CreatureInfo();
 		pnlMTG.add( this.pnlCreatureInfo, "cell 0 11 6 1,grow" );
+		this.pnlPlaneswalkerInfo = new PlaneswalkerInfo( 1 );
 		pnlMTG.add( this.pnlPlaneswalkerInfo, "cell 6 11 2 1,grow" );
 
 		add( pnlMTG, "cell 0 1 2 1,grow" );
@@ -191,9 +210,8 @@ public class InsertCardContent extends JPanel
 		this.btnClear.addActionListener( new ClearActionListener() );
 		pnlOptions.add( this.btnClear, "cell 0 0,growx" );
 
-		this.btnSave = new JButton( "Save" );
-		this.btnSave.addActionListener( new SaveActionListener() );
-		pnlOptions.add( this.btnSave, "cell 2 0,growx" );
+		this.btnSaveOrUpdate = new JButton();
+		pnlOptions.add( this.btnSaveOrUpdate, "cell 2 0,growx" );
 
 		add( pnlOptions, "cell 0 2 2 1,grow" );
 	}
@@ -221,6 +239,47 @@ public class InsertCardContent extends JPanel
 		tableEffects.setModel( new JXObjectModel<>() );
 	}
 
+	/* TODO add doc */
+	private void populateContent(){
+		this.MTGTypeListener.actionPerformed( new ActionEvent( new Object(), 1, this.cardToUpdate.getClass().getSimpleName() ) );
+		
+		this.pnlMTGBasicInfo.setData( cardToUpdate );
+		this.txtPrimaryEffect.setText( this.cardToUpdate.getPrimaryEffect() );
+		
+		if(this.cardToUpdate instanceof Creature){
+			this.pnlCreatureInfo.setData( this.cardToUpdate );
+			populateTables( Ability.class, this.cardToUpdate.getAbilities(), this.cardToUpdate.getEffects() );
+		}
+		
+		if(!(this.cardToUpdate instanceof Land)){
+			this.pnlManaCost.setData( this.cardToUpdate );
+		}
+		
+		if(this.cardToUpdate instanceof Planeswalker){
+			populateTables( PlanesAbility.class, ((Planeswalker) this.cardToUpdate).getPlanesAbilities(), this.cardToUpdate.getEffects() );
+			this.pnlPlaneswalkerInfo.setData( this.cardToUpdate );
+		}
+	}
+	
+	/* this method populate the table ability and effects */
+	private <T extends DisplayableObject> void populateTables(Class<T> abilityClaxx, Set<T> setOfAbilityClaxx, Set<Effect> setOfEffects){
+		if(!setOfAbilityClaxx.isEmpty()) {
+			JXObjectModel<T> model = new JXObjectModel<>();
+			for(T a: setOfAbilityClaxx)
+				model.addObject( a );
+			this.tableAbility.setModel( model );
+			this.tableAbilityColumnAdjuster.adjustColumns();
+		}
+
+		if(!setOfEffects.isEmpty()) {
+			JXObjectModel<Effect> model = new JXObjectModel<>();
+			for(Effect e: setOfEffects)
+				model.addObject( e );
+			this.tableEffects.setModel( model );
+			this.tableEffectsColumnAdjuster.adjustColumns();
+		}
+	}
+	
 	/* save the MTG card with appropriate message */
 	private void store(MTGCard m){
 		try {
@@ -255,7 +314,7 @@ public class InsertCardContent extends JPanel
 
 		@Override
 		public void actionPerformed(ActionEvent ev){
-			String ac = ((JRadioButton) ev.getSource()).getActionCommand();
+			String ac = ev.getActionCommand();
 			if(!ac.equals( lastActionCommand )) {
 				disableAllInPanel();
 				clearEffectsAndAbilityTable();
