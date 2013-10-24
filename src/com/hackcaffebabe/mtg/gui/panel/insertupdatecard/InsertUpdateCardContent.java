@@ -31,16 +31,11 @@ import com.hackcaffebabe.mtg.model.card.*;
 
 
 /**
- * TODO DO THIS CHANGES: == but before to do this to all other TODOs ==
- * 	- this (and sub) content has double purpose: 
- * 		1) create new MTGCard and save it 
- * 		2) View passed MTGCard, user update it and click on Apply Update (Save button in case 1). 
- * 		   Now this frame validate the user data and if is different from data displayed, update it.
- * 
+ * TODO define update action listener
  * The Insertion Card Content.
  *  
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
- * @version 2.1
+ * @version 3.1
  */
 public class InsertUpdateCardContent extends JPanel
 {
@@ -83,8 +78,8 @@ public class InsertUpdateCardContent extends JPanel
 	private MTGCard cardToUpdate;
 	
 	/**
-	 * TODO add doc.
-	 * @param cardToUpdate
+	 * Instance the content. Pass null to insert new card, otherwise pass a card to update it.
+	 * @param cardToUpdate {@link MTGCard}
 	 */
 	public InsertUpdateCardContent( MTGCard cardToUpdate ){
 		super();
@@ -95,11 +90,12 @@ public class InsertUpdateCardContent extends JPanel
 		this.chois();
 	}
 	
+	/* choose insert mode or update mode */
 	private void chois(){
 		SwingUtilities.invokeLater( new Runnable(){
 			@Override
 			public void run(){
-				//if card to update is null, user want to insert new card TODO maybe this in invokeLater()
+				//if card to update is null, user want to insert new card
 				if(cardToUpdate==null){
 					disableAllInPanel();
 					btnSaveOrUpdate.addActionListener( new SaveActionListener() );
@@ -261,7 +257,7 @@ public class InsertUpdateCardContent extends JPanel
 		tableEffects.setModel( new JXObjectModel<>() );
 	}
 
-	/* TODO add doc */
+	/* this method populate all the content with data of cardToUpdate */
 	private void populateContent(){
 		//this stuff is for select appropriate mtgType button
 		switch(cardToUpdate.getClass().getSimpleName()){

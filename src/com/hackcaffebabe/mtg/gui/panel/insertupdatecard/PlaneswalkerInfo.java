@@ -48,8 +48,8 @@ public class PlaneswalkerInfo extends JPanel
 // METHOD
 //===========================================================================================
 	/**
-	 * TODO add doc
-	 * @param c
+	 * This method display the planes walker life from {@link MTGCard} given.
+	 * @param c {@link MTGCard} if null or not instance of Planeswalker.class nothing happen;
 	 */
 	public void setData(MTGCard c){
 		if(c!=null&&c instanceof Planeswalker){

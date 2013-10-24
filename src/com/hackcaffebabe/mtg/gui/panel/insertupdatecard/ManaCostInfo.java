@@ -58,8 +58,8 @@ public class ManaCostInfo extends JPanel
 // METHOD
 //===========================================================================================
 	/**
-	 * TODO add doc
-	 * @param c
+	 * This method display the {@link Strength} object from {@link MTGCard} given.
+	 * @param c {@link MTGCard} if null or instance of != Land.class nothing happen;
 	 */
 	public void setData(MTGCard c){
 		if(c!=null&&!(c instanceof Land)){

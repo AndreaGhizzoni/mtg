@@ -74,8 +74,8 @@ public class CreatureInfo extends JPanel
 // METHOD
 //===========================================================================================
 	/**
-	 * TODO add doc
-	 * @param c
+	 * This method display the {@link Strength} object from {@link MTGCard} given.
+	 * @param c {@link MTGCard} if null or not instance of Creature.class nothing happen;
 	 */
 	public void setData(MTGCard c){
 		if(c!=null&&c instanceof Creature){

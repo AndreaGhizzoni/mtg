@@ -145,8 +145,8 @@ public class MTGBasicInfo extends JPanel
 // SETTER
 //===========================================================================================
 	/**
-	 * TODO add doc
-	 * @param c
+	 * This method display basic data from {@link MTGCard} given.
+	 * @param c {@link MTGCard} if null nothing happen;
 	 */
 	public void setData(MTGCard c){
 		if(c!=null){
