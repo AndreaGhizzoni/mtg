@@ -44,8 +44,8 @@ public class InsertCardContent extends JPanel
 	private static final long serialVersionUID = 1L;
 	private JPanel pnlMTG = new JPanel();
 	private TypeCardActionListener MTGTypeListener;
-	private ButtonGroup mtgCardType;
 
+	private ButtonGroup mtgCardType;
 	private MTGBasicInfo pnlMTGBasicInfo = new MTGBasicInfo();
 
 	private JXTable tableAbility;
@@ -144,10 +144,12 @@ public class InsertCardContent extends JPanel
 
 		pnlMTG.add( this.pnlMTGBasicInfo, "cell 0 0 8 3,grow" );
 
+		//================== Table Ability
 		pnlMTG.add( new JLabel( "Ability:" ), "cell 0 3" );
 		this.tableAbility = new JXTable( new JXObjectModel<>() );
 		this.tableAbilityColumnAdjuster = new JXTableColumnAdjuster( this.tableAbility );
-		pnlMTG.add( new JScrollPane( this.tableAbility ), "cell 0 4 7 2,grow" );
+		pnlMTG.add( new JScrollPane( this.tableAbility, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, 
+				                                        JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED ), "cell 0 4 7 2,grow" );
 		this.btnAddAbility = new JButton( "+" );
 		this.btnAddAbility.addActionListener( new AddAbilityActionListener() );
 		pnlMTG.add( this.btnAddAbility, "cell 7 4,grow" );
@@ -155,12 +157,14 @@ public class InsertCardContent extends JPanel
 		this.btnDelAbility.addActionListener( new DelAbilityActionListener( tableAbility, tableAbilityColumnAdjuster ) );
 		pnlMTG.add( this.btnDelAbility, "cell 7 5,alignx center,growy" );
 
+		//================== Primary Effect
 		pnlMTG.add( new JLabel( "Primary Effect:" ), "cell 0 6" );
 		this.txtPrimaryEffect = new JTextArea();
 		this.txtPrimaryEffect.setLineWrap( true );
 		pnlMTG.add( new JScrollPane( txtPrimaryEffect, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				                                       JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED ), "cell 1 6 6 2,grow" );
 
+		//================== Other Effect
 		pnlMTG.add( new JLabel( "Other Effects:" ), "cell 0 7" );
 		this.tableEffects = new JXTable( new JXObjectModel<>() );
 		this.tableEffectsColumnAdjuster = new JXTableColumnAdjuster( this.tableEffects );
@@ -173,6 +177,7 @@ public class InsertCardContent extends JPanel
 		this.btnDelEffect.addActionListener( new DelEffectActionListener( tableEffects, tableEffectsColumnAdjuster ) );
 		pnlMTG.add( this.btnDelEffect, "cell 7 9,alignx center,growy" );
 
+		//================== Other Panels
 		pnlMTG.add( this.pnlManaCost, "cell 0 10 8 1,grow" );
 		pnlMTG.add( this.pnlCreatureInfo, "cell 0 11 6 1,grow" );
 		pnlMTG.add( this.pnlPlaneswalkerInfo, "cell 6 11 2 1,grow" );
