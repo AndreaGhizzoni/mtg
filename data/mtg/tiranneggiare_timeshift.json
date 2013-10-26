@@ -2,10 +2,8 @@
   "type": "Sorcery",
   "name": "Tiranneggiare",
   "card_color": {
-    "colors": [
-      "RED"
-    ],
-    "type": "MONO_COLOR"
+    "colors": [],
+    "type": "COLOR_LESS"
   },
   "rarity": "NON_COMMON",
   "series": "timeshift",
@@ -16,7 +14,7 @@
   "effects": [],
   "abilitis": [],
   "mana_cost": {
-    "RED": 1,
-    "COLOR_LESS": 2
+    "COLOR_LESS": 2,
+    "RED": 1
   }
 }

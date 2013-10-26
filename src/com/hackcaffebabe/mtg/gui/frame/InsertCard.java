@@ -41,7 +41,7 @@ public class InsertCard extends JFrame
 //===========================================================================================
 	/* initialize all components */
 	private void initContent(MTGCard cardToView){
-		this.content = new InsertUpdateCardContent(cardToView);
+		this.content = new InsertUpdateCardContent(cardToView, this);
 		this.content.setOpaque( true );
 		setContentPane( this.content );
 	}

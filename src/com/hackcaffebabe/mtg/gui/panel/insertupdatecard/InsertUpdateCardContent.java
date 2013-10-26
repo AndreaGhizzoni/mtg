@@ -21,10 +21,10 @@ import it.hackcaffebabe.jx.table.JXTable;
 import it.hackcaffebabe.jx.table.JXTableColumnAdjuster;
 import it.hackcaffebabe.jx.table.model.DisplayableObject;
 import it.hackcaffebabe.jx.table.model.JXObjectModel;
-import it.hackcaffebabe.logger.Logger;
-import it.hackcaffebabe.logger.Tag;
+import it.hackcaffebabe.logger.*;
 import com.hackcaffebabe.mtg.controller.json.StoreManager;
 import com.hackcaffebabe.mtg.model.color.CardColor;
+import com.hackcaffebabe.mtg.gui.frame.InsertCard;
 import com.hackcaffebabe.mtg.gui.listener.*;
 import com.hackcaffebabe.mtg.model.*;
 import com.hackcaffebabe.mtg.model.card.*;
@@ -40,7 +40,7 @@ import com.hackcaffebabe.mtg.model.card.*;
 public class InsertUpdateCardContent extends JPanel
 {
 	private static final long serialVersionUID = 1L;
-	private JPanel pnlMTG = new JPanel();
+//	private JPanel pnlMTG = new JPanel();
 	private TypeCardActionListener MTGTypeListener;
 
 	private ButtonGroup mtgCardType = new ButtonGroup();
@@ -51,7 +51,7 @@ public class InsertUpdateCardContent extends JPanel
 	private JRadioButton rdbEnchantment = new JRadioButton( "Enchantment" );
 	private JRadioButton rdbSorcery = new JRadioButton( "Sorcery" );
 	private JRadioButton rdbInstant = new JRadioButton( "Instant" );
-	
+
 	private MTGBasicInfo pnlMTGBasicInfo;
 
 	private JXTable tableAbility;
@@ -76,12 +76,12 @@ public class InsertUpdateCardContent extends JPanel
 	private Logger log = Logger.getInstance();
 
 	private MTGCard cardToUpdate;
-	
+
 	/**
 	 * Instance the content. Pass null to insert new card, otherwise pass a card to update it.
 	 * @param cardToUpdate {@link MTGCard}
 	 */
-	public InsertUpdateCardContent( MTGCard cardToUpdate ){
+	public InsertUpdateCardContent(MTGCard cardToUpdate, InsertCard parent){
 		super();
 		setSize( DIMENSION_INSERT_CARD );
 		setLayout( new MigLayout( "", "[grow][grow]", "[60!][grow][60!]" ) );
@@ -89,23 +89,21 @@ public class InsertUpdateCardContent extends JPanel
 		this.initContent();
 		this.chois();
 	}
-	
+
 	/* choose insert mode or update mode */
 	private void chois(){
 		SwingUtilities.invokeLater( new Runnable(){
 			@Override
 			public void run(){
-				//if card to update is null, user want to insert new card
-				if(cardToUpdate==null){
+				if(cardToUpdate == null) { // if card to update is null, user want to insert new card
 					disableAllInPanel();
-					btnSaveOrUpdate.addActionListener( new SaveActionListener() );
 					btnSaveOrUpdate.setText( "Save" );
-				}else{// otherwise user want to update passing card
+				}
+				else { // otherwise user want to update passing card
 					populateContent();
-					// add action listener on btnSave to update card
 					btnSaveOrUpdate.setText( "Update" );
 					disableUnnecessaryComponentsForUpdates();
-				}		
+				}
 			}
 		} );
 	}
@@ -159,6 +157,7 @@ public class InsertUpdateCardContent extends JPanel
 		mtgCardType.add( this.rdbInstant );
 
 		// =========================== MTG PANEL ===========================
+		JPanel pnlMTG = new JPanel();
 		pnlMTG.setBorder( new TitledBorder( "Card Info" ) );
 		pnlMTG.setLayout( new MigLayout( "", "[grow][grow][grow][grow][grow][grow][100px:n,grow][29.00px:n]",
 				"[][][][][::100,grow][::100,grow][28!][][::100,grow][::100,grow][][][grow]" ) );
@@ -170,8 +169,8 @@ public class InsertUpdateCardContent extends JPanel
 		pnlMTG.add( new JLabel( "Ability:" ), "cell 0 3" );
 		this.tableAbility = new JXTable( new JXObjectModel<>() );
 		this.tableAbilityColumnAdjuster = new JXTableColumnAdjuster( this.tableAbility );
-		pnlMTG.add( new JScrollPane( this.tableAbility, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, 
-				                                        JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED ), "cell 0 4 7 2,grow" );
+		pnlMTG.add( new JScrollPane( this.tableAbility, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED ),
+				"cell 0 4 7 2,grow" );
 		this.btnAddAbility = new JButton( "+" );
 		this.btnAddAbility.addActionListener( new AddAbilityActionListener() );
 		pnlMTG.add( this.btnAddAbility, "cell 7 4,grow" );
@@ -183,15 +182,15 @@ public class InsertUpdateCardContent extends JPanel
 		pnlMTG.add( new JLabel( "Primary Effect:" ), "cell 0 6" );
 		this.txtPrimaryEffect = new JTextArea();
 		this.txtPrimaryEffect.setLineWrap( true );
-		pnlMTG.add( new JScrollPane( txtPrimaryEffect, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-				                                       JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED ), "cell 1 6 6 2,grow" );
+		pnlMTG.add( new JScrollPane( txtPrimaryEffect, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED ),
+				"cell 1 6 6 2,grow" );
 
 		//================== Other Effect
 		pnlMTG.add( new JLabel( "Other Effects:" ), "cell 0 7" );
 		this.tableEffects = new JXTable( new JXObjectModel<>() );
 		this.tableEffectsColumnAdjuster = new JXTableColumnAdjuster( this.tableEffects );
-		pnlMTG.add( new JScrollPane( this.tableEffects, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-				                                        JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED ), "cell 0 8 7 2,grow" );
+		pnlMTG.add( new JScrollPane( this.tableEffects, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED ),
+				"cell 0 8 7 2,grow" );
 		this.btnAddEffect = new JButton( "+" );
 		this.btnAddEffect.addActionListener( new AddEffectActionListener( this, tableEffects, tableEffectsColumnAdjuster ) );
 		pnlMTG.add( this.btnAddEffect, "cell 7 8,alignx center,growy" );
@@ -217,6 +216,7 @@ public class InsertUpdateCardContent extends JPanel
 		pnlOptions.add( this.btnClear, "cell 0 0,growx" );
 
 		this.btnSaveOrUpdate = new JButton();// strings of button is set later than initContent
+		this.btnSaveOrUpdate.addActionListener( new SaveActionListener() );
 		pnlOptions.add( this.btnSaveOrUpdate, "cell 2 0,growx" );
 
 		add( pnlOptions, "cell 0 2 2 1,grow" );
@@ -236,7 +236,7 @@ public class InsertUpdateCardContent extends JPanel
 		this.rdbPlanedwalker.setEnabled( false );
 		this.btnClear.setEnabled( false );
 	}
-	
+
 	/* Reset all the panel and components into the panel */
 	private void disableAllInPanel(){
 		this.pnlMTGBasicInfo.reset();
@@ -260,57 +260,57 @@ public class InsertUpdateCardContent extends JPanel
 	/* this method populate all the content with data of cardToUpdate */
 	private void populateContent(){
 		//this stuff is for select appropriate mtgType button
-		switch(cardToUpdate.getClass().getSimpleName()){
-			case AC_CREATURE:{
+		switch( cardToUpdate.getClass().getSimpleName() ) {
+			case AC_CREATURE: {
 				rdbCreature.setSelected( true );
 				break;
 			}
-			case AC_ARTIFACT:{
+			case AC_ARTIFACT: {
 				rdbArtifact.setSelected( true );
 				break;
 			}
-			case AC_INSTANT:{
+			case AC_INSTANT: {
 				rdbInstant.setSelected( true );
 				break;
 			}
-			case AC_SORCERY:{
+			case AC_SORCERY: {
 				rdbSorcery.setSelected( true );
 				break;
 			}
-			case AC_ENCHANTMENT:{
+			case AC_ENCHANTMENT: {
 				rdbEnchantment.setSelected( true );
 				break;
 			}
-			case AC_LAND:{
+			case AC_LAND: {
 				rdbLand.setSelected( true );
 				break;
 			}
-			case AC_PLANESWALKER:{
+			case AC_PLANESWALKER: {
 				rdbPlanedwalker.setSelected( true );
 				break;
 			}
 		}
 		//this is to call action event
 		this.MTGTypeListener.actionPerformed( new ActionEvent( new Object(), 1, cardToUpdate.getClass().getSimpleName() ) );
-		
+
 		this.pnlMTGBasicInfo.setData( cardToUpdate );
 		this.txtPrimaryEffect.setText( cardToUpdate.getPrimaryEffect() );
-		
-		if(cardToUpdate instanceof Creature){
+
+		if(cardToUpdate instanceof Creature) {
 			this.pnlCreatureInfo.setData( cardToUpdate );
 			populateTables( Ability.class, cardToUpdate.getAbilities(), cardToUpdate.getEffects() );
 		}
-		
-		if(!(cardToUpdate instanceof Land)){
+
+		if(!(cardToUpdate instanceof Land)) {
 			this.pnlManaCost.setData( this.cardToUpdate );
 		}
-		
-		if(cardToUpdate instanceof Planeswalker){
+
+		if(cardToUpdate instanceof Planeswalker) {
 			populateTables( PlanesAbility.class, ((Planeswalker) cardToUpdate).getPlanesAbilities(), cardToUpdate.getEffects() );
 			this.pnlPlaneswalkerInfo.setData( cardToUpdate );
 		}
 	}
-	
+
 	/* this method populate the table ability and effects */
 	private <T extends DisplayableObject> void populateTables(Class<T> abilityClaxx, Set<T> setOfAbilityClaxx, Set<Effect> setOfEffects){
 		if(!setOfAbilityClaxx.isEmpty()) {
@@ -329,29 +329,108 @@ public class InsertUpdateCardContent extends JPanel
 			this.tableEffectsColumnAdjuster.adjustColumns();
 		}
 	}
-	
-	/* save the MTG card with appropriate message */
-	private void store(MTGCard m){
-		try {
-			if(StoreManager.getInstance().store( m )) {
-				//reset all the form
-				disableAllInPanel();
-				clearEffectsAndAbilityTable();
-				mtgCardType.clearSelection();
-				MTGTypeListener.lastActionCommand = "";
-				refreshMTGTable();
 
-				JOptionPane.showMessageDialog( pnlMTG, "Card saved correctly!", "Succes!", JOptionPane.INFORMATION_MESSAGE );
-			}
-			else {
-				JOptionPane.showMessageDialog( pnlMTG, "Card is already saved!", "Bad Luck!", JOptionPane.INFORMATION_MESSAGE );
+	/* save the MTG card with appropriate message */
+	private void storeOrUpdate(MTGCard m){
+		try {
+			if(cardToUpdate==null){
+				if(StoreManager.getInstance().store( m )) {
+					//reset all the form
+					disableAllInPanel();
+					clearEffectsAndAbilityTable();
+					mtgCardType.clearSelection();
+					MTGTypeListener.lastActionCommand = "";
+					refreshMTGTable();
+	
+					JOptionPane.showMessageDialog( this, "Card saved correctly!", "Succes!", JOptionPane.INFORMATION_MESSAGE );
+				}
+				else {
+					JOptionPane.showMessageDialog( this, "Card is already saved!", "Bad Luck!", JOptionPane.INFORMATION_MESSAGE );
+				}
+			}else{
+				// cardToUpdate is the oldest card, m is the newest.
+				if(StoreManager.getInstance().applyDifference( cardToUpdate, m )){
+					JOptionPane.showMessageDialog( this, "Card updated correctly!", "Succes!", JOptionPane.INFORMATION_MESSAGE );
+					//close the frame.
+				}else{
+					JOptionPane.showMessageDialog( this, "No changes found.\nNothing to update.", "Bad Luck!", JOptionPane.INFORMATION_MESSAGE );
+				}
 			}
 		}
 		catch(Exception e) {
 			String s = String.format( "%s\nLog is reported.", e.getMessage() );
 			log.write( Tag.ERRORS, e.getMessage() );
-			displayError( pnlMTG, s );
+			displayError( this, s );
 		}
+	}
+
+	/**
+	 * This method check the data from the user.
+	 * @return {@link Boolean}
+	 */
+	private boolean checkUserData(){
+		String mtgCardType = MTGTypeListener.lastActionCommand;
+		if(mtgCardType.equals( "" ))
+			return false;
+
+		String mtgName = pnlMTGBasicInfo.getNames();
+		if(mtgName == null || mtgName.isEmpty()) {
+			displayError( this, "Name of MTG Card can not be void." );
+			log.write( Tag.ERRORS, "Name of MTG card missing." );
+			pnlMTGBasicInfo.requestFocus();
+			return false;
+		}
+
+		String mtgSeries = pnlMTGBasicInfo.getSeries();
+		if(mtgSeries == null || mtgSeries.isEmpty()) {
+			displayError( this, "Series of MTG can not be void." );
+			log.write( Tag.ERRORS, "Series of MTG card missing." );
+			pnlMTGBasicInfo.requestFocus();
+			return false;
+		}
+
+		if(!mtgCardType.equals( AC_LAND )) {
+			ManaCost mtgManaCost = pnlManaCost.getManaCost();
+			if(mtgManaCost == null) {
+				displayError( this, "Mana cost of MTG Card can not be void." );
+				log.write( Tag.ERRORS, "Mana cost of MTG card missing." );
+				pnlManaCost.requestFocus();
+				return false;
+			}
+		}
+
+		if(mtgCardType.equals( AC_CREATURE )) {
+			Strength creatureStrength = pnlCreatureInfo.getStrength();
+			if(creatureStrength == null) {
+				displayError( this, "Creature info missing." );
+				log.write( Tag.ERRORS, "Creature strength missing." );
+				pnlCreatureInfo.requestFocus();
+				return false;
+			}
+		}
+
+		if(mtgCardType.equals( AC_INSTANT ) || mtgCardType.equals( AC_SORCERY ) || mtgCardType.equals( AC_ENCHANTMENT )) {
+			String mtgPrimaryEffect = txtPrimaryEffect.getText();
+			if(mtgPrimaryEffect == null) {
+				displayError( this, mtgCardType + " have a primary effect." );
+				log.write( Tag.ERRORS, mtgCardType + "primary effect of MTG card missing." );
+				txtPrimaryEffect.requestFocus();
+				return false;
+			}
+		}
+
+		if(mtgCardType.equals( AC_LAND )) {
+			@SuppressWarnings("unchecked")
+			List<Effect> mtgEffects = ((JXObjectModel<Effect>) tableEffects.getModel()).getObjects();
+			if(mtgEffects.isEmpty()) {
+				displayError( this, "Land must have at least one effect." );
+				log.write( Tag.ERRORS, "Land primary effect of MTG card missing." );
+				tableEffects.requestFocus();
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 //===========================================================================================
@@ -445,20 +524,15 @@ public class InsertUpdateCardContent extends JPanel
 		@SuppressWarnings("unchecked")
 		@Override
 		public void actionPerformed(ActionEvent e){
+			if(!checkUserData())
+				return;
+
 			String mtgCardType = MTGTypeListener.lastActionCommand;
-			if(mtgCardType.equals( "" ))
-				return; // if no type selection do nothing
 
 			log.write( Tag.INFO, "New card start to save..." );
 			log.write( Tag.DEBUG, "type to save = " + mtgCardType );
 
 			String mtgName = pnlMTGBasicInfo.getNames();
-			if(mtgName == null || mtgName.isEmpty()) {
-				displayError( pnlMTG, "Name of MTG Card can not be void." );
-				log.write( Tag.ERRORS, "Name of MTG card missing." );
-				pnlMTGBasicInfo.requestFocus();
-				return;
-			}
 			log.write( Tag.DEBUG, "name = " + mtgName );
 
 			Rarity mtgRarity = pnlMTGBasicInfo.getRarity();
@@ -471,12 +545,6 @@ public class InsertUpdateCardContent extends JPanel
 			log.write( Tag.DEBUG, "is legendary = " + isLegendary );
 
 			String mtgSeries = pnlMTGBasicInfo.getSeries();
-			if(mtgSeries == null || mtgSeries.isEmpty()) {
-				displayError( pnlMTG, "Series of MTG can not be void." );
-				log.write( Tag.ERRORS, "Series of MTG card missing." );
-				pnlMTGBasicInfo.requestFocus();
-				return;
-			}
 			log.write( Tag.DEBUG, "series = " + mtgSeries );
 
 			String mtgSubType = pnlMTGBasicInfo.getSubType();
@@ -493,24 +561,12 @@ public class InsertUpdateCardContent extends JPanel
 			ManaCost mtgManaCost = null;
 			if(!mtgCardType.equals( AC_LAND )) {
 				mtgManaCost = pnlManaCost.getManaCost();
-				if(mtgManaCost == null) {
-					displayError( pnlMTG, "Mana cost of MTG Card can not be void." );
-					log.write( Tag.ERRORS, "Mana cost of MTG card missing." );
-					pnlManaCost.requestFocus();
-					return;
-				}
 				log.write( Tag.DEBUG, "mana cost = " + mtgManaCost );
 			}
 
 			switch( mtgCardType ) {
 				case AC_CREATURE: {
 					Strength creatureStrength = pnlCreatureInfo.getStrength();
-					if(creatureStrength == null) {
-						displayError( pnlMTG, "Creature info missing." );
-						log.write( Tag.ERRORS, "Creature strength missing." );
-						pnlCreatureInfo.requestFocus();
-						return;
-					}
 					log.write( Tag.DEBUG, "creature strength = " + creatureStrength );
 
 					boolean isArtifact = pnlMTGBasicInfo.isArtifactSelected();
@@ -533,7 +589,7 @@ public class InsertUpdateCardContent extends JPanel
 					}
 
 					log.write( Tag.DEBUG, finalCreature.toString() );
-					store( finalCreature );
+					storeOrUpdate( finalCreature );
 
 					break;
 				}
@@ -554,7 +610,7 @@ public class InsertUpdateCardContent extends JPanel
 					}
 
 					log.write( Tag.DEBUG, finalArtifact.toString() );
-					store( finalArtifact );
+					storeOrUpdate( finalArtifact );
 
 					break;
 				}
@@ -573,18 +629,11 @@ public class InsertUpdateCardContent extends JPanel
 					}
 
 					log.write( Tag.DEBUG, finalPlaneswalker.toString() );
-					store( finalPlaneswalker );
+					storeOrUpdate( finalPlaneswalker );
 
 					break;
 				}
 				case AC_INSTANT: {
-					if(mtgPrimaryEffect == null) {
-						displayError( pnlMTG, "Instant must have a primary effect." );
-						log.write( Tag.ERRORS, "Instant primary effect of MTG card missing." );
-						txtPrimaryEffect.requestFocus();
-						return;
-					}
-
 					List<Ability> mtgAbility = ((JXObjectModel<Ability>) tableAbility.getModel()).getObjects();
 					log.write( Tag.DEBUG, "ability = " + mtgAbility.toString() );
 
@@ -598,18 +647,11 @@ public class InsertUpdateCardContent extends JPanel
 					}
 
 					log.write( Tag.DEBUG, finalInstant.toString() );
-					store( finalInstant );
+					storeOrUpdate( finalInstant );
 
 					break;
 				}
 				case AC_SORCERY: {
-					if(mtgPrimaryEffect == null) {
-						displayError( pnlMTG, "Sorcery must have a primary effect." );
-						log.write( Tag.ERRORS, "Sorcery primary effect of MTG card missing." );
-						txtPrimaryEffect.requestFocus();
-						return;
-					}
-
 					List<Ability> mtgAbility = ((JXObjectModel<Ability>) tableAbility.getModel()).getObjects();
 					log.write( Tag.DEBUG, "ability = " + mtgAbility.toString() );
 
@@ -623,18 +665,11 @@ public class InsertUpdateCardContent extends JPanel
 					}
 
 					log.write( Tag.DEBUG, finalSorcery.toString() );
-					store( finalSorcery );
+					storeOrUpdate( finalSorcery );
 
 					break;
 				}
 				case AC_ENCHANTMENT: {
-					if(mtgPrimaryEffect == null) {
-						displayError( pnlMTG, "Enchantment must have a primary effect." );
-						log.write( Tag.ERRORS, "Enchantment primary effect of MTG card missing." );
-						txtPrimaryEffect.requestFocus();
-						return;
-					}
-
 					List<Ability> mtgAbility = ((JXObjectModel<Ability>) tableAbility.getModel()).getObjects();
 					log.write( Tag.DEBUG, "ability = " + mtgAbility.toString() );
 
@@ -651,18 +686,11 @@ public class InsertUpdateCardContent extends JPanel
 					}
 
 					log.write( Tag.DEBUG, finalEnchantment.toString() );
-					store( finalEnchantment );
+					storeOrUpdate( finalEnchantment );
 
 					break;
 				}
 				case AC_LAND: {
-					if(mtgEffects.isEmpty()) {
-						displayError( pnlMTG, "Land must have at least one effect." );
-						log.write( Tag.ERRORS, "Land primary effect of MTG card missing." );
-						tableEffects.requestFocus();
-						return;
-					}
-
 					Land finalLand = new Land( mtgName, mtgRarity );
 					finalLand.setPrimaryEffect( mtgPrimaryEffect );
 					finalLand.setSeries( mtgSeries );
@@ -672,7 +700,7 @@ public class InsertUpdateCardContent extends JPanel
 					}
 
 					log.write( Tag.DEBUG, finalLand.toString() );
-					store( finalLand );
+					storeOrUpdate( finalLand );
 
 					break;
 				}
@@ -687,7 +715,7 @@ public class InsertUpdateCardContent extends JPanel
 		@Override
 		public void actionPerformed(ActionEvent e){
 			if(MTGTypeListener.lastActionCommand.equals( AC_PLANESWALKER )) {
-				PlanesAbility p = showPlanesAbilityDialog( pnlMTG );
+				PlanesAbility p = showPlanesAbilityDialog( InsertUpdateCardContent.this );
 				if(p != null) {
 					JXObjectModel<PlanesAbility> model = (JXObjectModel<PlanesAbility>) tableAbility.getModel();
 					if(model.getRowCount() == 0) {
@@ -700,7 +728,7 @@ public class InsertUpdateCardContent extends JPanel
 				}
 			}
 			else {
-				Ability a = showAbilityDialog( pnlMTG );
+				Ability a = showAbilityDialog( InsertUpdateCardContent.this );
 				if(a != null) {
 					JXObjectModel<Ability> model = (JXObjectModel<Ability>) tableAbility.getModel();
 					if(model.getRowCount() == 0) {

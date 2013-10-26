@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import com.google.gson.Gson;
@@ -130,7 +131,7 @@ public class StoreManager
 		if(mtgSet.contains( c ))
 			return false;
 
-		String json = g.toJson( c, MTGCard.class );
+		String json = g.toJson( c, MTGCard.class );//TODO this could be asynchronous?
 		FileWriter f = new FileWriter( new File( getJSONFileName( c ) ) );
 		f.write( json );
 		f.flush();
@@ -141,9 +142,50 @@ public class StoreManager
 		log.write( Tag.INFO, String.format( "MTG card json file %s saved correctly.", c.getName() ) );
 		return true;
 	}
-
+	
+	/**
+	 * 
+	 * @param old
+	 * @param nevv
+	 * @return
+	 * @throws IllegalArgumentException
+	 * @throws IOException 
+	 */
+	public boolean applyDifference( MTGCard old, MTGCard nevv ) throws IllegalArgumentException, IOException{
+		if(old == null || nevv == null)
+			throw new IllegalArgumentException( "Update MTG card can not be null" );
+		
+		// this operation is computationally expensive
+		if(old.equals( nevv )) return false; 
+		
+		log.write( Tag.DEBUG, "apply difference initialized." );
+		
+		// if the new card is already contained into MTGset or
+		// the oldest card is not contained into MTGset, do nothing.
+		if(this.mtgSet.contains( nevv ) || !this.mtgSet.contains( old ))
+			return false;
+		
+		this.mtgSet.remove( old );
+		log.write( Tag.DEBUG, old.getName()+" removed correctly from data structure." );
+		
+		//update series list
+		if(Collections.frequency( this.lstSeries, old.getSeries() )==1){
+			this.lstSeries.remove( old.getSeries() );
+			log.write( Tag.DEBUG, old.getSeries()+" removed because his frequency == 1" );
+		}
+		
+		String path = getJSONFileName( old );
+		new File( path ).delete();
+		log.write( Tag.DEBUG, path+" deleted correctly." );
+		store( nevv );
+		
+		log.write( Tag.INFO, "Card was updated correctly." );
+		return true;
+	}
+	
+	
 	/* this method add the series string if and only if isn't already inserted into this.lstSeries 
-	 * TODO maybe implement this with a bynary search. */
+	 * TODO maybe implement this with a binary search. */
 	private void addSeriesToList(MTGCard c){
 		if(c != null) {
 			if(this.lstSeries.isEmpty()) {
