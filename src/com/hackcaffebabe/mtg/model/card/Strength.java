@@ -15,7 +15,7 @@ public class Strength implements Serializable
 	private static final long serialVersionUID = 1L;
 	private int power;
 	private int toughness;
-		
+
 	/**
 	 * Instance the strength of Creatures.<br>
 	 * Pass -1 as argument to set power or toughness to X.
@@ -23,35 +23,34 @@ public class Strength implements Serializable
 	 * @param toughness {@link Integer} the toughness of creature.
 	 * @throws IllegalArgumentException if any arguments are less of -1.
 	 */
-	public Strength( int power, int toughness ) throws IllegalArgumentException{
+	public Strength(int power, int toughness) throws IllegalArgumentException{
 		this.setPower( power );
 		this.setToughness( toughness );
 	}
-	
-	
+
 	/**
 	 * Instance the creature's strength as a string in format "power/toughness" 
 	 * where p is the power and t is the toughness.
 	 * @param strength {@link String} in format "p/t".
 	 * @throws IllegalArgumentException if argument given is null, empty string, or p/t are not digits.
 	 */
-	public Strength( String strength ) throws IllegalArgumentException {
-		if( strength == null || strength.isEmpty() )
+	public Strength(String strength) throws IllegalArgumentException{
+		if(strength == null || strength.isEmpty())
 			throw new IllegalArgumentException( "Strength given can not be null or empty string" );
-		
+
 		StringTokenizer token = new StringTokenizer( strength, "/" );
-		int p,t;
-		try{
+		int p, t;
+		try {
 			p = new Integer( token.nextToken() );
-			t = new Integer( token.nextToken() );			
-		}catch( Exception e ){
+			t = new Integer( token.nextToken() );
+		}
+		catch(Exception e) {
 			throw new IllegalArgumentException( "Strength string is not in format \"p/t\"" );
 		}
 		this.setPower( p );
 		this.setToughness( t );
 	}
-	
-	
+
 //===========================================================================================
 // METHOD
 //===========================================================================================
@@ -75,8 +74,7 @@ public class Strength implements Serializable
 //				return 1;
 //		else return 2;// if( power < o.toughness && o.power >= toughness )
 //	}
-	
-	
+
 //===========================================================================================
 // SETTER
 //===========================================================================================
@@ -85,27 +83,25 @@ public class Strength implements Serializable
 	 * @param power {@link Integer} the power of Creature.
 	 * @throws IllegalArgumentException if argument given is less of -1.
 	 */
-	public void setPower( int power ) throws IllegalArgumentException{
-		if( power < -1 )
+	public void setPower(int power) throws IllegalArgumentException{
+		if(power < -1)
 			throw new IllegalArgumentException( "The power can not be less of zero." );
-		
+
 		this.power = power;
 	}
-	
-	
+
 	/**
 	 * Set the toughness of Creature.
 	 * @param toughness {@link Integer} the toughness of Creature.
 	 * @throws IllegalArgumentException if argument given is less of -1.
 	 */
-	public void setToughness( int toughness ) throws IllegalArgumentException{
-		if( toughness <-1 )
+	public void setToughness(int toughness) throws IllegalArgumentException{
+		if(toughness < -1)
 			throw new IllegalArgumentException( "The toughness can not be less of zero." );
-		
+
 		this.toughness = toughness;
 	}
-	
-	
+
 //===========================================================================================
 // GETTER
 //===========================================================================================
@@ -113,23 +109,49 @@ public class Strength implements Serializable
 	 * Returns the Power of Creature.
 	 * @return {@link Integer} the Power of Creature.
 	 */
-	public final int getPower(){ return this.power; }
-	
+	public final int getPower(){
+		return this.power;
+	}
+
 	/**
 	 * Returns the Toughness of Creature.
 	 * @return {@link Integer} the Toughness of Creature.
 	 */
-	public final int getToughness(){ return this.toughness; }
-	
-	
+	public final int getToughness(){
+		return this.toughness;
+	}
+
 //===========================================================================================
 // OVERRIDE
 //===========================================================================================
 	@Override
 	public String toString(){
-		return String.format( "%s/%s", power == -1 ? "*": power, 
-				                       toughness == -1 ? "*" : toughness );
+		return String.format( "%s/%s", power == -1 ? "*" : power, toughness == -1 ? "*" : toughness );
+	}
+
+	@Override
+	public int hashCode(){
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + power;
+		result = prime * result + toughness;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj){
+		if(this == obj)
+			return true;
+		if(obj == null)
+			return false;
+		if(getClass() != obj.getClass())
+			return false;
+		Strength other = (Strength) obj;
+
+		if(power != other.power)
+			return false;
+		if(toughness != other.toughness)
+			return false;
+		return true;
 	}
 }
-
-

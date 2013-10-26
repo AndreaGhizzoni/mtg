@@ -352,8 +352,8 @@ public class InsertUpdateCardContent extends JPanel
 				// cardToUpdate is the oldest card, m is the newest.
 				if(StoreManager.getInstance().applyDifference( cardToUpdate, m )){
 					JOptionPane.showMessageDialog( this, "Card updated correctly!", "Succes!", JOptionPane.INFORMATION_MESSAGE );
-//					refreshMTGTable();
-//					this.parent.close();
+					refreshMTGTable();
+					this.parent.close();
 				}else{
 					JOptionPane.showMessageDialog( this, "No changes found.\nNothing to update.", "Bad Luck!", JOptionPane.INFORMATION_MESSAGE );
 				}

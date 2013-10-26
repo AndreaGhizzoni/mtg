@@ -302,7 +302,8 @@ public abstract class MTGCard extends DisplayableObject implements Serializable
 		
 		//check rarity
 		if( rarity != other.rarity )
-			return false;		
+			return false;
+		
 		return true;
 	}
 }

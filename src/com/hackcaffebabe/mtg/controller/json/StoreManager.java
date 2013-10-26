@@ -156,7 +156,9 @@ public class StoreManager
 			throw new IllegalArgumentException( "Update MTG card can not be null" );
 		
 		// this operation is computationally expensive
-		if(old.equals( nevv )) 
+		boolean a = old.equals( nevv );
+		log.write( Tag.DEBUG, "old.equals( nevv ) "+a );
+		if(a) 
 			return false; 
 		
 		// if the new card is already contained into MTGset or

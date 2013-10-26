@@ -97,7 +97,7 @@ public class Creature extends MTGCard implements Serializable
 	}
 
 	@Override
-	public boolean equals(Object obj){
+	public boolean equals(Object obj){//TODO check the equals
 		if( this == obj )
 			return true;
 		if( !super.equals( obj ) )
