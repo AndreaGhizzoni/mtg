@@ -23,8 +23,8 @@
   ],
   "abilitis": [],
   "mana_cost": {
-    "COLOR_LESS": 4,
-    "RED": 2
+    "RED": 2,
+    "COLOR_LESS": 4
   },
   "strength": {
     "power": 6,

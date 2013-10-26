@@ -2,11 +2,8 @@
   "type": "Instant",
   "name": "Putrificare",
   "card_color": {
-    "colors": [
-      "GREEN",
-      "BLACK"
-    ],
-    "type": "MULTI_COLOR"
+    "colors": [],
+    "type": "COLOR_LESS"
   },
   "rarity": "NON_COMMON",
   "series": "labirinto del drago",
@@ -17,8 +14,8 @@
   "effects": [],
   "abilitis": [],
   "mana_cost": {
-    "COLOR_LESS": 1,
+    "BLACK": 1,
     "GREEN": 1,
-    "BLACK": 1
+    "COLOR_LESS": 1
   }
 }

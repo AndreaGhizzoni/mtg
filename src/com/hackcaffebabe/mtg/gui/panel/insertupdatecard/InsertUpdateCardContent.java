@@ -40,7 +40,7 @@ import com.hackcaffebabe.mtg.model.card.*;
 public class InsertUpdateCardContent extends JPanel
 {
 	private static final long serialVersionUID = 1L;
-//	private JPanel pnlMTG = new JPanel();
+	private InsertCard parent;
 	private TypeCardActionListener MTGTypeListener;
 
 	private ButtonGroup mtgCardType = new ButtonGroup();
@@ -83,6 +83,7 @@ public class InsertUpdateCardContent extends JPanel
 	 */
 	public InsertUpdateCardContent(MTGCard cardToUpdate, InsertCard parent){
 		super();
+		this.parent = parent;
 		setSize( DIMENSION_INSERT_CARD );
 		setLayout( new MigLayout( "", "[grow][grow]", "[60!][grow][60!]" ) );
 		this.cardToUpdate = cardToUpdate;
@@ -351,7 +352,8 @@ public class InsertUpdateCardContent extends JPanel
 				// cardToUpdate is the oldest card, m is the newest.
 				if(StoreManager.getInstance().applyDifference( cardToUpdate, m )){
 					JOptionPane.showMessageDialog( this, "Card updated correctly!", "Succes!", JOptionPane.INFORMATION_MESSAGE );
-					//close the frame.
+//					refreshMTGTable();
+//					this.parent.close();
 				}else{
 					JOptionPane.showMessageDialog( this, "No changes found.\nNothing to update.", "Bad Luck!", JOptionPane.INFORMATION_MESSAGE );
 				}

@@ -2,10 +2,8 @@
   "type": "Creature",
   "name": "Golia Skarrg",
   "card_color": {
-    "colors": [
-      "GREEN"
-    ],
-    "type": "MONO_COLOR"
+    "colors": [],
+    "type": "COLOR_LESS"
   },
   "rarity": "RARE",
   "series": "irruzzione",

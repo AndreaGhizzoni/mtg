@@ -2,10 +2,8 @@
   "type": "Sorcery",
   "name": "Giorno del Castigo",
   "card_color": {
-    "colors": [
-      "WHITE"
-    ],
-    "type": "MONO_COLOR"
+    "colors": [],
+    "type": "COLOR_LESS"
   },
   "rarity": "RARE",
   "series": "m12",
@@ -16,7 +14,7 @@
   "effects": [],
   "abilitis": [],
   "mana_cost": {
-    "WHITE": 2,
-    "COLOR_LESS": 2
+    "COLOR_LESS": 2,
+    "WHITE": 2
   }
 }

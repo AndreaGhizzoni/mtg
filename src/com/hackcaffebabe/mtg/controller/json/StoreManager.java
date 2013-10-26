@@ -144,7 +144,7 @@ public class StoreManager
 	}
 	
 	/**
-	 * 
+	 * This method update an existing {@link MTGCard} (old) with the difference between the second argument (nevv).
 	 * @param old
 	 * @param nevv
 	 * @return
@@ -156,14 +156,15 @@ public class StoreManager
 			throw new IllegalArgumentException( "Update MTG card can not be null" );
 		
 		// this operation is computationally expensive
-		if(old.equals( nevv )) return false; 
-		
-		log.write( Tag.DEBUG, "apply difference initialized." );
+		if(old.equals( nevv )) 
+			return false; 
 		
 		// if the new card is already contained into MTGset or
 		// the oldest card is not contained into MTGset, do nothing.
 		if(this.mtgSet.contains( nevv ) || !this.mtgSet.contains( old ))
 			return false;
+		
+		log.write( Tag.DEBUG, "apply difference initialized." );
 		
 		this.mtgSet.remove( old );
 		log.write( Tag.DEBUG, old.getName()+" removed correctly from data structure." );
@@ -171,7 +172,7 @@ public class StoreManager
 		//update series list
 		if(Collections.frequency( this.lstSeries, old.getSeries() )==1){
 			this.lstSeries.remove( old.getSeries() );
-			log.write( Tag.DEBUG, old.getSeries()+" removed because his frequency == 1" );
+			log.write( Tag.DEBUG, old.getSeries()+" removed because its frequency == 1" );
 		}
 		
 		String path = getJSONFileName( old );

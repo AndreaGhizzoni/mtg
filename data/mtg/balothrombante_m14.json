@@ -2,10 +2,8 @@
   "type": "Creature",
   "name": "Baloth Rombante",
   "card_color": {
-    "colors": [
-      "GREEN"
-    ],
-    "type": "MONO_COLOR"
+    "colors": [],
+    "type": "COLOR_LESS"
   },
   "rarity": "COMMON",
   "series": "m14",
@@ -16,8 +14,8 @@
   "effects": [],
   "abilitis": [],
   "mana_cost": {
-    "COLOR_LESS": 2,
-    "GREEN": 2
+    "GREEN": 2,
+    "COLOR_LESS": 2
   },
   "strength": {
     "power": 4,

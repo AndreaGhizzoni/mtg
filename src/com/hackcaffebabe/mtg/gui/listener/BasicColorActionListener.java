@@ -8,6 +8,7 @@ import javax.swing.JComboBox;
 import com.hackcaffebabe.mtg.gui.GUIUtils;
 import com.hackcaffebabe.mtg.model.color.BasicColors;
 import com.hackcaffebabe.mtg.model.color.CardColor;
+import com.hackcaffebabe.mtg.model.color.TypeColor;
 
 /**
  * This action listener is used to get the {@link CardColor} from the user.<br>
@@ -18,7 +19,7 @@ import com.hackcaffebabe.mtg.model.color.CardColor;
 public class BasicColorActionListener implements ActionListener
 {
 	List<BasicColors> colors = new ArrayList<>();
-	int isHybrid = -1;
+	private int isHybrid = -1;
 	
 	@Override
 	public void actionPerformed( ActionEvent e ){
@@ -49,11 +50,37 @@ public class BasicColorActionListener implements ActionListener
 		}
 	}
 	
+	/**
+	 * TODO add doc
+	 */
 	public void reset(){
 		isHybrid = -1;
 		colors = new ArrayList<>();
 	}
 	
+	/**
+	 * TODO add doc
+	 * @param c
+	 */
+	public void setCardColor( CardColor c ){
+		this.colors = new ArrayList<>( c.getBasicColors() );
+//		if( colors.size() == 0 ) isHybrid = -1;// color less
+//		if( colors.size() == 1 ) isHybrid =  2;// mono color
+//		if( colors.size()  > 2 ) isHybrid =  0;// multicolor
+		if(c.getType()==TypeColor.MULTI_COLOR)
+			isHybrid = 0;
+		else if(c.getType()==TypeColor.IBRID)
+			isHybrid = 1;
+		else if(c.getType()==TypeColor.MONO_COLOR)
+			isHybrid = 2;
+		else
+			isHybrid = -1;
+	}
+	
+	/**
+	 * TODO add doc
+	 * @return
+	 */
 	public CardColor getCardColor(){
 		CardColor mtgCardColor = null;
 		if( isHybrid == 0 ){ // multicolor card

@@ -166,6 +166,7 @@ public class MTGBasicInfo extends JPanel
 				else if(s.equals(BasicColors.WHITE))
 					chbWhite.setSelected( true );
 			}
+			this.basicColorActionListener.setCardColor( c.getCardColor() );
 			this.chbIsLegendary.setSelected( c.isLegendary() );
 			this.chbIsArtifact.setSelected( c.isArtifact() );
 		}
