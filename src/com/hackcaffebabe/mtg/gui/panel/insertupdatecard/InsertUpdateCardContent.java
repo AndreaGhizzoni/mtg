@@ -31,11 +31,10 @@ import com.hackcaffebabe.mtg.model.card.*;
 
 
 /**
- * TODO define update action listener
  * The Insertion Card Content.
  *  
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
- * @version 3.1
+ * @version 3.2
  */
 public class InsertUpdateCardContent extends JPanel
 {
@@ -297,18 +296,17 @@ public class InsertUpdateCardContent extends JPanel
 		this.pnlMTGBasicInfo.setData( cardToUpdate );
 		this.txtPrimaryEffect.setText( cardToUpdate.getPrimaryEffect() );
 
-		if(cardToUpdate instanceof Creature) {
-			this.pnlCreatureInfo.setData( cardToUpdate );
+		if(!(cardToUpdate instanceof Planeswalker)) {
+			if(cardToUpdate instanceof Creature)
+				this.pnlCreatureInfo.setData( cardToUpdate );
 			populateTables( Ability.class, cardToUpdate.getAbilities(), cardToUpdate.getEffects() );
+		}else{
+			populateTables( PlanesAbility.class, ((Planeswalker) cardToUpdate).getPlanesAbilities(), cardToUpdate.getEffects() );
+			this.pnlPlaneswalkerInfo.setData( cardToUpdate );
 		}
 
 		if(!(cardToUpdate instanceof Land)) {
 			this.pnlManaCost.setData( this.cardToUpdate );
-		}
-
-		if(cardToUpdate instanceof Planeswalker) {
-			populateTables( PlanesAbility.class, ((Planeswalker) cardToUpdate).getPlanesAbilities(), cardToUpdate.getEffects() );
-			this.pnlPlaneswalkerInfo.setData( cardToUpdate );
 		}
 	}
 
