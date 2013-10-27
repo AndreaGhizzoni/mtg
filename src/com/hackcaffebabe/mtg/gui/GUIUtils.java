@@ -48,7 +48,7 @@ import com.hackcaffebabe.mtg.model.color.BasicColors;
 public class GUIUtils
 {
 	/** Current software version */
-	public static final String VERSION = "0.2.5";
+	public static final String VERSION = "BETA_0.3";
 
 	/** Title of main frame */
 	public static final String TITLE_MAIN_FRAME = "MTG Card Manager!";

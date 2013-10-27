@@ -4,12 +4,12 @@ import static com.hackcaffebabe.mtg.gui.GUIUtils.*;
 import it.hackcaffebabe.jx.table.JXTable;
 import it.hackcaffebabe.jx.table.JXTableColumnAdjuster;
 import it.hackcaffebabe.jx.table.model.JXObjectModel;
-import it.hackcaffebabe.logger.Logger;
-import it.hackcaffebabe.logger.Tag;
+import it.hackcaffebabe.logger.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -19,6 +19,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import net.miginfocom.swing.MigLayout;
+import com.hackcaffebabe.mtg.controller.json.StoreManager;
 import com.hackcaffebabe.mtg.gui.frame.AdvanceSearch;
 import com.hackcaffebabe.mtg.gui.frame.InsertCard;
 import com.hackcaffebabe.mtg.model.MTGCard;
@@ -55,7 +56,7 @@ public class MTGContent extends JPanel
 	public MTGContent(){
 		super();
 		setSize( DIMENSION_MAIN_FRAME );
-		setLayout( new MigLayout("", "[698.00,grow][190!][190!]", "[grow][60!]") );
+		setLayout( new MigLayout( "", "[698.00,grow][190!][190!]", "[grow][60!]" ) );
 		this.initContent();
 		refreshMTGTable();
 	}
@@ -98,8 +99,8 @@ public class MTGContent extends JPanel
 		JXTABLE_MTG.getSelectionModel().setSelectionMode( ListSelectionModel.SINGLE_SELECTION );
 		JXTABLE_MTG.getSelectionModel().addListSelectionListener( this.tableSelectionListener );
 		JXTABLE_MTG_COLUMN_ADJUSTER = new JXTableColumnAdjuster( JXTABLE_MTG );
-		pnlMTGList.add( new JScrollPane( JXTABLE_MTG, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-				                                      JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED ), "cell 0 0,grow" );
+		pnlMTGList.add( new JScrollPane( JXTABLE_MTG, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED ),
+				"cell 0 0,grow" );
 
 		// MTG card properties
 		this.pnlMTGPropreties = new MTGProperties();
@@ -114,7 +115,7 @@ public class MTGContent extends JPanel
 		this.btnDeleteCard = new JButton( "Delete Card" );
 		this.btnDeleteCard.addActionListener( new DeleteCardActionListener() );
 		this.btnDeleteCard.setEnabled( false );
-		add( this.btnDeleteCard, "cell 2 1,alignx center,aligny center" );		
+		add( this.btnDeleteCard, "cell 2 1,alignx center,aligny center" );
 	}
 
 //===========================================================================================
@@ -125,7 +126,7 @@ public class MTGContent extends JPanel
 	{
 		@Override
 		public void actionPerformed(ActionEvent e){
-			new AdvanceSearch(JXTABLE_MTG).setVisible( true );
+			new AdvanceSearch( JXTABLE_MTG ).setVisible( true );
 		}
 	}
 
@@ -160,24 +161,41 @@ public class MTGContent extends JPanel
 		@Override
 		public void actionPerformed(ActionEvent e){
 			if(frame == null) {
-				InsertCard card = new InsertCard(null);
+				InsertCard card = new InsertCard( null );
 				card.setVisible( true );
 				card.toFront();
 				frame = card;
-			}
-			else {
+			} else {
 				frame.setVisible( true );
 				frame.toFront();
 			}
 		}
 	}
-	
-	/* */
+
+	/* Event handle on button btnDeleteCard */
 	private class DeleteCardActionListener implements ActionListener
 	{
 		@Override
 		public void actionPerformed(ActionEvent e){
-			
-		}		
+			MTGCard card = tableSelectionListener.selCard;
+			log.write( Tag.DEBUG, "card to delete: "+card );
+			if(card != null) {
+				String msg = String.format( "Are you sure to delete %s ?", card.getName() );
+				if(JOptionPane.showConfirmDialog( MTGContent.this, msg, "Be careful!", JOptionPane.YES_NO_OPTION ) == 0) {
+					try {
+						StoreManager.getInstance().delete( card );
+						JOptionPane.showConfirmDialog( MTGContent.this, card.getName() + " delete correctly!", "Operation complete!",
+								JOptionPane.OK_OPTION );
+						pnlMTGPropreties.clearAll();
+						btnDeleteCard.setEnabled( false );
+						refreshMTGTable();
+					} catch(Exception ex) {
+						log.write( Tag.ERRORS, ex.getMessage() );
+						ex.printStackTrace( Logger.getInstance().getPrintStream() );
+						displayError( MTGContent.this, "Error to delete " + card.getName() );
+					}
+				}
+			}
+		}
 	}
 }

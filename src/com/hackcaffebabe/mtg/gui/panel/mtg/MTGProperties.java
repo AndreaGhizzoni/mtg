@@ -137,8 +137,10 @@ public class MTGProperties extends JPanel
 		add( this.btnUpdate, "cell 0 11 5 1,grow" );
 	}
 
-	/* Clear all the form */
-	private void clearAll(){
+	/**
+	 * Clear all the form
+	 */
+	public void clearAll(){
 		this.displayedMTGCard = null;// this is necessary for all the documents listener.
 		this.txtName.setText( "" );
 		this.txtManaCost.setText( "" );
