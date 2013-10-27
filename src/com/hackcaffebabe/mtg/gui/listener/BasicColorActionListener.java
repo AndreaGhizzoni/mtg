@@ -38,11 +38,12 @@ public class BasicColorActionListener implements ActionListener
 			int i;
 			do{
 				i = GUIUtils.showHybridMulticolorDialog();
-			}while(i == -1);
+			}while(i==-1);
 			isHybrid = i;
 		}
 	}
 	
+	/* this method do the equals and check if basic colors is in the list */
 	private void doEqualsAndCheck( String command, BasicColors b ){
 		if( command.equals( BasicColors.getAbbraviation( b ) ) ){
 			if( colors.contains( b ) ) colors.remove( b );
@@ -51,7 +52,7 @@ public class BasicColorActionListener implements ActionListener
 	}
 	
 	/**
-	 * TODO add doc
+	 * This method reset the selection. But not the graphical selection.
 	 */
 	public void reset(){
 		isHybrid = -1;
@@ -59,27 +60,26 @@ public class BasicColorActionListener implements ActionListener
 	}
 	
 	/**
-	 * TODO add doc
-	 * @param c
+	 * This method set this action listener on given {@link CardColor}.
+	 * @param c {@link CardColor} if c==null nothing happened.
 	 */
 	public void setCardColor( CardColor c ){
-		this.colors = new ArrayList<>( c.getBasicColors() );
-//		if( colors.size() == 0 ) isHybrid = -1;// color less
-//		if( colors.size() == 1 ) isHybrid =  2;// mono color
-//		if( colors.size()  > 2 ) isHybrid =  0;// multicolor
-		if(c.getType()==TypeColor.MULTI_COLOR)
-			isHybrid = 0;
-		else if(c.getType()==TypeColor.IBRID)
-			isHybrid = 1;
-		else if(c.getType()==TypeColor.MONO_COLOR)
-			isHybrid = 2;
-		else
-			isHybrid = -1;
+		if(c!=null){
+			this.colors = new ArrayList<>( c.getBasicColors() );
+			if(c.getType()==TypeColor.MULTI_COLOR)
+				isHybrid = 0;
+			else if(c.getType()==TypeColor.IBRID)
+				isHybrid = 1;
+			else if(c.getType()==TypeColor.MONO_COLOR)
+				isHybrid = 2;
+			else
+				isHybrid = -1;
+		}
 	}
 	
 	/**
-	 * TODO add doc
-	 * @return
+	 * Returns the selected Card Color selected by the user.
+	 * @return {@link CardColor}
 	 */
 	public CardColor getCardColor(){
 		CardColor mtgCardColor = null;

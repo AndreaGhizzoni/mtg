@@ -36,8 +36,6 @@ public class MTGContent extends JPanel
 
 	private JPanel pnlMTGList = new JPanel();
 
-//	private JXTable tableMTG;
-//	private JXTableColumnAdjuster tableAdjuster;
 	private MTGCardListSelectionListener tableSelectionListener = new MTGCardListSelectionListener();
 
 	private MTGProperties pnlMTGPropreties;
@@ -114,28 +112,10 @@ public class MTGContent extends JPanel
 		add( this.btnNewCard, "cell 1 1,alignx center,aligny center" );
 
 		this.btnDeleteCard = new JButton( "Delete Card" );
+		this.btnDeleteCard.addActionListener( new DeleteCardActionListener() );
 		this.btnDeleteCard.setEnabled( false );
 		add( this.btnDeleteCard, "cell 2 1,alignx center,aligny center" );		
 	}
-
-//	/**
-//	 * Refresh the MTG card list
-//	 */
-//	public void refreshMTGTable(){
-//		log.write( Tag.DEBUG, "Refreshing mtg card list" );
-//		STATUS_BAR_MAIN_FRAME.setStatus( "Refreshing mtg card list..." );
-//		setCursor( Cursor.getPredefinedCursor( Cursor.WAIT_CURSOR ) );
-//		List<MTGCard> lst = StoreManager.getInstance().getAllCardsAsList();
-//		if(!lst.isEmpty()){
-//			tableMTG.setModel( new JXObjectModel<MTGCard>( lst ) );
-//
-//			//update sorter and text search
-//			tableMTG.refreshRowSorter();
-//			tableAdjuster.adjustColumns();
-//		}
-//		STATUS_BAR_MAIN_FRAME.setStatus( "MTG Cards list refreshed correctly!" );
-//		setCursor( null );
-//	}
 
 //===========================================================================================
 // INNER CLASS
@@ -190,5 +170,14 @@ public class MTGContent extends JPanel
 				frame.toFront();
 			}
 		}
+	}
+	
+	/* */
+	private class DeleteCardActionListener implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent e){
+			
+		}		
 	}
 }

@@ -89,7 +89,7 @@ public class StoreManager
 		EventQueue.invokeLater( new Runnable(){
 			@Override
 			public void run(){
-				try{
+				try {
 					for(File f: new File( JSON_PATH ).listFiles()) {
 						FileReader br = new FileReader( f );
 						MTGCard c = g.fromJson( br, MTGCard.class );
@@ -97,7 +97,9 @@ public class StoreManager
 						addSeriesToList( c );
 						br.close();
 					}
-				}catch(IOException e){}//if throw continue
+				}
+				catch(IOException e) {
+				}//if throw continue
 			}
 		} );
 	}
@@ -131,7 +133,9 @@ public class StoreManager
 		if(mtgSet.contains( c ))
 			return false;
 
-		String json = g.toJson( c, MTGCard.class );//TODO this could be asynchronous?
+		log.write( Tag.DEBUG, "store initialized." );
+		
+		String json = g.toJson( c, MTGCard.class );
 		FileWriter f = new FileWriter( new File( getJSONFileName( c ) ) );
 		f.write( json );
 		f.flush();
@@ -142,63 +146,82 @@ public class StoreManager
 		log.write( Tag.INFO, String.format( "MTG card json file %s saved correctly.", c.getName() ) );
 		return true;
 	}
-	
+
+	/**
+	 * This method delete given card from the store path.
+	 * @param c {@link MTGCard} to delete.
+	 * @return {@link Boolean} false if card is not saved, otherwise true.
+	 * @throws IllegalArgumentException if argument passed is null.
+	 */
+	public boolean delete(MTGCard c) throws IllegalArgumentException{
+		if(c == null)
+			throw new IllegalArgumentException( "Card to delete can not to be null." );
+
+		if(!this.mtgSet.contains( c ))
+			return false;
+
+		log.write( Tag.DEBUG, "delete card initialized." );
+		
+		this.mtgSet.remove( c );
+		log.write( Tag.DEBUG, c.getName() + " removed correctly from data structure." );
+
+		//update series list
+		if(Collections.frequency( this.lstSeries, c.getSeries() ) == 1) {
+			this.lstSeries.remove( c.getSeries() );
+			log.write( Tag.DEBUG, c.getSeries() + " removed because its frequency == 1" );
+		}
+
+		String path = getJSONFileName( c );
+		new File( path ).delete();
+		
+		log.write( Tag.INFO, path + " deleted correctly." );
+		return true;
+	}
+
 	/**
 	 * This method update an existing {@link MTGCard} (old) with the difference between the second argument (nevv).
-	 * @param old
-	 * @param nevv
-	 * @return
-	 * @throws IllegalArgumentException
-	 * @throws IOException 
+	 * @param old {@link MTGCard} the older card without the user update.
+	 * @param nevv {@link MTGCard} the new card with the user update.
+	 * @return {@link Boolean} true if changes are applied on the card correctly, false if old.equals(nevv) ||
+	 * this.mtgSet.contains( nevv ) || !this.mtgSet.contains( old ).
+	 * @throws IllegalArgumentException if argument passed are null.
+	 * @throws IOException if write new json file fail.
 	 */
-	public boolean applyDifference( MTGCard old, MTGCard nevv ) throws IllegalArgumentException, IOException{
+	public boolean applyDifference(MTGCard old, MTGCard nevv) throws IllegalArgumentException, IOException{
 		if(old == null || nevv == null)
 			throw new IllegalArgumentException( "Update MTG card can not be null" );
-		
+
 		// this operation is computationally expensive
-		boolean a = old.equals( nevv );
-		log.write( Tag.DEBUG, "old.equals( nevv ) "+a );
-		if(a) 
-			return false; 
-		
+		if(old.equals( nevv ))
+			return false;
+
 		// if the new card is already contained into MTGset or
 		// the oldest card is not contained into MTGset, do nothing.
 		if(this.mtgSet.contains( nevv ) || !this.mtgSet.contains( old ))
 			return false;
-		
+
 		log.write( Tag.DEBUG, "apply difference initialized." );
-		
-		this.mtgSet.remove( old );
-		log.write( Tag.DEBUG, old.getName()+" removed correctly from data structure." );
-		
-		//update series list
-		if(Collections.frequency( this.lstSeries, old.getSeries() )==1){
-			this.lstSeries.remove( old.getSeries() );
-			log.write( Tag.DEBUG, old.getSeries()+" removed because its frequency == 1" );
-		}
-		
-		String path = getJSONFileName( old );
-		new File( path ).delete();
-		log.write( Tag.DEBUG, path+" deleted correctly." );
+
+		delete( old );
 		store( nevv );
-		
+
 		log.write( Tag.INFO, "Card was updated correctly." );
 		return true;
 	}
-	
-	
-	/* this method add the series string if and only if isn't already inserted into this.lstSeries 
-	 * TODO maybe implement this with a binary search. */
+
+	/* this method add the series string if and only if isn't already inserted into this.lstSeries */
 	private void addSeriesToList(MTGCard c){
 		if(c != null) {
+			Collections.sort( this.lstSeries );
 			if(this.lstSeries.isEmpty()) {
 				this.lstSeries.add( c.getSeries() );
-			}else{
-//				int r = Collections.binarySearch( this.lstSeries, c.getSeries() );
-//				if(r<0)
-//					this.lstSeries.add( c.getSeries() );
-				if( !this.lstSeries.contains( c.getSeries() ) )
+			}
+			else {
+				int r = Collections.binarySearch( this.lstSeries, c.getSeries() );
+				if(r<0)
 					this.lstSeries.add( c.getSeries() );
+//				if(!this.lstSeries.contains( c.getSeries() ))
+//					this.lstSeries.add( c.getSeries() );
 			}
 		}
 	}
@@ -249,11 +272,6 @@ public class StoreManager
 				}
 			}
 
-//			if(c.getType() != null) {
-//				if( m.getClass().isInstance( c.getType() ))
-//					set.add( m );
-//			}
-
 			if(c.getSubType() != null) {
 				if(c.getSubType().replaceAll( " ", "" ).toLowerCase().equals( m.getSubType().replaceAll( " ", "" ).toLowerCase() ))
 					set.add( m );
@@ -270,16 +288,6 @@ public class StoreManager
 					break;
 				}
 			}
-
-//			if(c.getTypeColor() != null) {
-//				if(c.getTypeColor().equals( m.getCardColor().getType() ))
-//					set.add( m );
-//			}
-//
-//			if(c.getColor() != null) {
-//				if(c.getColor().equals( m.getCardColor() ))
-//					set.add( m );
-//			}
 
 			if(c.getRarity() != null) {
 				if(c.getRarity() == m.getRarity())
