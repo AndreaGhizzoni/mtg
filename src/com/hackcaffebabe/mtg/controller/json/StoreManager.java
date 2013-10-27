@@ -166,7 +166,7 @@ public class StoreManager
 		log.write( Tag.DEBUG, c.getName() + " removed correctly from data structure." );
 
 		//update series list
-		if(Collections.frequency( this.lstSeries, c.getSeries() ) == 1) {
+		if(searchBy(new Criteria().bySeries(c.getSeries())).isEmpty() ){
 			this.lstSeries.remove( c.getSeries() );
 			log.write( Tag.DEBUG, c.getSeries() + " removed because its frequency == 1" );
 		}

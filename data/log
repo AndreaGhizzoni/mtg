@@ -1,3 +1,0 @@
-[Sun Oct 27 10:30:54 CET 2013] com.hackcaffebabe.mtg.LauncherMTG.initLogger | INFO   : Logger initialized correctly.
-[Sun Oct 27 10:30:54 CET 2013] com.hackcaffebabe.mtg.LauncherMTG.initDB | INFO   : Store manager initialized correctly.
-[Sun Oct 27 10:31:03 CET 2013] com.hackcaffebabe.mtg.gui.frame.MTG.close | INFO   : Program will exit.
