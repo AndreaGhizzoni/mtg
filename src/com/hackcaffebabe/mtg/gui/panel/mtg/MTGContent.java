@@ -21,7 +21,7 @@ import javax.swing.event.ListSelectionListener;
 import net.miginfocom.swing.MigLayout;
 import com.hackcaffebabe.mtg.controller.json.StoreManager;
 import com.hackcaffebabe.mtg.gui.frame.AdvanceSearch;
-import com.hackcaffebabe.mtg.gui.frame.InsertCard;
+import com.hackcaffebabe.mtg.gui.panel.mtg.listener.NewCardActionListener;
 import com.hackcaffebabe.mtg.model.MTGCard;
 
 
@@ -153,25 +153,6 @@ public class MTGContent extends JPanel
 		}
 	}
 
-	/* Event handle on button btnNewCard */
-	private class NewCardActionListener implements ActionListener
-	{
-		private InsertCard frame;
-
-		@Override
-		public void actionPerformed(ActionEvent e){
-			if(frame == null) {
-				InsertCard card = new InsertCard( null );
-				card.setVisible( true );
-				card.toFront();
-				frame = card;
-			} else {
-				frame.setVisible( true );
-				frame.toFront();
-			}
-		}
-	}
-
 	/* Event handle on button btnDeleteCard */
 	private class DeleteCardActionListener implements ActionListener
 	{
@@ -184,7 +165,7 @@ public class MTGContent extends JPanel
 				if(JOptionPane.showConfirmDialog( MTGContent.this, msg, "Be careful!", JOptionPane.YES_NO_OPTION ) == 0) {
 					try {
 						StoreManager.getInstance().delete( card );
-						JOptionPane.showConfirmDialog( MTGContent.this, card.getName() + " delete correctly!", "Operation complete!",
+						JOptionPane.showMessageDialog( MTGContent.this, card.getName() + " delete correctly!", "Operation complete!",
 								JOptionPane.OK_OPTION );
 						pnlMTGPropreties.clearAll();
 						btnDeleteCard.setEnabled( false );
