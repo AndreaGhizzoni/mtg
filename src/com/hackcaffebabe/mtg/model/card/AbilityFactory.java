@@ -10,6 +10,7 @@ import java.util.Map;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.hackcaffebabe.mtg.controller.DBCostants;
 
 /**
  * This class provide the common method to save the abilities on JSON file an manage them.
@@ -21,7 +22,7 @@ public class AbilityFactory
 {
 	private static AbilityFactory factory;
 	
-	private File abilityFile = new File( "data/ability.json" );
+	private File abilityFile = new File( DBCostants.ABILITY_FILE_PATH );
 	private HashMap<String, String> abilities = new HashMap<>();
 	private JsonObject jsonAbilities = new JsonObject();
 	

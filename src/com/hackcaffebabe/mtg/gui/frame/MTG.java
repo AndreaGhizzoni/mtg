@@ -6,6 +6,7 @@ import it.hackcaffebabe.jx.statusbar.JXStatusBar;
 import it.hackcaffebabe.logger.Logger;
 import it.hackcaffebabe.logger.Tag;
 import java.awt.BorderLayout;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -123,6 +124,7 @@ public class MTG extends JFrame
 //===========================================================================================
 // INNER CLASS
 //===========================================================================================
+	/* windows closing listener */
 	private class WinListener implements WindowListener
 	{
 		public void windowClosing( WindowEvent e ){ close(); }
@@ -174,12 +176,14 @@ public class MTG extends JFrame
 			f.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 			int r = f.showDialog( null, "OK" );
 			if(r == JFileChooser.APPROVE_OPTION){
+				setCursor( Cursor.getPredefinedCursor( Cursor.WAIT_CURSOR ) );
 				String destination = f.getSelectedFile().toString();
-				File backupFile = new File( destination+PathUtil.FILE_SEPARATOR+DBCostants.BACKUP_FILE_NAME );
+				File backupFile = new File( destination+PathUtil.FILE_SEPARATOR+DBCostants.getBackupFileName() );
 				StoreManager.getInstance().createBackup( backupFile );
+				setCursor( null );
 				
 				String msg = "Backup file saved correctly on: "+backupFile.getAbsolutePath();
-				JOptionPane.showMessageDialog( null, msg, "Success!", JOptionPane.INFORMATION_MESSAGE );
+				JOptionPane.showMessageDialog( MTG.this, msg, "Success!", JOptionPane.INFORMATION_MESSAGE );
 			}
 		}
 	}

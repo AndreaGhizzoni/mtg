@@ -16,13 +16,14 @@ import com.hackcaffebabe.mtg.controller.json.StoreManager;
  * Class to launch the program
  *  
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
- * @version 1.0
+ * @version 2.0
  */
 public class LauncherMTG
 {
 	public static void main(String... args){
 		try {
 			initLogger();
+			initFolderStructure();
 			initDB();
 			initUIManager();
 			SwingUtilities.invokeLater( new Runnable(){
@@ -44,12 +45,32 @@ public class LauncherMTG
 	private static void initLogger() throws Exception{
 		Logger.getInstance();
 		if(DBCostants.DB_LOG_ON_FILE) {
-			Logger.getInstance().setPrintStream( new PrintStream( new File( DBCostants.LOG_PATH ) ) );
+			Logger.getInstance().setPrintStream( new PrintStream( new File( DBCostants.LOG_FILE_PATH ) ) );
 			Logger.getInstance().disableTag( Tag.DEBUG );
 		}
 		Logger.getInstance().write( Tag.INFO, "Logger initialized correctly." );
 	}
 
+	private static void initFolderStructure(){
+		File mtgHome = new File( DBCostants.mtgHome );
+		if(!mtgHome.exists()){
+			mtgHome.mkdirs();
+			Logger.getInstance().write( Tag.INFO, "creating path: "+mtgHome.getAbsolutePath() );
+		}
+			
+		File mtgDataFile = new File( DBCostants.mtgDataHome );
+		if(!mtgDataFile.exists()){
+			mtgDataFile.mkdirs();
+			Logger.getInstance().write( Tag.INFO, "creating path: "+mtgDataFile.getAbsolutePath() );
+		}
+		
+		File mtgJsonPath = new File( DBCostants.JSON_PATH );
+		if(!mtgJsonPath.exists()){
+			mtgJsonPath.mkdirs();
+			Logger.getInstance().write( Tag.INFO, "creating path: "+mtgJsonPath.getAbsolutePath() );
+		}
+	}
+	
 	private static void initDB() throws Exception{
 		StoreManager d = StoreManager.getInstance();
 		if(d == null)

@@ -7,16 +7,23 @@ import com.hackcaffebabe.mtg.model.MTGCard;
 /**
  * Constants for storing data 
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
- * @version 1.1
+ * @version 1.2
  */
 public class DBCostants
 {
-	/* The storing data Path */
-	public static final String JSON_PATH = "data"+PathUtil.FILE_SEPARATOR+"mtg";
-	public static final String BACKUP_FILE_NAME = "bck.zip";// TODO maybe the name could be bck_<current_date_and_hours>.zip
+	/** user home directory/.mtg */
+	public static final String mtgHome = PathUtil.USER_HOME+PathUtil.FILE_SEPARATOR+".mtg";
+	/** user home directory/.mtg/data */
+	public static final String mtgDataHome = mtgHome+PathUtil.FILE_SEPARATOR+"data";
+	/** user home directory/.mtg/log.txt */
+	public static final String LOG_FILE_PATH = mtgHome+PathUtil.FILE_SEPARATOR+"log.txt";
+	/** user home directory/.mtg/data/card */
+	public static final String JSON_PATH = mtgDataHome+PathUtil.FILE_SEPARATOR+"card";
+	/** user home directory/.mtg/data/ability.json */
+	public static final String ABILITY_FILE_PATH = mtgDataHome+PathUtil.FILE_SEPARATOR+"ability.json";
+	
 	/* Flag for logging on file */
-	public static final boolean DB_LOG_ON_FILE = false;
-	public static final String LOG_PATH = "data"+PathUtil.FILE_SEPARATOR+"log";
+	public static final boolean DB_LOG_ON_FILE = true;
 
 	/* JSON tag */
 	public static final String JSON_TAG_NAME = "name";
@@ -62,5 +69,17 @@ public class DBCostants
 		r.append( name_series );
 
 		return r.toString();
+	}
+	
+	/**
+	 * This method return the name of backup file.
+	 * @return {@link String} "bck.zip"
+	 */
+	public static String getBackupFileName(){
+//		StringBuilder b = new StringBuilder();
+//		b.append( "bck" );
+//		b.append( ".zip" );
+//		return b.toString();
+		return "bck.zip";
 	}
 }
