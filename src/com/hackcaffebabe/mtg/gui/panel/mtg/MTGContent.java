@@ -165,11 +165,11 @@ public class MTGContent extends JPanel
 				if(JOptionPane.showConfirmDialog( MTGContent.this, msg, "Be careful!", JOptionPane.YES_NO_OPTION ) == 0) {
 					try {
 						StoreManager.getInstance().delete( card );
-						JOptionPane.showMessageDialog( MTGContent.this, card.getName() + " delete correctly!", "Operation complete!",
-								JOptionPane.OK_OPTION );
 						pnlMTGPropreties.clearAll();
 						btnDeleteCard.setEnabled( false );
 						refreshMTGTable();
+						JOptionPane.showMessageDialog( MTGContent.this, card.getName() + " delete correctly!", "Operation complete!",
+								JOptionPane.INFORMATION_MESSAGE );
 					} catch(Exception ex) {
 						log.write( Tag.ERRORS, ex.getMessage() );
 						ex.printStackTrace( Logger.getInstance().getPrintStream() );

@@ -23,7 +23,7 @@ public class DBCostants
 	public static final String ABILITY_FILE_PATH = mtgDataHome+PathUtil.FILE_SEPARATOR+"ability.json";
 	
 	/* Flag for logging on file */
-	public static final boolean DB_LOG_ON_FILE = true;
+	public static final boolean DB_LOG_ON_FILE = false;
 
 	/* JSON tag */
 	public static final String JSON_TAG_NAME = "name";

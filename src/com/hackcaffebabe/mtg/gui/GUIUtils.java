@@ -112,6 +112,8 @@ public class GUIUtils
 			//update sorter and text search
 			JXTABLE_MTG.refreshRowSorter();
 			JXTABLE_MTG_COLUMN_ADJUSTER.adjustColumns();
+		}else{
+			JXTABLE_MTG.setModel( new JXObjectModel<>() );
 		}
 		STATUS_BAR_MAIN_FRAME.setStatus( "MTG Cards list refreshed correctly!" );
 	}
