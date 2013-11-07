@@ -22,8 +22,9 @@ public class LauncherMTG
 {
 	public static void main(String... args){
 		try {
+			initHomeFolder();
 			initLogger();
-			initFolderStructure();
+			initSubFolderStructure();
 			initDB();
 			initUIManager();
 			SwingUtilities.invokeLater( new Runnable(){
@@ -51,13 +52,14 @@ public class LauncherMTG
 		Logger.getInstance().write( Tag.INFO, "Logger initialized correctly." );
 	}
 
-	private static void initFolderStructure(){
+	private static void initHomeFolder(){
 		File mtgHome = new File( DBCostants.mtgHome );
 		if(!mtgHome.exists()){
 			mtgHome.mkdirs();
-			Logger.getInstance().write( Tag.INFO, "creating path: "+mtgHome.getAbsolutePath() );
-		}
-			
+		}		
+	}
+	
+	private static void initSubFolderStructure(){
 		File mtgDataFile = new File( DBCostants.mtgDataHome );
 		if(!mtgDataFile.exists()){
 			mtgDataFile.mkdirs();
