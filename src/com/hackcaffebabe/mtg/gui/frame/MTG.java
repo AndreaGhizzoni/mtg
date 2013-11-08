@@ -7,10 +7,12 @@ import it.hackcaffebabe.logger.Logger;
 import it.hackcaffebabe.logger.Tag;
 import java.awt.BorderLayout;
 import java.awt.Cursor;
+import java.awt.Event;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
@@ -73,6 +75,7 @@ public class MTG extends JFrame
 
 		JMenu file = new JMenu( "File" );
 		JMenuItem fileExit = new JMenuItem( "Exit" );
+		fileExit.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_Q, Event.CTRL_MASK ) );
 		fileExit.addActionListener( new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e){
@@ -83,6 +86,7 @@ public class MTG extends JFrame
 		file.add( new JSeparator() );
 		JMenuItem fileImportUpdate = new JMenuItem( "Import..." );
 //		fileImportUpdate.setActionCommand( "IU" );
+		fileImportUpdate.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_I, Event.CTRL_MASK ) );
 		fileImportUpdate.addActionListener( new ImportActionListener() );
 		file.add( fileImportUpdate );
 
@@ -92,6 +96,7 @@ public class MTG extends JFrame
 //		file.add( fileImportCleaning );
 
 		JMenuItem fileExport = new JMenuItem( "Export..." );
+		fileExport.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_E, Event.CTRL_MASK ) );
 		fileExport.addActionListener( new ExportActionListener() );
 		file.add( fileExport );
 
@@ -134,11 +139,17 @@ public class MTG extends JFrame
 		public void windowClosing(WindowEvent e){
 			close();
 		}
+
 		public void windowOpened(WindowEvent e){}
+
 		public void windowClosed(WindowEvent e){}
+
 		public void windowIconified(WindowEvent e){}
+
 		public void windowDeiconified(WindowEvent e){}
+
 		public void windowActivated(WindowEvent e){}
+
 		public void windowDeactivated(WindowEvent e){}
 	}
 
@@ -161,10 +172,15 @@ public class MTG extends JFrame
 				}
 			} );
 
-			MTG.this.setCursor( new Cursor( Cursor.WAIT_CURSOR ) );
-			//TODO maybe create a swing worker to unzip all cards and copy that on .mtg/data			
-			MTG.this.setCursor( null );
-			
+			String msg = "Import and update will read a backup zip file and it updates the current library.\nContinue?";
+			if(JOptionPane.showConfirmDialog( null, msg, "Confirm", JOptionPane.YES_NO_OPTION ) == JOptionPane.YES_OPTION) {
+				if(f.showDialog( null, "Open" ) == JFileChooser.APPROVE_OPTION) {
+					MTG.this.setCursor( new Cursor( Cursor.WAIT_CURSOR ) );
+					//TODO maybe create a swing worker to unzip all cards and copy that on .mtg/data. check Test project for example			
+					MTG.this.setCursor( null );
+				}
+			}
+
 //			if(e.getActionCommand().equals( "IU" )) {
 //				String msg = "Import and update will read a backup zip file and it update current the library.\nContinue?";
 //				if(JOptionPane.showConfirmDialog( null, msg, "Confirm", JOptionPane.YES_NO_OPTION ) == JOptionPane.YES_OPTION) {

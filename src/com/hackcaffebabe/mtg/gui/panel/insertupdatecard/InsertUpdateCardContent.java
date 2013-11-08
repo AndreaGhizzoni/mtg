@@ -98,8 +98,7 @@ public class InsertUpdateCardContent extends JPanel
 				if(cardToUpdate == null) { // if card to update is null, user want to insert new card
 					disableAllInPanel();
 					btnSaveOrUpdate.setText( "Save" );
-				}
-				else { // otherwise user want to update passing card
+				} else { // otherwise user want to update passing card
 					populateContent();
 					btnSaveOrUpdate.setText( "Update" );
 					disableUnnecessaryComponentsForUpdates();
@@ -300,7 +299,7 @@ public class InsertUpdateCardContent extends JPanel
 			if(cardToUpdate instanceof Creature)
 				this.pnlCreatureInfo.setData( cardToUpdate );
 			populateTables( Ability.class, cardToUpdate.getAbilities(), cardToUpdate.getEffects() );
-		}else{
+		} else {
 			populateTables( PlanesAbility.class, ((Planeswalker) cardToUpdate).getPlanesAbilities(), cardToUpdate.getEffects() );
 			this.pnlPlaneswalkerInfo.setData( cardToUpdate );
 		}
@@ -332,7 +331,7 @@ public class InsertUpdateCardContent extends JPanel
 	/* save the MTG card with appropriate message */
 	private void storeOrUpdate(MTGCard m){
 		try {
-			if(cardToUpdate==null){
+			if(cardToUpdate == null) {
 				if(StoreManager.getInstance().store( m )) {
 					//reset all the form
 					disableAllInPanel();
@@ -340,24 +339,22 @@ public class InsertUpdateCardContent extends JPanel
 					mtgCardType.clearSelection();
 					MTGTypeListener.lastActionCommand = "";
 					refreshMTGTable();
-	
+
 					JOptionPane.showMessageDialog( this, "Card saved correctly!", "Succes!", JOptionPane.INFORMATION_MESSAGE );
-				}
-				else {
+				} else {
 					JOptionPane.showMessageDialog( this, "Card is already saved!", "Bad Luck!", JOptionPane.INFORMATION_MESSAGE );
 				}
-			}else{
+			} else {
 				// cardToUpdate is the oldest card, m is the newest.
-				if(StoreManager.getInstance().applyDifference( cardToUpdate, m )){
+				if(StoreManager.getInstance().applyDifference( cardToUpdate, m )) {
 					JOptionPane.showMessageDialog( this, "Card updated correctly!", "Succes!", JOptionPane.INFORMATION_MESSAGE );
 					refreshMTGTable();
 					this.parent.close();
-				}else{
+				} else {
 					JOptionPane.showMessageDialog( this, "No changes found.\nNothing to update.", "Bad Luck!", JOptionPane.INFORMATION_MESSAGE );
 				}
 			}
-		}
-		catch(Exception e) {
+		} catch(Exception e) {
 			String s = String.format( "%s\nLog is reported.", e.getMessage() );
 			log.write( Tag.ERRORS, e.getMessage() );
 			displayError( this, s );
@@ -720,21 +717,18 @@ public class InsertUpdateCardContent extends JPanel
 					JXObjectModel<PlanesAbility> model = (JXObjectModel<PlanesAbility>) tableAbility.getModel();
 					if(model.getRowCount() == 0) {
 						tableAbility.setModel( new JXObjectModel<PlanesAbility>( Arrays.asList( p ) ) );
-					}
-					else {
+					} else {
 						model.addObject( p );
 					}
 					tableAbilityColumnAdjuster.adjustColumns();
 				}
-			}
-			else {
+			} else {
 				Ability a = showAbilityDialog( InsertUpdateCardContent.this );
 				if(a != null) {
 					JXObjectModel<Ability> model = (JXObjectModel<Ability>) tableAbility.getModel();
 					if(model.getRowCount() == 0) {
 						tableAbility.setModel( new JXObjectModel<Ability>( Arrays.asList( a ) ) );
-					}
-					else {
+					} else {
 						model.addObject( a );
 					}
 					tableAbilityColumnAdjuster.adjustColumns();

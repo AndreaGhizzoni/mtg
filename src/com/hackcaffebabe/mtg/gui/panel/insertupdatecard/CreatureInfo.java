@@ -78,13 +78,13 @@ public class CreatureInfo extends JPanel
 	 * @param c {@link MTGCard} if null or not instance of Creature.class nothing happen;
 	 */
 	public void setData(MTGCard c){
-		if(c!=null&&c instanceof Creature){
-			Creature creature = ((Creature)c);
+		if(c != null && c instanceof Creature) {
+			Creature creature = ((Creature) c);
 			this.txtPower.setText( String.valueOf( creature.getStrength().getPower() ) );
 			this.txtToughness.setText( String.valueOf( creature.getStrength().getToughness() ) );
 		}
 	}
-	
+
 	/**
 	 * Disable all components
 	 */
@@ -131,8 +131,7 @@ public class CreatureInfo extends JPanel
 					toughness = "-1";
 				Strength s = new Strength( String.format( "%s/%s", power, toughness ) );
 				return s;
-			}
-			catch(IllegalArgumentException e) {
+			} catch(IllegalArgumentException e) {
 				return null;
 			}
 		}

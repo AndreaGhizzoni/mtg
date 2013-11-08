@@ -62,23 +62,23 @@ public class ManaCostInfo extends JPanel
 	 * @param c {@link MTGCard} if null or instance of != Land.class nothing happen;
 	 */
 	public void setData(MTGCard c){
-		if(c!=null&&!(c instanceof Land)){
+		if(c != null && !(c instanceof Land)) {
 			if(c instanceof Creature)
-				this.viewManaCost = ((Creature)c).getManaCost();
+				this.viewManaCost = ((Creature) c).getManaCost();
 			else if(c instanceof Artifact)
-				this.viewManaCost = ((Artifact)c).getManaCost();
+				this.viewManaCost = ((Artifact) c).getManaCost();
 			else if(c instanceof Instant)
-				this.viewManaCost = ((Instant)c).getManaCost();
+				this.viewManaCost = ((Instant) c).getManaCost();
 			else if(c instanceof Sorcery)
-				this.viewManaCost = ((Sorcery)c).getManaCost();
+				this.viewManaCost = ((Sorcery) c).getManaCost();
 			else if(c instanceof Enchantment)
-				this.viewManaCost = ((Enchantment)c).getManaCost();
+				this.viewManaCost = ((Enchantment) c).getManaCost();
 			else if(c instanceof Planeswalker)
-				this.viewManaCost = ((Planeswalker)c).getManaCost();
+				this.viewManaCost = ((Planeswalker) c).getManaCost();
 			this.txtManaCost.setText( this.viewManaCost.toString() );
 		}
 	}
-	
+
 	/**
 	 * Disable all components
 	 */

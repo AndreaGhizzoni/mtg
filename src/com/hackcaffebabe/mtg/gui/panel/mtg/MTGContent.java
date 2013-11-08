@@ -1,12 +1,17 @@
 package com.hackcaffebabe.mtg.gui.panel.mtg;
 
-import static com.hackcaffebabe.mtg.gui.GUIUtils.*;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.refreshMTGTable;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.displayError;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.DIMENSION_MAIN_FRAME;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.JXTABLE_MTG;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.JXTABLE_MTG_COLUMN_ADJUSTER;
 import it.hackcaffebabe.jx.table.JXTable;
 import it.hackcaffebabe.jx.table.JXTableColumnAdjuster;
 import it.hackcaffebabe.jx.table.model.JXObjectModel;
 import it.hackcaffebabe.logger.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -20,7 +25,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import net.miginfocom.swing.MigLayout;
 import com.hackcaffebabe.mtg.controller.json.StoreManager;
-import com.hackcaffebabe.mtg.gui.frame.AdvanceSearch;
+import com.hackcaffebabe.mtg.gui.panel.mtg.listener.AdvanceSearchActionListener;
 import com.hackcaffebabe.mtg.gui.panel.mtg.listener.NewCardActionListener;
 import com.hackcaffebabe.mtg.model.MTGCard;
 
@@ -84,6 +89,7 @@ public class MTGContent extends JPanel
 		this.pnlSearch.add( this.txtSearch, "cell 0 0,growx,aligny center" );
 
 		this.btnAdvanceSearch = new JButton( "Advance Search" );
+		this.btnAdvanceSearch.setMnemonic( KeyEvent.VK_S );
 		this.btnAdvanceSearch.addActionListener( new AdvanceSearchActionListener() );
 		this.pnlSearch.add( this.btnAdvanceSearch, "cell 1 0,growx,aligny top" );
 
@@ -109,6 +115,7 @@ public class MTGContent extends JPanel
 
 		// button
 		this.btnNewCard = new JButton( "New Card" );
+		this.btnNewCard.setMnemonic( KeyEvent.VK_N );
 		this.btnNewCard.addActionListener( new NewCardActionListener() );
 		add( this.btnNewCard, "cell 1 1,alignx center,aligny center" );
 
@@ -121,15 +128,6 @@ public class MTGContent extends JPanel
 //===========================================================================================
 // INNER CLASS
 //===========================================================================================
-	/* Event on button Advance search */
-	private class AdvanceSearchActionListener implements ActionListener
-	{
-		@Override
-		public void actionPerformed(ActionEvent e){
-			new AdvanceSearch( JXTABLE_MTG ).setVisible( true );
-		}
-	}
-
 	/* Event handle on row selection */
 	private class MTGCardListSelectionListener implements ListSelectionListener
 	{
@@ -159,7 +157,7 @@ public class MTGContent extends JPanel
 		@Override
 		public void actionPerformed(ActionEvent e){
 			MTGCard card = tableSelectionListener.selCard;
-			log.write( Tag.DEBUG, "card to delete: "+card );
+			log.write( Tag.DEBUG, "card to delete: " + card );
 			if(card != null) {
 				String msg = String.format( "Are you sure to delete %s ?", card.getName() );
 				if(JOptionPane.showConfirmDialog( MTGContent.this, msg, "Be careful!", JOptionPane.YES_NO_OPTION ) == 0) {

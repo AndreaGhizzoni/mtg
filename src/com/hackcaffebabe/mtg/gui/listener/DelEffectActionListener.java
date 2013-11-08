@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import com.hackcaffebabe.mtg.model.card.Effect;
 
+
 /**
  * class that describe the action on btnDelEffect in InsertCardConten.java
  *  
@@ -17,17 +18,18 @@ public class DelEffectActionListener implements ActionListener
 {
 	private JXTable tableEffects;
 	private JXTableColumnAdjuster tableEffectsColumnAdjuster;
-	
-	public DelEffectActionListener( JXTable tableEffects, JXTableColumnAdjuster tableEffectsColumnAdjuster ){
+
+	public DelEffectActionListener(JXTable tableEffects, JXTableColumnAdjuster tableEffectsColumnAdjuster){
 		this.tableEffects = tableEffects;
 		this.tableEffectsColumnAdjuster = tableEffectsColumnAdjuster;
 	}
-	
-	@Override@SuppressWarnings( "unchecked" )
-	public void actionPerformed( ActionEvent e ){
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public void actionPerformed(ActionEvent e){
 		int i = tableEffects.getSelectedModelRow();
-		if( i != -1 ){
-			JXObjectModel<Effect> model = (JXObjectModel<Effect>)tableEffects.getModel();
+		if(i != -1) {
+			JXObjectModel<Effect> model = (JXObjectModel<Effect>) tableEffects.getModel();
 			model.removeObject( i );
 			tableEffectsColumnAdjuster.adjustColumns();
 		}

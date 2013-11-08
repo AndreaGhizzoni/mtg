@@ -2,25 +2,26 @@ package com.hackcaffebabe.mtg.gui.panel.mtg.listener;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import com.hackcaffebabe.mtg.gui.frame.InsertCard;
+import com.hackcaffebabe.mtg.gui.frame.AdvanceSearch;
 import com.hackcaffebabe.mtg.gui.panel.mtg.MTGContent;
 
+
 /**
- * Event handle on button btnNewCard in {@link MTGContent}
+ * Event handle on button btnAdvanceSearch in {@link MTGContent}
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
- * @version 1.2
+ * @version 1.0
  */
-public class NewCardActionListener implements ActionListener
+public class AdvanceSearchActionListener implements ActionListener
 {
-	private InsertCard frame;
+	private AdvanceSearch ads = null;
 
 	@Override
 	public void actionPerformed(ActionEvent e){
-		if(frame == null) {
-			frame = new InsertCard( null );
+		if(ads == null) {
+			ads = new AdvanceSearch();
 		} else {
-			frame.toFront();
+			ads.toFront();
 		}
-		frame.setVisible( true );
+		ads.setVisible( true );
 	}
 }

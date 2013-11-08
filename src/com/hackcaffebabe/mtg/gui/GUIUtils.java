@@ -58,7 +58,7 @@ public class GUIUtils
 	public static final String TITLE_UPDATE_CARD = "MTG Update Card!";
 	/** Title of advance search frame */
 	public static final String TITLE_ADVANCE_SEARCH = "Advance Search";
-	
+
 	/** Dimension of main frame */
 	public static final Dimension DIMENSION_MAIN_FRAME = new Dimension( 1150, 655 );
 	/** Dimension of insert card frame */
@@ -86,7 +86,7 @@ public class GUIUtils
 //	public static final String DP_TYPE = "type";
 //	public static final String DP_SUB_TYPE = "sub_type";
 //	public static final String DP_PRIMARY_EFFECT = "primary_effect";
-	
+
 	/* Tool Tip TODO maybe add some TP around the program */
 	public static final String TP_PANEL_CREATURE_INFO = "Creature strength like \"2/2\". Use * to indicate \"*/*\" or \"X/X\".";
 
@@ -95,7 +95,7 @@ public class GUIUtils
 	/** Public access of JXTable of Main frame */
 	public static JXTable JXTABLE_MTG;
 	public static JXTableColumnAdjuster JXTABLE_MTG_COLUMN_ADJUSTER;
-	
+
 //===========================================================================================
 // COMMON METHODS
 //===========================================================================================
@@ -106,18 +106,18 @@ public class GUIUtils
 		Logger.getInstance().write( Tag.DEBUG, "Refreshing mtg card list" );;
 		STATUS_BAR_MAIN_FRAME.setStatus( "Refreshing mtg card list..." );
 		List<MTGCard> lst = StoreManager.getInstance().getAllCardsAsList();
-		if(!lst.isEmpty()){
+		if(!lst.isEmpty()) {
 			JXTABLE_MTG.setModel( new JXObjectModel<MTGCard>( lst ) );
 
 			//update sorter and text search
 			JXTABLE_MTG.refreshRowSorter();
 			JXTABLE_MTG_COLUMN_ADJUSTER.adjustColumns();
-		}else{
+		} else {
 			JXTABLE_MTG.setModel( new JXObjectModel<>() );
 		}
 		STATUS_BAR_MAIN_FRAME.setStatus( "MTG Cards list refreshed correctly!" );
 	}
-	
+
 	/**
 	 * Display an error message.
 	 * @param parent {@link Component} the parent component of error message.
@@ -201,8 +201,7 @@ public class GUIUtils
 			return null;
 		try {
 			return new Effect( action.cost, txtDescription.getText().replaceAll( "\n", " " ) );
-		}
-		catch(Exception ex) {
+		} catch(Exception ex) {
 			return null;
 		}
 	}
@@ -223,8 +222,7 @@ public class GUIUtils
 		if(set.size() == 0) {
 			cmbAbility.setEnabled( false );
 			chbNewAbility.setEnabled( false );
-		}
-		else {
+		} else {
 			DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
 			for(Map.Entry<String, String> s: set) {
 				model.addElement( s.getKey() );
@@ -242,8 +240,7 @@ public class GUIUtils
 					txtAbilty.setEnabled( true );
 					txtDescription.setEnabled( true );
 					cmbAbility.setEnabled( false );
-				}
-				else {
+				} else {
 					txtAbilty.setEnabled( false );
 					txtDescription.setEnabled( false );
 					cmbAbility.setEnabled( true );
@@ -264,15 +261,13 @@ public class GUIUtils
 			else {
 				if(chbNewAbility.isSelected()) {
 					return new Ability( txtAbilty.getText(), txtDescription.getText().replaceAll( "\n", " " ) );
-				}
-				else {
+				} else {
 					String name = (String) cmbAbility.getSelectedItem();
 					String description = AbilityFactory.getInstance().getAbilities().get( name );
 					return new Ability( name, description );
 				}
 			}
-		}
-		catch(Exception e) {
+		} catch(Exception e) {
 			return null;
 		}
 	}
@@ -300,8 +295,7 @@ public class GUIUtils
 
 		try {
 			return new PlanesAbility( (Integer) spinLifeCost.getValue(), txtDescription.getText().replaceAll( "\n", " " ) );
-		}
-		catch(Exception e) {
+		} catch(Exception e) {
 			return null;
 		}
 	}
@@ -352,8 +346,7 @@ public class GUIUtils
 			input = new JComponent[] { new JLabel( "Color Less:" ), txtManaColorLess, new JLabel( "Red:" ), txtManaRed, new JLabel( "Black:" ),
 					txtManaBlack, new JLabel( "Green:" ), txtManaGreen, new JLabel( "White:" ), txtManaWhite, new JLabel( "Blue:" ), txtManaBlue,
 					chbX };
-		}
-		else {
+		} else {
 			input = new JComponent[] { new JLabel( "Color Less:" ), txtManaColorLess, new JLabel( "Red:" ), txtManaRed, new JLabel( "Black:" ),
 					txtManaBlack, new JLabel( "Green:" ), txtManaGreen, new JLabel( "White:" ), txtManaWhite, new JLabel( "Blue:" ), txtManaBlue,
 					chbTap, chbX };
@@ -383,8 +376,7 @@ public class GUIUtils
 			if(chbX.isSelected())
 				return new ManaCost( cl, red, bck, green, white, blue, x );
 			else return new ManaCost( cl, red, bck, green, white, blue );
-		}
-		else {
+		} else {
 			Map.Entry<BasicColors, Integer> tap = null;
 
 			if(chbTap.isSelected())

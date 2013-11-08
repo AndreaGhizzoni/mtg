@@ -19,22 +19,22 @@ public class AdvanceSearch extends JFrame
 	/**
 	 * Create the frame.
 	 */
-	public AdvanceSearch(JXTable table){
+	public AdvanceSearch(){
 		super(TITLE_ADVANCE_SEARCH);
 		setResizable( false );
 		setMinimumSize( DIMENSION_ADVANCE_SEARCH );
 		setAlwaysOnTop( true );
 		setLocation( (Toolkit.getDefaultToolkit().getScreenSize().width/2)-(DIMENSION_ADVANCE_SEARCH.width/2),
 				     (Toolkit.getDefaultToolkit().getScreenSize().height/2)-(DIMENSION_ADVANCE_SEARCH.height/2));
-		this.initContent(table);
+		this.initContent();
 	}
 	
 //===========================================================================================
 // METHOD
 //===========================================================================================
 	/* initialize all components */
-	private void initContent(JXTable t){
-		this.contentPane = new AdvanceSearchContent(t);
+	private void initContent(){
+		this.contentPane = new AdvanceSearchContent();
 		this.contentPane.setOpaque( true );
 		setContentPane( this.contentPane );
 	}

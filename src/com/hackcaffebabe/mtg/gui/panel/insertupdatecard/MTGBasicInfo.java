@@ -149,21 +149,21 @@ public class MTGBasicInfo extends JPanel
 	 * @param c {@link MTGCard} if null nothing happen;
 	 */
 	public void setData(MTGCard c){
-		if(c!=null){
+		if(c != null) {
 			this.txtName.setText( c.getName() );
 			this.cmbRarity.setSelectedItem( c.getRarity() );
 			this.txtSeries.setText( c.getSeries() );
 			this.txtSubType.setText( c.getSubType() );
-			for( BasicColors s : c.getCardColor().getBasicColors() ){
-				if(s.equals(BasicColors.RED))
+			for(BasicColors s: c.getCardColor().getBasicColors()) {
+				if(s.equals( BasicColors.RED ))
 					chbRed.setSelected( true );
-				else if(s.equals(BasicColors.BLACK))
+				else if(s.equals( BasicColors.BLACK ))
 					chbBlack.setSelected( true );
-				else if(s.equals(BasicColors.BLUE))
+				else if(s.equals( BasicColors.BLUE ))
 					chbBlue.setSelected( true );
-				else if(s.equals(BasicColors.GREEN))
+				else if(s.equals( BasicColors.GREEN ))
 					chbGreen.setSelected( true );
-				else if(s.equals(BasicColors.WHITE))
+				else if(s.equals( BasicColors.WHITE ))
 					chbWhite.setSelected( true );
 			}
 			this.basicColorActionListener.setCardColor( c.getCardColor() );
@@ -171,7 +171,7 @@ public class MTGBasicInfo extends JPanel
 			this.chbIsArtifact.setSelected( c.isArtifact() );
 		}
 	}
-	
+
 	/**
 	 * Set the component enable or not
 	 */

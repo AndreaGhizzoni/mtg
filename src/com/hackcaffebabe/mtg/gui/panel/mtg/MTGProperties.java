@@ -1,6 +1,6 @@
 package com.hackcaffebabe.mtg.gui.panel.mtg;
 
-import static com.hackcaffebabe.mtg.gui.GUIUtils.*;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.STATUS_BAR_MAIN_FRAME;
 import it.hackcaffebabe.jx.table.JXTable;
 import it.hackcaffebabe.jx.table.JXTableColumnAdjuster;
 import it.hackcaffebabe.jx.table.model.DisplayableObject;
@@ -30,7 +30,7 @@ import com.hackcaffebabe.mtg.model.card.*;
 public class MTGProperties extends JPanel
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	private JTextField txtName = new JTextField();
 	private JTextField txtManaCost = new JTextField();
 	private JTextField txtCardColor = new JTextField();
@@ -51,14 +51,14 @@ public class MTGProperties extends JPanel
 	private JButton btnUpdate;
 
 	private MTGCard displayedMTGCard = null;
-	
+
 	/**
 	 * Create the panel.
 	 */
 	public MTGProperties(){
 		super();
 		setBorder( new TitledBorder( "MTG Properties" ) );
-		setLayout( new MigLayout("", "[44.00][38.00][150.00][80.00][grow]", "[][][][][][][150px,grow][][:96.00:100,grow][150px][]") );
+		setLayout( new MigLayout( "", "[44.00][38.00][150.00][80.00][grow]", "[][][][][][][150px,grow][][:96.00:100,grow][150px][]" ) );
 		this.initContent();
 	}
 
@@ -74,10 +74,10 @@ public class MTGProperties extends JPanel
 		add( new JLabel( "Card Color:" ), "cell 0 1,alignx right" );
 		this.txtCardColor.setEditable( false );
 		add( this.txtCardColor, "cell 1 1 2 1,growx" );
-		
+
 		add( new JLabel( "Mana Cost:" ), "cell 3 1,alignx trailing" );
 		this.txtManaCost.setEditable( false );
-		add(this.txtManaCost, "cell 4 1,growx");
+		add( this.txtManaCost, "cell 4 1,growx" );
 
 		add( new JLabel( "Rarity:" ), "cell 0 2,alignx right" );
 		this.txtRarity.setEditable( false );
@@ -105,7 +105,7 @@ public class MTGProperties extends JPanel
 
 		JPanel pnlAbility = new JPanel();
 		pnlAbility.setBorder( new TitledBorder( "Ability:" ) );
-		pnlAbility.setLayout( new MigLayout("", "[grow]", "[grow][grow]") );
+		pnlAbility.setLayout( new MigLayout( "", "[grow]", "[grow][grow]" ) );
 		this.tableAbility = new JXTable( new JXObjectModel<DisplayableObject>() );
 		this.tableColumnAdjusterAbility = new JXTableColumnAdjuster( this.tableAbility );
 		pnlAbility.add( new JScrollPane( this.tableAbility ), "cell 0 0 1 2,grow" );
@@ -114,16 +114,17 @@ public class MTGProperties extends JPanel
 		add( new JLabel( "Primary Effect:" ), "cell 0 7 2 1" );
 		this.textPrimaryEffects.setLineWrap( true );
 		this.textPrimaryEffects.setEditable( false );
-		add( new JScrollPane( this.textPrimaryEffects, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-				                                       JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED), "cell 2 7 3 2,grow" );
+		add( new JScrollPane( this.textPrimaryEffects, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED ),
+				"cell 2 7 3 2,grow" );
 
 		JPanel pnlOtherEffects = new JPanel();
 		pnlOtherEffects.setBorder( new TitledBorder( "Other Effects:" ) );
-		pnlOtherEffects.setLayout( new MigLayout("", "[grow]", "[grow][grow]") );
+		pnlOtherEffects.setLayout( new MigLayout( "", "[grow]", "[grow][grow]" ) );
 		this.tableEffects = new JXTable( new JXObjectModel<Effect>() );
 		this.tableColumnAdjusterEffects = new JXTableColumnAdjuster( this.tableEffects );
-		pnlOtherEffects.add( new JScrollPane( this.tableEffects, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-				                                                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED ), "cell 0 0 1 2,grow" );
+		pnlOtherEffects.add(
+				new JScrollPane( this.tableEffects, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED ),
+				"cell 0 0 1 2,grow" );
 		add( pnlOtherEffects, "cell 0 9 5 1,grow" );
 
 		this.btnUpdate = new JButton( "Update MTG Card" );
@@ -207,45 +208,38 @@ public class MTGProperties extends JPanel
 				type += " Artifact";
 			if(c.isLegendary())
 				type += " Legendary";
-		}
-		else if(c instanceof Sorcery) {
+		} else if(c instanceof Sorcery) {
 			manaCost = ((Sorcery) c).getManaCost();
 			type = Sorcery.class.getSimpleName();
 			if(c.isLegendary())
 				type += " Legendary";
-		}
-		else if(c instanceof Instant) {
+		} else if(c instanceof Instant) {
 			manaCost = ((Instant) c).getManaCost();
 			type = Instant.class.getSimpleName();
 			if(c.isLegendary())
 				type += " Legendary";
-		}
-		else if(c instanceof Enchantment) {
+		} else if(c instanceof Enchantment) {
 			manaCost = ((Enchantment) c).getManaCost();
 			type = Enchantment.class.getSimpleName();
 			if(c.isLegendary())
 				type += " Legendary";
-		}
-		else if(c instanceof Planeswalker) {
+		} else if(c instanceof Planeswalker) {
 			manaCost = ((Planeswalker) c).getManaCost();
 			planeswalkerLife = ((Planeswalker) c).getLife();
 			type = Planeswalker.class.getSimpleName();
 			if(c.isLegendary())
 				type += " Legendary";
-		}
-		else if(c instanceof Artifact) {
+		} else if(c instanceof Artifact) {
 			manaCost = ((Artifact) c).getManaCost();
 			type = Artifact.class.getSimpleName();
 			if(c.isLegendary())
 				type += " Legendary";
-		}
-		else { // this type is land
+		} else { // this type is land
 			type = Land.class.getSimpleName();
 			if(c.isLegendary())
 				type += " Legendary";
 		}
 
-		
 		this.txtName.setText( c.getName() );
 		this.txtSubType.setText( c.getSubType() );
 		this.txtSeries.setText( c.getSeries() );
@@ -255,21 +249,17 @@ public class MTGProperties extends JPanel
 		this.txtType.setText( type );
 		if(manaCost == null)
 			this.txtManaCost.setEnabled( false );
-		else 
-			this.txtManaCost.setText( manaCost.toString() );
+		else this.txtManaCost.setText( manaCost.toString() );
 		if(creatureStrength == null)
 			this.txtStrenght.setEnabled( false );
-		else 
-			this.txtStrenght.setText( creatureStrength.toString() );
+		else this.txtStrenght.setText( creatureStrength.toString() );
 		if(planeswalkerLife == -1)
 			this.txtPlaneswalkerLife.setEnabled( false );
-		else 
-			this.txtPlaneswalkerLife.setText( planeswalkerLife.toString() );
+		else this.txtPlaneswalkerLife.setText( planeswalkerLife.toString() );
 
 		if(type.equals( Planeswalker.class.getSimpleName() ))
 			populateTables( PlanesAbility.class, ((Planeswalker) c).getPlanesAbilities(), c.getEffects() );
-		else 
-			populateTables( Ability.class, c.getAbilities(), c.getEffects() );
+		else populateTables( Ability.class, c.getAbilities(), c.getEffects() );
 
 		this.displayedMTGCard = c;// this is necessary for all the documents listener.
 		STATUS_BAR_MAIN_FRAME.setStatus( c.getName() );

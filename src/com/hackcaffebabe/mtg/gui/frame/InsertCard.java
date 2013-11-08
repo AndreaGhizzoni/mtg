@@ -27,29 +27,29 @@ public class InsertCard extends JFrame
 	 * Instance a frame to view or update a {@link MTGCard}
 	 * @param cardToView {@link MTG} or null if user want to insert a card.
 	 */
-	public InsertCard( MTGCard cardToView ){
-		super( cardToView==null?TITLE_INSERT_CARD:TITLE_UPDATE_CARD );
+	public InsertCard(MTGCard cardToView){
+		super( cardToView == null ? TITLE_INSERT_CARD : TITLE_UPDATE_CARD );
 		setMinimumSize( DIMENSION_INSERT_CARD );
-		setLocation( (Toolkit.getDefaultToolkit().getScreenSize().width/2)-(DIMENSION_INSERT_CARD.width/2),
-				     (Toolkit.getDefaultToolkit().getScreenSize().height/2)-(DIMENSION_INSERT_CARD.height/2));
-		this.initContent(cardToView);
+		setLocation( (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - (DIMENSION_INSERT_CARD.width / 2), (Toolkit.getDefaultToolkit()
+				.getScreenSize().height / 2) - (DIMENSION_INSERT_CARD.height / 2) );
+		this.initContent( cardToView );
 		this.initMenuBar();
 	}
-	
+
 //===========================================================================================
 // METHOD
 //===========================================================================================
 	/* initialize all components */
 	private void initContent(MTGCard cardToView){
-		this.content = new InsertUpdateCardContent(cardToView, this);
+		this.content = new InsertUpdateCardContent( cardToView, this );
 		this.content.setOpaque( true );
 		setContentPane( this.content );
 	}
-	
+
 	/* Initialize the menu bar */
 	private void initMenuBar(){
 		JMenuBar bar = new JMenuBar();
-		
+
 		JMenu file = new JMenu( "File" );
 		JMenuItem fileExit = new JMenuItem( "Exit" );
 		fileExit.addActionListener( new ActionListener(){
@@ -58,19 +58,21 @@ public class InsertCard extends JFrame
 			}
 		} );
 		file.add( fileExit );
-		
+
 		JMenu edit = new JMenu( "Edit" );
-		
+
 		bar.add( file );
 		bar.add( edit );
 		setJMenuBar( bar );
 	}
-	
+
 	/*
 	 * Close the frame
 	 */
-	public void close(){ dispose(); }
-	
+	public void close(){
+		dispose();
+	}
+
 //===========================================================================================
 // INNER CLASS
 //===========================================================================================

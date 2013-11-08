@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.util.Arrays;
 import com.hackcaffebabe.mtg.model.card.Effect;
 
+
 /**
  * Action Listener to get new {@link Effect} from the user.
  *  
@@ -21,7 +22,7 @@ public class AddEffectActionListener implements ActionListener
 	private JXTable table;
 	private JXTableColumnAdjuster tableColumnAdjuster;
 	private Component parent;
-	
+
 	/**
 	 * Instance a listener of {@link Effect} object.
 	 * @param parent {@link Component} to anchor the pop-up menu to get {@link Effect} object.
@@ -33,7 +34,7 @@ public class AddEffectActionListener implements ActionListener
 		this.table = table;
 		this.tableColumnAdjuster = columnAdjuster;
 	}
-	
+
 	@Override
 	@SuppressWarnings("unchecked")
 	public void actionPerformed(ActionEvent e){
@@ -42,8 +43,7 @@ public class AddEffectActionListener implements ActionListener
 			JXObjectModel<Effect> model = (JXObjectModel<Effect>) this.table.getModel();
 			if(model.getRowCount() == 0) {
 				this.table.setModel( new JXObjectModel<Effect>( Arrays.asList( ef ) ) );
-			}
-			else {
+			} else {
 				model.addObject( ef );
 			}
 			this.tableColumnAdjuster.adjustColumns();

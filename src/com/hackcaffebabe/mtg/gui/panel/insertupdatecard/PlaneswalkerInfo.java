@@ -52,11 +52,11 @@ public class PlaneswalkerInfo extends JPanel
 	 * @param c {@link MTGCard} if null or not instance of Planeswalker.class nothing happen;
 	 */
 	public void setData(MTGCard c){
-		if(c!=null&&c instanceof Planeswalker){
-			this.spinLife.setValue( ((Planeswalker)c).getLife() );
+		if(c != null && c instanceof Planeswalker) {
+			this.spinLife.setValue( ((Planeswalker) c).getLife() );
 		}
 	}
-	
+
 	/**
 	 * Disable all components
 	 */

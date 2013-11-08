@@ -5,6 +5,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.table.TableCellRenderer;
 
+
 /**
  * Class that wrap the lines into description column of table ability and effects 
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com

@@ -1,6 +1,6 @@
 package com.hackcaffebabe.mtg.gui.panel.advancesearch;
 
-import it.hackcaffebabe.jx.table.JXTable;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.JXTABLE_MTG;
 import it.hackcaffebabe.jx.table.model.JXObjectModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,7 +35,6 @@ import java.awt.Component;
 public class AdvanceSearchContent extends JPanel
 {
 	private static final long serialVersionUID = 1L;
-	private JXTable table;
 	private Criteria criteria = new Criteria();
 
 	private ColorsActionListener colorsActionListener;
@@ -61,9 +60,8 @@ public class AdvanceSearchContent extends JPanel
 	/**
 	 * Create the panel.
 	 */
-	public AdvanceSearchContent(JXTable t){
+	public AdvanceSearchContent(){
 		super();
-		this.table = t;
 		setLayout( new MigLayout( "", "[52.00][100.00][83.00][27.00][190.00]", "[][][][]" ) );
 		this.initContent();
 		setFocusTraversalPolicy( new FocusTraversalOnArray( new Component[] { chbBlack, chbGreen, chbRed, chbBlue, chbWhite, cmbRarity, cmbSeries,
@@ -221,13 +219,12 @@ public class AdvanceSearchContent extends JPanel
 	private void applyCriteriaChanges(){
 		List<MTGCard> lst = StoreManager.getInstance().searchBy( this.criteria );
 		if(!lst.isEmpty()) {
-			JXObjectModel<MTGCard> model = (JXObjectModel<MTGCard>) this.table.getModel();
+			JXObjectModel<MTGCard> model = (JXObjectModel<MTGCard>) JXTABLE_MTG.getModel();
 			model.removeAll();
 			model.addObjects( lst );
-			this.table.setModel( model );
-		}
-		else {
-			((JXObjectModel<MTGCard>) this.table.getModel()).removeAll();
+			JXTABLE_MTG.setModel( model );
+		} else {
+			((JXObjectModel<MTGCard>) JXTABLE_MTG.getModel()).removeAll();
 		}
 	}
 
@@ -242,17 +239,13 @@ public class AdvanceSearchContent extends JPanel
 			String ac = e.getActionCommand();
 			if(ac.equals( BasicColors.getAbbraviation( BasicColors.RED ) )) {
 				criteria = criteria.byBasiColors( BasicColors.RED );
-			}
-			else if(ac.equals( BasicColors.getAbbraviation( BasicColors.BLACK ) )) {
+			} else if(ac.equals( BasicColors.getAbbraviation( BasicColors.BLACK ) )) {
 				criteria = criteria.byBasiColors( BasicColors.BLACK );
-			}
-			else if(ac.equals( BasicColors.getAbbraviation( BasicColors.GREEN ) )) {
+			} else if(ac.equals( BasicColors.getAbbraviation( BasicColors.GREEN ) )) {
 				criteria = criteria.byBasiColors( BasicColors.GREEN );
-			}
-			else if(ac.equals( BasicColors.getAbbraviation( BasicColors.BLUE ) )) {
+			} else if(ac.equals( BasicColors.getAbbraviation( BasicColors.BLUE ) )) {
 				criteria = criteria.byBasiColors( BasicColors.BLUE );
-			}
-			else {// WHITE
+			} else {// WHITE
 				criteria = criteria.byBasiColors( BasicColors.WHITE );
 			}
 			applyCriteriaChanges();
@@ -278,17 +271,13 @@ public class AdvanceSearchContent extends JPanel
 			String sel = (String) cmbRarity.getSelectedItem();
 			if(sel.equals( Rarity.COMMON.toString() )) {
 				criteria = criteria.byRarity( Rarity.COMMON );
-			}
-			else if(sel.equals( Rarity.NON_COMMON.toString() )) {
+			} else if(sel.equals( Rarity.NON_COMMON.toString() )) {
 				criteria = criteria.byRarity( Rarity.NON_COMMON );
-			}
-			else if(sel.equals( Rarity.RARE.toString() )) {
+			} else if(sel.equals( Rarity.RARE.toString() )) {
 				criteria = criteria.byRarity( Rarity.RARE );
-			}
-			else if(sel.equals( Rarity.MYTHIC.toString() )) {
+			} else if(sel.equals( Rarity.MYTHIC.toString() )) {
 				criteria = criteria.byRarity( Rarity.MYTHIC );
-			}
-			else {// "--------"
+			} else {// "--------"
 				criteria = criteria.byRarity( null );
 			}
 			applyCriteriaChanges();
