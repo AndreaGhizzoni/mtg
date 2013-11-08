@@ -16,6 +16,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -153,6 +160,45 @@ public class MTG extends JFrame
 		public void windowDeactivated(WindowEvent e){}
 	}
 
+	private List<File> unzip(File srcZip, File dstFolder){
+		Logger.getInstance().write( Tag.DEBUG, "upzip called." );
+		
+		List<File> lstFileLoded = new ArrayList<>();
+		try {
+			ZipInputStream zis = new ZipInputStream( new FileInputStream( srcZip ) );
+			Logger.getInstance().write( Tag.DEBUG, "Zip opened correctly" );
+
+			ZipEntry ze = zis.getNextEntry();
+			while( ze != null ) {
+				File newFile = new File( dstFolder + PathUtil.FILE_SEPARATOR + ze.getName() );
+				
+				//create all non exists folders else you will hit FileNotFoundException for compressed folder
+				new File( newFile.getParent() ).mkdirs();
+
+				FileOutputStream fos = new FileOutputStream( newFile );
+				int len;
+				byte[] buffer = new byte[1024];
+				while( (len = zis.read( buffer )) > 0 ) {
+					fos.write( buffer, 0, len );
+				}
+				fos.close();
+				lstFileLoded.add( newFile );
+				
+				ze = zis.getNextEntry();
+			}
+
+			zis.closeEntry();
+			zis.close();
+
+		} catch(IOException ex) {
+			ex.printStackTrace( Logger.getInstance().getPrintStream() );
+			return null;
+		}
+		
+		Logger.getInstance().write( Tag.DEBUG, "done" );
+		return lstFileLoded;
+	}
+	
 	/* Import Event */
 	private class ImportActionListener implements ActionListener
 	{
@@ -172,30 +218,14 @@ public class MTG extends JFrame
 				}
 			} );
 
-			String msg = "Import and update will read a backup zip file and it updates the current library.\nContinue?";
-			if(JOptionPane.showConfirmDialog( null, msg, "Confirm", JOptionPane.YES_NO_OPTION ) == JOptionPane.YES_OPTION) {
-				if(f.showDialog( null, "Open" ) == JFileChooser.APPROVE_OPTION) {
-					MTG.this.setCursor( new Cursor( Cursor.WAIT_CURSOR ) );
-					//TODO maybe create a swing worker to unzip all cards and copy that on .mtg/data. check Test project for example			
-					MTG.this.setCursor( null );
-				}
+			if(f.showDialog( null, "Open" ) == JFileChooser.APPROVE_OPTION) {
+				MTG.this.setCursor( new Cursor( Cursor.WAIT_CURSOR ) );
+				unzip( f.getSelectedFile(), new File(DBCostants.JSON_PATH) );
+				StoreManager.getInstance().refresh();
+				refreshMTGTable();
+				MTG.this.setCursor( null );
 			}
 
-//			if(e.getActionCommand().equals( "IU" )) {
-//				String msg = "Import and update will read a backup zip file and it update current the library.\nContinue?";
-//				if(JOptionPane.showConfirmDialog( null, msg, "Confirm", JOptionPane.YES_NO_OPTION ) == JOptionPane.YES_OPTION) {
-//					if(f.showDialog( null, "Open" ) == JFileChooser.APPROVE_OPTION) {
-//
-//					}
-//				}
-//			} else {
-//				String msg = "Import and clear will read a backup zip file and replace all cards in your library with backup content.\nContinue?";
-//				if(JOptionPane.showConfirmDialog( null, msg, "Confirm", JOptionPane.YES_NO_OPTION ) == JOptionPane.YES_OPTION) {
-//					if(f.showDialog( null, "Open" ) == JFileChooser.APPROVE_OPTION) {
-//
-//					}
-//				}
-//			}
 		}
 	}
 

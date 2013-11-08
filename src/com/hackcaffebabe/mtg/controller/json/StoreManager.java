@@ -222,9 +222,8 @@ public class StoreManager
 
 	/**
 	 * This method read all files into data/mtg.
-	 * @throws IOException if read all files fail.
 	 */
-	public void refresh() throws IOException{
+	public void refresh(){
 		this.mtgSet.clear();
 		this.lstSeries.clear();
 		this.load();

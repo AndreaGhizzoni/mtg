@@ -29,6 +29,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingUtilities;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
@@ -103,19 +104,24 @@ public class GUIUtils
 	 * This method refresh the JXTABLE_MTG of Main frame
 	 */
 	public static void refreshMTGTable(){
-		Logger.getInstance().write( Tag.DEBUG, "Refreshing mtg card list" );;
-		STATUS_BAR_MAIN_FRAME.setStatus( "Refreshing mtg card list..." );
-		List<MTGCard> lst = StoreManager.getInstance().getAllCardsAsList();
-		if(!lst.isEmpty()) {
-			JXTABLE_MTG.setModel( new JXObjectModel<MTGCard>( lst ) );
+		SwingUtilities.invokeLater( new Runnable(){
+			@Override
+			public void run(){
+				Logger.getInstance().write( Tag.DEBUG, "Refreshing mtg card list" );;
+				STATUS_BAR_MAIN_FRAME.setStatus( "Refreshing mtg card list..." );
+				List<MTGCard> lst = StoreManager.getInstance().getAllCardsAsList();
+				if(!lst.isEmpty()) {
+					JXTABLE_MTG.setModel( new JXObjectModel<MTGCard>( lst ) );
 
-			//update sorter and text search
-			JXTABLE_MTG.refreshRowSorter();
-			JXTABLE_MTG_COLUMN_ADJUSTER.adjustColumns();
-		} else {
-			JXTABLE_MTG.setModel( new JXObjectModel<>() );
-		}
-		STATUS_BAR_MAIN_FRAME.setStatus( "MTG Cards list refreshed correctly!" );
+					//update sorter and text search
+					JXTABLE_MTG.refreshRowSorter();
+					JXTABLE_MTG_COLUMN_ADJUSTER.adjustColumns();
+				} else {
+					JXTABLE_MTG.setModel( new JXObjectModel<>() );
+				}
+				STATUS_BAR_MAIN_FRAME.setStatus( "MTG Cards list refreshed correctly!" );
+			}
+		} );		
 	}
 
 	/**
