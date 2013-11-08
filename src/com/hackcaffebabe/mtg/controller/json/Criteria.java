@@ -16,21 +16,20 @@ public class Criteria
 {
 	private String name = null;
 	private Integer convertedManaCost = null;
-	
+
 	private String subType = null;
-	
+
 	private String series = null;
-	
+
 	private List<BasicColors> colors = new ArrayList<>();
-	
+
 	private Rarity rarity = null;
-	
+
 	private Boolean isLegendary = null;
 	private Boolean hasPrimaryEffect = null;
 	private Boolean hasEffect = null;
 	private Boolean hasAbility = null;
-	
-	
+
 //===========================================================================================
 // METHOD
 //===========================================================================================
@@ -40,36 +39,38 @@ public class Criteria
 	 * @return {@link Criteria} with the name flag set.
 	 */
 	public Criteria byName(String n){
-		if(n!=null&&!n.isEmpty()) this.name = n;
+		if(n != null && !n.isEmpty())
+			this.name = n;
 		return this;
 	}
-	
+
 	/**
 	 * This method set the criteria by converted mana cost.
 	 * @param c {@link Integer} the converted mana cost to search.
 	 * @return {@link Criteria} with the converted mana cost flag set.
 	 */
 	public Criteria byConvertedManaCost(Integer c){
-		if(c==null){
+		if(c == null) {
 			this.convertedManaCost = null;
 			return this;
-		}else{
-			if(c>=0) 
+		} else {
+			if(c >= 0)
 				this.convertedManaCost = c;
 			return this;
 		}
 	}
-	
+
 	/**
 	 * This method set the criteria by sub type.
 	 * @param t {@link String} the sub type to search.
 	 * @return {@link Criteria} with the sub type flag set.
 	 */
 	public Criteria bySubType(String t){
-		if(t!=null&&!t.isEmpty()) this.subType = t;
+		if(t != null && !t.isEmpty())
+			this.subType = t;
 		return this;
 	}
-	
+
 	/**
 	 * This method set the criteria by series.<br>
 	 * Set to null to cancel the series criteria.
@@ -80,23 +81,23 @@ public class Criteria
 		this.series = s;
 		return this;
 	}
-	
+
 	/**
 	 * This method set the criteria by {@link BasicColors}.
 	 * @param b {@link BasicColors} the basic to search.
 	 * @return
 	 */
 	public Criteria byBasiColors(BasicColors b){
-		if(b!=null){
-			if(this.colors.contains(b)){
-				this.colors.remove(b);
-			}else{
-				this.colors.add(b);
+		if(b != null) {
+			if(this.colors.contains( b )) {
+				this.colors.remove( b );
+			} else {
+				this.colors.add( b );
 			}
 		}
 		return this;
 	}
-	
+
 	/**
 	 * This method set the criteria by rarity. Set to null to cancel the rarity criteria.
 	 * @param r {@link Rarity} the rarity to search.
@@ -106,7 +107,7 @@ public class Criteria
 		this.rarity = r;
 		return this;
 	}
-	
+
 	/**
 	 * This method set the criteria by legendary card.<br>
 	 * Set to null to cancel the isLegendary criteria.
@@ -117,7 +118,7 @@ public class Criteria
 		this.isLegendary = isLegendary;
 		return this;
 	}
-	
+
 	/**
 	 * This method set the criteria by if has a primary effect.<br>
 	 * Set to null to cancel the has primary effect criteria.
@@ -128,7 +129,7 @@ public class Criteria
 		this.hasPrimaryEffect = hasPrimaryEffect;
 		return this;
 	}
-	
+
 	/**
 	 * This method set the criteria by if has at least one effect.<br>
 	 * Set to null to cancel the has effect criteria.
@@ -139,7 +140,7 @@ public class Criteria
 		this.hasEffect = hasEffect;
 		return this;
 	}
-	
+
 	/**
 	 * This method set the criteria by if has at least one ability.<br>
 	 * Set to null to cancel the has ability criteria.
@@ -150,48 +151,66 @@ public class Criteria
 		this.hasAbility = hasAblility;
 		return this;
 	}
-	
+
 	/**
 	 * Check if criteria is void.
 	 * @return {@link Boolean} if there is no criteria inserted.
 	 */
 	public boolean isEmpty(){
-		return (name==null) && (convertedManaCost==null) &&
-			   (subType==null) && (series==null) && (colors.isEmpty()) &&
-			   (rarity==null) && (isLegendary==null) && (hasPrimaryEffect==null) && 
-			   (hasEffect==null) && (hasAbility==null);
+		return (name == null) && (convertedManaCost == null) && (subType == null) && (series == null) && (colors.isEmpty()) && (rarity == null)
+				&& (isLegendary == null) && (hasPrimaryEffect == null) && (hasEffect == null) && (hasAbility == null);
 	}
-	
+
 //===========================================================================================
 // GETTER
 //===========================================================================================
 	/** @return {@link String} the name */
-	public String getName(){ return name; }
+	public String getName(){
+		return name;
+	}
 
 	/** @return {@link Integer} the converted mana cost */
-	public Integer getConvertedManaCost(){ return convertedManaCost; }
-	
+	public Integer getConvertedManaCost(){
+		return convertedManaCost;
+	}
+
 	/** @return {@link String} the subType */
-	public String getSubType(){ return subType; }
-	
+	public String getSubType(){
+		return subType;
+	}
+
 	/** @return {@link String} the series */
-	public String getSeries(){ return series; }
+	public String getSeries(){
+		return series;
+	}
 
 	/** @return {@link List} of {@link BasicColors} */
-	public List<BasicColors> getColors(){ return this.colors; }
-	
+	public List<BasicColors> getColors(){
+		return this.colors;
+	}
+
 	/** @return {@link Rarity} the rarity */
-	public Rarity getRarity(){ return rarity; }
+	public Rarity getRarity(){
+		return rarity;
+	}
 
 	/** @return {@link Boolean} the isLegendary flag */
-	public Boolean getIsLegendary(){ return isLegendary; }
+	public Boolean getIsLegendary(){
+		return isLegendary;
+	}
 
 	/** @return {@link Boolean} the has primary effect flag */
-	public Boolean getHasPrimaryEffect(){ return hasPrimaryEffect; }
+	public Boolean getHasPrimaryEffect(){
+		return hasPrimaryEffect;
+	}
 
-    /** @return {@link Boolean} the has effect flag */
-	public Boolean getHasEffect(){ return hasEffect; }
-	
+	/** @return {@link Boolean} the has effect flag */
+	public Boolean getHasEffect(){
+		return hasEffect;
+	}
+
 	/** @return {@link Boolean} the has ability flag */
-	public Boolean getHasAbility(){ return hasAbility; }
+	public Boolean getHasAbility(){
+		return hasAbility;
+	}
 }

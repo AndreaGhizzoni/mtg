@@ -47,8 +47,7 @@ public class StoreManager
 			if(manager == null)
 				manager = new StoreManager();
 			return manager;
-		}
-		catch(Exception e) {
+		} catch(Exception e) {
 			e.printStackTrace( Logger.getInstance().getPrintStream() );
 			return null;
 		}
@@ -97,8 +96,7 @@ public class StoreManager
 						addSeriesToList( c );
 						br.close();
 					}
-				}
-				catch(IOException e) {
+				} catch(IOException e) {
 				}//if throw continue
 			}
 		} );
@@ -115,8 +113,7 @@ public class StoreManager
 			MTGCard toReturn = g.fromJson( f, MTGCard.class );
 			f.close();
 			return toReturn;
-		}
-		catch(Exception e) {
+		} catch(Exception e) {
 			return null;
 		}
 	}
@@ -134,7 +131,7 @@ public class StoreManager
 			return false;
 
 		log.write( Tag.DEBUG, "store initialized." );
-		
+
 		String json = g.toJson( c, MTGCard.class );
 		FileWriter f = new FileWriter( new File( getJSONFileName( c ) ) );
 		f.write( json );
@@ -161,19 +158,19 @@ public class StoreManager
 			return false;
 
 		log.write( Tag.DEBUG, "delete card initialized." );
-		
+
 		this.mtgSet.remove( c );
 		log.write( Tag.DEBUG, c.getName() + " removed correctly from data structure." );
 
 		//update series list
-		if(searchBy(new Criteria().bySeries(c.getSeries())).isEmpty() ){
+		if(searchBy( new Criteria().bySeries( c.getSeries() ) ).isEmpty()) {
 			this.lstSeries.remove( c.getSeries() );
 			log.write( Tag.DEBUG, c.getSeries() + " removed because its frequency == 1" );
 		}
 
 		String path = getJSONFileName( c );
 		new File( path ).delete();
-		
+
 		log.write( Tag.INFO, path + " deleted correctly." );
 		return true;
 	}
@@ -215,13 +212,10 @@ public class StoreManager
 			Collections.sort( this.lstSeries );
 			if(this.lstSeries.isEmpty()) {
 				this.lstSeries.add( c.getSeries() );
-			}
-			else {
+			} else {
 				int r = Collections.binarySearch( this.lstSeries, c.getSeries() );
-				if(r<0)
+				if(r < 0)
 					this.lstSeries.add( c.getSeries() );
-//				if(!this.lstSeries.contains( c.getSeries() ))
-//					this.lstSeries.add( c.getSeries() );
 			}
 		}
 	}
@@ -333,8 +327,7 @@ public class StoreManager
 
 			PathUtil.makeZip( destinationFile, new File( JSON_PATH ).listFiles() );
 			log.write( Tag.DEBUG, "Backup closed and create correctly." );
-		}
-		catch(IOException e) {
+		} catch(IOException e) {
 			log.write( Tag.ERRORS, e.getMessage() );
 		}
 	}

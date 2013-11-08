@@ -58,7 +58,7 @@ public class MTGProperties extends JPanel
 	public MTGProperties(){
 		super();
 		setBorder( new TitledBorder( "MTG Properties" ) );
-		setLayout( new MigLayout("", "[44.00][38.00][150.00][100.00][grow]", "[][][][][][][][150px,grow][][:96.00:100,grow][150px][]") );
+		setLayout( new MigLayout("", "[44.00][38.00][150.00][80.00][grow]", "[][][][][][][150px,grow][][:96.00:100,grow][150px][]") );
 		this.initContent();
 	}
 
@@ -71,37 +71,37 @@ public class MTGProperties extends JPanel
 		this.txtName.setEditable( false );
 		add( this.txtName, "cell 1 0 4 1,growx" );
 
-		add( new JLabel( "Mana Cost:" ), "cell 0 1,alignx right" );
-		this.txtManaCost.setEditable( false );
-		add( this.txtManaCost, "cell 1 1 3 1,growx" );
-
-		add( new JLabel( "Card Color:" ), "cell 0 2,alignx right" );
+		add( new JLabel( "Card Color:" ), "cell 0 1,alignx right" );
 		this.txtCardColor.setEditable( false );
-		add( this.txtCardColor, "cell 1 2 3 1,growx" );
+		add( this.txtCardColor, "cell 1 1 2 1,growx" );
+		
+		add( new JLabel( "Mana Cost:" ), "cell 3 1,alignx trailing" );
+		this.txtManaCost.setEditable( false );
+		add(this.txtManaCost, "cell 4 1,growx");
 
-		add( new JLabel( "Rarity:" ), "cell 0 3,alignx right" );
+		add( new JLabel( "Rarity:" ), "cell 0 2,alignx right" );
 		this.txtRarity.setEditable( false );
-		add( this.txtRarity, "cell 1 3 2 1,growx" );
+		add( this.txtRarity, "cell 1 2 2 1,growx" );
 
-		add( new JLabel( "PW Life:" ), "cell 3 3,alignx trailing" );
+		add( new JLabel( "PW Life:" ), "cell 3 2,alignx trailing" );
 		this.txtPlaneswalkerLife.setEditable( false );
-		add( this.txtPlaneswalkerLife, "cell 4 3,growx" );
+		add( this.txtPlaneswalkerLife, "cell 4 2,growx" );
 
-		add( new JLabel( "Series:" ), "cell 0 4,alignx trailing" );
+		add( new JLabel( "Series:" ), "cell 0 3,alignx trailing" );
 		this.txtSeries.setEditable( false );
-		add( this.txtSeries, "cell 1 4 2 1,growx" );
+		add( this.txtSeries, "cell 1 3 2 1,growx" );
 
-		add( new JLabel( "Strength:" ), "cell 3 4,alignx trailing" );
+		add( new JLabel( "Strength:" ), "cell 3 3,alignx trailing" );
 		this.txtStrenght.setEditable( false );
-		add( this.txtStrenght, "cell 4 4,growx" );
+		add( this.txtStrenght, "cell 4 3,growx" );
 
-		add( new JLabel( "Type:" ), "cell 0 5,alignx right" );
+		add( new JLabel( "Type:" ), "cell 0 4,alignx right" );
 		this.txtType.setEditable( false );
-		add( this.txtType, "cell 1 5 3 1,growx" );
+		add( this.txtType, "cell 1 4 4 1,growx" );
 
-		add( new JLabel( "Sub Type:" ), "cell 0 6,alignx right" );
+		add( new JLabel( "Sub Type:" ), "cell 0 5,alignx right" );
 		this.txtSubType.setEditable( false );
-		add( this.txtSubType, "cell 1 6 3 1,growx" );
+		add( this.txtSubType, "cell 1 5 4 1,growx" );
 
 		JPanel pnlAbility = new JPanel();
 		pnlAbility.setBorder( new TitledBorder( "Ability:" ) );
@@ -109,13 +109,13 @@ public class MTGProperties extends JPanel
 		this.tableAbility = new JXTable( new JXObjectModel<DisplayableObject>() );
 		this.tableColumnAdjusterAbility = new JXTableColumnAdjuster( this.tableAbility );
 		pnlAbility.add( new JScrollPane( this.tableAbility ), "cell 0 0 1 2,grow" );
-		add( pnlAbility, "cell 0 7 5 1,grow" );
+		add( pnlAbility, "cell 0 6 5 1,grow" );
 
-		add( new JLabel( "Primary Effect:" ), "cell 0 8 2 1" );
+		add( new JLabel( "Primary Effect:" ), "cell 0 7 2 1" );
 		this.textPrimaryEffects.setLineWrap( true );
 		this.textPrimaryEffects.setEditable( false );
 		add( new JScrollPane( this.textPrimaryEffects, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-				                                       JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED), "cell 2 8 3 2,grow" );
+				                                       JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED), "cell 2 7 3 2,grow" );
 
 		JPanel pnlOtherEffects = new JPanel();
 		pnlOtherEffects.setBorder( new TitledBorder( "Other Effects:" ) );
@@ -124,7 +124,7 @@ public class MTGProperties extends JPanel
 		this.tableColumnAdjusterEffects = new JXTableColumnAdjuster( this.tableEffects );
 		pnlOtherEffects.add( new JScrollPane( this.tableEffects, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				                                                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED ), "cell 0 0 1 2,grow" );
-		add( pnlOtherEffects, "cell 0 10 5 1,grow" );
+		add( pnlOtherEffects, "cell 0 9 5 1,grow" );
 
 		this.btnUpdate = new JButton( "Update MTG Card" );
 		this.btnUpdate.setEnabled( false );
@@ -134,7 +134,7 @@ public class MTGProperties extends JPanel
 				new InsertCard( displayedMTGCard ).setVisible( true );
 			}
 		} );
-		add( this.btnUpdate, "cell 0 11 5 1,grow" );
+		add( this.btnUpdate, "cell 0 10 5 1,grow" );
 	}
 
 	/**
