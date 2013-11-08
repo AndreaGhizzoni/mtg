@@ -17,15 +17,11 @@ public class Criteria
 	private String name = null;
 	private Integer convertedManaCost = null;
 	
-//	private Class<? extends MTGCard> type = null;
 	private String subType = null;
 	
 	private String series = null;
 	
 	private List<BasicColors> colors = new ArrayList<>();
-	
-//	private TypeColor typeColor = null;
-//	private CardColor color = null;
 	
 	private Rarity rarity = null;
 	
@@ -64,16 +60,6 @@ public class Criteria
 		}
 	}
 	
-//	/**
-//	 * This method set the criteria by type. Set to null to cancel the type criteria.
-//	 * @param c {@link Class} the type to search.
-//	 * @return {@link Criteria} with the type flag set.
-//	 */
-//	public Criteria byType( Class<? extends MTGCard> c){
-//		this.type = c;
-//		return this;
-//	}
-	
 	/**
 	 * This method set the criteria by sub type.
 	 * @param t {@link String} the sub type to search.
@@ -110,26 +96,6 @@ public class Criteria
 		}
 		return this;
 	}
-	
-//	/**
-//	 * This method set the criteria by color type.
-//	 * @param t {@link TypeColor} the color type to search.
-//	 * @return {@link Criteria} with the color type flag set.
-//	 */
-//	public Criteria byTypeColor(TypeColor t){
-//		if(t!=null) this.typeColor = t;
-//		return this;
-//	}
-//	
-//	/**
-//	 * This method set the criteria by color.
-//	 * @param c {@link String} the color to search.
-//	 * @return {@link Criteria} with the color flag set.
-//	 */
-//	public Criteria byColor(CardColor c){
-//		if(c!=null) this.color = c;
-//		return this;
-//	}
 	
 	/**
 	 * This method set the criteria by rarity. Set to null to cancel the rarity criteria.
@@ -190,7 +156,7 @@ public class Criteria
 	 * @return {@link Boolean} if there is no criteria inserted.
 	 */
 	public boolean isEmpty(){
-		return (name==null) && (convertedManaCost==null) /*&& (type==null)*/ &&
+		return (name==null) && (convertedManaCost==null) &&
 			   (subType==null) && (series==null) && (colors.isEmpty()) &&
 			   (rarity==null) && (isLegendary==null) && (hasPrimaryEffect==null) && 
 			   (hasEffect==null) && (hasAbility==null);
@@ -205,9 +171,6 @@ public class Criteria
 	/** @return {@link Integer} the converted mana cost */
 	public Integer getConvertedManaCost(){ return convertedManaCost; }
 	
-//	/** @return {@link Class} the type */
-//	public Class<?extends MTGCard> getType(){ return type; }
-
 	/** @return {@link String} the subType */
 	public String getSubType(){ return subType; }
 	
@@ -217,12 +180,6 @@ public class Criteria
 	/** @return {@link List} of {@link BasicColors} */
 	public List<BasicColors> getColors(){ return this.colors; }
 	
-//	/** @return {@link TypeColor} the color type */
-//	public final TypeColor getTypeColor(){ return typeColor; }
-//
-//	/** @return {@link CardColor} the color */
-//	public final CardColor getColor(){ return color; }
-
 	/** @return {@link Rarity} the rarity */
 	public Rarity getRarity(){ return rarity; }
 
