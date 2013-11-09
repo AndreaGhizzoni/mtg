@@ -1,12 +1,14 @@
 package com.hackcaffebabe.mtg.gui.frame;
 
-import static com.hackcaffebabe.mtg.gui.GUIUtils.*;
-import it.hackcaffebabe.ioutil.file.PathUtil;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.refreshMTGTable;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.TITLE_MAIN_FRAME;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.DIMENSION_MAIN_FRAME;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.STATUS_BAR_MAIN_FRAME;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.VERSION;
 import it.hackcaffebabe.jx.statusbar.JXStatusBar;
 import it.hackcaffebabe.logger.Logger;
 import it.hackcaffebabe.logger.Tag;
 import java.awt.BorderLayout;
-import java.awt.Cursor;
 import java.awt.Event;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -15,26 +17,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
-import javax.swing.filechooser.FileFilter;
-import com.hackcaffebabe.about.About;
-import com.hackcaffebabe.mtg.controller.DBCostants;
-import com.hackcaffebabe.mtg.controller.json.StoreManager;
+import com.hackcaffebabe.mtg.gui.frame.listener.*;
 import com.hackcaffebabe.mtg.gui.panel.mtg.MTGContent;
 
 
@@ -92,15 +81,9 @@ public class MTG extends JFrame
 		file.add( fileExit );
 		file.add( new JSeparator() );
 		JMenuItem fileImportUpdate = new JMenuItem( "Import..." );
-//		fileImportUpdate.setActionCommand( "IU" );
 		fileImportUpdate.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_I, Event.CTRL_MASK ) );
 		fileImportUpdate.addActionListener( new ImportActionListener() );
 		file.add( fileImportUpdate );
-
-//		JMenuItem fileImportCleaning = new JMenuItem( "Import and Clean" );
-//		fileImportCleaning.setActionCommand( "IC" );
-//		fileImportCleaning.addActionListener( new ImportActionListener() );
-//		file.add( fileImportCleaning );
 
 		JMenuItem fileExport = new JMenuItem( "Export..." );
 		fileExport.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_E, Event.CTRL_MASK ) );
@@ -120,7 +103,7 @@ public class MTG extends JFrame
 
 		JMenu help = new JMenu( "Help" );
 		JMenuItem helpAbout = new JMenuItem( "About" );
-		helpAbout.addActionListener( new HelpActionListener() );
+		helpAbout.addActionListener( new AboutActionListener() );
 		helpAbout.setAccelerator( KeyStroke.getKeyStroke( "F1" ) );
 		help.add( helpAbout );
 
@@ -158,115 +141,5 @@ public class MTG extends JFrame
 		public void windowActivated(WindowEvent e){}
 
 		public void windowDeactivated(WindowEvent e){}
-	}
-
-	private List<File> unzip(File srcZip, File dstFolder){
-		Logger.getInstance().write( Tag.DEBUG, "upzip called." );
-		
-		List<File> lstFileLoded = new ArrayList<>();
-		try {
-			ZipInputStream zis = new ZipInputStream( new FileInputStream( srcZip ) );
-			Logger.getInstance().write( Tag.DEBUG, "Zip opened correctly" );
-
-			ZipEntry ze = zis.getNextEntry();
-			while( ze != null ) {
-				File newFile = new File( dstFolder + PathUtil.FILE_SEPARATOR + ze.getName() );
-				
-				//create all non exists folders else you will hit FileNotFoundException for compressed folder
-				new File( newFile.getParent() ).mkdirs();
-
-				FileOutputStream fos = new FileOutputStream( newFile );
-				int len;
-				byte[] buffer = new byte[1024];
-				while( (len = zis.read( buffer )) > 0 ) {
-					fos.write( buffer, 0, len );
-				}
-				fos.close();
-				lstFileLoded.add( newFile );
-				
-				ze = zis.getNextEntry();
-			}
-
-			zis.closeEntry();
-			zis.close();
-
-		} catch(IOException ex) {
-			ex.printStackTrace( Logger.getInstance().getPrintStream() );
-			return null;
-		}
-		
-		Logger.getInstance().write( Tag.DEBUG, "done" );
-		return lstFileLoded;
-	}
-	
-	/* Import Event */
-	private class ImportActionListener implements ActionListener
-	{
-		@Override
-		public void actionPerformed(ActionEvent e){
-			JFileChooser f = new JFileChooser( PathUtil.USER_HOME );
-			f.setDialogTitle( "Select backup file" );
-			f.setFileFilter( new FileFilter(){
-				@Override
-				public String getDescription(){
-					return "Zip files";
-				}
-
-				@Override
-				public boolean accept(File f){
-					return f.isDirectory() || f.getName().endsWith( ".zip" );
-				}
-			} );
-
-			if(f.showDialog( null, "Open" ) == JFileChooser.APPROVE_OPTION) {
-				MTG.this.setCursor( new Cursor( Cursor.WAIT_CURSOR ) );
-				unzip( f.getSelectedFile(), new File(DBCostants.JSON_PATH) );
-				StoreManager.getInstance().refresh();
-				refreshMTGTable();
-				MTG.this.setCursor( null );
-			}
-
-		}
-	}
-
-	/* Export event */
-	private class ExportActionListener implements ActionListener
-	{
-		@Override
-		public void actionPerformed(ActionEvent e){
-			JFileChooser f = new JFileChooser( PathUtil.USER_HOME );
-			f.setDialogTitle( "Select folder to save backup file" );
-			f.setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY );
-			int r = f.showDialog( null, "OK" );
-			if(r == JFileChooser.APPROVE_OPTION) {
-				setCursor( Cursor.getPredefinedCursor( Cursor.WAIT_CURSOR ) );
-				String destination = f.getSelectedFile().toString();
-				File backupFile = new File( destination + PathUtil.FILE_SEPARATOR + DBCostants.getBackupFileName() );
-				StoreManager.getInstance().createBackup( backupFile );
-				setCursor( null );
-
-				String msg = "Backup file saved correctly on: " + backupFile.getAbsolutePath();
-				JOptionPane.showMessageDialog( MTG.this, msg, "Success!", JOptionPane.INFORMATION_MESSAGE );
-			}
-		}
-	}
-
-	/* About event */
-	private class HelpActionListener implements ActionListener
-	{
-		private About about;
-
-		@Override
-		public void actionPerformed(ActionEvent e){
-			if(about == null) {
-				About a = new About( "About MTGProject", "MTG Card Manager", VERSION );
-				a.setVisible( true );
-				a.toFront();
-				about = a;
-			} else {
-				about.setVisible( true );
-				about.toFront();
-			}
-		}
 	}
 }

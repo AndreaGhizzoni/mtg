@@ -1,6 +1,6 @@
 package com.hackcaffebabe.mtg.gui.panel.insertupdatecard;
 
-import static com.hackcaffebabe.mtg.gui.GUIUtils.*;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.showManaCost;
 import com.hackcaffebabe.mtg.model.Artifact;
 import com.hackcaffebabe.mtg.model.Creature;
 import com.hackcaffebabe.mtg.model.Enchantment;

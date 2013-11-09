@@ -1,6 +1,8 @@
 package com.hackcaffebabe.mtg.gui.frame;
 
-import static com.hackcaffebabe.mtg.gui.GUIUtils.*;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.TITLE_UPDATE_CARD;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.TITLE_INSERT_CARD;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.DIMENSION_INSERT_CARD;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -66,14 +68,10 @@ public class InsertCard extends JFrame
 		setJMenuBar( bar );
 	}
 
-	/*
+	/**
 	 * Close the frame
 	 */
 	public void close(){
 		dispose();
 	}
-
-//===========================================================================================
-// INNER CLASS
-//===========================================================================================
 }

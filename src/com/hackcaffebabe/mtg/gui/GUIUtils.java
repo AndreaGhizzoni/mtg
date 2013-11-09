@@ -10,6 +10,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.AbstractMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -121,7 +123,7 @@ public class GUIUtils
 				}
 				STATUS_BAR_MAIN_FRAME.setStatus( "MTG Cards list refreshed correctly!" );
 			}
-		} );		
+		} );
 	}
 
 	/**
@@ -134,8 +136,24 @@ public class GUIUtils
 	}
 
 	/**
+	 * This method display a list of file.
+	 * @param lst {@link List} of File.
+	 */
+	public static void displayUnzippedFiles(List<File> lst){
+		if(lst.isEmpty()) {
+			JOptionPane.showMessageDialog( null, "No file unzipped", "Done!", JOptionPane.INFORMATION_MESSAGE );
+		} else {
+			JList<File> lstFiles = new JList<>( lst.toArray( new File[] {} ) );
+			lstFiles.setEnabled( false );
+
+			JComponent[] input = { new JScrollPane( lstFiles ) };
+			JOptionPane.showMessageDialog( null, input, "Unziped Files:", JOptionPane.INFORMATION_MESSAGE );
+		}
+	}
+
+	/**
 	 * This method show a pop up to get the chose between hybrid or multicolor.
-	 * @return
+	 * @return -1 if user select Hybrid, 0 if user select Multicolor and -1 otherwise.
 	 */
 	public static int showHybridMulticolorDialog(){
 		JRadioButton isHybrid = new JRadioButton( "Hybrid" );

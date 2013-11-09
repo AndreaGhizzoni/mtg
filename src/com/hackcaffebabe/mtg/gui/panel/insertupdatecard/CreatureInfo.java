@@ -1,6 +1,6 @@
 package com.hackcaffebabe.mtg.gui.panel.insertupdatecard;
 
-import com.hackcaffebabe.mtg.gui.GUIUtils;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.TP_PANEL_CREATURE_INFO;
 import com.hackcaffebabe.mtg.model.Creature;
 import com.hackcaffebabe.mtg.model.MTGCard;
 import com.hackcaffebabe.mtg.model.card.Strength;
@@ -36,7 +36,7 @@ public class CreatureInfo extends JPanel
 		super();
 		setBorder( new TitledBorder( "Creature Info" ) );
 		setLayout( new MigLayout( "", "[][grow][][grow]", "[pref!]" ) );
-		setToolTipText( GUIUtils.TP_PANEL_CREATURE_INFO );
+		setToolTipText( TP_PANEL_CREATURE_INFO );
 		this.initContent();
 	}
 
