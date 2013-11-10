@@ -5,6 +5,7 @@ import static com.hackcaffebabe.mtg.gui.GUIUtils.displayError;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.DIMENSION_MAIN_FRAME;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.JXTABLE_MTG;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.JXTABLE_MTG_COLUMN_ADJUSTER;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.PNL_MTGPROPERTIES;
 import it.hackcaffebabe.jx.table.JXTable;
 import it.hackcaffebabe.jx.table.JXTableColumnAdjuster;
 import it.hackcaffebabe.jx.table.model.JXObjectModel;
@@ -44,7 +45,7 @@ public class MTGContent extends JPanel
 
 	private MTGCardListSelectionListener tableSelectionListener = new MTGCardListSelectionListener();
 
-	private MTGProperties pnlMTGPropreties;
+//	private MTGProperties pnlMTGPropreties;
 
 	private JPanel pnlSearch;
 	private JTextField txtSearch;
@@ -109,9 +110,9 @@ public class MTGContent extends JPanel
 				"cell 0 0,grow" );
 
 		// MTG card properties
-		this.pnlMTGPropreties = new MTGProperties();
-		this.pnlMTGPropreties.setBorder( new TitledBorder( "MTG Properties" ) );
-		add( this.pnlMTGPropreties, "cell 1 0 2 1,grow" );
+		PNL_MTGPROPERTIES = new MTGProperties();
+		PNL_MTGPROPERTIES.setBorder( new TitledBorder( "MTG Properties" ) );
+		add( PNL_MTGPROPERTIES, "cell 1 0 2 1,grow" );
 
 		// button
 		this.btnNewCard = new JButton( "New Card" );
@@ -142,7 +143,7 @@ public class MTGContent extends JPanel
 			int selRow = JXTABLE_MTG.getSelectedModelRow();
 			if(selRow != -1 && selRow != prevIndex) {
 				selCard = ((JXObjectModel<MTGCard>) JXTABLE_MTG.getModel()).getObject( selRow );
-				pnlMTGPropreties.setMTGCardToView( selCard );
+				PNL_MTGPROPERTIES.setMTGCardToView( selCard );
 				btnDeleteCard.setEnabled( true );
 				log.write( Tag.DEBUG, selCard.toString() );
 
@@ -163,7 +164,7 @@ public class MTGContent extends JPanel
 				if(JOptionPane.showConfirmDialog( MTGContent.this, msg, "Be careful!", JOptionPane.YES_NO_OPTION ) == 0) {
 					try {
 						StoreManager.getInstance().delete( card );
-						pnlMTGPropreties.clearAll();
+						PNL_MTGPROPERTIES.clearAll();
 						btnDeleteCard.setEnabled( false );
 						refreshMTGTable();
 						JOptionPane.showMessageDialog( MTGContent.this, card.getName() + " delete correctly!", "Operation complete!",

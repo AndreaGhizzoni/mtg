@@ -37,6 +37,7 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 import com.hackcaffebabe.mtg.controller.json.StoreManager;
+import com.hackcaffebabe.mtg.gui.panel.mtg.MTGProperties;
 import com.hackcaffebabe.mtg.model.MTGCard;
 import com.hackcaffebabe.mtg.model.card.*;
 import com.hackcaffebabe.mtg.model.color.BasicColors;
@@ -98,6 +99,9 @@ public class GUIUtils
 	/** Public access of JXTable of Main frame */
 	public static JXTable JXTABLE_MTG;
 	public static JXTableColumnAdjuster JXTABLE_MTG_COLUMN_ADJUSTER;
+	
+	/** Public access of MTGProperties panel */
+	public static MTGProperties PNL_MTGPROPERTIES;
 
 //===========================================================================================
 // COMMON METHODS

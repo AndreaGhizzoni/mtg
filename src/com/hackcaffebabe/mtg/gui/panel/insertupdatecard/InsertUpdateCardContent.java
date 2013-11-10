@@ -349,6 +349,7 @@ public class InsertUpdateCardContent extends JPanel
 				if(StoreManager.getInstance().applyDifference( cardToUpdate, m )) {
 					JOptionPane.showMessageDialog( this, "Card updated correctly!", "Succes!", JOptionPane.INFORMATION_MESSAGE );
 					refreshMTGTable();
+					PNL_MTGPROPERTIES.clearAll();
 					this.parent.close();
 				} else {
 					JOptionPane.showMessageDialog( this, "No changes found.\nNothing to update.", "Bad Luck!", JOptionPane.INFORMATION_MESSAGE );
