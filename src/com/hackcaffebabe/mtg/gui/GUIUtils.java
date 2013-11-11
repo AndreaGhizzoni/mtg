@@ -145,13 +145,13 @@ public class GUIUtils
 	 */
 	public static void displayUnzippedFiles(List<File> lst){
 		if(lst.isEmpty()) {
-			JOptionPane.showMessageDialog( null, "No file unzipped", "Done!", JOptionPane.INFORMATION_MESSAGE );
+			JOptionPane.showMessageDialog( null, "No file to import", "Done!", JOptionPane.INFORMATION_MESSAGE );
 		} else {
 			JList<File> lstFiles = new JList<>( lst.toArray( new File[] {} ) );
 			lstFiles.setEnabled( false );
 
 			JComponent[] input = { new JScrollPane( lstFiles ) };
-			JOptionPane.showMessageDialog( null, input, "Unziped Files:", JOptionPane.INFORMATION_MESSAGE );
+			JOptionPane.showMessageDialog( null, input, "Imported Files:", JOptionPane.INFORMATION_MESSAGE );
 		}
 	}
 

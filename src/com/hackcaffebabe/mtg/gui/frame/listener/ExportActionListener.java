@@ -1,10 +1,13 @@
 package com.hackcaffebabe.mtg.gui.frame.listener;
 
+import static com.hackcaffebabe.mtg.gui.GUIUtils.displayError;
 import it.hackcaffebabe.ioutil.file.PathUtil;
+import it.hackcaffebabe.logger.Logger;
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -25,17 +28,20 @@ public class ExportActionListener implements ActionListener
 		JFileChooser f = new JFileChooser( PathUtil.USER_HOME );
 		f.setDialogTitle( "Select folder to save backup file" );
 		f.setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY );
-		int r = f.showDialog( null, "OK" );
-		if(r == JFileChooser.APPROVE_OPTION) {
+		if(f.showDialog( null, "OK" ) == JFileChooser.APPROVE_OPTION) {
 			JMenuItem src = (JMenuItem)e.getSource();
-			src.setCursor( Cursor.getPredefinedCursor( Cursor.WAIT_CURSOR ) );
+			src.setCursor( Cursor.getPredefinedCursor( Cursor.WAIT_CURSOR ) );// TODO maybe remove this.
 			String destination = f.getSelectedFile().toString();
 			File backupFile = new File( destination + PathUtil.FILE_SEPARATOR + DBCostants.getBackupFileName() );
-			StoreManager.getInstance().createBackup( backupFile );
-			src.setCursor( null );
-
-			String msg = "Backup file saved correctly on: " + backupFile.getAbsolutePath();
-			JOptionPane.showMessageDialog( src, msg, "Success!", JOptionPane.INFORMATION_MESSAGE );
+			try {
+				StoreManager.getInstance().createBackup( backupFile );
+				src.setCursor( null );
+				String msg = "Backup file saved correctly on: " + backupFile.getAbsolutePath();
+				JOptionPane.showMessageDialog( src, msg, "Success!", JOptionPane.INFORMATION_MESSAGE );
+			} catch(IOException ex) {
+				displayError( null, "Error to export.\nLog is reported." );
+				ex.printStackTrace( Logger.getInstance().getPrintStream() );
+			}
 		}
 	}
 }

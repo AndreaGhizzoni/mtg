@@ -53,6 +53,7 @@ public class DBCostants
 //===========================================================================================
 	/**
 	 * This method returns the name of stored file of {@link MTGCard} in format name_series.json
+	 * TODO escape all invalid characters and [.,:;_-]
 	 * @param c {@link MTGCard}
 	 * @return {@link String} in format name_series.json
 	 */

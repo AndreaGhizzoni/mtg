@@ -312,22 +312,19 @@ public class StoreManager
 	/**
 	 * This method creates a backup file in .zip format of all stored card.
 	 * @param destinationFile {@link File} the file represents .zip.
+	 * @throws IOException TODO add doc
 	 */
-	public void createBackup(File destinationFile){
+	public void createBackup(File destinationFile) throws IOException{
 		if(destinationFile == null)
 			return;
 
 		log.write( Tag.INFO, String.format( "%s %s", "Try to backup of all stored files on", destinationFile.getAbsolutePath() ) );
-		try {
-			if(destinationFile.exists() && !destinationFile.delete()) {
-				log.write( Tag.ERRORS, "Error on delete exists backup." );
-			}
-
-			PathUtil.makeZip( destinationFile, new File( JSON_PATH ).listFiles() );
-			log.write( Tag.DEBUG, "Backup closed and create correctly." );
-		} catch(IOException e) {
-			log.write( Tag.ERRORS, e.getMessage() );
+		if(destinationFile.exists() && !destinationFile.delete()) {
+			log.write( Tag.ERRORS, "Error on delete exists backup." );
 		}
+
+		PathUtil.makeZip( destinationFile, new File( JSON_PATH ).listFiles() );
+		log.write( Tag.DEBUG, "Backup closed and create correctly." );
 	}
 
 //===========================================================================================

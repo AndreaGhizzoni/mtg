@@ -1,5 +1,6 @@
 package com.hackcaffebabe.mtg.gui.frame.listener;
 
+import static com.hackcaffebabe.mtg.gui.GUIUtils.displayError;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.displayUnzippedFiles;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.refreshMTGTable;
 import it.hackcaffebabe.ioutil.file.PathUtil;
@@ -45,20 +46,18 @@ public class ImportActionListener implements ActionListener
 
 		if(f.showDialog( null, "Open" ) == JFileChooser.APPROVE_OPTION) {
 			JMenuItem src = (JMenuItem) e.getSource();
-			src.setCursor( new Cursor( Cursor.WAIT_CURSOR ) );
-			List<File> lst;
+			src.setCursor( new Cursor( Cursor.WAIT_CURSOR ) ); // TODO maybe remove this.
 			try {
 				Logger.getInstance().write( Tag.DEBUG, f.getSelectedFile() );
-				lst = PathUtil.unZip( f.getSelectedFile(), new File( DBCostants.JSON_PATH ) );
+				List<File> lst = PathUtil.unZip( f.getSelectedFile(), new File( DBCostants.JSON_PATH ) );
 				StoreManager.getInstance().refresh();
 				refreshMTGTable();
 				displayUnzippedFiles( lst );
-			} catch( IOException e1) {
-				Logger.getInstance().write( Tag.ERRORS, e1.getMessage() );
-				e1.printStackTrace( Logger.getInstance().getPrintStream() );
+			} catch( IOException ex) {
+				displayError( null, "Error while reading backup file.\nLog is reported." );
+				ex.printStackTrace( Logger.getInstance().getPrintStream() );
 			}
 			src.setCursor( null );
 		}
-
 	}
 }
