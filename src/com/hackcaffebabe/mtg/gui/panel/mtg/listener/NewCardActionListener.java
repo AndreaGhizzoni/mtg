@@ -2,7 +2,7 @@ package com.hackcaffebabe.mtg.gui.panel.mtg.listener;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import com.hackcaffebabe.mtg.gui.frame.InsertCard;
+import com.hackcaffebabe.mtg.gui.frame.InsertUpdateCard;
 import com.hackcaffebabe.mtg.gui.panel.mtg.MTGContent;
 
 /**
@@ -12,12 +12,12 @@ import com.hackcaffebabe.mtg.gui.panel.mtg.MTGContent;
  */
 public class NewCardActionListener implements ActionListener
 {
-	private InsertCard frame;
+	private InsertUpdateCard frame;
 
 	@Override
 	public void actionPerformed(ActionEvent e){
 		if(frame == null) {
-			frame = new InsertCard( null );
+			frame = new InsertUpdateCard( null );
 		} else {
 			frame.toFront();
 		}

@@ -16,7 +16,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 import net.miginfocom.swing.MigLayout;
-import com.hackcaffebabe.mtg.gui.frame.InsertCard;
+import com.hackcaffebabe.mtg.gui.frame.InsertUpdateCard;
 import com.hackcaffebabe.mtg.model.*;
 import com.hackcaffebabe.mtg.model.card.*;
 
@@ -132,7 +132,7 @@ public class MTGProperties extends JPanel
 		this.btnUpdate.addActionListener( new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e){
-				new InsertCard( displayedMTGCard ).setVisible( true );
+				new InsertUpdateCard( displayedMTGCard ).setVisible( true );
 			}
 		} );
 		add( this.btnUpdate, "cell 0 10 5 1,grow" );

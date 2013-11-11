@@ -24,7 +24,7 @@ import it.hackcaffebabe.jx.table.model.JXObjectModel;
 import it.hackcaffebabe.logger.*;
 import com.hackcaffebabe.mtg.controller.json.StoreManager;
 import com.hackcaffebabe.mtg.model.color.CardColor;
-import com.hackcaffebabe.mtg.gui.frame.InsertCard;
+import com.hackcaffebabe.mtg.gui.frame.InsertUpdateCard;
 import com.hackcaffebabe.mtg.gui.listener.*;
 import com.hackcaffebabe.mtg.model.*;
 import com.hackcaffebabe.mtg.model.card.*;
@@ -39,7 +39,7 @@ import com.hackcaffebabe.mtg.model.card.*;
 public class InsertUpdateCardContent extends JPanel
 {
 	private static final long serialVersionUID = 1L;
-	private InsertCard parent;
+	private InsertUpdateCard parent;
 	private TypeCardActionListener MTGTypeListener;
 
 	private ButtonGroup mtgCardType = new ButtonGroup();
@@ -80,7 +80,7 @@ public class InsertUpdateCardContent extends JPanel
 	 * Instance the content. Pass null to insert new card, otherwise pass a card to update it.
 	 * @param cardToUpdate {@link MTGCard}
 	 */
-	public InsertUpdateCardContent(MTGCard cardToUpdate, InsertCard parent){
+	public InsertUpdateCardContent(MTGCard cardToUpdate, InsertUpdateCard parent){
 		super();
 		this.parent = parent;
 		setSize( DIMENSION_INSERT_CARD );

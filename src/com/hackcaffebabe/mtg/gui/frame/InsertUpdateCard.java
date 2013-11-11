@@ -3,24 +3,27 @@ package com.hackcaffebabe.mtg.gui.frame;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.TITLE_UPDATE_CARD;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.TITLE_INSERT_CARD;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.DIMENSION_INSERT_CARD;
+import java.awt.Event;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
 import com.hackcaffebabe.mtg.gui.panel.insertupdatecard.InsertUpdateCardContent;
 import com.hackcaffebabe.mtg.model.MTGCard;
 
 
 /**
  * This is the main frame that contains all components to insert the MTG card data.
- *  
+ * TODO add feature : manage Abilities
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
  */
-public class InsertCard extends JFrame
+public class InsertUpdateCard extends JFrame
 {
 	private static final long serialVersionUID = 1L;
 	private InsertUpdateCardContent content;
@@ -29,7 +32,7 @@ public class InsertCard extends JFrame
 	 * Instance a frame to view or update a {@link MTGCard}
 	 * @param cardToView {@link MTG} or null if user want to insert a card.
 	 */
-	public InsertCard(MTGCard cardToView){
+	public InsertUpdateCard(MTGCard cardToView){
 		super( cardToView == null ? TITLE_INSERT_CARD : TITLE_UPDATE_CARD );
 		setMinimumSize( DIMENSION_INSERT_CARD );
 		setLocation( (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - (DIMENSION_INSERT_CARD.width / 2), (Toolkit.getDefaultToolkit()
@@ -53,13 +56,14 @@ public class InsertCard extends JFrame
 		JMenuBar bar = new JMenuBar();
 
 		JMenu file = new JMenu( "File" );
-		JMenuItem fileExit = new JMenuItem( "Exit" );
-		fileExit.addActionListener( new ActionListener(){
+		JMenuItem fileClose = new JMenuItem( "Close" );
+		fileClose.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_Q, Event.CTRL_MASK ) );
+		fileClose.addActionListener( new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				close();
 			}
 		} );
-		file.add( fileExit );
+		file.add( fileClose );
 
 		JMenu edit = new JMenu( "Edit" );
 

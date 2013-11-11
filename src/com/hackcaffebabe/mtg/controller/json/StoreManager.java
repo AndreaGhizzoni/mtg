@@ -96,8 +96,7 @@ public class StoreManager
 						addSeriesToList( c );
 						br.close();
 					}
-				} catch(IOException e) {
-				}//if throw continue
+				} catch(IOException e) {}//if throw continue
 			}
 		} );
 	}

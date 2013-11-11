@@ -15,6 +15,6 @@
 			<attribute name="javadoc_location" value="jar:file:/home/andrea/Dropbox/workspace/MTGProject/lib/jxcomponents-1.4.jar!/doc"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/about.frame-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/about-2.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
