@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.Set;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -147,8 +148,12 @@ public class GUIUtils
 		if(lst.isEmpty()) {
 			JOptionPane.showMessageDialog( null, "No file to import", "Done!", JOptionPane.INFORMATION_MESSAGE );
 		} else {
-			JList<File> lstFiles = new JList<>( lst.toArray( new File[] {} ) );
+			JList<File> lstFiles = new JList<>();
 			lstFiles.setEnabled( false );
+			DefaultListModel<File> model = new DefaultListModel<>();
+			for(File f : lst )
+				model.addElement( f );
+			lstFiles.setModel( model );
 
 			JComponent[] input = { new JScrollPane( lstFiles ) };
 			JOptionPane.showMessageDialog( null, input, "Imported Files:", JOptionPane.INFORMATION_MESSAGE );

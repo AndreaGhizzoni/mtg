@@ -22,6 +22,7 @@ import it.hackcaffebabe.jx.table.JXTableColumnAdjuster;
 import it.hackcaffebabe.jx.table.model.DisplayableObject;
 import it.hackcaffebabe.jx.table.model.JXObjectModel;
 import it.hackcaffebabe.logger.*;
+import com.hackcaffebabe.mtg.controller.DBCostants;
 import com.hackcaffebabe.mtg.controller.json.StoreManager;
 import com.hackcaffebabe.mtg.model.color.CardColor;
 import com.hackcaffebabe.mtg.gui.frame.InsertUpdateCard;
@@ -378,11 +379,23 @@ public class InsertUpdateCardContent extends JPanel
 			pnlMTGBasicInfo.requestFocus();
 			return false;
 		}
+		if(DBCostants.normalize( mtgName ).isEmpty()){// if user insert "...." or "/////" as name.
+			displayError( this, "Name not valid" );
+			log.write( Tag.ERRORS, String.format( "Name %s not valid", mtgName ) );
+			pnlMTGBasicInfo.requestFocus();
+			return false;
+		}
 
 		String mtgSeries = pnlMTGBasicInfo.getSeries();
 		if(mtgSeries == null || mtgSeries.isEmpty()) {
 			displayError( this, "Series of MTG can not be void." );
 			log.write( Tag.ERRORS, "Series of MTG card missing." );
+			pnlMTGBasicInfo.requestFocus();
+			return false;
+		}
+		if(DBCostants.normalize( mtgSeries ).isEmpty()){// if user insert "...." or "/////" as series.
+			displayError( this, "Series not valid" );
+			log.write( Tag.ERRORS, String.format( "Series %s not valid", mtgSeries ) );
 			pnlMTGBasicInfo.requestFocus();
 			return false;
 		}

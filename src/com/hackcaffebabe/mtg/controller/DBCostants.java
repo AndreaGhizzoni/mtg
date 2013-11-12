@@ -22,8 +22,13 @@ public class DBCostants
 	/** user home directory/.mtg/data/ability.json */
 	public static final String ABILITY_FILE_PATH = mtgDataHome+PathUtil.FILE_SEPARATOR+"ability.json";
 	
-	/* Flag for logging on file */
-	public static final boolean DB_LOG_ON_FILE = false;
+	/** Flag for logging on file */
+	public static final boolean DB_LOG_ON_FILE = true;
+	
+	private static final String BCK_FILE_NAME = "MTG_Cards_Backup";
+	private static final String BCK_FILE_EXTENSION = "zip";
+	/** Represents the backup name */
+	public static final String BCK_NAME = BCK_FILE_NAME+"."+BCK_FILE_EXTENSION;
 
 	/* JSON tag */
 	public static final String JSON_TAG_NAME = "name";
@@ -53,7 +58,6 @@ public class DBCostants
 //===========================================================================================
 	/**
 	 * This method returns the name of stored file of {@link MTGCard} in format name_series.json
-	 * TODO escape all invalid characters and [.,:;_-]
 	 * @param c {@link MTGCard}
 	 * @return {@link String} in format name_series.json
 	 */
@@ -62,25 +66,24 @@ public class DBCostants
 			return "";
 
 		StringBuilder r = new StringBuilder();
-		String name = c.getName().replaceAll( " ", "" ).toLowerCase();
-		String series = c.getSeries().replaceAll( " ", "" ).toLowerCase();
+		String name = normalize( c.getName() );
+		String series = normalize( c.getSeries() );
 		String name_series = String.format( "%s_%s.json", name, series );
 		r.append( JSON_PATH );
-		r.append( System.getProperties().getProperty( "file.separator" ) );
+		r.append( PathUtil.FILE_SEPARATOR );
 		r.append( name_series );
 
 		return r.toString();
 	}
 	
 	/**
-	 * This method return the name of backup file.
-	 * @return {@link String} "bck.zip"
+	 * This method check if in a string there are characters as: à|è|é|ù|\|/|.<br>
+	 * In the first 4 case it will replace with the corresponding letter, otherwise remove it.
+	 * @param s {@link String} 
+	 * @return {@link String} normalized string, or empty string if contains only characters \|/|.
 	 */
-	public static String getBackupFileName(){
-//		StringBuilder b = new StringBuilder();
-//		b.append( "bck" );
-//		b.append( ".zip" );
-//		return b.toString();
-		return "bck.zip";
+	public static String normalize( String s ){
+		return s.replace( " ", "" ).replace( 'à', 'a' ).replace( 'è', 'e' ).replace( 'é', 'e' ).
+				replace( 'ù', 'u' ).replace( "\\","" ).replace( "//", "" ).replace( ".", "" ).toLowerCase();
 	}
 }

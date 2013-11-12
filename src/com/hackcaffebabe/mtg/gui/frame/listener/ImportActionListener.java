@@ -24,7 +24,7 @@ import com.hackcaffebabe.mtg.gui.frame.MTG;
  * Import event of {@link JMenuItem} in {@link MTG} frame
  *  
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
- * @version 1.0
+ * @version 1.5
  */
 public class ImportActionListener implements ActionListener
 {
@@ -45,10 +45,10 @@ public class ImportActionListener implements ActionListener
 		} );
 
 		if(f.showDialog( null, "Open" ) == JFileChooser.APPROVE_OPTION) {
+			Logger.getInstance().write( Tag.INFO, "Try to Import from backup: "+f.getSelectedFile() );
 			JMenuItem src = (JMenuItem) e.getSource();
-			src.setCursor( new Cursor( Cursor.WAIT_CURSOR ) ); // TODO maybe remove this.
+			src.setCursor( new Cursor( Cursor.WAIT_CURSOR ) );
 			try {
-				Logger.getInstance().write( Tag.DEBUG, f.getSelectedFile() );
 				List<File> lst = PathUtil.unZip( f.getSelectedFile(), new File( DBCostants.JSON_PATH ) );
 				StoreManager.getInstance().refresh();
 				refreshMTGTable();

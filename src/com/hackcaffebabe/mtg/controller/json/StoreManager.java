@@ -312,7 +312,7 @@ public class StoreManager
 	/**
 	 * This method creates a backup file in .zip format of all stored card.
 	 * @param destinationFile {@link File} the file represents .zip.
-	 * @throws IOException TODO add doc
+	 * @throws IOException if backup creation fail.
 	 */
 	public void createBackup(File destinationFile) throws IOException{
 		if(destinationFile == null)
@@ -324,7 +324,7 @@ public class StoreManager
 		}
 
 		PathUtil.makeZip( destinationFile, new File( JSON_PATH ).listFiles() );
-		log.write( Tag.DEBUG, "Backup closed and create correctly." );
+		log.write( Tag.INFO, "Backup closed and create correctly." );
 	}
 
 //===========================================================================================
