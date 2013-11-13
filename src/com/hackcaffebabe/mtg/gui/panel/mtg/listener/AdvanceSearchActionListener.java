@@ -17,11 +17,6 @@ public class AdvanceSearchActionListener implements ActionListener
 
 	@Override
 	public void actionPerformed(ActionEvent e){
-		if(ads == null) {
-			ads = new AdvanceSearch();
-		} else {
-			ads.toFront();
-		}
-		ads.setVisible( true );
+		new AdvanceSearch().setVisible( true );
 	}
 }

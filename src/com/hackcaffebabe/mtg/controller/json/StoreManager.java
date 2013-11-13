@@ -88,15 +88,13 @@ public class StoreManager
 		EventQueue.invokeLater( new Runnable(){
 			@Override
 			public void run(){
-				try {
-					for(File f: new File( JSON_PATH ).listFiles()) {
-						FileReader br = new FileReader( f );
-						MTGCard c = g.fromJson( br, MTGCard.class );
+				for(File f: new File( JSON_PATH ).listFiles()) {
+					MTGCard c = loadFile( f );
+					if( c!=null ){//if null continue
 						mtgSet.add( c );
 						addSeriesToList( c );
-						br.close();
 					}
-				} catch(IOException e) {}//if throw continue
+				}
 			}
 		} );
 	}

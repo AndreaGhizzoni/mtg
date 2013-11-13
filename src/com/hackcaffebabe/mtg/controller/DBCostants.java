@@ -84,6 +84,6 @@ public class DBCostants
 	 */
 	public static String normalize( String s ){
 		return s.replace( " ", "" ).replace( 'à', 'a' ).replace( 'è', 'e' ).replace( 'é', 'e' ).
-				replace( 'ù', 'u' ).replace( "\\","" ).replace( "//", "" ).replace( ".", "" ).toLowerCase();
+				replace( 'ù', 'u' ).replace( "\\","" ).replace( "/", "" ).replace( ".", "" ).toLowerCase();
 	}
 }

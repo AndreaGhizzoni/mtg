@@ -121,12 +121,6 @@ public class AdvanceSearchContent extends JPanel
 		this.cmbSeries.addActionListener( new SeriesActionListener() );
 		add( this.cmbSeries, "cell 1 1 2 1,growx" );
 
-		// Type
-//		add(new JLabel("Type:"), "cell 3 1,alignx trailing");
-//		this.cmbType = new JComboBox<>(getTypeCB());
-//		this.cmbType.addActionListener( new TypeActionListener() );
-//		add(this.cmbType, "cell 4 1,alignx center,growy");
-
 		// Converted Mana Cost
 		JPanel pnlConvertedManaCost = new JPanel();
 		pnlConvertedManaCost.setBorder( new TitledBorder( "Conv. Mana Cost" ) );
@@ -199,20 +193,6 @@ public class AdvanceSearchContent extends JPanel
 			s.addElement( a );
 		return s;
 	}
-
-//	/* return the type as combo box model. */
-//	private DefaultComboBoxModel<String> getTypeCB(){
-//		DefaultComboBoxModel<String> s = new DefaultComboBoxModel<>();
-//		s.addElement( "-------------" );
-//		s.addElement( Creature.class.getSimpleName() );
-//		s.addElement( Artifact.class.getSimpleName() );
-//		s.addElement( Instant.class.getSimpleName() );
-//		s.addElement( Sorcery.class.getSimpleName() );
-//		s.addElement( Enchantment.class.getSimpleName() );
-//		s.addElement( Land.class.getSimpleName() );
-//		s.addElement( Planeswalker.class.getSimpleName() );
-//		return s;
-//	}
 
 	/* apply on the table the criteria */
 	@SuppressWarnings("unchecked")
@@ -295,30 +275,4 @@ public class AdvanceSearchContent extends JPanel
 			applyCriteriaChanges();
 		}
 	}
-
-//	/* event on change the type */
-//	private class TypeActionListener implements ActionListener
-//	{
-//		@Override
-//		public void actionPerformed(ActionEvent e){
-//			String sel = (String)cmbType.getSelectedItem();
-//			if( sel.equals(Creature.class.getSimpleName()) ){
-//				criteria = criteria.byType( Creature.class );
-//			}else if( sel.equals(Artifact.class.getSimpleName()) ){
-//				criteria = criteria.byType( Artifact.class );
-//			}else if( sel.equals(Instant.class.getSimpleName()) ){
-//				criteria = criteria.byType( Instant.class );
-//			}else if( sel.equals(Sorcery.class.getSimpleName()) ){
-//				criteria = criteria.byType( Sorcery.class );
-//			}else if( sel.equals(Enchantment.class.getSimpleName()) ){
-//				criteria = criteria.byType( Enchantment.class );
-//			}else if( sel.equals(Land.class.getSimpleName()) ){
-//				criteria = criteria.byType( Land.class );
-//			}else if( sel.equals(Planeswalker.class.getSimpleName()) ){
-//				criteria = criteria.byType( Planeswalker.class );
-//			}else{// "--------"
-//				criteria = criteria.byType( null );
-//			}
-//		}		
-//	}
 }

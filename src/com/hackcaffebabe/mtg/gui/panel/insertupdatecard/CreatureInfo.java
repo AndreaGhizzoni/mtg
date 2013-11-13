@@ -127,7 +127,7 @@ public class CreatureInfo extends JPanel
 			try {
 				if(power.toLowerCase().equals( "x" ) || power.toLowerCase().equals( "*" ))
 					power = "-1";
-				else if(toughness.toLowerCase().equals( "x" ) || toughness.toLowerCase().equals( "*" ))
+				if(toughness.toLowerCase().equals( "x" ) || toughness.toLowerCase().equals( "*" ))
 					toughness = "-1";
 				Strength s = new Strength( String.format( "%s/%s", power, toughness ) );
 				return s;

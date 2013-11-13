@@ -30,7 +30,9 @@ public class LauncherMTG
 			SwingUtilities.invokeLater( new Runnable(){
 				@Override
 				public void run(){
-					new MTG().setVisible( true );
+					MTG g = new MTG();
+					g.setVisible( true );
+					g.pack();
 				}
 			} );
 			
