@@ -2,28 +2,28 @@ package com.hackcaffebabe.mtg.gui.panel.advancesearch;
 
 import static com.hackcaffebabe.mtg.gui.GUIUtils.JXTABLE_MTG;
 import it.hackcaffebabe.jx.table.model.JXObjectModel;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-import javax.swing.JPanel;
-import net.miginfocom.swing.MigLayout;
-import javax.swing.border.TitledBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import net.miginfocom.swing.MigLayout;
 import com.hackcaffebabe.mtg.controller.json.Criteria;
 import com.hackcaffebabe.mtg.controller.json.StoreManager;
 import com.hackcaffebabe.mtg.gui.frame.AdvanceSearch;
 import com.hackcaffebabe.mtg.gui.panel.FocusTraversalOnArray;
-import com.hackcaffebabe.mtg.model.*;
+import com.hackcaffebabe.mtg.model.MTGCard;
 import com.hackcaffebabe.mtg.model.card.Rarity;
 import com.hackcaffebabe.mtg.model.color.BasicColors;
-import javax.swing.JLabel;
-import javax.swing.JSpinner;
-import java.awt.Component;
 
 
 /**
@@ -54,8 +54,6 @@ public class AdvanceSearchContent extends JPanel
 	private JCheckBox chbHasPrimaryeffect;
 	private JCheckBox chbHasEffect;
 	private JCheckBox chbHasAbility;
-
-	private JComboBox<String> cmbType;
 
 	/**
 	 * Create the panel.

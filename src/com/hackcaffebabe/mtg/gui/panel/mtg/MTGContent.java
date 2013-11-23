@@ -45,8 +45,6 @@ public class MTGContent extends JPanel
 
 	private MTGCardListSelectionListener tableSelectionListener = new MTGCardListSelectionListener();
 
-//	private MTGProperties pnlMTGPropreties;
-
 	private JPanel pnlSearch;
 	private JTextField txtSearch;
 	private JButton btnAdvanceSearch;

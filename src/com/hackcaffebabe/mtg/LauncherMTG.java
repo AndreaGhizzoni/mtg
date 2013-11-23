@@ -31,8 +31,8 @@ public class LauncherMTG
 				@Override
 				public void run(){
 					MTG g = new MTG();
-					g.setVisible( true );
 					g.pack();
+					g.setVisible( true );					
 				}
 			} );
 			

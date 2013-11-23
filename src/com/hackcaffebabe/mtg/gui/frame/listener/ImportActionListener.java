@@ -1,7 +1,7 @@
 package com.hackcaffebabe.mtg.gui.frame.listener;
 
 import static com.hackcaffebabe.mtg.gui.GUIUtils.displayError;
-import static com.hackcaffebabe.mtg.gui.GUIUtils.displayUnzippedFiles;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.displayFiles;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.refreshMTGTable;
 import it.hackcaffebabe.ioutil.file.PathUtil;
 import it.hackcaffebabe.logger.Logger;
@@ -52,7 +52,7 @@ public class ImportActionListener implements ActionListener
 				List<File> lst = PathUtil.unZip( f.getSelectedFile(), new File( DBCostants.JSON_PATH ) );
 				StoreManager.getInstance().refresh();
 				refreshMTGTable();
-				displayUnzippedFiles( lst );
+				displayFiles( lst );
 			} catch( IOException ex) {
 				displayError( null, "Error while reading backup file.\nLog is reported." );
 				ex.printStackTrace( Logger.getInstance().getPrintStream() );

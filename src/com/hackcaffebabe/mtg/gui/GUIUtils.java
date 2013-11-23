@@ -40,7 +40,11 @@ import javax.swing.text.DocumentFilter;
 import com.hackcaffebabe.mtg.controller.json.StoreManager;
 import com.hackcaffebabe.mtg.gui.panel.mtg.MTGProperties;
 import com.hackcaffebabe.mtg.model.MTGCard;
-import com.hackcaffebabe.mtg.model.card.*;
+import com.hackcaffebabe.mtg.model.card.Ability;
+import com.hackcaffebabe.mtg.model.card.AbilityFactory;
+import com.hackcaffebabe.mtg.model.card.Effect;
+import com.hackcaffebabe.mtg.model.card.ManaCost;
+import com.hackcaffebabe.mtg.model.card.PlanesAbility;
 import com.hackcaffebabe.mtg.model.color.BasicColors;
 
 
@@ -80,18 +84,6 @@ public class GUIUtils
 	public static final String AC_SORCERY = "Sorcery";
 	public static final String AC_ENCHANTMENT = "Enchantment";
 
-	/* Some document property used in MTGProperties */
-//	public static final String DP_NAME = "name";
-//	public static final String DP_MANA_COST = "mana_cost";
-//	public static final String DP_CARD_COLOR = "card_color";
-//	public static final String DP_RARITY = "rarity";
-//	public static final String DP_PLANESWALKER_LIFE = "planeswalker_file";
-//	public static final String DP_SERIES = "series";
-//	public static final String DP_STRENGTH = "strength";
-//	public static final String DP_TYPE = "type";
-//	public static final String DP_SUB_TYPE = "sub_type";
-//	public static final String DP_PRIMARY_EFFECT = "primary_effect";
-
 	/* Tool Tip TODO maybe add some TP around the program */
 	public static final String TP_PANEL_CREATURE_INFO = "Creature strength like \"2/2\". Use * to indicate \"*/*\" or \"X/X\".";
 
@@ -100,7 +92,7 @@ public class GUIUtils
 	/** Public access of JXTable of Main frame */
 	public static JXTable JXTABLE_MTG;
 	public static JXTableColumnAdjuster JXTABLE_MTG_COLUMN_ADJUSTER;
-	
+
 	/** Public access of MTGProperties panel */
 	public static MTGProperties PNL_MTGPROPERTIES;
 
@@ -111,6 +103,31 @@ public class GUIUtils
 	 * This method refresh the JXTABLE_MTG of Main frame
 	 */
 	public static void refreshMTGTable(){
+//		SwingWorker<Void, MTGCard> worker = new SwingWorker<Void, MTGCard>(){
+//			protected Void doInBackground() throws Exception{
+//				Logger.getInstance().write( Tag.DEBUG, "Refreshing mtg card list" );
+//				STATUS_BAR_MAIN_FRAME.setStatus( "Refreshing mtg card list..." );
+//				List<MTGCard> lst = StoreManager.getInstance().getAllCardsAsList();
+//				if(!lst.isEmpty()) {
+//					for(MTGCard c : lst )
+//						publish( c );
+//				} else {
+//					JXTABLE_MTG.setModel( new JXObjectModel<>() );
+//				}
+//				return null;
+//			}
+//			
+//			protected void process(List<MTGCard> chunks) {
+//				JXTABLE_MTG.setModel( new JXObjectModel<MTGCard>( chunks ) );
+//				
+//				//update sorter and text search
+//				JXTABLE_MTG.refreshRowSorter();
+//				JXTABLE_MTG_COLUMN_ADJUSTER.adjustColumns();
+//				STATUS_BAR_MAIN_FRAME.setStatus( "MTG Cards list refreshed correctly!" );
+//			}
+//		};
+//		worker.execute();
+
 		SwingUtilities.invokeLater( new Runnable(){
 			@Override
 			public void run(){
@@ -144,14 +161,14 @@ public class GUIUtils
 	 * This method display a list of file.
 	 * @param lst {@link List} of File.
 	 */
-	public static void displayUnzippedFiles(List<File> lst){
+	public static void displayFiles(List<File> lst){
 		if(lst.isEmpty()) {
 			JOptionPane.showMessageDialog( null, "No file to import", "Done!", JOptionPane.INFORMATION_MESSAGE );
 		} else {
 			JList<File> lstFiles = new JList<>();
 			lstFiles.setEnabled( false );
 			DefaultListModel<File> model = new DefaultListModel<>();
-			for(File f : lst )
+			for(File f: lst)
 				model.addElement( f );
 			lstFiles.setModel( model );
 
@@ -206,10 +223,6 @@ public class GUIUtils
 			public void actionPerformed(ActionEvent e){
 				cost = showManaCost( parent, false );
 				txt.setText( cost.toString() );
-			}
-
-			public ManaCost getManaCost(){
-				return cost;
 			}
 		}
 

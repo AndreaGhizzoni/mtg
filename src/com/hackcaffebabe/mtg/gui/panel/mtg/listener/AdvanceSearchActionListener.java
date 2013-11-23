@@ -13,8 +13,6 @@ import com.hackcaffebabe.mtg.gui.panel.mtg.MTGContent;
  */
 public class AdvanceSearchActionListener implements ActionListener
 {
-	private AdvanceSearch ads = null;
-
 	@Override
 	public void actionPerformed(ActionEvent e){
 		new AdvanceSearch().setVisible( true );

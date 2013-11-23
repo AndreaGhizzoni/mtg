@@ -79,12 +79,19 @@ public class MTG extends JFrame
 			}
 		} );
 		file.add( fileExit );
+		
 		file.add( new JSeparator() );
-		JMenuItem fileImportUpdate = new JMenuItem( "Import..." );
-		fileImportUpdate.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_I, Event.CTRL_MASK ) );
-		fileImportUpdate.addActionListener( new ImportActionListener() );
-		file.add( fileImportUpdate );
+		
+		JMenuItem fileImport = new JMenuItem( "Import..." );
+		fileImport.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_I, Event.CTRL_MASK ) );
+		fileImport.addActionListener( new ImportActionListener() );
+		file.add( fileImport );
 
+		JMenuItem fileImportSelected = new JMenuItem( "Selected Import..." );
+		fileImportSelected.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_U, Event.CTRL_MASK ) );
+		fileImportSelected.addActionListener( new SelectedImportActionListener() );
+		file.add(fileImportSelected);
+		
 		JMenuItem fileExport = new JMenuItem( "Export..." );
 		fileExport.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_E, Event.CTRL_MASK ) );
 		fileExport.addActionListener( new ExportActionListener() );
@@ -103,8 +110,8 @@ public class MTG extends JFrame
 
 		JMenu help = new JMenu( "Help" );
 		JMenuItem helpAbout = new JMenuItem( "About" );
-		helpAbout.addActionListener( new AboutActionListener() );
 		helpAbout.setAccelerator( KeyStroke.getKeyStroke( "F1" ) );
+		helpAbout.addActionListener( new AboutActionListener() );
 		help.add( helpAbout );
 
 		bar.add( file );

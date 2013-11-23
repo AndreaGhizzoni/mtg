@@ -19,7 +19,6 @@ import com.hackcaffebabe.mtg.model.MTGCard;
 
 /**
  * This is the main frame that contains all components to insert the MTG card data.
- * TODO add feature : manage Abilities
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
  */
