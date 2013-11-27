@@ -2,21 +2,21 @@ package com.hackcaffebabe.mtg.gui.panel.insertupdatecard;
 
 import it.hackcaffebabe.jx.typeahead.CommitAction;
 import it.hackcaffebabe.jx.typeahead.JXAutocomplete;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.border.TitledBorder;
 import net.miginfocom.swing.MigLayout;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JComboBox;
-import javax.swing.KeyStroke;
 import com.hackcaffebabe.mtg.controller.json.StoreManager;
 import com.hackcaffebabe.mtg.gui.listener.BasicColorActionListener;
 import com.hackcaffebabe.mtg.model.MTGCard;
 import com.hackcaffebabe.mtg.model.card.Rarity;
 import com.hackcaffebabe.mtg.model.color.BasicColors;
 import com.hackcaffebabe.mtg.model.color.CardColor;
-import javax.swing.JCheckBox;
 
 
 /**
@@ -235,7 +235,7 @@ public class MTGBasicInfo extends JPanel
 		String s = this.txtSeries.getText();
 		if(s == null)
 			return "";
-		else return s.replaceAll( "\t", "" );
+		else return s.replaceAll( "\t", "" ).replace( ".", "" );
 	}
 
 	/**

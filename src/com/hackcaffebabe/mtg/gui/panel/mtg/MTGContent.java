@@ -1,15 +1,16 @@
 package com.hackcaffebabe.mtg.gui.panel.mtg;
 
-import static com.hackcaffebabe.mtg.gui.GUIUtils.refreshMTGTable;
-import static com.hackcaffebabe.mtg.gui.GUIUtils.displayError;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.DIMENSION_MAIN_FRAME;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.JXTABLE_MTG;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.JXTABLE_MTG_COLUMN_ADJUSTER;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.PNL_MTGPROPERTIES;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.displayError;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.refreshMTGTable;
 import it.hackcaffebabe.jx.table.JXTable;
 import it.hackcaffebabe.jx.table.JXTableColumnAdjuster;
 import it.hackcaffebabe.jx.table.model.JXObjectModel;
-import it.hackcaffebabe.logger.*;
+import it.hackcaffebabe.logger.Logger;
+import it.hackcaffebabe.logger.Tag;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -27,6 +28,7 @@ import javax.swing.event.ListSelectionListener;
 import net.miginfocom.swing.MigLayout;
 import com.hackcaffebabe.mtg.controller.json.StoreManager;
 import com.hackcaffebabe.mtg.gui.panel.mtg.listener.AdvanceSearchActionListener;
+import com.hackcaffebabe.mtg.gui.panel.mtg.listener.DoubleClickMouseAdapter;
 import com.hackcaffebabe.mtg.gui.panel.mtg.listener.NewCardActionListener;
 import com.hackcaffebabe.mtg.model.MTGCard;
 
@@ -103,6 +105,7 @@ public class MTGContent extends JPanel
 		JXTABLE_MTG.setRowSorter( this.txtSearch );
 		JXTABLE_MTG.getSelectionModel().setSelectionMode( ListSelectionModel.SINGLE_SELECTION );
 		JXTABLE_MTG.getSelectionModel().addListSelectionListener( this.tableSelectionListener );
+		JXTABLE_MTG.addMouseListener( new DoubleClickMouseAdapter() );
 		JXTABLE_MTG_COLUMN_ADJUSTER = new JXTableColumnAdjuster( JXTABLE_MTG );
 		pnlMTGList.add( new JScrollPane( JXTABLE_MTG, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED ),
 				"cell 0 0,grow" );
@@ -130,22 +133,15 @@ public class MTGContent extends JPanel
 	/* Event handle on row selection */
 	private class MTGCardListSelectionListener implements ListSelectionListener
 	{
-		private MTGCard selCard = null;
-		// prevents multiple read on MTG card from table.
-		// otherwise this event is called twice for each row selection.
-		private int prevIndex = -2;
-
 		@Override
 		@SuppressWarnings("unchecked")
 		public void valueChanged(ListSelectionEvent e){
 			int selRow = JXTABLE_MTG.getSelectedModelRow();
-			if(selRow != -1 && selRow != prevIndex) {
-				selCard = ((JXObjectModel<MTGCard>) JXTABLE_MTG.getModel()).getObject( selRow );
-				PNL_MTGPROPERTIES.setMTGCardToView( selCard );
+			if(selRow != -1) {
+				MTGCard c = ((JXObjectModel<MTGCard>) JXTABLE_MTG.getModel()).getObject( selRow );
+				PNL_MTGPROPERTIES.setMTGCardToView( c );
+				log.write( Tag.DEBUG, c.toString() );
 				btnDeleteCard.setEnabled( true );
-				log.write( Tag.DEBUG, selCard.toString() );
-
-				prevIndex = selRow;// update selected index
 			}
 		}
 	}
@@ -155,7 +151,7 @@ public class MTGContent extends JPanel
 	{
 		@Override
 		public void actionPerformed(ActionEvent e){
-			MTGCard card = tableSelectionListener.selCard;
+			MTGCard card = PNL_MTGPROPERTIES.getDisplayedCard();
 			log.write( Tag.DEBUG, "card to delete: " + card );
 			if(card != null) {
 				String msg = String.format( "Are you sure to delete %s ?", card.getName() );

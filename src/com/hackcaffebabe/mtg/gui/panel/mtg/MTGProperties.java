@@ -17,8 +17,19 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 import net.miginfocom.swing.MigLayout;
 import com.hackcaffebabe.mtg.gui.frame.InsertUpdateCard;
-import com.hackcaffebabe.mtg.model.*;
-import com.hackcaffebabe.mtg.model.card.*;
+import com.hackcaffebabe.mtg.model.Artifact;
+import com.hackcaffebabe.mtg.model.Creature;
+import com.hackcaffebabe.mtg.model.Enchantment;
+import com.hackcaffebabe.mtg.model.Instant;
+import com.hackcaffebabe.mtg.model.Land;
+import com.hackcaffebabe.mtg.model.MTGCard;
+import com.hackcaffebabe.mtg.model.Planeswalker;
+import com.hackcaffebabe.mtg.model.Sorcery;
+import com.hackcaffebabe.mtg.model.card.Ability;
+import com.hackcaffebabe.mtg.model.card.Effect;
+import com.hackcaffebabe.mtg.model.card.ManaCost;
+import com.hackcaffebabe.mtg.model.card.PlanesAbility;
+import com.hackcaffebabe.mtg.model.card.Strength;
 
 
 /**
@@ -113,6 +124,7 @@ public class MTGProperties extends JPanel
 
 		add( new JLabel( "Primary Effect:" ), "cell 0 7 2 1" );
 		this.textPrimaryEffects.setLineWrap( true );
+		this.textPrimaryEffects.setWrapStyleWord( true );
 		this.textPrimaryEffects.setEditable( false );
 		add( new JScrollPane( this.textPrimaryEffects, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED ),
 				"cell 2 7 3 2,grow" );
@@ -194,6 +206,10 @@ public class MTGProperties extends JPanel
 		if(c == null)
 			throw new IllegalArgumentException( "Card to view is null." );
 
+		//do not display the same card that is already displayed.
+		if(this.displayedMTGCard != null && this.displayedMTGCard.hashCode() == c.hashCode())
+			return;
+
 		this.clearAll();// reset the form from the previous MTG card view
 
 		Strength creatureStrength = null;
@@ -264,5 +280,24 @@ public class MTGProperties extends JPanel
 		this.displayedMTGCard = c;// this is necessary for all the documents listener.
 		STATUS_BAR_MAIN_FRAME.setStatus( c.getName() );
 		this.btnUpdate.setEnabled( true );
+	}
+
+//===========================================================================================
+// GETTER
+//===========================================================================================
+	/**
+	 * TODO Add doc
+	 * @return
+	 */
+	public MTGCard getDisplayedCard(){
+		return this.displayedMTGCard;
+	}
+
+	/**
+	 * Return true if this panel is displaying a {@link MTGCard}.
+	 * @return {@link Boolean}
+	 */
+	public boolean isDisplayingACard(){
+		return this.displayedMTGCard == null ? false : true;
 	}
 }

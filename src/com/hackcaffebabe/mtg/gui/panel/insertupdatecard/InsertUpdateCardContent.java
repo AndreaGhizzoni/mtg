@@ -1,34 +1,61 @@
 package com.hackcaffebabe.mtg.gui.panel.insertupdatecard;
 
-import static com.hackcaffebabe.mtg.gui.GUIUtils.*;
-import net.miginfocom.swing.MigLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.ButtonGroup;
-import javax.swing.JPanel;
-import javax.swing.border.TitledBorder;
-import javax.swing.JOptionPane;
-import javax.swing.JRadioButton;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JTextArea;
-import javax.swing.JScrollPane;
-import javax.swing.SwingUtilities;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.AC_ARTIFACT;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.AC_CREATURE;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.AC_ENCHANTMENT;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.AC_INSTANT;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.AC_LAND;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.AC_PLANESWALKER;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.AC_SORCERY;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.DIMENSION_INSERT_CARD;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.PNL_MTGPROPERTIES;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.displayError;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.refreshMTGTable;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.showAbilityDialog;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.showPlanesAbilityDialog;
 import it.hackcaffebabe.jx.table.JXTable;
 import it.hackcaffebabe.jx.table.JXTableColumnAdjuster;
 import it.hackcaffebabe.jx.table.model.DisplayableObject;
 import it.hackcaffebabe.jx.table.model.JXObjectModel;
-import it.hackcaffebabe.logger.*;
+import it.hackcaffebabe.logger.Logger;
+import it.hackcaffebabe.logger.Tag;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
+import javax.swing.border.TitledBorder;
+import net.miginfocom.swing.MigLayout;
 import com.hackcaffebabe.mtg.controller.DBCostants;
 import com.hackcaffebabe.mtg.controller.json.StoreManager;
-import com.hackcaffebabe.mtg.model.color.CardColor;
 import com.hackcaffebabe.mtg.gui.frame.InsertUpdateCard;
-import com.hackcaffebabe.mtg.gui.listener.*;
-import com.hackcaffebabe.mtg.model.*;
-import com.hackcaffebabe.mtg.model.card.*;
+import com.hackcaffebabe.mtg.gui.listener.AddEffectActionListener;
+import com.hackcaffebabe.mtg.gui.listener.DelAbilityActionListener;
+import com.hackcaffebabe.mtg.gui.listener.DelEffectActionListener;
+import com.hackcaffebabe.mtg.model.Artifact;
+import com.hackcaffebabe.mtg.model.Creature;
+import com.hackcaffebabe.mtg.model.Enchantment;
+import com.hackcaffebabe.mtg.model.Instant;
+import com.hackcaffebabe.mtg.model.Land;
+import com.hackcaffebabe.mtg.model.MTGCard;
+import com.hackcaffebabe.mtg.model.Planeswalker;
+import com.hackcaffebabe.mtg.model.Sorcery;
+import com.hackcaffebabe.mtg.model.card.Ability;
+import com.hackcaffebabe.mtg.model.card.Effect;
+import com.hackcaffebabe.mtg.model.card.ManaCost;
+import com.hackcaffebabe.mtg.model.card.PlanesAbility;
+import com.hackcaffebabe.mtg.model.card.Rarity;
+import com.hackcaffebabe.mtg.model.card.Strength;
+import com.hackcaffebabe.mtg.model.color.CardColor;
 
 
 /**
@@ -182,6 +209,7 @@ public class InsertUpdateCardContent extends JPanel
 		pnlMTG.add( new JLabel( "Primary Effect:" ), "cell 0 6" );
 		this.txtPrimaryEffect = new JTextArea();
 		this.txtPrimaryEffect.setLineWrap( true );
+		this.txtPrimaryEffect.setWrapStyleWord( true );
 		pnlMTG.add( new JScrollPane( txtPrimaryEffect, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED ),
 				"cell 1 6 6 2,grow" );
 
@@ -216,7 +244,7 @@ public class InsertUpdateCardContent extends JPanel
 		pnlOptions.add( this.btnClear, "cell 0 0,growx" );
 
 		this.btnSaveOrUpdate = new JButton();// strings of button is set later than initContent
-		this.btnSaveOrUpdate.addActionListener( new SaveActionListener() );
+		this.btnSaveOrUpdate.addActionListener( new SaveOrUpdateActionListener() );
 		pnlOptions.add( this.btnSaveOrUpdate, "cell 2 0,growx" );
 
 		add( pnlOptions, "cell 0 2 2 1,grow" );
@@ -379,7 +407,7 @@ public class InsertUpdateCardContent extends JPanel
 			pnlMTGBasicInfo.requestFocus();
 			return false;
 		}
-		if(DBCostants.normalize( mtgName ).isEmpty()){// if user insert "...." or "/////" as name.
+		if(DBCostants.normalize( mtgName ).isEmpty()) {// if user insert "...." or "/////" as name.
 			displayError( this, "Name not valid" );
 			log.write( Tag.ERRORS, String.format( "Name %s not valid", mtgName ) );
 			pnlMTGBasicInfo.requestFocus();
@@ -393,7 +421,7 @@ public class InsertUpdateCardContent extends JPanel
 			pnlMTGBasicInfo.requestFocus();
 			return false;
 		}
-		if(DBCostants.normalize( mtgSeries ).isEmpty()){// if user insert "...." or "/////" as series.
+		if(DBCostants.normalize( mtgSeries ).isEmpty()) {// if user insert "...." or "/////" as series.
 			displayError( this, "Series not valid" );
 			log.write( Tag.ERRORS, String.format( "Series %s not valid", mtgSeries ) );
 			pnlMTGBasicInfo.requestFocus();
@@ -530,7 +558,7 @@ public class InsertUpdateCardContent extends JPanel
 	}
 
 	/* inner class that describe the action on btnSave */
-	private class SaveActionListener implements ActionListener
+	private class SaveOrUpdateActionListener implements ActionListener
 	{
 		@SuppressWarnings("unchecked")
 		@Override

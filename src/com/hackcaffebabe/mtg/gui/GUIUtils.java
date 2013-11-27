@@ -234,6 +234,7 @@ public class GUIUtils
 		btnSetMana.addActionListener( action );
 
 		JTextArea txtDescription = new JTextArea( 10, 20 );
+		txtDescription.setWrapStyleWord( true );
 		txtDescription.setLineWrap( true );
 
 		JPanel p = new JPanel();
@@ -259,6 +260,7 @@ public class GUIUtils
 	public static Ability showAbilityDialog(Component parent){
 		final JTextField txtAbilty = new JTextField();
 		final JTextArea txtDescription = new JTextArea( 10, 20 );
+		txtDescription.setWrapStyleWord( true );
 		txtDescription.setLineWrap( true );
 
 		final JCheckBox chbNewAbility = new JCheckBox( "New Ability" );

@@ -4,6 +4,7 @@ import static com.hackcaffebabe.mtg.gui.GUIUtils.displayError;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.displayFiles;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.refreshMTGTable;
 import it.hackcaffebabe.ioutil.file.PathUtil;
+import it.hackcaffebabe.ioutil.file.UnZipper;
 import it.hackcaffebabe.logger.Logger;
 import it.hackcaffebabe.logger.Tag;
 import java.awt.Cursor;
@@ -45,15 +46,15 @@ public class ImportActionListener implements ActionListener
 		} );
 
 		if(f.showDialog( null, "Open" ) == JFileChooser.APPROVE_OPTION) {
-			Logger.getInstance().write( Tag.INFO, "Try to Import from backup: "+f.getSelectedFile() );
+			Logger.getInstance().write( Tag.INFO, "Try to Import from backup: " + f.getSelectedFile() );
 			JMenuItem src = (JMenuItem) e.getSource();
 			src.setCursor( new Cursor( Cursor.WAIT_CURSOR ) );
 			try {
-				List<File> lst = PathUtil.unZip( f.getSelectedFile(), new File( DBCostants.JSON_PATH ) );
+				List<File> lst = new UnZipper( f.getSelectedFile(), new File( DBCostants.JSON_PATH ) ).unZipAll( false );//TODO maybe let user to decide.
 				StoreManager.getInstance().refresh();
 				refreshMTGTable();
 				displayFiles( lst );
-			} catch( IOException ex) {
+			} catch(IOException ex) {
 				displayError( null, "Error while reading backup file.\nLog is reported." );
 				ex.printStackTrace( Logger.getInstance().getPrintStream() );
 			}

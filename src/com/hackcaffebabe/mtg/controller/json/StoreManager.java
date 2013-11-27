@@ -1,8 +1,10 @@
 package com.hackcaffebabe.mtg.controller.json;
 
-import static com.hackcaffebabe.mtg.controller.DBCostants.*;
-import it.hackcaffebabe.ioutil.file.PathUtil;
-import it.hackcaffebabe.logger.*;
+import static com.hackcaffebabe.mtg.controller.DBCostants.JSON_PATH;
+import static com.hackcaffebabe.mtg.controller.DBCostants.getJSONFileName;
+import it.hackcaffebabe.ioutil.file.Zipper;
+import it.hackcaffebabe.logger.Logger;
+import it.hackcaffebabe.logger.Tag;
 import java.awt.EventQueue;
 import java.io.File;
 import java.io.FileReader;
@@ -14,9 +16,26 @@ import java.util.HashSet;
 import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.hackcaffebabe.mtg.controller.json.adapter.*;
-import com.hackcaffebabe.mtg.model.*;
-import com.hackcaffebabe.mtg.model.card.*;
+import com.hackcaffebabe.mtg.controller.json.adapter.AbilityAdapter;
+import com.hackcaffebabe.mtg.controller.json.adapter.CardColorAdapter;
+import com.hackcaffebabe.mtg.controller.json.adapter.EffectAdapter;
+import com.hackcaffebabe.mtg.controller.json.adapter.MTGCardAdapter;
+import com.hackcaffebabe.mtg.controller.json.adapter.ManaCostAdapter;
+import com.hackcaffebabe.mtg.controller.json.adapter.PlanesAbilityAdapter;
+import com.hackcaffebabe.mtg.controller.json.adapter.StrengthAdapter;
+import com.hackcaffebabe.mtg.model.Artifact;
+import com.hackcaffebabe.mtg.model.Creature;
+import com.hackcaffebabe.mtg.model.Enchantment;
+import com.hackcaffebabe.mtg.model.Instant;
+import com.hackcaffebabe.mtg.model.Land;
+import com.hackcaffebabe.mtg.model.MTGCard;
+import com.hackcaffebabe.mtg.model.Planeswalker;
+import com.hackcaffebabe.mtg.model.Sorcery;
+import com.hackcaffebabe.mtg.model.card.Ability;
+import com.hackcaffebabe.mtg.model.card.Effect;
+import com.hackcaffebabe.mtg.model.card.ManaCost;
+import com.hackcaffebabe.mtg.model.card.PlanesAbility;
+import com.hackcaffebabe.mtg.model.card.Strength;
 import com.hackcaffebabe.mtg.model.color.BasicColors;
 import com.hackcaffebabe.mtg.model.color.CardColor;
 
@@ -90,7 +109,7 @@ public class StoreManager
 			public void run(){
 				for(File f: new File( JSON_PATH ).listFiles()) {
 					MTGCard c = loadFile( f );
-					if( c!=null ){//if null continue
+					if(c != null) {//if null continue
 						mtgSet.add( c );
 						addSeriesToList( c );
 					}
@@ -321,7 +340,8 @@ public class StoreManager
 			log.write( Tag.ERRORS, "Error on delete exists backup." );
 		}
 
-		PathUtil.makeZip( destinationFile, new File( JSON_PATH ).listFiles() );
+		Zipper zip = new Zipper( destinationFile, new File( JSON_PATH ).listFiles() );
+		zip.forceZip();
 		log.write( Tag.INFO, "Backup closed and create correctly." );
 	}
 
