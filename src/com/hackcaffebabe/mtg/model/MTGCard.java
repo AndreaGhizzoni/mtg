@@ -20,7 +20,7 @@ import com.hackcaffebabe.mtg.model.color.CardColor;
 public abstract class MTGCard extends DisplayableObject implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	//These fields are used for equal and hash code.
 	private String name;
 	private CardColor color;
@@ -29,11 +29,11 @@ public abstract class MTGCard extends DisplayableObject implements Serializable
 	private String subType;
 	private boolean isLegendary = false;
 	private boolean isArtifact = false;
-	
+
 	private String primaryEffect;
 	private Set<Effect> effects = new HashSet<>();
 	private Set<Ability> abilitis = new HashSet<>();
-	
+
 	/**
 	 * Creates the common information of MTG Card.
 	 * @param name {@link String} the name of card.
@@ -41,15 +41,15 @@ public abstract class MTGCard extends DisplayableObject implements Serializable
 	 * @param rarity {@link Rarity} the rarity of card.
 	 * @throws IllegalArgumentException if some argument are null or empty string.
 	 */
-	public MTGCard( String name, CardColor color, Rarity rarity ) throws IllegalArgumentException{
+	public MTGCard(String name, CardColor color, Rarity rarity) throws IllegalArgumentException{
 		super( MTGCard.class );
-		setColumnNames( new String[]{"Name", "Card Color", "Type", "Sub Type", "Rarity"} );
-		
+		setColumnNames( new String[] { "Name", "Card Color", "Type", "Sub Type", "Rarity" } );
+
 		this.setName( name );
 		this.setCardColor( color );
-		this.setRarity( rarity );		
+		this.setRarity( rarity );
 	}
-	
+
 //===========================================================================================
 // METHOD
 //===========================================================================================
@@ -60,27 +60,26 @@ public abstract class MTGCard extends DisplayableObject implements Serializable
 	 * @param ability {@link Ability} the ability to add.
 	 * @throws IllegalArgumentException if argument is null.
 	 */
-	public void addAbility( Ability ability ) throws IllegalArgumentException{
-		if( ability == null )
+	public void addAbility(Ability ability) throws IllegalArgumentException{
+		if(ability == null)
 			throw new IllegalArgumentException( "Ability to add can not be null" );
-		
+
 		this.abilitis.add( ability );
 	}
-	
-	
+
 	/**
 	 * This method adds an Effect at MTG Card.<br>
 	 * The ability can not to be added on {@link Planeswalker}.
 	 * @param effect {@link Effect} the effect to add.
 	 * @throws IllegalArgumentException if argument is null.
 	 */
-	public void addEffect( Effect effect ) throws IllegalArgumentException{
-		if( effect == null )
+	public void addEffect(Effect effect) throws IllegalArgumentException{
+		if(effect == null)
 			throw new IllegalArgumentException( "Effect to add can not be null." );
-		
+
 		this.effects.add( effect );
-	}	
-	
+	}
+
 //===========================================================================================
 // SETTER
 //===========================================================================================
@@ -89,154 +88,166 @@ public abstract class MTGCard extends DisplayableObject implements Serializable
 	 * @param name {@link String} The name of MTG Card.
 	 * @throws IllegalArgumentException if argument given is null of empty string.
 	 */
-	public void setName( String name ) throws IllegalArgumentException{
-		if( name == null || name.isEmpty() )
+	public void setName(String name) throws IllegalArgumentException{
+		if(name == null || name.isEmpty())
 			throw new IllegalArgumentException( "Name can not be null or empty String." );
-		
+
 		this.name = name;
 	}
-	
-	
+
 	/**
 	 * Set the Color of MTG Card.
 	 * @param color {@link CardColor} the Color of MTG Card.
 	 * @throws IllegalArgumentException if color is null.
 	 */
-	public void setCardColor( CardColor color ) throws IllegalArgumentException{
-		if( color == null )
+	public void setCardColor(CardColor color) throws IllegalArgumentException{
+		if(color == null)
 			throw new IllegalArgumentException( "Card Color can not be null." );
-		
+
 		this.color = color;
 	}
-	
 
 	/**
 	 * Set the rarity of MTG Card.
 	 * @param rarity {@link Rarity} the rarity of MTG Card.
 	 * @throws IllegalArgumentException if rarity is null.
 	 */
-	public void setRarity( Rarity rarity ) throws IllegalArgumentException{
-		if( rarity == null )
+	public void setRarity(Rarity rarity) throws IllegalArgumentException{
+		if(rarity == null)
 			throw new IllegalArgumentException( "Rartity can not be null." );
-		
+
 		this.rarity = rarity;
 	}
-	
-	
+
 	/**
 	 * Set the series of MTG Card.
 	 * @param series {@link String} that represents the series of MTG Card.
 	 * @throws IllegalArgumentException if string given is null or empty.
 	 */
-	public void setSeries( String series ) throws IllegalArgumentException{
-		if( series == null || series.isEmpty() )
+	public void setSeries(String series) throws IllegalArgumentException{
+		if(series == null || series.isEmpty())
 			throw new IllegalArgumentException( "Series can not be null." );
 		this.series = series;
 	}
-	
-	
+
 	/**
 	 * Set the sub type of MTG Card.
 	 * @param subType {@link String} the sub type of MTG Card.
 	 * @throws IllegalArgumentException if string is null or empty.
 	 */
-	public void setSubType( String subType ) throws IllegalArgumentException{
-		if( subType == null )
+	public void setSubType(String subType) throws IllegalArgumentException{
+		if(subType == null)
 			throw new IllegalArgumentException( "Sub Type can not be null." );
 		this.subType = subType;
 	}
-	
-	
+
 	/**
 	 * This method set if the card is legendary.
 	 * @param isLegendary {@link Boolean} if the card is legendary.
 	 */
-	public void setLegendary( boolean isLegendary ){
+	public void setLegendary(boolean isLegendary){
 		this.isLegendary = isLegendary;
 	}
-	
-	
+
 	/**
 	 * This method set if the card is an artifact.<br>
 	 * If the MTGCard is instance of {@link Artifact}, {@link Instant}, {@link Enchantment} ,{@link Land}, 
 	 * {@link Planeswalker} and {@link Sorcery} this method is void.
 	 * @param isArtifact {@link Boolean}
 	 */
-	public void setArtifact( boolean isArtifact ){
+	public void setArtifact(boolean isArtifact){
 		this.isArtifact = isArtifact;
 	}
-	
-	
+
 	/**
 	 * This method set the primary effect of MTG Card.<br>
 	 * On {@link Planeswalker} object this method is void.
 	 * @param primaryEffect {@link String} the primary effect. Set to null or empty string to cancel the effect.
 	 */
-	public void setPrimaryEffect( String primaryEffect ){
+	public void setPrimaryEffect(String primaryEffect){
 		this.primaryEffect = primaryEffect;
 	}
-	
+
 //===========================================================================================
 // GETTER
 //===========================================================================================
 	/**
 	 * @return {@link String} the name of MTG Card.
 	 */
-	public String getName(){ return name; }
+	public String getName(){
+		return name;
+	}
 
 	/**
 	 * @return {@link CardColor} the color of MTG Card.
 	 */
-	public CardColor getCardColor(){ return color; }
+	public CardColor getCardColor(){
+		return color;
+	}
 
 	/**
 	 * @return {@link Rarity} the rarity of MTG Card.
 	 */
-	public Rarity getRarity(){ return rarity; }
-	
+	public Rarity getRarity(){
+		return rarity;
+	}
+
 	/**
 	 * @return {@link String} the series of MTG card.
 	 */
-	public String getSeries(){ return this.series; }
-	
+	public String getSeries(){
+		return this.series;
+	}
+
 	/**
 	 * @return {@link String} the sub type of MTG Card.
 	 */
-	public String getSubType(){ return this.subType; }
-	
+	public String getSubType(){
+		return this.subType;
+	}
+
 	/**
 	 * @return {@link Set} the set of ability.
 	 */
-	public Set<Ability> getAbilities(){ return this.abilitis; }
-	
+	public Set<Ability> getAbilities(){
+		return this.abilitis;
+	}
+
 	/**
 	 * @return {@link Set} the set of effects.
 	 */
-	public Set<Effect> getEffects(){ return this.effects; }
-	
+	public Set<Effect> getEffects(){
+		return this.effects;
+	}
+
 	/**
 	 * @return {@link String} the primary effect of MTG Card. This is always null on {@link Planeswalker} object.
 	 */
-	public String getPrimaryEffect(){ return this.primaryEffect; }
-	
+	public String getPrimaryEffect(){
+		return this.primaryEffect;
+	}
+
 	/**
 	 * Check if the creature is legendary.
 	 * @return {@link Boolean} if the card is legendary.
 	 */
-	public boolean isLegendary(){ return this.isLegendary; }
-	
+	public boolean isLegendary(){
+		return this.isLegendary;
+	}
+
 	/**
 	 * Check if the creature is an artifact.
 	 * @return {@link Boolean} if the card is an artifact.
 	 */
-	public boolean isArtifact(){ return this.isArtifact; }
+	public boolean isArtifact(){
+		return this.isArtifact;
+	}
 
 //===========================================================================================
 // OVERRIDE
 //===========================================================================================
 	@Override
-	public int hashCode()
-	{
+	public int hashCode(){
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((color == null) ? 0 : color.hashCode());
@@ -250,60 +261,58 @@ public abstract class MTGCard extends DisplayableObject implements Serializable
 	}
 
 	@Override
-	public boolean equals( Object obj )
-	{
-		if( this == obj )
+	public boolean equals(Object obj){
+		if(this == obj)
 			return true;
-		if( obj == null )
+		if(obj == null)
 			return false;
-		if( getClass() != obj.getClass() )
+		if(getClass() != obj.getClass())
 			return false;
 		MTGCard other = (MTGCard) obj;
 
 		//check name
-		if( name == null ){
-			if( other.name != null )
+		if(name == null) {
+			if(other.name != null)
 				return false;
-		}
-		else if( !name.toLowerCase().replaceAll( " ", "" ).equals( other.name.replaceAll( " ", "" ).toLowerCase() ) )
+		} else if(!name.toLowerCase().replaceAll( " ", "" )
+				.equals( other.name.replaceAll( " ", "" ).toLowerCase() ))
 			return false;
-		
+
 		//check series
-		if( series == null ){
-			if( other.series != null )
+		if(series == null) {
+			if(other.series != null)
 				return false;
-		}
-		else if( !series.toLowerCase().replaceAll( " ", "" ).equals( other.series.replaceAll( " ", "" ).toLowerCase() ) )
+		} else if(!series.toLowerCase().replaceAll( " ", "" )
+				.equals( other.series.replaceAll( " ", "" ).toLowerCase() ))
 			return false;
 
 		//check sub type
-		if( subType == null ){
-			if( other.subType != null )
+		if(subType == null) {
+			if(other.subType != null)
 				return false;
-		}
-		else if( !subType.toLowerCase().replaceAll( " ", "" ).equals( other.subType.replaceAll( " ", "" ).toLowerCase() ) )
+		} else if(!subType.toLowerCase().replaceAll( " ", "" )
+				.equals( other.subType.replaceAll( " ", "" ).toLowerCase() ))
 			return false;
-		
+
 		//check color
-		if( color == null ){
-			if( other.color != null )
+		if(color == null) {
+			if(other.color != null)
 				return false;
-		}
-		else if( !color.equals( other.color ) )
+		} else if(!color.equals( other.color ))
 			return false;
-		
+
 		//check is artifact
-		if( isArtifact != other.isArtifact )
+		if(isArtifact != other.isArtifact)
 			return false;
-		
+
 		//check is legendary
-		if( isLegendary != other.isLegendary )
+		if(isLegendary != other.isLegendary)
 			return false;
-		
+
 		//check rarity
-		if( rarity != other.rarity )
+		if(rarity != other.rarity)
 			return false;
-		
+
 		return true;
 	}
 }

@@ -29,7 +29,8 @@ public class StrengthAdapter implements JsonSerializer<Strength>, JsonDeserializ
 	}
 
 	@Override
-	public Strength deserialize(JsonElement arg0, Type arg1, JsonDeserializationContext arg2) throws JsonParseException{
+	public Strength deserialize(JsonElement arg0, Type arg1, JsonDeserializationContext arg2)
+			throws JsonParseException{
 		Strength resutl = null;
 		Integer p = arg0.getAsJsonObject().get( JSON_TAG_POWER ).getAsInt();
 		Integer t = arg0.getAsJsonObject().get( JSON_TAG_TOUGHNESS ).getAsInt();

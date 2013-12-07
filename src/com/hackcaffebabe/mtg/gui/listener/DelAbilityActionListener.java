@@ -19,7 +19,8 @@ public class DelAbilityActionListener implements ActionListener
 	private JXTable tableAbility;
 	private JXTableColumnAdjuster tableAbilityColumnAdjuster;
 
-	public DelAbilityActionListener(JXTable tableEffects, JXTableColumnAdjuster tableEffectsColumnAdjuster){
+	public DelAbilityActionListener(JXTable tableEffects,
+			JXTableColumnAdjuster tableEffectsColumnAdjuster){
 		this.tableAbility = tableEffects;
 		this.tableAbilityColumnAdjuster = tableEffectsColumnAdjuster;
 	}
@@ -29,7 +30,8 @@ public class DelAbilityActionListener implements ActionListener
 	public void actionPerformed(ActionEvent e){
 		int i = tableAbility.getSelectedModelRow();
 		if(i != -1) {
-			JXObjectModel<DisplayableObject> model = (JXObjectModel<DisplayableObject>) tableAbility.getModel();
+			JXObjectModel<DisplayableObject> model = (JXObjectModel<DisplayableObject>) tableAbility
+					.getModel();
 			model.removeObject( i );
 			tableAbilityColumnAdjuster.adjustColumns();
 		}

@@ -10,6 +10,7 @@ import com.hackcaffebabe.mtg.model.card.PlanesAbility;
 import com.hackcaffebabe.mtg.model.card.Rarity;
 import com.hackcaffebabe.mtg.model.color.CardColor;
 
+
 /**
  * Represents the planes walker MTG card.
  *  
@@ -22,8 +23,7 @@ public class Planeswalker extends MTGCard implements Serializable
 	private ManaCost cost;
 	private int life;
 	private Set<PlanesAbility> planesAbility = new HashSet<>();
-	
-	
+
 	/**
 	 * Instance a planes walker card.
 	 * @param name {@link String} the name of planes walker.
@@ -33,8 +33,8 @@ public class Planeswalker extends MTGCard implements Serializable
 	 * @param rarity {@link Rarity} the rarity of planes walker.
 	 * @throws IllegalArgumentException if some arguments are null or empty string.
 	 */
-	public Planeswalker( String name, ManaCost cost, int life,
-			             CardColor color, Rarity rarity )throws IllegalArgumentException{
+	public Planeswalker(String name, ManaCost cost, int life, CardColor color, Rarity rarity)
+			throws IllegalArgumentException{
 		super( name, color, rarity );
 		this.setLife( life );
 		this.setManaCost( cost );
@@ -48,13 +48,13 @@ public class Planeswalker extends MTGCard implements Serializable
 	 * @param ability {@link PlanesAbility} the planes walker ability.
 	 * @throws IllegalArgumentException if argument is null.
 	 */
-	public void addAbility( PlanesAbility ability ) throws IllegalArgumentException{
-		if( ability == null )
+	public void addAbility(PlanesAbility ability) throws IllegalArgumentException{
+		if(ability == null)
 			throw new IllegalArgumentException( "Planes ability can not be null." );
-		
+
 		this.planesAbility.add( ability );
 	}
-	
+
 //===========================================================================================
 // SETTER
 //===========================================================================================
@@ -63,37 +63,39 @@ public class Planeswalker extends MTGCard implements Serializable
 	 * @param cost {@link ManaCost} the mana cost of Artifact.
 	 * @throws IllegalArgumentException if argument given is null or is TAP action.
 	 */
-	public void setManaCost( ManaCost cost ) throws IllegalArgumentException{
-		if( cost == null )
+	public void setManaCost(ManaCost cost) throws IllegalArgumentException{
+		if(cost == null)
 			throw new IllegalArgumentException( "Mana cost of Artifact can not be null." );
-		
-		if( cost.getCost().containsKey( null ) )
+
+		if(cost.getCost().containsKey( null ))
 			throw new IllegalArgumentException( "Mana cost of Artifact can not be TAP action." );
-		
+
 		this.cost = cost;
 	}
-	
+
 	/**
 	 * Set the life of planes walker.
 	 * @param life {@link Integer} the life of planes walker.
 	 * @throws IllegalArgumentException if argument given is equal or less than zero.
 	 */
-	public void setLife( int life ) throws IllegalArgumentException{
-		if( life <= 0 )
-			throw new IllegalArgumentException( "Life of planes walker can not be equal or less than zero." );
+	public void setLife(int life) throws IllegalArgumentException{
+		if(life <= 0)
+			throw new IllegalArgumentException(
+					"Life of planes walker can not be equal or less than zero." );
 
 		this.life = life;
 	}
-	
-	public void setPlanesAbilities( Set<PlanesAbility> s ){
+
+	public void setPlanesAbilities(Set<PlanesAbility> s){
 		this.planesAbility = s;
 	}
-	
+
 	@Override
-	public void setArtifact( boolean isArtifact ){}
+	public void setArtifact(boolean isArtifact){}
+
 	@Override
-	public void setPrimaryEffect( String primaryEffect ){}
-	
+	public void setPrimaryEffect(String primaryEffect){}
+
 //===========================================================================================
 // GETTER
 //===========================================================================================
@@ -101,30 +103,39 @@ public class Planeswalker extends MTGCard implements Serializable
 	 * Returns the mana cost of Planes walker.
 	 * @return {@link ManaCost} the mana cost of Planes walker.
 	 */
-	public ManaCost getManaCost(){ return this.cost; }
+	public ManaCost getManaCost(){
+		return this.cost;
+	}
 
 	/**
 	 * Returns a {@link Set} of planes walker ability.
 	 * @return {@link Set} of {@link PlanesAbility}
 	 */
-	public Set<PlanesAbility> getPlanesAbilities(){ return this.planesAbility;}
-	
+	public Set<PlanesAbility> getPlanesAbilities(){
+		return this.planesAbility;
+	}
+
 	/**
 	 * Returns the life of planes walker.
 	 * @return {@link Integer} the life of planes walker.
 	 */
-	public int getLife(){ return this.life; }
-	
+	public int getLife(){
+		return this.life;
+	}
+
 	@Override
-	public boolean isArtifact(){ return false; }
-	
+	public boolean isArtifact(){
+		return false;
+	}
+
 //===========================================================================================
 // OVERRIDE
 //===========================================================================================
 	@Override
-	public void addAbility( Ability ability ) throws IllegalArgumentException{}
+	public void addAbility(Ability ability) throws IllegalArgumentException{}
+
 	@Override
-	public void addEffect( Effect effect ) throws IllegalArgumentException{}
+	public void addEffect(Effect effect) throws IllegalArgumentException{}
 
 	@Override
 	public int hashCode(){
@@ -138,26 +149,24 @@ public class Planeswalker extends MTGCard implements Serializable
 
 	@Override
 	public boolean equals(Object obj){
-		if( this == obj )
+		if(this == obj)
 			return true;
-		if( !super.equals( obj ) )
+		if(!super.equals( obj ))
 			return false;
-		if( getClass() != obj.getClass() )
+		if(getClass() != obj.getClass())
 			return false;
 		Planeswalker other = (Planeswalker) obj;
-		if( cost == null ){
-			if( other.cost != null )
+		if(cost == null) {
+			if(other.cost != null)
 				return false;
-		}
-		else if( !cost.equals( other.cost ) )
+		} else if(!cost.equals( other.cost ))
 			return false;
-		if( life != other.life )
+		if(life != other.life)
 			return false;
-		if( planesAbility == null ){
-			if( other.planesAbility != null )
+		if(planesAbility == null) {
+			if(other.planesAbility != null)
 				return false;
-		}
-		else if( !planesAbility.equals( other.planesAbility ) )
+		} else if(!planesAbility.equals( other.planesAbility ))
 			return false;
 		return true;
 	}
@@ -165,18 +174,22 @@ public class Planeswalker extends MTGCard implements Serializable
 	@Override
 	public Object[] getDisplayRow(){
 		String color = String.format( "%s %s", getCardColor(), getCardColor().getType() );
-		String type ="Planeswalker";
-		if(isLegendary()) type+=" Leg.";
-		return new Object[]{getName(), color, type, getSubType()==null?"":getSubType(), getRarity().toString()};
+		String type = "Planeswalker";
+		if(isLegendary())
+			type += " Leg.";
+		return new Object[] { getName(), color, type, getSubType() == null ? "" : getSubType(),
+				getRarity().toString() };
 	}
-	
+
 	@Override
 	public String toString(){
 		String pattern = "%s [%s %s %s %s - %s %s %s]";
-		String type ="Planeswalker";
-		if(isLegendary()) type+=" Legendary";
-		if(getSubType()!=null && !getSubType().isEmpty()) type+=" - "+getSubType();
-		return String.format( pattern, getName(), getCardColor(), getCardColor().getType(), getManaCost(), 
-							  type, getLife(), getRarity(), getSeries() );
+		String type = "Planeswalker";
+		if(isLegendary())
+			type += " Legendary";
+		if(getSubType() != null && !getSubType().isEmpty())
+			type += " - " + getSubType();
+		return String.format( pattern, getName(), getCardColor(), getCardColor().getType(),
+				getManaCost(), type, getLife(), getRarity(), getSeries() );
 	}
 }

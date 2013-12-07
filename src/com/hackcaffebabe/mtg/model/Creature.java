@@ -18,7 +18,7 @@ public class Creature extends MTGCard implements Serializable
 	private static final long serialVersionUID = 1L;
 	private ManaCost cost;
 	private Strength strength;
-	
+
 	/**
 	 * Instance a MTG Creature card with all his fields.
 	 * @param name {@link String} the name of Creature.
@@ -30,14 +30,14 @@ public class Creature extends MTGCard implements Serializable
 	 * @throws IllegalArgumentException if some arguments are null, 
 	 *                                  empty string or mana cost is TAP action.
 	 */
-	public Creature( String name, CardColor color, Strength strength, 
-					 ManaCost cost, String subType, Rarity rarity ) throws IllegalArgumentException{
+	public Creature(String name, CardColor color, Strength strength, ManaCost cost, String subType,
+			Rarity rarity) throws IllegalArgumentException{
 		super( name, color, rarity );
 		this.setManaCost( cost );
 		this.setSubType( subType );
 		this.setStrength( strength );
 	}
-	
+
 //===========================================================================================
 // SETTER
 //===========================================================================================
@@ -46,29 +46,28 @@ public class Creature extends MTGCard implements Serializable
 	 * @param cost {@link ManaCost} the cost of mana.
 	 * @throws IllegalArgumentException if argument given is null or is a TAP action.
 	 */
-	public void setManaCost( ManaCost cost ) throws IllegalArgumentException{
-		if( cost == null )
+	public void setManaCost(ManaCost cost) throws IllegalArgumentException{
+		if(cost == null)
 			throw new IllegalArgumentException( "Mana Cost of Creature can not be null." );
-		
-		if( cost.getCost().containsKey( null ) )
+
+		if(cost.getCost().containsKey( null ))
 			throw new IllegalArgumentException( "Mana cost of Enchantment can not be TAP action." );
-		
+
 		this.cost = cost;
 	}
-	
-	
+
 	/**
 	 * Set the creature's strength.
 	 * @param strength {@link Strength} the creature's strength.
 	 * @throws IllegalArgumentException if argument given is null.
 	 */
-	public void setStrength( Strength strength ) throws IllegalArgumentException{
-		if( strength == null )
+	public void setStrength(Strength strength) throws IllegalArgumentException{
+		if(strength == null)
 			throw new IllegalArgumentException( "Strength of creature can not be null." );
-		
+
 		this.strength = strength;
 	}
-	
+
 //===========================================================================================
 // GETTER
 //===========================================================================================
@@ -76,14 +75,18 @@ public class Creature extends MTGCard implements Serializable
 	 * Returns the mana cost of creature.
 	 * @return {@link ManaCost} the mana cost of creature.
 	 */
-	public ManaCost getManaCost(){ return this.cost; }
-	
+	public ManaCost getManaCost(){
+		return this.cost;
+	}
+
 	/**
 	 * Returns the creature's strength.
 	 * @return {@link Strength} the creature's strength.
 	 */
-	public Strength getStrength(){ return this.strength; }
-	
+	public Strength getStrength(){
+		return this.strength;
+	}
+
 //===========================================================================================
 // OVERRIDE
 //===========================================================================================
@@ -98,44 +101,48 @@ public class Creature extends MTGCard implements Serializable
 
 	@Override
 	public boolean equals(Object obj){
-		if( this == obj )
+		if(this == obj)
 			return true;
-		if( !super.equals( obj ) )
+		if(!super.equals( obj ))
 			return false;
-		if( getClass() != obj.getClass() )
+		if(getClass() != obj.getClass())
 			return false;
 		Creature other = (Creature) obj;
-		if( cost == null ){
-			if( other.cost != null )
+		if(cost == null) {
+			if(other.cost != null)
 				return false;
-		}
-		else if( !cost.equals( other.cost ) )
+		} else if(!cost.equals( other.cost ))
 			return false;
-		if( strength == null ){
-			if( other.strength != null )
+		if(strength == null) {
+			if(other.strength != null)
 				return false;
-		}
-		else if( !strength.equals( other.strength ) )
+		} else if(!strength.equals( other.strength ))
 			return false;
 		return true;
 	}
 
 	public Object[] getDisplayRow(){
 		String color = String.format( "%s %s", getCardColor(), getCardColor().getType() );
-		String type="Creature";
-		if(isArtifact()) type+=" Art.";
-		if(isLegendary()) type+=" Leg.";
-		return new Object[]{getName(), color, type, getSubType()==null?"":getSubType(), getRarity().toString()};
+		String type = "Creature";
+		if(isArtifact())
+			type += " Art.";
+		if(isLegendary())
+			type += " Leg.";
+		return new Object[] { getName(), color, type, getSubType() == null ? "" : getSubType(),
+				getRarity().toString() };
 	}
-	
+
 	@Override
 	public String toString(){
 		String pattern = "%s [%s %s %s %s - %s %s %s]";
-		String type="Creature";
-		if(isArtifact()) type+=" Artifact";
-		if(isLegendary()) type+=" Legendary";
-		if(getSubType()!=null && !getSubType().isEmpty()) type+=" - "+getSubType();
-		return String.format( pattern, getName(), getCardColor(), getCardColor().getType(), getManaCost(), 
-							  type, getStrength(), getRarity(), getSeries() );
+		String type = "Creature";
+		if(isArtifact())
+			type += " Artifact";
+		if(isLegendary())
+			type += " Legendary";
+		if(getSubType() != null && !getSubType().isEmpty())
+			type += " - " + getSubType();
+		return String.format( pattern, getName(), getCardColor(), getCardColor().getType(),
+				getManaCost(), type, getStrength(), getRarity(), getSeries() );
 	}
 }

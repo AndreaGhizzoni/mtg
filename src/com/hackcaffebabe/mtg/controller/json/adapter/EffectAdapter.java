@@ -33,14 +33,16 @@ public class EffectAdapter implements JsonSerializer<Effect>, JsonDeserializer<E
 	}
 
 	@Override
-	public Effect deserialize(JsonElement arg0, Type arg1, JsonDeserializationContext arg2) throws JsonParseException{
+	public Effect deserialize(JsonElement arg0, Type arg1, JsonDeserializationContext arg2)
+			throws JsonParseException{
 		Effect result = null;
 
 		JsonObject effectAsJsonObject = arg0.getAsJsonObject();
 		JsonObject manacost = effectAsJsonObject.get( JSON_TAG_MANA_COST ).getAsJsonObject();
 		HashMap<BasicColors, Integer> cost = new HashMap<>();
 		for(Map.Entry<String, JsonElement> i: manacost.entrySet()) {
-			cost.put( i.getKey().equals( "null" ) ? null : BasicColors.valueOf( i.getKey() ), i.getValue().getAsInt() );
+			cost.put( i.getKey().equals( "null" ) ? null : BasicColors.valueOf( i.getKey() ), i
+					.getValue().getAsInt() );
 		}
 		String text = effectAsJsonObject.get( JSON_TAG_TEXT ).getAsString();
 

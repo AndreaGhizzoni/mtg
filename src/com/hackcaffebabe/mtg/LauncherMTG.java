@@ -32,23 +32,23 @@ public class LauncherMTG
 				public void run(){
 					MTG g = new MTG();
 					g.pack();
-					g.setVisible( true );					
+					g.setVisible( true );
 				}
 			} );
-			
-		}
-		catch(Exception e) {
+
+		} catch(Exception e) {
 			String s = String.format( "%s\nLog is reported.", e.getMessage() );
 			Logger.getInstance().write( Tag.ERRORS, e.getMessage() );
 			displayError( null, s );
-			e.printStackTrace(Logger.getInstance().getPrintStream());
+			e.printStackTrace( Logger.getInstance().getPrintStream() );
 		}
 	}
 
 	private static void initLogger() throws Exception{
 		Logger.getInstance();
 		if(DBCostants.DB_LOG_ON_FILE) {
-			Logger.getInstance().setPrintStream( new PrintStream( new File( DBCostants.LOG_FILE_PATH ) ) );
+			Logger.getInstance().setPrintStream(
+					new PrintStream( new File( DBCostants.LOG_FILE_PATH ) ) );
 			Logger.getInstance().disableTag( Tag.DEBUG );
 		}
 		Logger.getInstance().write( Tag.INFO, "Logger initialized correctly." );
@@ -56,25 +56,27 @@ public class LauncherMTG
 
 	private static void initHomeFolder(){
 		File mtgHome = new File( DBCostants.mtgHome );
-		if(!mtgHome.exists()){
+		if(!mtgHome.exists()) {
 			mtgHome.mkdirs();
-		}		
+		}
 	}
-	
+
 	private static void initSubFolderStructure(){
 		File mtgDataFile = new File( DBCostants.mtgDataHome );
-		if(!mtgDataFile.exists()){
+		if(!mtgDataFile.exists()) {
 			mtgDataFile.mkdirs();
-			Logger.getInstance().write( Tag.INFO, "creating path: "+mtgDataFile.getAbsolutePath() );
+			Logger.getInstance()
+					.write( Tag.INFO, "creating path: " + mtgDataFile.getAbsolutePath() );
 		}
-		
+
 		File mtgJsonPath = new File( DBCostants.JSON_PATH );
-		if(!mtgJsonPath.exists()){
+		if(!mtgJsonPath.exists()) {
 			mtgJsonPath.mkdirs();
-			Logger.getInstance().write( Tag.INFO, "creating path: "+mtgJsonPath.getAbsolutePath() );
+			Logger.getInstance()
+					.write( Tag.INFO, "creating path: " + mtgJsonPath.getAbsolutePath() );
 		}
 	}
-	
+
 	private static void initDB() throws Exception{
 		StoreManager d = StoreManager.getInstance();
 		if(d == null)

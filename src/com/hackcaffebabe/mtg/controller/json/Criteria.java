@@ -157,8 +157,10 @@ public class Criteria
 	 * @return {@link Boolean} if there is no criteria inserted.
 	 */
 	public boolean isEmpty(){
-		return (name == null) && (convertedManaCost == null) && (subType == null) && (series == null) && (colors.isEmpty()) && (rarity == null)
-				&& (isLegendary == null) && (hasPrimaryEffect == null) && (hasEffect == null) && (hasAbility == null);
+		return (name == null) && (convertedManaCost == null) && (subType == null)
+				&& (series == null) && (colors.isEmpty()) && (rarity == null)
+				&& (isLegendary == null) && (hasPrimaryEffect == null) && (hasEffect == null)
+				&& (hasAbility == null);
 	}
 
 //===========================================================================================

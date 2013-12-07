@@ -163,7 +163,8 @@ public class GUIUtils
 	 */
 	public static void displayFiles(List<File> lst){
 		if(lst.isEmpty()) {
-			JOptionPane.showMessageDialog( null, "No file to import", "Done!", JOptionPane.INFORMATION_MESSAGE );
+			JOptionPane.showMessageDialog( null, "No file to import", "Done!",
+					JOptionPane.INFORMATION_MESSAGE );
 		} else {
 			JList<File> lstFiles = new JList<>();
 			lstFiles.setEnabled( false );
@@ -173,7 +174,8 @@ public class GUIUtils
 			lstFiles.setModel( model );
 
 			JComponent[] input = { new JScrollPane( lstFiles ) };
-			JOptionPane.showMessageDialog( null, input, "Imported Files:", JOptionPane.INFORMATION_MESSAGE );
+			JOptionPane.showMessageDialog( null, input, "Imported Files:",
+					JOptionPane.INFORMATION_MESSAGE );
 		}
 	}
 
@@ -196,7 +198,8 @@ public class GUIUtils
 
 		JComponent[] input = { new JLabel( "You have chosen two colors. Your card is:" ), a };
 
-		JOptionPane.showMessageDialog( null, input, "Hybrid or Multicolor?", JOptionPane.INFORMATION_MESSAGE );
+		JOptionPane.showMessageDialog( null, input, "Hybrid or Multicolor?",
+				JOptionPane.INFORMATION_MESSAGE );
 
 		if(isHybrid.isSelected())
 			return 1;
@@ -243,7 +246,8 @@ public class GUIUtils
 
 		JComponent[] input = { p, new JScrollPane( txtDescription ) };
 
-		int i = JOptionPane.showConfirmDialog( parent, input, "Insert Effects", JOptionPane.OK_CANCEL_OPTION );
+		int i = JOptionPane.showConfirmDialog( parent, input, "Insert Effects",
+				JOptionPane.OK_CANCEL_OPTION );
 		if(i == JOptionPane.CANCEL_OPTION || i == JOptionPane.CLOSED_OPTION)
 			return null;
 		try {
@@ -266,7 +270,8 @@ public class GUIUtils
 		final JCheckBox chbNewAbility = new JCheckBox( "New Ability" );
 
 		final JComboBox<String> cmbAbility = new JComboBox<String>();
-		final Set<Map.Entry<String, String>> set = AbilityFactory.getInstance().getAbilities().entrySet();
+		final Set<Map.Entry<String, String>> set = AbilityFactory.getInstance().getAbilities()
+				.entrySet();
 		if(set.size() == 0) {
 			cmbAbility.setEnabled( false );
 			chbNewAbility.setEnabled( false );
@@ -297,18 +302,21 @@ public class GUIUtils
 		};
 		chbNewAbility.addActionListener( l );
 
-		JComponent[] input = { cmbAbility, chbNewAbility, new JLabel( "Ability name:" ), txtAbilty, new JLabel( "Description:" ),
-				new JScrollPane( txtDescription ) };
+		JComponent[] input = { cmbAbility, chbNewAbility, new JLabel( "Ability name:" ), txtAbilty,
+				new JLabel( "Description:" ), new JScrollPane( txtDescription ) };
 
-		int i = JOptionPane.showConfirmDialog( parent, input, "Insert Ability", JOptionPane.OK_CANCEL_OPTION );
+		int i = JOptionPane.showConfirmDialog( parent, input, "Insert Ability",
+				JOptionPane.OK_CANCEL_OPTION );
 		if(i == JOptionPane.CANCEL_OPTION || i == JOptionPane.CLOSED_OPTION)
 			return null;
 		try {
 			if(set.isEmpty())// no ability saved
-				return new Ability( txtAbilty.getText(), txtDescription.getText().replaceAll( "\n", " " ) );
+				return new Ability( txtAbilty.getText(), txtDescription.getText().replaceAll( "\n",
+						" " ) );
 			else {
 				if(chbNewAbility.isSelected()) {
-					return new Ability( txtAbilty.getText(), txtDescription.getText().replaceAll( "\n", " " ) );
+					return new Ability( txtAbilty.getText(), txtDescription.getText().replaceAll(
+							"\n", " " ) );
 				} else {
 					String name = (String) cmbAbility.getSelectedItem();
 					String description = AbilityFactory.getInstance().getAbilities().get( name );
@@ -339,10 +347,12 @@ public class GUIUtils
 
 		JComponent[] input = { a, new JLabel( "Description:" ), new JScrollPane( txtDescription ) };
 
-		JOptionPane.showMessageDialog( parent, input, "Insert Planes Ability", JOptionPane.INFORMATION_MESSAGE );
+		JOptionPane.showMessageDialog( parent, input, "Insert Planes Ability",
+				JOptionPane.INFORMATION_MESSAGE );
 
 		try {
-			return new PlanesAbility( (Integer) spinLifeCost.getValue(), txtDescription.getText().replaceAll( "\n", " " ) );
+			return new PlanesAbility( (Integer) spinLifeCost.getValue(), txtDescription.getText()
+					.replaceAll( "\n", " " ) );
 		} catch(Exception e) {
 			return null;
 		}
@@ -356,13 +366,15 @@ public class GUIUtils
 	public static ManaCost showManaCost(Component parent, boolean isForCardCost){
 		DocumentFilter docFilter = new DocumentFilter(){
 			@Override
-			public void insertString(FilterBypass fb, int off, String str, AttributeSet attr) throws BadLocationException{
+			public void insertString(FilterBypass fb, int off, String str, AttributeSet attr)
+					throws BadLocationException{
 				// remove non-digits
 				fb.insertString( off, str.replaceAll( "\\D++", "" ), attr );
 			}
 
 			@Override
-			public void replace(FilterBypass fb, int off, int len, String str, AttributeSet attr) throws BadLocationException{
+			public void replace(FilterBypass fb, int off, int len, String str, AttributeSet attr)
+					throws BadLocationException{
 				// remove non-digits
 				fb.replace( off, len, str.replaceAll( "\\D++", "" ), attr );
 			}
@@ -391,16 +403,19 @@ public class GUIUtils
 
 		JComponent[] input;
 		if(isForCardCost) {
-			input = new JComponent[] { new JLabel( "Color Less:" ), txtManaColorLess, new JLabel( "Red:" ), txtManaRed, new JLabel( "Black:" ),
-					txtManaBlack, new JLabel( "Green:" ), txtManaGreen, new JLabel( "White:" ), txtManaWhite, new JLabel( "Blue:" ), txtManaBlue,
-					chbX };
+			input = new JComponent[] { new JLabel( "Color Less:" ), txtManaColorLess,
+					new JLabel( "Red:" ), txtManaRed, new JLabel( "Black:" ), txtManaBlack,
+					new JLabel( "Green:" ), txtManaGreen, new JLabel( "White:" ), txtManaWhite,
+					new JLabel( "Blue:" ), txtManaBlue, chbX };
 		} else {
-			input = new JComponent[] { new JLabel( "Color Less:" ), txtManaColorLess, new JLabel( "Red:" ), txtManaRed, new JLabel( "Black:" ),
-					txtManaBlack, new JLabel( "Green:" ), txtManaGreen, new JLabel( "White:" ), txtManaWhite, new JLabel( "Blue:" ), txtManaBlue,
-					chbTap, chbX };
+			input = new JComponent[] { new JLabel( "Color Less:" ), txtManaColorLess,
+					new JLabel( "Red:" ), txtManaRed, new JLabel( "Black:" ), txtManaBlack,
+					new JLabel( "Green:" ), txtManaGreen, new JLabel( "White:" ), txtManaWhite,
+					new JLabel( "Blue:" ), txtManaBlue, chbTap, chbX };
 		}
 
-		JOptionPane.showMessageDialog( parent, input, "Insert Mana Cost", JOptionPane.INFORMATION_MESSAGE );
+		JOptionPane.showMessageDialog( parent, input, "Insert Mana Cost",
+				JOptionPane.INFORMATION_MESSAGE );
 
 		Integer manaColorLess = Integer.parseInt( txtManaColorLess.getText() );
 		Integer manaRed = Integer.parseInt( txtManaRed.getText() );
@@ -409,12 +424,18 @@ public class GUIUtils
 		Integer manaWhite = Integer.parseInt( txtManaWhite.getText() );
 		Integer manaBlue = Integer.parseInt( txtManaBlue.getText() );
 
-		Map.Entry<BasicColors, Integer> cl = new AbstractMap.SimpleEntry<BasicColors, Integer>( BasicColors.COLOR_LESS, manaColorLess );
-		Map.Entry<BasicColors, Integer> red = new AbstractMap.SimpleEntry<BasicColors, Integer>( BasicColors.RED, manaRed );
-		Map.Entry<BasicColors, Integer> bck = new AbstractMap.SimpleEntry<BasicColors, Integer>( BasicColors.BLACK, manaBlack );
-		Map.Entry<BasicColors, Integer> green = new AbstractMap.SimpleEntry<BasicColors, Integer>( BasicColors.GREEN, manaGreen );
-		Map.Entry<BasicColors, Integer> white = new AbstractMap.SimpleEntry<BasicColors, Integer>( BasicColors.WHITE, manaWhite );
-		Map.Entry<BasicColors, Integer> blue = new AbstractMap.SimpleEntry<BasicColors, Integer>( BasicColors.BLUE, manaBlue );
+		Map.Entry<BasicColors, Integer> cl = new AbstractMap.SimpleEntry<BasicColors, Integer>(
+				BasicColors.COLOR_LESS, manaColorLess );
+		Map.Entry<BasicColors, Integer> red = new AbstractMap.SimpleEntry<BasicColors, Integer>(
+				BasicColors.RED, manaRed );
+		Map.Entry<BasicColors, Integer> bck = new AbstractMap.SimpleEntry<BasicColors, Integer>(
+				BasicColors.BLACK, manaBlack );
+		Map.Entry<BasicColors, Integer> green = new AbstractMap.SimpleEntry<BasicColors, Integer>(
+				BasicColors.GREEN, manaGreen );
+		Map.Entry<BasicColors, Integer> white = new AbstractMap.SimpleEntry<BasicColors, Integer>(
+				BasicColors.WHITE, manaWhite );
+		Map.Entry<BasicColors, Integer> blue = new AbstractMap.SimpleEntry<BasicColors, Integer>(
+				BasicColors.BLUE, manaBlue );
 
 		Map.Entry<BasicColors, Integer> x = null;
 		if(chbX.isSelected())

@@ -29,7 +29,8 @@ public class PlanesAbilityAdapter implements JsonSerializer<PlanesAbility>, Json
 	}
 
 	@Override
-	public PlanesAbility deserialize(JsonElement arg0, Type arg1, JsonDeserializationContext arg2) throws JsonParseException{
+	public PlanesAbility deserialize(JsonElement arg0, Type arg1, JsonDeserializationContext arg2)
+			throws JsonParseException{
 		PlanesAbility result = null;
 		Integer cost = arg0.getAsJsonObject().get( JSON_TAG_COST ).getAsInt();
 		String description = arg0.getAsJsonObject().get( JSON_TAG_DESCRIPTION ).getAsString();

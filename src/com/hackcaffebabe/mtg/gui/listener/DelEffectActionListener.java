@@ -19,7 +19,8 @@ public class DelEffectActionListener implements ActionListener
 	private JXTable tableEffects;
 	private JXTableColumnAdjuster tableEffectsColumnAdjuster;
 
-	public DelEffectActionListener(JXTable tableEffects, JXTableColumnAdjuster tableEffectsColumnAdjuster){
+	public DelEffectActionListener(JXTable tableEffects,
+			JXTableColumnAdjuster tableEffectsColumnAdjuster){
 		this.tableEffects = tableEffects;
 		this.tableEffectsColumnAdjuster = tableEffectsColumnAdjuster;
 	}

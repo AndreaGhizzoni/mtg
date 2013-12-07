@@ -20,10 +20,11 @@ public class DBCostants
 	/** user home directory/.mtg/data/card */
 	public static final String JSON_PATH = mtgDataHome + PathUtil.FILE_SEPARATOR + "card";
 	/** user home directory/.mtg/data/ability.json */
-	public static final String ABILITY_FILE_PATH = mtgDataHome + PathUtil.FILE_SEPARATOR + "ability.json";
+	public static final String ABILITY_FILE_PATH = mtgDataHome + PathUtil.FILE_SEPARATOR
+			+ "ability.json";
 
 	/** Flag for logging on file */
-	public static final boolean DB_LOG_ON_FILE = true;
+	public static final boolean DB_LOG_ON_FILE = false;
 
 	private static final String BCK_FILE_NAME = "MTG_Cards_Backup";
 	private static final String BCK_FILE_EXTENSION = "zip";
@@ -66,8 +67,8 @@ public class DBCostants
 			return "";
 
 		StringBuilder r = new StringBuilder();
-		String name = normalize( c.getName() );
-		String series = normalize( c.getSeries() );
+		String name = normalizeForStorage( c.getName() );
+		String series = normalizeForStorage( c.getSeries() );
 		String name_series = String.format( "%s_%s.json", name, series );
 		r.append( JSON_PATH );
 		r.append( PathUtil.FILE_SEPARATOR );
@@ -77,13 +78,38 @@ public class DBCostants
 	}
 
 	/**
-	 * This method check if in a string there are characters as: à|è|é|ù|\|/|.<br>
-	 * In the first 4 case it will replace with the corresponding letter, otherwise remove it.
-	 * @param s {@link String} 
-	 * @return {@link String} normalized string, or empty string if contains only characters \|/|.
+	 * TODO add doc
+	 * @param s
+	 * @return
 	 */
 	public static String normalize(String s){
-		return s.replace( " ", "" ).replace( 'à', 'a' ).replace( 'è', 'e' ).replace( 'é', 'e' ).replace( 'ù', 'u' ).replace( "\\", "" )
-				.replace( "/", "" ).replace( ".", "" ).toLowerCase();
+		if(s != null && !s.isEmpty()) {
+			return s.replace( "à", "a" ).replace( "è", "e" ).replace( "é", "e" ).replace( "ù", "u" )
+					.replace( "\t", "" ).replace( "|", "" ).replace( "-", "" ).replace( "\n", "" )
+					.replace( "ì", "" );
+		} else {
+			return s;
+		}
+	}
+
+	/**
+	 * TODO add doc
+	 * @param s
+	 * @return
+	 */
+	public static String normalizeForStorage(String s){
+		if(s != null && !s.isEmpty()) {
+			String norm = normalize( s );
+			if(!norm.isEmpty()) {
+				String a = norm.replace( "\\", "" ).replace( "/", "" );
+				if(a.endsWith( "." ))
+					return a.substring( 0, a.length() - 1 );
+				return a;
+			} else {
+				return "";
+			}
+		} else {
+			return s;
+		}
 	}
 }

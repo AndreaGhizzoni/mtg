@@ -87,9 +87,11 @@ public class StoreManager
 		if(!store.exists())
 			store.mkdirs();
 		if(!store.canWrite())
-			throw new IOException( String.format( "Storage can't write on %s", store.getAbsolutePath() ) );
+			throw new IOException( String.format( "Storage can't write on %s",
+					store.getAbsolutePath() ) );
 		if(!store.canRead())
-			throw new IOException( String.format( "Storage can't read on %s", store.getAbsolutePath() ) );
+			throw new IOException( String.format( "Storage can't read on %s",
+					store.getAbsolutePath() ) );
 
 		GsonBuilder b = new GsonBuilder().setPrettyPrinting().enableComplexMapKeySerialization();
 		b.registerTypeAdapter( PlanesAbility.class, new PlanesAbilityAdapter() );// register the JSON adapter for PlanesAbility class
@@ -200,7 +202,8 @@ public class StoreManager
 	 * @throws IllegalArgumentException if argument passed are null.
 	 * @throws IOException if write new json file fail.
 	 */
-	public boolean applyDifference(MTGCard old, MTGCard nevv) throws IllegalArgumentException, IOException{
+	public boolean applyDifference(MTGCard old, MTGCard nevv) throws IllegalArgumentException,
+			IOException{
 		if(old == null || nevv == null)
 			throw new IllegalArgumentException( "Update MTG card can not be null" );
 
@@ -257,7 +260,8 @@ public class StoreManager
 		HashSet<MTGCard> set = new HashSet<>();
 		for(MTGCard m: this.mtgSet) {
 			if(c.getName() != null) {
-				if(c.getName().replaceAll( " ", "" ).toLowerCase().equals( m.getName().replaceAll( " ", "" ).toLowerCase() ))
+				if(c.getName().replaceAll( " ", "" ).toLowerCase()
+						.equals( m.getName().replaceAll( " ", "" ).toLowerCase() ))
 					set.add( m );
 			}
 
@@ -282,12 +286,14 @@ public class StoreManager
 			}
 
 			if(c.getSubType() != null) {
-				if(c.getSubType().replaceAll( " ", "" ).toLowerCase().equals( m.getSubType().replaceAll( " ", "" ).toLowerCase() ))
+				if(c.getSubType().replaceAll( " ", "" ).toLowerCase()
+						.equals( m.getSubType().replaceAll( " ", "" ).toLowerCase() ))
 					set.add( m );
 			}
 
 			if(c.getSeries() != null) {
-				if(c.getSeries().replaceAll( " ", "" ).toLowerCase().equals( m.getSeries().replaceAll( " ", "" ).toLowerCase() ))
+				if(c.getSeries().replaceAll( " ", "" ).toLowerCase()
+						.equals( m.getSeries().replaceAll( " ", "" ).toLowerCase() ))
 					set.add( m );
 			}
 
@@ -335,7 +341,10 @@ public class StoreManager
 		if(destinationFile == null)
 			return;
 
-		log.write( Tag.INFO, String.format( "%s %s", "Try to backup of all stored files on", destinationFile.getAbsolutePath() ) );
+		log.write(
+				Tag.INFO,
+				String.format( "%s %s", "Try to backup of all stored files on",
+						destinationFile.getAbsolutePath() ) );
 		if(destinationFile.exists() && !destinationFile.delete()) {
 			log.write( Tag.ERRORS, "Error on delete exists backup." );
 		}

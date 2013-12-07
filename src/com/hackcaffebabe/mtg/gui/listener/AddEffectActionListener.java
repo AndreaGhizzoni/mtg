@@ -29,7 +29,8 @@ public class AddEffectActionListener implements ActionListener
 	 * @param table {@link JXTable} to get the model
 	 * @param columnAdjuster {@link JXTableColumnAdjuster} to adjust the columns with new data.
 	 */
-	public AddEffectActionListener(Component parent, JXTable table, JXTableColumnAdjuster columnAdjuster){
+	public AddEffectActionListener(Component parent, JXTable table,
+			JXTableColumnAdjuster columnAdjuster){
 		this.parent = parent;
 		this.table = table;
 		this.tableColumnAdjuster = columnAdjuster;

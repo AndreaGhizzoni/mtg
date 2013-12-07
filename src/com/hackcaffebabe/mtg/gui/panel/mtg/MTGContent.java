@@ -107,8 +107,8 @@ public class MTGContent extends JPanel
 		JXTABLE_MTG.getSelectionModel().addListSelectionListener( this.tableSelectionListener );
 		JXTABLE_MTG.addMouseListener( new DoubleClickMouseAdapter() );
 		JXTABLE_MTG_COLUMN_ADJUSTER = new JXTableColumnAdjuster( JXTABLE_MTG );
-		pnlMTGList.add( new JScrollPane( JXTABLE_MTG, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED ),
-				"cell 0 0,grow" );
+		pnlMTGList.add( new JScrollPane( JXTABLE_MTG, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED ), "cell 0 0,grow" );
 
 		// MTG card properties
 		PNL_MTGPROPERTIES = new MTGProperties();
@@ -155,13 +155,15 @@ public class MTGContent extends JPanel
 			log.write( Tag.DEBUG, "card to delete: " + card );
 			if(card != null) {
 				String msg = String.format( "Are you sure to delete %s ?", card.getName() );
-				if(JOptionPane.showConfirmDialog( MTGContent.this, msg, "Be careful!", JOptionPane.YES_NO_OPTION ) == 0) {
+				if(JOptionPane.showConfirmDialog( MTGContent.this, msg, "Be careful!",
+						JOptionPane.YES_NO_OPTION ) == 0) {
 					try {
 						StoreManager.getInstance().delete( card );
 						PNL_MTGPROPERTIES.clearAll();
 						btnDeleteCard.setEnabled( false );
 						refreshMTGTable();
-						JOptionPane.showMessageDialog( MTGContent.this, card.getName() + " delete correctly!", "Operation complete!",
+						JOptionPane.showMessageDialog( MTGContent.this, card.getName()
+								+ " delete correctly!", "Operation complete!",
 								JOptionPane.INFORMATION_MESSAGE );
 					} catch(Exception ex) {
 						log.write( Tag.ERRORS, ex.getMessage() );

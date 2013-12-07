@@ -5,6 +5,7 @@ import com.hackcaffebabe.mtg.model.card.ManaCost;
 import com.hackcaffebabe.mtg.model.card.Rarity;
 import com.hackcaffebabe.mtg.model.color.CardColor;
 
+
 /**
  * Represents the Instant sorcery card in MTG game.
  *  
@@ -12,7 +13,7 @@ import com.hackcaffebabe.mtg.model.color.CardColor;
  * @version 1.3
  */
 public class Instant extends MTGCard implements Serializable
-{	
+{
 	private static final long serialVersionUID = 1L;
 	private ManaCost cost;
 
@@ -25,8 +26,8 @@ public class Instant extends MTGCard implements Serializable
 	 * @throws IllegalArgumentException if some argument are null, 
 	 *                                  empty string or mana cost is TAP action.
 	 */
-	public Instant( String name, ManaCost cost, CardColor color, 
-			        Rarity rarity ) throws IllegalArgumentException{
+	public Instant(String name, ManaCost cost, CardColor color, Rarity rarity)
+			throws IllegalArgumentException{
 		super( name, color, rarity );
 		this.setManaCost( cost );
 	}
@@ -39,19 +40,19 @@ public class Instant extends MTGCard implements Serializable
 	 * @param cost {@link ManaCost} the cost of mana.
 	 * @throws IllegalArgumentException if argument given is null or is TAP action.
 	 */
-	public void setManaCost( ManaCost cost ) throws IllegalArgumentException{
-		if( cost == null )
+	public void setManaCost(ManaCost cost) throws IllegalArgumentException{
+		if(cost == null)
 			throw new IllegalArgumentException( "Mana Cost of Instant can not be null." );
-		
-		if( cost.getCost().containsKey( null ) )
+
+		if(cost.getCost().containsKey( null ))
 			throw new IllegalArgumentException( "Mana cost of Enchantment can not be TAP action." );
-		
+
 		this.cost = cost;
 	}
 
 	@Override
-	public void setArtifact( boolean isArtifact ){}
-	
+	public void setArtifact(boolean isArtifact){}
+
 //===========================================================================================
 // GETTER
 //===========================================================================================
@@ -59,11 +60,15 @@ public class Instant extends MTGCard implements Serializable
 	 * Returns the mana cost of Instant.
 	 * @return {@link ManaCost} the mana cost of Instant.
 	 */
-	public ManaCost getManaCost(){ return this.cost; }
-	
+	public ManaCost getManaCost(){
+		return this.cost;
+	}
+
 	@Override
-	public boolean isArtifact(){ return false; }
-	
+	public boolean isArtifact(){
+		return false;
+	}
+
 //===========================================================================================
 // OVERRIDE
 //===========================================================================================
@@ -77,18 +82,17 @@ public class Instant extends MTGCard implements Serializable
 
 	@Override
 	public boolean equals(Object obj){
-		if( this == obj )
+		if(this == obj)
 			return true;
-		if( !super.equals( obj ) )
+		if(!super.equals( obj ))
 			return false;
-		if( getClass() != obj.getClass() )
+		if(getClass() != obj.getClass())
 			return false;
 		Instant other = (Instant) obj;
-		if( cost == null ){
-			if( other.cost != null )
+		if(cost == null) {
+			if(other.cost != null)
 				return false;
-		}
-		else if( !cost.equals( other.cost ) )
+		} else if(!cost.equals( other.cost ))
 			return false;
 		return true;
 	}
@@ -96,18 +100,22 @@ public class Instant extends MTGCard implements Serializable
 	@Override
 	public Object[] getDisplayRow(){
 		String color = String.format( "%s %s", getCardColor(), getCardColor().getType() );
-		String type ="Instant";
-		if(isLegendary()) type+=" Leg.";
-		return new Object[]{getName(), color, type, getSubType()==null?"":getSubType(), getRarity().toString()};
+		String type = "Instant";
+		if(isLegendary())
+			type += " Leg.";
+		return new Object[] { getName(), color, type, getSubType() == null ? "" : getSubType(),
+				getRarity().toString() };
 	}
-	
+
 	@Override
 	public String toString(){
 		String pattern = "%s [%s %s %s %s - %s %s]";
-		String type ="Instant";
-		if(isLegendary()) type+=" Legendary";
-		if(getSubType()!=null && !getSubType().isEmpty()) type+=" - "+getSubType();
-		return String.format( pattern, getName(), getCardColor(), getCardColor().getType(), getManaCost(), 
-							  type, getRarity(), getSeries() );
+		String type = "Instant";
+		if(isLegendary())
+			type += " Legendary";
+		if(getSubType() != null && !getSubType().isEmpty())
+			type += " - " + getSubType();
+		return String.format( pattern, getName(), getCardColor(), getCardColor().getType(),
+				getManaCost(), type, getRarity(), getSeries() );
 	}
 }
