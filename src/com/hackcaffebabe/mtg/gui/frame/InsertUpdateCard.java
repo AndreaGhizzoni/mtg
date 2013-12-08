@@ -34,10 +34,8 @@ public class InsertUpdateCard extends JFrame
 	public InsertUpdateCard(MTGCard cardToView){
 		super( cardToView == null ? TITLE_INSERT_CARD : TITLE_UPDATE_CARD );
 		setMinimumSize( DIMENSION_INSERT_CARD );
-		setLocation( (Toolkit.getDefaultToolkit().getScreenSize().width / 2)
-				- (DIMENSION_INSERT_CARD.width / 2),
-				(Toolkit.getDefaultToolkit().getScreenSize().height / 2)
-						- (DIMENSION_INSERT_CARD.height / 2) );
+		setLocation( (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - (DIMENSION_INSERT_CARD.width / 2),
+				(Toolkit.getDefaultToolkit().getScreenSize().height / 2) - (DIMENSION_INSERT_CARD.height / 2) );
 		this.initContent( cardToView );
 		this.initMenuBar();
 	}

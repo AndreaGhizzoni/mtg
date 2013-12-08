@@ -21,8 +21,8 @@ public class CellRendererAsTextArea extends JTextArea implements TableCellRender
 	}
 
 	@Override
-	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-			boolean hasFocus, int row, int column){
+	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+			int row, int column){
 		setText( (String) value );
 		setSize( table.getColumnModel().getColumn( column ).getWidth(), getPreferredSize().height );
 		if(table.getRowHeight( row ) != getPreferredSize().height)

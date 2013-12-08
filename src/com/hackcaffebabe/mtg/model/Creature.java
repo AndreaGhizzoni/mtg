@@ -30,8 +30,8 @@ public class Creature extends MTGCard implements Serializable
 	 * @throws IllegalArgumentException if some arguments are null, 
 	 *                                  empty string or mana cost is TAP action.
 	 */
-	public Creature(String name, CardColor color, Strength strength, ManaCost cost, String subType,
-			Rarity rarity) throws IllegalArgumentException{
+	public Creature(String name, CardColor color, Strength strength, ManaCost cost, String subType, Rarity rarity)
+			throws IllegalArgumentException{
 		super( name, color, rarity );
 		this.setManaCost( cost );
 		this.setSubType( subType );
@@ -128,8 +128,7 @@ public class Creature extends MTGCard implements Serializable
 			type += " Art.";
 		if(isLegendary())
 			type += " Leg.";
-		return new Object[] { getName(), color, type, getSubType() == null ? "" : getSubType(),
-				getRarity().toString() };
+		return new Object[] { getName(), color, type, getSubType() == null ? "" : getSubType(), getRarity().toString() };
 	}
 
 	@Override
@@ -142,7 +141,7 @@ public class Creature extends MTGCard implements Serializable
 			type += " Legendary";
 		if(getSubType() != null && !getSubType().isEmpty())
 			type += " - " + getSubType();
-		return String.format( pattern, getName(), getCardColor(), getCardColor().getType(),
-				getManaCost(), type, getStrength(), getRarity(), getSeries() );
+		return String.format( pattern, getName(), getCardColor(), getCardColor().getType(), getManaCost(), type,
+				getStrength(), getRarity(), getSeries() );
 	}
 }

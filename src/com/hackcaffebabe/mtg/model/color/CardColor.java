@@ -134,8 +134,7 @@ public class CardColor implements Serializable
 		if(colors == null) {
 			if(other.colors != null)
 				return false;
-		}
-		else if(!colors.equals( other.colors ))
+		} else if(!colors.equals( other.colors ))
 			return false;
 		else if(type != other.type)
 			return false;

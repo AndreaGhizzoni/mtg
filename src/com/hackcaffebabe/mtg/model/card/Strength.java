@@ -43,8 +43,7 @@ public class Strength implements Serializable
 		try {
 			p = new Integer( token.nextToken() );
 			t = new Integer( token.nextToken() );
-		}
-		catch(Exception e) {
+		} catch(Exception e) {
 			throw new IllegalArgumentException( "Strength string is not in format \"p/t\"" );
 		}
 		this.setPower( p );

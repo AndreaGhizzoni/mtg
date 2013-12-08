@@ -20,8 +20,7 @@ public class DBCostants
 	/** user home directory/.mtg/data/card */
 	public static final String JSON_PATH = mtgDataHome + PathUtil.FILE_SEPARATOR + "card";
 	/** user home directory/.mtg/data/ability.json */
-	public static final String ABILITY_FILE_PATH = mtgDataHome + PathUtil.FILE_SEPARATOR
-			+ "ability.json";
+	public static final String ABILITY_FILE_PATH = mtgDataHome + PathUtil.FILE_SEPARATOR + "ability.json";
 
 	/** Flag for logging on file */
 	public static final boolean DB_LOG_ON_FILE = false;
@@ -67,8 +66,8 @@ public class DBCostants
 			return "";
 
 		StringBuilder r = new StringBuilder();
-		String name = normalizeForStorage( c.getName() );
-		String series = normalizeForStorage( c.getSeries() );
+		String name = c.getName().toLowerCase();
+		String series = c.getSeries().toLowerCase();
 		String name_series = String.format( "%s_%s.json", name, series );
 		r.append( JSON_PATH );
 		r.append( PathUtil.FILE_SEPARATOR );
@@ -82,11 +81,28 @@ public class DBCostants
 	 * @param s
 	 * @return
 	 */
+	public static String removeAccentCharacters(String s){
+		if(s != null && !s.isEmpty()) {
+			return s.replace( "à", "a" ).replace( "è", "e" ).replace( "é", "e" ).replace( "ù", "u" ).replace( "ì", "" )
+					.replaceAll( "ò", "o" );
+		} else {
+			return s;
+		}
+	}
+
+	/**
+	 * TODO add doc
+	 * @param s
+	 * @return
+	 */
 	public static String normalize(String s){
 		if(s != null && !s.isEmpty()) {
-			return s.replace( "à", "a" ).replace( "è", "e" ).replace( "é", "e" ).replace( "ù", "u" )
-					.replace( "\t", "" ).replace( "|", "" ).replace( "-", "" ).replace( "\n", "" )
-					.replace( "ì", "" );
+			String norm = removeAccentCharacters( s );
+			if(!norm.isEmpty()) {
+				return norm.replace( "\t", "" ).replace( "|", "" ).replace( "-", "" ).replace( "\n", "" );
+			} else {
+				return "";
+			}
 		} else {
 			return s;
 		}
@@ -107,6 +123,39 @@ public class DBCostants
 				return a;
 			} else {
 				return "";
+			}
+		} else {
+			return s;
+		}
+	}
+
+	/**
+	 * TODO add doc
+	 * @param s
+	 * @return
+	 */
+	public static String removeSpaceStartEnd(String s){
+		if(s != null && !s.isEmpty()) {
+			int i;
+			for(i = 0; i < s.length() - 1; i++) {
+				if(!Character.isWhitespace( s.charAt( i ) ))
+					break;
+			}
+			if(i != 0)
+				s = s.substring( i, s.length() - 1 );
+
+			if(s.isEmpty())
+				return s;
+
+			int cont = 0;
+			for(int j = s.length() - 1; j >= 0; j--) {
+				if(Character.isWhitespace( s.charAt( j ) ))
+					cont++;
+			}
+			if(cont == 0) {
+				return s;
+			} else {
+				return s.substring( 0, s.length() - cont );
 			}
 		} else {
 			return s;

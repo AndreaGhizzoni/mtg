@@ -135,8 +135,7 @@ public class MTGProperties extends JPanel
 		pnlOtherEffects.setLayout( new MigLayout( "", "[grow]", "[grow][grow]" ) );
 		this.tableEffects = new JXTable( new JXObjectModel<Effect>() );
 		this.tableColumnAdjusterEffects = new JXTableColumnAdjuster( this.tableEffects );
-		pnlOtherEffects.add( new JScrollPane( this.tableEffects,
-				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+		pnlOtherEffects.add( new JScrollPane( this.tableEffects, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED ), "cell 0 0 1 2,grow" );
 		add( pnlOtherEffects, "cell 0 9 5 1,grow" );
 
@@ -175,16 +174,15 @@ public class MTGProperties extends JPanel
 	}
 
 	/* this method populate the table ability and effects */
-	private <T extends DisplayableObject> void populateTables(Class<T> abilityClaxx,
-			Set<T> setOfAbilityClaxx, Set<Effect> setOfEffects){
+	private <T extends DisplayableObject> void populateTables(Class<T> abilityClaxx, Set<T> setOfAbilityClaxx,
+			Set<Effect> setOfEffects){
 		if(!setOfAbilityClaxx.isEmpty()) {
 			JXObjectModel<T> model = new JXObjectModel<>();
 			for(T a: setOfAbilityClaxx)
 				model.addObject( a );
 			this.tableAbility.setModel( model );
 			this.tableColumnAdjusterAbility.adjustColumns();
-			this.tableAbility.getColumnModel().getColumn( 1 )
-					.setCellRenderer( new CellRendererAsTextArea() );
+			this.tableAbility.getColumnModel().getColumn( 1 ).setCellRenderer( new CellRendererAsTextArea() );
 		}
 
 		if(!setOfEffects.isEmpty()) {
@@ -193,8 +191,7 @@ public class MTGProperties extends JPanel
 				model.addObject( e );
 			this.tableEffects.setModel( model );
 			this.tableColumnAdjusterEffects.adjustColumns();
-			this.tableEffects.getColumnModel().getColumn( 1 )
-					.setCellRenderer( new CellRendererAsTextArea() );
+			this.tableEffects.getColumnModel().getColumn( 1 ).setCellRenderer( new CellRendererAsTextArea() );
 		}
 	}
 
@@ -264,8 +261,7 @@ public class MTGProperties extends JPanel
 		this.txtSubType.setText( c.getSubType() );
 		this.txtSeries.setText( c.getSeries() );
 		this.txtRarity.setText( c.getRarity().toString() );
-		this.txtCardColor.setText( String.format( "%s %s", c.getCardColor().toString(), c
-				.getCardColor().getType() ) );
+		this.txtCardColor.setText( String.format( "%s %s", c.getCardColor().toString(), c.getCardColor().getType() ) );
 		this.textPrimaryEffects.setText( c.getPrimaryEffect() );
 		this.txtType.setText( type );
 		if(manaCost == null)
@@ -279,8 +275,7 @@ public class MTGProperties extends JPanel
 		else this.txtPlaneswalkerLife.setText( planeswalkerLife.toString() );
 
 		if(type.equals( Planeswalker.class.getSimpleName() ))
-			populateTables( PlanesAbility.class, ((Planeswalker) c).getPlanesAbilities(),
-					c.getEffects() );
+			populateTables( PlanesAbility.class, ((Planeswalker) c).getPlanesAbilities(), c.getEffects() );
 		else populateTables( Ability.class, c.getAbilities(), c.getEffects() );
 
 		this.displayedMTGCard = c;// this is necessary for all the documents listener.

@@ -26,8 +26,7 @@ public class Artifact extends MTGCard implements Serializable
 	 * @throws IllegalArgumentException f some arguments are null, 
 	 *                                  empty string or mana cost is TAP action.
 	 */
-	public Artifact(String name, ManaCost cost, CardColor color, Rarity rarity)
-			throws IllegalArgumentException{
+	public Artifact(String name, ManaCost cost, CardColor color, Rarity rarity) throws IllegalArgumentException{
 		super( name, color, rarity );
 		this.setManaCost( cost );
 	}
@@ -102,8 +101,7 @@ public class Artifact extends MTGCard implements Serializable
 		String type = "Artifact";
 		if(isLegendary())
 			type += " Leg.";
-		return new Object[] { getName(), color, type, getSubType() == null ? "" : getSubType(),
-				getRarity().toString() };
+		return new Object[] { getName(), color, type, getSubType() == null ? "" : getSubType(), getRarity().toString() };
 	}
 
 	@Override
@@ -114,7 +112,7 @@ public class Artifact extends MTGCard implements Serializable
 			type += " Legendary";
 		if(getSubType() != null && !getSubType().isEmpty())
 			type += " - " + getSubType();
-		return String.format( pattern, getName(), getCardColor(), getCardColor().getType(),
-				getManaCost(), type, getRarity(), getSeries() );
+		return String.format( pattern, getName(), getCardColor(), getCardColor().getType(), getManaCost(), type,
+				getRarity(), getSeries() );
 	}
 }

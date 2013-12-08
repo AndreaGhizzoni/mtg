@@ -3,6 +3,7 @@ package com.hackcaffebabe.mtg.model.color;
 import java.util.Arrays;
 import java.util.List;
 
+
 /**
  * Represents the MTG card color.
  *  
@@ -26,7 +27,8 @@ public enum BasicColors
 	 * @return {@link List} all possible colors of MTG Card as String.
 	 */
 	public static List<String> getColorsStrings(){
-		return Arrays.asList( BLACK.toString(), RED.toString(), GREEN.toString(), BLUE.toString(), COLOR_LESS.toString() );
+		return Arrays.asList( BLACK.toString(), RED.toString(), GREEN.toString(), BLUE.toString(),
+				COLOR_LESS.toString() );
 	}
 
 	/**

@@ -64,8 +64,7 @@ public class MTGBasicInfo extends JPanel
 
 		add( new JLabel( "Rarity:" ), "cell 6 0,alignx trailing" );
 		this.cmbRarity = new JComboBox<Rarity>();
-		this.cmbRarity.setModel( new DefaultComboBoxModel<>( Rarity.getAllRarity().toArray(
-				new Rarity[] {} ) ) );
+		this.cmbRarity.setModel( new DefaultComboBoxModel<>( Rarity.getAllRarity().toArray( new Rarity[] {} ) ) );
 		add( cmbRarity, "cell 7 0 2 1,growx" );
 
 		add( new JLabel( "Color:" ), "cell 0 1" );
@@ -93,12 +92,10 @@ public class MTGBasicInfo extends JPanel
 
 		add( new JLabel( "Series:" ), "cell 6 1,alignx trailing" );
 		this.txtSeries = new JTextField();
-		this.txtSeriesAutocomplete = new JXAutocomplete( this.txtSeries, StoreManager.getInstance()
-				.getInsertedSeries() );
+		this.txtSeriesAutocomplete = new JXAutocomplete( this.txtSeries, StoreManager.getInstance().getInsertedSeries() );
 		this.txtSeries.getInputMap().put( KeyStroke.getKeyStroke( "TAB" ), "commit" );
 		this.txtSeries.getInputMap().put( KeyStroke.getKeyStroke( "ENTER" ), "commit" );
-		this.txtSeries.getActionMap()
-				.put( "commit", new CommitAction( this.txtSeriesAutocomplete ) );
+		this.txtSeries.getActionMap().put( "commit", new CommitAction( this.txtSeriesAutocomplete ) );
 		add( this.txtSeries, "cell 7 1 2 1,growx" );
 
 		add( new JLabel( "Flags:" ), "cell 0 2" );

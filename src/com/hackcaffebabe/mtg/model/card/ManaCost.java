@@ -39,7 +39,8 @@ public class ManaCost implements Comparable<ManaCost>, Serializable
 				throw new IllegalArgumentException( "Amount of mana can not be null or less of zero" );
 
 			if(e.getKey() == null && e.getValue() != -1)
-				throw new IllegalArgumentException( "(null,%s) is not acceptable, use (null,-1) to indicate TAP action." );
+				throw new IllegalArgumentException(
+						"(null,%s) is not acceptable, use (null,-1) to indicate TAP action." );
 
 			if(e.getValue() == 0)
 				continue;
@@ -69,7 +70,8 @@ public class ManaCost implements Comparable<ManaCost>, Serializable
 				throw new IllegalArgumentException( "Amount of mana can not be null or less of zero" );
 
 			if(e.getKey() == null && e.getValue() != -1)
-				throw new IllegalArgumentException( "(null,%s) is not acceptable, use (null,-1) to indicate TAP action." );
+				throw new IllegalArgumentException(
+						"(null,%s) is not acceptable, use (null,-1) to indicate TAP action." );
 
 			if(e.getValue() == 0)
 				continue;
@@ -117,8 +119,7 @@ public class ManaCost implements Comparable<ManaCost>, Serializable
 		if(this.cost.containsKey( BasicColors.COLOR_LESS )) {
 			if(this.cost.get( BasicColors.COLOR_LESS ) > -1) {
 				builder.append( this.cost.get( BasicColors.COLOR_LESS ) + "." );
-			}
-			else {
+			} else {
 				builder.append( "X." );
 			}
 		}
@@ -126,8 +127,7 @@ public class ManaCost implements Comparable<ManaCost>, Serializable
 		for(Map.Entry<BasicColors, Integer> e: this.cost.entrySet()) {
 			if(e.getKey() == null) {
 				builder.append( "TAP." );
-			}
-			else {
+			} else {
 				if(e.getKey() != BasicColors.COLOR_LESS) {
 					String bc = BasicColors.getAbbraviation( e.getKey() );
 					for(int i = 1; i <= e.getValue(); i++)
@@ -175,8 +175,7 @@ public class ManaCost implements Comparable<ManaCost>, Serializable
 		if(cost == null) {
 			if(other.cost != null)
 				return false;
-		}
-		else if(this.getConvertedManaCost() != other.getConvertedManaCost())
+		} else if(this.getConvertedManaCost() != other.getConvertedManaCost())
 			return false;
 		return true;
 	}

@@ -62,9 +62,9 @@ public class AdvanceSearchContent extends JPanel
 		super();
 		setLayout( new MigLayout( "", "[52.00][100.00][83.00][27.00][190.00]", "[][][][]" ) );
 		this.initContent();
-		setFocusTraversalPolicy( new FocusTraversalOnArray( new Component[] { chbBlack, chbGreen,
-				chbRed, chbBlue, chbWhite, cmbRarity, cmbSeries, chbIsLegendary,
-				chbHasPrimaryeffect, chbHasEffect, chbHasAbility, spinManaCost } ) );
+		setFocusTraversalPolicy( new FocusTraversalOnArray( new Component[] { chbBlack, chbGreen, chbRed, chbBlue,
+				chbWhite, cmbRarity, cmbSeries, chbIsLegendary, chbHasPrimaryeffect, chbHasEffect, chbHasAbility,
+				spinManaCost } ) );
 	}
 
 //===========================================================================================
@@ -148,8 +148,7 @@ public class AdvanceSearchContent extends JPanel
 		this.chbHasPrimaryeffect.addActionListener( new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e){
-				criteria = criteria.byHasPrimaryEffect( chbHasPrimaryeffect.isSelected() ? true
-						: null );
+				criteria = criteria.byHasPrimaryEffect( chbHasPrimaryeffect.isSelected() ? true : null );
 				applyCriteriaChanges();
 			}
 		} );

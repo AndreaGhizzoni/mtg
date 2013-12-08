@@ -55,11 +55,13 @@ public class SelectedImportActionListener implements ActionListener
 				UnZipper unzip = new UnZipper( f.getSelectedFile(), new File( DBCostants.JSON_PATH ) );
 				Logger.getInstance().write( Tag.DEBUG, "unzipper created correctly" );
 
-				DefaultListModel<JXCheckListEntry<String>> model = JXCheckList.convertToModel( unzip.listZipContent(), true );
+				DefaultListModel<JXCheckListEntry<String>> model = JXCheckList.convertToModel( unzip.listZipContent(),
+						true );
 				JXCheckList<String> lstCheckList = new JXCheckList<>();
 				lstCheckList.setModel( model );
 
-				JComponent[] input = { new JLabel( "Select wich card you want to import:" ), new JScrollPane( lstCheckList ) };
+				JComponent[] input = { new JLabel( "Select wich card you want to import:" ),
+						new JScrollPane( lstCheckList ) };
 				int r = JOptionPane.showConfirmDialog( null, input, "Selected Import", JOptionPane.OK_CANCEL_OPTION );
 				if(r == JOptionPane.OK_OPTION) {
 					Logger.getInstance().write( Tag.DEBUG, "Selected Objects: " + lstCheckList.getCheckedObjects() );

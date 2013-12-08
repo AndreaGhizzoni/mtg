@@ -25,9 +25,8 @@ public class AdvanceSearch extends JFrame
 		setResizable( false );
 		setMinimumSize( DIMENSION_ADVANCE_SEARCH );
 		setAlwaysOnTop( true );
-		setLocation( (Toolkit.getDefaultToolkit().getScreenSize().width / 2)
-				- (DIMENSION_ADVANCE_SEARCH.width / 2), (Toolkit.getDefaultToolkit()
-				.getScreenSize().height / 2) - (DIMENSION_ADVANCE_SEARCH.height / 2) );
+		setLocation( (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - (DIMENSION_ADVANCE_SEARCH.width / 2),
+				(Toolkit.getDefaultToolkit().getScreenSize().height / 2) - (DIMENSION_ADVANCE_SEARCH.height / 2) );
 		this.initContent();
 	}
 

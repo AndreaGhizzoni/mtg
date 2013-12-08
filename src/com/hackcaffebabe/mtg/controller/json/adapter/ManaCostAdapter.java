@@ -26,20 +26,17 @@ public class ManaCostAdapter implements JsonSerializer<ManaCost>, JsonDeserializ
 	public JsonElement serialize(ManaCost arg0, Type arg1, JsonSerializationContext arg2){
 		JsonObject result = new JsonObject();
 		for(Map.Entry<BasicColors, Integer> i: arg0.getCost().entrySet())
-			result.add( i.getKey() == null ? "null" : i.getKey().toString(),
-					new JsonPrimitive( i.getValue() ) );
+			result.add( i.getKey() == null ? "null" : i.getKey().toString(), new JsonPrimitive( i.getValue() ) );
 		return result;
 	}
 
 	@Override
-	public ManaCost deserialize(JsonElement arg0, Type arg1, JsonDeserializationContext arg2)
-			throws JsonParseException{
+	public ManaCost deserialize(JsonElement arg0, Type arg1, JsonDeserializationContext arg2) throws JsonParseException{
 		ManaCost result = null;
 		JsonObject manaCostAsJsonObject = arg0.getAsJsonObject();
 		HashMap<BasicColors, Integer> mana = new HashMap<>();
 		for(Map.Entry<String, JsonElement> i: manaCostAsJsonObject.entrySet()) {
-			mana.put( i.getKey().equals( "null" ) ? null : BasicColors.valueOf( i.getKey() ), i
-					.getValue().getAsInt() );
+			mana.put( i.getKey().equals( "null" ) ? null : BasicColors.valueOf( i.getKey() ), i.getValue().getAsInt() );
 		}
 		result = new ManaCost( mana );
 		return result;

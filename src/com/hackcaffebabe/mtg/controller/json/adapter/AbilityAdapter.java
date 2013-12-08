@@ -31,8 +31,7 @@ public class AbilityAdapter implements JsonSerializer<Ability>, JsonDeserializer
 	}
 
 	@Override
-	public Ability deserialize(JsonElement arg0, Type arg1, JsonDeserializationContext arg2)
-			throws JsonParseException{
+	public Ability deserialize(JsonElement arg0, Type arg1, JsonDeserializationContext arg2) throws JsonParseException{
 		Ability result = null;
 		JsonObject abilityAsJsonObject = arg0.getAsJsonObject();
 		String name = abilityAsJsonObject.get( JSON_TAG_NAME ).getAsString();

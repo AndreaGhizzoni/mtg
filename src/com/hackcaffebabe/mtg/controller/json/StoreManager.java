@@ -87,11 +87,9 @@ public class StoreManager
 		if(!store.exists())
 			store.mkdirs();
 		if(!store.canWrite())
-			throw new IOException( String.format( "Storage can't write on %s",
-					store.getAbsolutePath() ) );
+			throw new IOException( String.format( "Storage can't write on %s", store.getAbsolutePath() ) );
 		if(!store.canRead())
-			throw new IOException( String.format( "Storage can't read on %s",
-					store.getAbsolutePath() ) );
+			throw new IOException( String.format( "Storage can't read on %s", store.getAbsolutePath() ) );
 
 		GsonBuilder b = new GsonBuilder().setPrettyPrinting().enableComplexMapKeySerialization();
 		b.registerTypeAdapter( PlanesAbility.class, new PlanesAbilityAdapter() );// register the JSON adapter for PlanesAbility class
@@ -202,8 +200,7 @@ public class StoreManager
 	 * @throws IllegalArgumentException if argument passed are null.
 	 * @throws IOException if write new json file fail.
 	 */
-	public boolean applyDifference(MTGCard old, MTGCard nevv) throws IllegalArgumentException,
-			IOException{
+	public boolean applyDifference(MTGCard old, MTGCard nevv) throws IllegalArgumentException, IOException{
 		if(old == null || nevv == null)
 			throw new IllegalArgumentException( "Update MTG card can not be null" );
 
@@ -341,10 +338,8 @@ public class StoreManager
 		if(destinationFile == null)
 			return;
 
-		log.write(
-				Tag.INFO,
-				String.format( "%s %s", "Try to backup of all stored files on",
-						destinationFile.getAbsolutePath() ) );
+		log.write( Tag.INFO,
+				String.format( "%s %s", "Try to backup of all stored files on", destinationFile.getAbsolutePath() ) );
 		if(destinationFile.exists() && !destinationFile.delete()) {
 			log.write( Tag.ERRORS, "Error on delete exists backup." );
 		}

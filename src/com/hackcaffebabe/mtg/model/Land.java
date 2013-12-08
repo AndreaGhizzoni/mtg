@@ -98,8 +98,7 @@ public class Land extends MTGCard implements Serializable
 		String type = "Land";
 		if(isLegendary())
 			type += " Leg.";
-		return new Object[] { getName(), color, type, getSubType() == null ? "" : getSubType(),
-				getRarity().toString() };
+		return new Object[] { getName(), color, type, getSubType() == null ? "" : getSubType(), getRarity().toString() };
 	}
 
 	@Override
@@ -110,7 +109,7 @@ public class Land extends MTGCard implements Serializable
 			type += " Legendary";
 		if(getSubType() != null && !getSubType().isEmpty())
 			type += " - " + getSubType();
-		return String.format( pattern, getName(), getCardColor(), getCardColor().getType(), type,
-				getRarity(), getSeries() );
+		return String.format( pattern, getName(), getCardColor(), getCardColor().getType(), type, getRarity(),
+				getSeries() );
 	}
 }

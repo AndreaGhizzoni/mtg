@@ -80,8 +80,7 @@ public class Planeswalker extends MTGCard implements Serializable
 	 */
 	public void setLife(int life) throws IllegalArgumentException{
 		if(life <= 0)
-			throw new IllegalArgumentException(
-					"Life of planes walker can not be equal or less than zero." );
+			throw new IllegalArgumentException( "Life of planes walker can not be equal or less than zero." );
 
 		this.life = life;
 	}
@@ -177,8 +176,7 @@ public class Planeswalker extends MTGCard implements Serializable
 		String type = "Planeswalker";
 		if(isLegendary())
 			type += " Leg.";
-		return new Object[] { getName(), color, type, getSubType() == null ? "" : getSubType(),
-				getRarity().toString() };
+		return new Object[] { getName(), color, type, getSubType() == null ? "" : getSubType(), getRarity().toString() };
 	}
 
 	@Override
@@ -189,7 +187,7 @@ public class Planeswalker extends MTGCard implements Serializable
 			type += " Legendary";
 		if(getSubType() != null && !getSubType().isEmpty())
 			type += " - " + getSubType();
-		return String.format( pattern, getName(), getCardColor(), getCardColor().getType(),
-				getManaCost(), type, getLife(), getRarity(), getSeries() );
+		return String.format( pattern, getName(), getCardColor(), getCardColor().getType(), getManaCost(), type,
+				getLife(), getRarity(), getSeries() );
 	}
 }

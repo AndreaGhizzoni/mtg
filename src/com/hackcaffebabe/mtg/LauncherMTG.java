@@ -47,8 +47,7 @@ public class LauncherMTG
 	private static void initLogger() throws Exception{
 		Logger.getInstance();
 		if(DBCostants.DB_LOG_ON_FILE) {
-			Logger.getInstance().setPrintStream(
-					new PrintStream( new File( DBCostants.LOG_FILE_PATH ) ) );
+			Logger.getInstance().setPrintStream( new PrintStream( new File( DBCostants.LOG_FILE_PATH ) ) );
 			Logger.getInstance().disableTag( Tag.DEBUG );
 		}
 		Logger.getInstance().write( Tag.INFO, "Logger initialized correctly." );
@@ -65,15 +64,13 @@ public class LauncherMTG
 		File mtgDataFile = new File( DBCostants.mtgDataHome );
 		if(!mtgDataFile.exists()) {
 			mtgDataFile.mkdirs();
-			Logger.getInstance()
-					.write( Tag.INFO, "creating path: " + mtgDataFile.getAbsolutePath() );
+			Logger.getInstance().write( Tag.INFO, "creating path: " + mtgDataFile.getAbsolutePath() );
 		}
 
 		File mtgJsonPath = new File( DBCostants.JSON_PATH );
 		if(!mtgJsonPath.exists()) {
 			mtgJsonPath.mkdirs();
-			Logger.getInstance()
-					.write( Tag.INFO, "creating path: " + mtgJsonPath.getAbsolutePath() );
+			Logger.getInstance().write( Tag.INFO, "creating path: " + mtgJsonPath.getAbsolutePath() );
 		}
 	}
 

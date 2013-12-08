@@ -4,7 +4,6 @@ import it.hackcaffebabe.jx.table.model.DisplayableObject;
 import java.io.Serializable;
 
 
-
 /**
  * Represents a single MTG card ability.
  *  
@@ -15,46 +14,45 @@ public class Ability extends DisplayableObject implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	private String name, description;
-	
+
 	/**
 	 * Instance a new ability with name and description.
 	 * @param name {@link String} the name of ability.
 	 * @param description {@link String} the description of ability.
 	 * @throws IllegalArgumentException if arguments given are null or empty string.
 	 */
-	public Ability( String name, String description ) throws IllegalArgumentException{
+	public Ability(String name, String description) throws IllegalArgumentException{
 		super( Ability.class );
-		setColumnNames( new String[]{ "Name", "Description" } );
-		
+		setColumnNames( new String[] { "Name", "Description" } );
+
 		this.setName( name );
 		this.setDescription( description );
 		AbilityFactory.getInstance().add( name, description );
 	}
-	
+
 //===========================================================================================
 // SETTER
 //===========================================================================================
 	/**
 	 * Set the name of ability 
 	 */
-	private void setName( String name ) throws IllegalArgumentException{
-		if( name == null || name.isEmpty() )
+	private void setName(String name) throws IllegalArgumentException{
+		if(name == null || name.isEmpty())
 			throw new IllegalArgumentException( "Name of ability can not be null or empty string." );
-		
+
 		this.name = name;
 	}
-	
-	
+
 	/**
 	 * Set the description of ability
 	 */
-	private void setDescription( String description ) throws IllegalArgumentException{
-		if( description == null || description.isEmpty() )
+	private void setDescription(String description) throws IllegalArgumentException{
+		if(description == null || description.isEmpty())
 			throw new IllegalArgumentException( "Description of ability can not be null." );
-		
+
 		this.description = description;
 	}
-	
+
 //===========================================================================================
 // GETTER
 //===========================================================================================
@@ -62,13 +60,18 @@ public class Ability extends DisplayableObject implements Serializable
 	 * Returns the ability name.
 	 * @return {@link String} the ability name.
 	 */
-	public final String getName(){ return this.name; }
-	
+	public final String getName(){
+		return this.name;
+	}
+
 	/**
 	 * Return the description text.
 	 * @return {@link String} the description text.
 	 */
-	public final String getDescription(){ return this.description;}
+	public final String getDescription(){
+		return this.description;
+	}
+
 //===========================================================================================
 // OVERRIDE
 //===========================================================================================
@@ -87,25 +90,24 @@ public class Ability extends DisplayableObject implements Serializable
 	}
 
 	@Override
-	public boolean equals( Object obj){
-		if( this == obj )
+	public boolean equals(Object obj){
+		if(this == obj)
 			return true;
-		if( obj == null )
+		if(obj == null)
 			return false;
-		if( getClass() != obj.getClass() )
+		if(getClass() != obj.getClass())
 			return false;
 		Ability other = (Ability) obj;
-		if( name == null ){
-			if( other.name != null )
+		if(name == null) {
+			if(other.name != null)
 				return false;
-		}
-		else if( !name.trim().toLowerCase().equals( other.name.trim().toLowerCase() ) )
+		} else if(!name.trim().toLowerCase().equals( other.name.trim().toLowerCase() ))
 			return false;
 		return true;
 	}
 
 	@Override
 	public Object[] getDisplayRow(){
-		return new Object[]{ this.name, this.description };
+		return new Object[] { this.name, this.description };
 	}
 }

@@ -15,6 +15,7 @@ import com.hackcaffebabe.mtg.controller.DBCostants;
 import com.hackcaffebabe.mtg.controller.json.StoreManager;
 import com.hackcaffebabe.mtg.gui.frame.MTG;
 
+
 /**
  * Export event of {@link JMenuItem} in {@link MTG} frame
  *  
@@ -29,12 +30,12 @@ public class ExportActionListener implements ActionListener
 		f.setDialogTitle( "Select export folder" );
 		f.setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY );
 		if(f.showDialog( null, "OK" ) == JFileChooser.APPROVE_OPTION) {
-			JMenuItem src = (JMenuItem)e.getSource();
+			JMenuItem src = (JMenuItem) e.getSource();
 			src.setCursor( Cursor.getPredefinedCursor( Cursor.WAIT_CURSOR ) );
 			File backupFile = new File( f.getSelectedFile().getPath() + PathUtil.FILE_SEPARATOR + DBCostants.BCK_NAME );
 			try {
 				StoreManager.getInstance().createBackup( backupFile );
-				
+
 				String msg = String.format( "Backup file saved correctly on %s", backupFile.getAbsolutePath() );
 				JOptionPane.showMessageDialog( src, msg, "Success!", JOptionPane.INFORMATION_MESSAGE );
 			} catch(IOException ex) {

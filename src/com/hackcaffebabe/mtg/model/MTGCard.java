@@ -274,16 +274,14 @@ public abstract class MTGCard extends DisplayableObject implements Serializable
 		if(name == null) {
 			if(other.name != null)
 				return false;
-		} else if(!name.toLowerCase().replaceAll( " ", "" )
-				.equals( other.name.replaceAll( " ", "" ).toLowerCase() ))
+		} else if(!name.toLowerCase().replaceAll( " ", "" ).equals( other.name.replaceAll( " ", "" ).toLowerCase() ))
 			return false;
 
 		//check series
 		if(series == null) {
 			if(other.series != null)
 				return false;
-		} else if(!series.toLowerCase().replaceAll( " ", "" )
-				.equals( other.series.replaceAll( " ", "" ).toLowerCase() ))
+		} else if(!series.toLowerCase().replaceAll( " ", "" ).equals( other.series.replaceAll( " ", "" ).toLowerCase() ))
 			return false;
 
 		//check sub type

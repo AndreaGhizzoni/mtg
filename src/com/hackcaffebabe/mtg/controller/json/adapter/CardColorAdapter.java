@@ -47,8 +47,7 @@ public class CardColorAdapter implements JsonSerializer<CardColor>, JsonDeserial
 		for(JsonElement i: colors)
 			list.add( BasicColors.valueOf( i.getAsString() ) );
 
-		TypeColor type = TypeColor.valueOf( cardColorAdJsonObject.get( JSON_TAG_TYPE )
-				.getAsString() );
+		TypeColor type = TypeColor.valueOf( cardColorAdJsonObject.get( JSON_TAG_TYPE ).getAsString() );
 		switch( type ) {
 			case COLOR_LESS: {
 				result = new CardColor();

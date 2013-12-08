@@ -45,10 +45,8 @@ public class MTG extends JFrame
 		super( TITLE_MAIN_FRAME );
 		setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		setMinimumSize( DIMENSION_MAIN_FRAME );
-		setLocation( (Toolkit.getDefaultToolkit().getScreenSize().width / 2)
-				- (DIMENSION_MAIN_FRAME.width / 2),
-				(Toolkit.getDefaultToolkit().getScreenSize().height / 2)
-						- (DIMENSION_MAIN_FRAME.height / 2) );
+		setLocation( (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - (DIMENSION_MAIN_FRAME.width / 2),
+				(Toolkit.getDefaultToolkit().getScreenSize().height / 2) - (DIMENSION_MAIN_FRAME.height / 2) );
 		addWindowListener( new WinListener() );
 		this.initContent();
 		this.initMenuBar();
@@ -90,8 +88,7 @@ public class MTG extends JFrame
 		file.add( fileImport );
 
 		JMenuItem fileImportSelected = new JMenuItem( "Selected Import..." );
-		fileImportSelected
-				.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_U, Event.CTRL_MASK ) );
+		fileImportSelected.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_U, Event.CTRL_MASK ) );
 		fileImportSelected.addActionListener( new SelectedImportActionListener() );
 		file.add( fileImportSelected );
 

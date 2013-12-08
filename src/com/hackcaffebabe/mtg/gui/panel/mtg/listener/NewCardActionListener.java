@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import com.hackcaffebabe.mtg.gui.frame.InsertUpdateCard;
 import com.hackcaffebabe.mtg.gui.panel.mtg.MTGContent;
 
+
 /**
  * Event handle on button btnNewCard in {@link MTGContent}
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
