@@ -287,8 +287,8 @@ public class MTGProperties extends JPanel
 // GETTER
 //===========================================================================================
 	/**
-	 * TODO Add doc
-	 * @return
+	 * Returns the displayed card. if no card is displayed return null.
+	 * @return {@link MTGCard} or null.
 	 */
 	public MTGCard getDisplayedCard(){
 		return this.displayedMTGCard;

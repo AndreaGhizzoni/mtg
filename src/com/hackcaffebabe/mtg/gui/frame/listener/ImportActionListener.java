@@ -50,7 +50,7 @@ public class ImportActionListener implements ActionListener
 			JMenuItem src = (JMenuItem) e.getSource();
 			src.setCursor( new Cursor( Cursor.WAIT_CURSOR ) );
 			try {
-				List<File> lst = new UnZipper( f.getSelectedFile(), new File( DBCostants.JSON_PATH ) ).unZipAll( false );//TODO maybe let user to decide.
+				List<File> lst = new UnZipper( f.getSelectedFile(), new File( DBCostants.JSON_PATH ) ).unZipAll( false );
 				StoreManager.getInstance().refresh();
 				refreshMTGTable();
 				displayFiles( lst );

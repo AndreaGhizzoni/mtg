@@ -4,7 +4,6 @@ import static com.hackcaffebabe.mtg.gui.GUIUtils.DIMENSION_MAIN_FRAME;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.JXTABLE_MTG;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.JXTABLE_MTG_COLUMN_ADJUSTER;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.PNL_MTGPROPERTIES;
-import static com.hackcaffebabe.mtg.gui.GUIUtils.displayError;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.refreshMTGTable;
 import it.hackcaffebabe.jx.table.JXTable;
 import it.hackcaffebabe.jx.table.JXTableColumnAdjuster;
@@ -12,11 +11,9 @@ import it.hackcaffebabe.jx.table.model.JXObjectModel;
 import it.hackcaffebabe.logger.Logger;
 import it.hackcaffebabe.logger.Tag;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -26,10 +23,10 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import net.miginfocom.swing.MigLayout;
-import com.hackcaffebabe.mtg.controller.json.StoreManager;
+import com.hackcaffebabe.mtg.gui.listener.DeleteCardActionListener;
+import com.hackcaffebabe.mtg.gui.listener.NewCardActionListener;
 import com.hackcaffebabe.mtg.gui.panel.mtg.listener.AdvanceSearchActionListener;
 import com.hackcaffebabe.mtg.gui.panel.mtg.listener.DoubleClickMouseAdapter;
-import com.hackcaffebabe.mtg.gui.panel.mtg.listener.NewCardActionListener;
 import com.hackcaffebabe.mtg.model.MTGCard;
 
 
@@ -62,7 +59,7 @@ public class MTGContent extends JPanel
 	public MTGContent(){
 		super();
 		setSize( DIMENSION_MAIN_FRAME );
-		setLayout( new MigLayout( "", "[698.00,grow][190!][190!]", "[grow][60!]" ) );
+		setLayout( new MigLayout( "", "[698.00,grow][190!][190!]", "[35][grow][60!]" ) );
 		this.initContent();
 		refreshMTGTable();
 	}
@@ -72,11 +69,22 @@ public class MTGContent extends JPanel
 //===========================================================================================
 	/* initialize all components */
 	private void initContent(){
+		//button
+		this.btnDeleteCard = new JButton( "X" );
+		this.btnDeleteCard.addActionListener( DeleteCardActionListener.getInstance() );
+		this.btnDeleteCard.setEnabled( false );
+		add( this.btnDeleteCard, "cell 1 0,alignx center,aligny bottom" );
+
+		this.btnNewCard = new JButton( "+" );
+		this.btnNewCard.setMnemonic( KeyEvent.VK_N );
+		this.btnNewCard.addActionListener( NewCardActionListener.getInstance() );
+		add( this.btnNewCard, "cell 2 0,alignx center,aligny bottom" );
+
 		// MTG search
 		this.pnlSearch = new JPanel();
 		this.pnlSearch.setBorder( new TitledBorder( "Search by String:" ) );
 		this.pnlSearch.setLayout( new MigLayout( "", "[grow][150!]", "[]" ) );
-		add( this.pnlSearch, "cell 0 1,grow" );
+		add( this.pnlSearch, "cell 0 2,grow" );
 
 		this.txtSearch = new JTextField();
 		this.txtSearch.getInputMap().put( KeyStroke.getKeyStroke( "ESCAPE" ), "clear" );
@@ -97,7 +105,7 @@ public class MTGContent extends JPanel
 		// MTG list panel
 		this.pnlMTGList.setBorder( new TitledBorder( "MTG Cards" ) );
 		this.pnlMTGList.setLayout( new MigLayout( "", "[grow]", "[grow]" ) );
-		add( this.pnlMTGList, "cell 0 0 1 1,grow" );
+		add( this.pnlMTGList, "cell 0 0 1 2,grow" );
 
 		JXTABLE_MTG = new JXTable( new JXObjectModel<MTGCard>() );
 		JXTABLE_MTG.setFillsViewportHeight( true );
@@ -113,18 +121,7 @@ public class MTGContent extends JPanel
 		// MTG card properties
 		PNL_MTGPROPERTIES = new MTGProperties();
 		PNL_MTGPROPERTIES.setBorder( new TitledBorder( "MTG Properties" ) );
-		add( PNL_MTGPROPERTIES, "cell 1 0 2 1,grow" );
-
-		// button
-		this.btnNewCard = new JButton( "New Card" );
-		this.btnNewCard.setMnemonic( KeyEvent.VK_N );
-		this.btnNewCard.addActionListener( new NewCardActionListener() );
-		add( this.btnNewCard, "cell 1 1,alignx center,aligny center" );
-
-		this.btnDeleteCard = new JButton( "Delete Card" );
-		this.btnDeleteCard.addActionListener( new DeleteCardActionListener() );
-		this.btnDeleteCard.setEnabled( false );
-		add( this.btnDeleteCard, "cell 2 1,alignx center,aligny center" );
+		add( PNL_MTGPROPERTIES, "cell 1 1 2 2,grow" );
 	}
 
 //===========================================================================================
@@ -142,33 +139,6 @@ public class MTGContent extends JPanel
 				PNL_MTGPROPERTIES.setMTGCardToView( c );
 				log.write( Tag.DEBUG, c.toString() );
 				btnDeleteCard.setEnabled( true );
-			}
-		}
-	}
-
-	/* Event handle on button btnDeleteCard */
-	private class DeleteCardActionListener implements ActionListener
-	{
-		@Override
-		public void actionPerformed(ActionEvent e){
-			MTGCard card = PNL_MTGPROPERTIES.getDisplayedCard();
-			log.write( Tag.DEBUG, "card to delete: " + card );
-			if(card != null) {
-				String msg = String.format( "Are you sure to delete %s ?", card.getName() );
-				if(JOptionPane.showConfirmDialog( MTGContent.this, msg, "Be careful!", JOptionPane.YES_NO_OPTION ) == 0) {
-					try {
-						StoreManager.getInstance().delete( card );
-						PNL_MTGPROPERTIES.clearAll();
-						btnDeleteCard.setEnabled( false );
-						refreshMTGTable();
-						JOptionPane.showMessageDialog( MTGContent.this, card.getName() + " delete correctly!",
-								"Operation complete!", JOptionPane.INFORMATION_MESSAGE );
-					} catch(Exception ex) {
-						log.write( Tag.ERRORS, ex.getMessage() );
-						ex.printStackTrace( Logger.getInstance().getPrintStream() );
-						displayError( MTGContent.this, "Error to delete " + card.getName() );
-					}
-				}
 			}
 		}
 	}

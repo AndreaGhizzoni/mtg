@@ -1,9 +1,11 @@
 package com.hackcaffebabe.mtg.model;
 
+import it.hackcaffebabe.ioutil.file.PathUtil;
 import it.hackcaffebabe.jx.table.model.DisplayableObject;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import com.hackcaffebabe.mtg.controller.DBCostants;
 import com.hackcaffebabe.mtg.model.card.Ability;
 import com.hackcaffebabe.mtg.model.card.Effect;
 import com.hackcaffebabe.mtg.model.card.PlanesAbility;
@@ -171,58 +173,42 @@ public abstract class MTGCard extends DisplayableObject implements Serializable
 //===========================================================================================
 // GETTER
 //===========================================================================================
-	/**
-	 * @return {@link String} the name of MTG Card.
-	 */
+	/** @return {@link String} the name of MTG Card.*/
 	public String getName(){
 		return name;
 	}
 
-	/**
-	 * @return {@link CardColor} the color of MTG Card.
-	 */
+	/** @return {@link CardColor} the color of MTG Card. */
 	public CardColor getCardColor(){
 		return color;
 	}
 
-	/**
-	 * @return {@link Rarity} the rarity of MTG Card.
-	 */
+	/** @return {@link Rarity} the rarity of MTG Card. */
 	public Rarity getRarity(){
 		return rarity;
 	}
 
-	/**
-	 * @return {@link String} the series of MTG card.
-	 */
+	/** @return {@link String} the series of MTG card. */
 	public String getSeries(){
 		return this.series;
 	}
 
-	/**
-	 * @return {@link String} the sub type of MTG Card.
-	 */
+	/** @return {@link String} the sub type of MTG Card. */
 	public String getSubType(){
 		return this.subType;
 	}
 
-	/**
-	 * @return {@link Set} the set of ability.
-	 */
+	/** @return {@link Set} the set of ability. */
 	public Set<Ability> getAbilities(){
 		return this.abilitis;
 	}
 
-	/**
-	 * @return {@link Set} the set of effects.
-	 */
+	/** @return {@link Set} the set of effects. */
 	public Set<Effect> getEffects(){
 		return this.effects;
 	}
 
-	/**
-	 * @return {@link String} the primary effect of MTG Card. This is always null on {@link Planeswalker} object.
-	 */
+	/** @return {@link String} the primary effect of MTG Card. This is always null on {@link Planeswalker} object. */
 	public String getPrimaryEffect(){
 		return this.primaryEffect;
 	}
@@ -241,6 +227,23 @@ public abstract class MTGCard extends DisplayableObject implements Serializable
 	 */
 	public boolean isArtifact(){
 		return this.isArtifact;
+	}
+
+	/**
+	 * This method returns the name of stored file of {@link MTGCard} in format name_series.json
+	 * @param c {@link MTGCard}
+	 * @return {@link String} in format name_series.json
+	 */
+	public String getJSONFileName(){
+		StringBuilder r = new StringBuilder();
+		String name = this.getName().toLowerCase();
+		String series = this.getSeries().toLowerCase();
+		String name_series = String.format( "%s_%s.json", name, series );
+		r.append( DBCostants.JSON_PATH );
+		r.append( PathUtil.FILE_SEPARATOR );
+		r.append( name_series );
+
+		return r.toString();
 	}
 
 //===========================================================================================

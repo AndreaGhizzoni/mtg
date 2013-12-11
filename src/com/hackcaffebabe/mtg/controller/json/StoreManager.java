@@ -1,7 +1,6 @@
 package com.hackcaffebabe.mtg.controller.json;
 
 import static com.hackcaffebabe.mtg.controller.DBCostants.JSON_PATH;
-import static com.hackcaffebabe.mtg.controller.DBCostants.getJSONFileName;
 import it.hackcaffebabe.ioutil.file.Zipper;
 import it.hackcaffebabe.logger.Logger;
 import it.hackcaffebabe.logger.Tag;
@@ -149,7 +148,7 @@ public class StoreManager
 		log.write( Tag.DEBUG, "store initialized." );
 
 		String json = g.toJson( c, MTGCard.class );
-		FileWriter f = new FileWriter( new File( getJSONFileName( c ) ) );
+		FileWriter f = new FileWriter( new File( c.getJSONFileName() ) );
 		f.write( json );
 		f.flush();
 		f.close();
@@ -184,7 +183,7 @@ public class StoreManager
 			log.write( Tag.DEBUG, c.getSeries() + " removed because its frequency == 1" );
 		}
 
-		String path = getJSONFileName( c );
+		String path = c.getJSONFileName();
 		new File( path ).delete();
 
 		log.write( Tag.INFO, path + " deleted correctly." );

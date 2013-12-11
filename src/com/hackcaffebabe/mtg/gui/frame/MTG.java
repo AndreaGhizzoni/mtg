@@ -1,10 +1,10 @@
 package com.hackcaffebabe.mtg.gui.frame;
 
-import static com.hackcaffebabe.mtg.gui.GUIUtils.refreshMTGTable;
-import static com.hackcaffebabe.mtg.gui.GUIUtils.TITLE_MAIN_FRAME;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.DIMENSION_MAIN_FRAME;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.STATUS_BAR_MAIN_FRAME;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.TITLE_MAIN_FRAME;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.VERSION;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.refreshMTGTable;
 import it.hackcaffebabe.jx.statusbar.JXStatusBar;
 import it.hackcaffebabe.logger.Logger;
 import it.hackcaffebabe.logger.Tag;
@@ -23,7 +23,11 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
-import com.hackcaffebabe.mtg.gui.frame.listener.*;
+import com.hackcaffebabe.mtg.gui.frame.listener.AboutActionListener;
+import com.hackcaffebabe.mtg.gui.frame.listener.ExportActionListener;
+import com.hackcaffebabe.mtg.gui.frame.listener.ImportActionListener;
+import com.hackcaffebabe.mtg.gui.frame.listener.SelectedImportActionListener;
+import com.hackcaffebabe.mtg.gui.listener.NewCardActionListener;
 import com.hackcaffebabe.mtg.gui.panel.mtg.MTGContent;
 
 
@@ -70,18 +74,6 @@ public class MTG extends JFrame
 		JMenuBar bar = new JMenuBar();
 
 		JMenu file = new JMenu( "File" );
-		JMenuItem fileExit = new JMenuItem( "Exit" );
-		fileExit.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_Q, Event.CTRL_MASK ) );
-		fileExit.addActionListener( new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e){
-				close();
-			}
-		} );
-		file.add( fileExit );
-
-		file.add( new JSeparator() );
-
 		JMenuItem fileImport = new JMenuItem( "Import..." );
 		fileImport.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_I, Event.CTRL_MASK ) );
 		fileImport.addActionListener( new ImportActionListener() );
@@ -97,7 +89,32 @@ public class MTG extends JFrame
 		fileExport.addActionListener( new ExportActionListener() );
 		file.add( fileExport );
 
+		file.add( new JSeparator() );
+		JMenuItem fileExit = new JMenuItem( "Exit" );
+		fileExit.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_Q, Event.CTRL_MASK ) );
+		fileExit.addActionListener( new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				close();
+			}
+		} );
+		file.add( fileExit );
+
 		JMenu edit = new JMenu( "Edit" );
+		JMenuItem editNewCard = new JMenuItem( "New Card" );
+		editNewCard.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_N, Event.CTRL_MASK ) );
+		editNewCard.addActionListener( NewCardActionListener.getInstance() );
+		edit.add( editNewCard );
+
+		JMenuItem editDeleteCard = new JMenuItem( "Delete" );
+		editDeleteCard.addActionListener( new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				//TODO finish this
+			}
+		} );
+		edit.add( editDeleteCard );
+
 		JMenuItem editRefresh = new JMenuItem( "Refresh" );
 		editRefresh.setAccelerator( KeyStroke.getKeyStroke( "F5" ) );
 		editRefresh.addActionListener( new ActionListener(){
@@ -117,6 +134,12 @@ public class MTG extends JFrame
 		bar.add( file );
 		bar.add( edit );
 		bar.add( help );
+//		bar.add( Box.createGlue() );
+//
+//		JButton p = new JButton( "+" );//TODO finish this
+//		p.setMargin( new Insets( 0, 5, 0, 5 ) );
+//
+//		bar.add( p );
 		setJMenuBar( bar );
 	}
 

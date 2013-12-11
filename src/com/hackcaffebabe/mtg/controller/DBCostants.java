@@ -1,7 +1,6 @@
 package com.hackcaffebabe.mtg.controller;
 
 import it.hackcaffebabe.ioutil.file.PathUtil;
-import com.hackcaffebabe.mtg.model.MTGCard;
 
 
 /**
@@ -57,29 +56,9 @@ public class DBCostants
 // COMMON METHODS
 //===========================================================================================
 	/**
-	 * This method returns the name of stored file of {@link MTGCard} in format name_series.json
-	 * @param c {@link MTGCard}
-	 * @return {@link String} in format name_series.json
-	 */
-	public static String getJSONFileName(MTGCard c){
-		if(c == null)
-			return "";
-
-		StringBuilder r = new StringBuilder();
-		String name = c.getName().toLowerCase();
-		String series = c.getSeries().toLowerCase();
-		String name_series = String.format( "%s_%s.json", name, series );
-		r.append( JSON_PATH );
-		r.append( PathUtil.FILE_SEPARATOR );
-		r.append( name_series );
-
-		return r.toString();
-	}
-
-	/**
-	 * TODO add doc
-	 * @param s
-	 * @return
+	 * This method replace from the given string all the accent characters whit the respective non-accent.
+	 * @param s {@link String} to normalize.
+	 * @return {@link String} normalized.
 	 */
 	public static String removeAccentCharacters(String s){
 		if(s != null && !s.isEmpty()) {
@@ -91,9 +70,10 @@ public class DBCostants
 	}
 
 	/**
-	 * TODO add doc
-	 * @param s
-	 * @return
+	 * This method remove from the given string the follow characters: \t,\n and |<br>
+	 * Also replace the Accent Characters whit the respective non-accent.
+	 * @param s {@link String} to normalize.
+	 * @return {@link String} normalized.
 	 */
 	public static String normalize(String s){
 		if(s != null && !s.isEmpty()) {
@@ -109,9 +89,11 @@ public class DBCostants
 	}
 
 	/**
-	 * TODO add doc
-	 * @param s
-	 * @return
+	 * This method remove from the given string the follow characters: \t,\n, |, -, \ and /<br>
+	 * Also removes all the '.' characters from the bottom of the string and replace the Accent Characters
+	 * whit the respective non-accent.
+	 * @param s {@link String} to normalize.
+	 * @return {@link String} normalized.
 	 */
 	public static String normalizeForStorage(String s){
 		if(s != null && !s.isEmpty()) {
@@ -119,7 +101,7 @@ public class DBCostants
 			if(!norm.isEmpty()) {
 				String a = norm.replace( "\\", "" ).replace( "/", "" );
 				if(a.endsWith( "." ))
-					return a.substring( 0, a.length() - 1 );
+					return a.replaceAll( "[*.]", "" );
 				return a;
 			} else {
 				return "";
@@ -130,32 +112,37 @@ public class DBCostants
 	}
 
 	/**
-	 * TODO add doc
-	 * @param s
-	 * @return
+	 * This method remove all the white spaces before and after a given string.<br>
+	 * For example this string <code>"**my*fantastic*string******"</code> where "*" (no quotes) are spaces,
+	 * by calling <code>removeSpaceStartEnd("**my*fantastic*string******")</code> will return: 
+	 * <code>my*fantastic*string</code>.
+	 * @param s {@link String} the string to normalize.
+	 * @return {@link String} without spaces before and after.
 	 */
 	public static String removeSpaceStartEnd(String s){
 		if(s != null && !s.isEmpty()) {
-			int i;
+			int i;// string index of the first non-white-space character.
 			for(i = 0; i < s.length() - 1; i++) {
 				if(!Character.isWhitespace( s.charAt( i ) ))
 					break;
 			}
-			if(i != 0)
+			if(i != 0)// if index != 0 remove all the white space before
 				s = s.substring( i, s.length() - 1 );
 
+			// if string is empty don't continue 
+			// but returns empty string
 			if(s.isEmpty())
 				return s;
 
-			int cont = 0;
+			int cont = 0;// white space counter from the bottom of the string
 			for(int j = s.length() - 1; j >= 0; j--) {
 				if(Character.isWhitespace( s.charAt( j ) ))
 					cont++;
 			}
-			if(cont == 0) {
-				return s;
+			if(cont == 0) {// if no white space are countered
+				return s;// return the string
 			} else {
-				return s.substring( 0, s.length() - cont );
+				return s.substring( 0, s.length() - cont );// otherwise cut the string.
 			}
 		} else {
 			return s;
