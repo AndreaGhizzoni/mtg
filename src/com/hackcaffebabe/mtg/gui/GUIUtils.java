@@ -68,6 +68,8 @@ public class GUIUtils
 	public static final String TITLE_UPDATE_CARD = "MTG Update Card!";
 	/** Title of advance search frame */
 	public static final String TITLE_ADVANCE_SEARCH = "Advance Search";
+	/** Title of Deck Editor frame */
+	public static final String TITLE_DECK_EDITOR = "Deck Editor!";
 
 	/** Dimension of main frame */
 	public static final Dimension DIMENSION_MAIN_FRAME = new Dimension( 1150, 655 );
@@ -75,6 +77,8 @@ public class GUIUtils
 	public static final Dimension DIMENSION_INSERT_CARD = new Dimension( 660, 700 );
 	/** Dimension of advance search frame */
 	public static final Dimension DIMENSION_ADVANCE_SEARCH = new Dimension( 485, 190 );
+	/** Dimension of Deck editor */
+	public static final Dimension DIMENSION_DECK_EDITOR = new Dimension( 700, 535 );
 
 	/* Action Command */
 	public static final String AC_CREATURE = "Creature";

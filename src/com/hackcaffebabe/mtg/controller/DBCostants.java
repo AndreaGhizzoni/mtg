@@ -18,6 +18,8 @@ public class DBCostants
 	public static final String LOG_FILE_PATH = mtgHome + PathUtil.FILE_SEPARATOR + "log.txt";
 	/** user home directory/.mtg/data/card */
 	public static final String JSON_PATH = mtgDataHome + PathUtil.FILE_SEPARATOR + "card";
+	/** user home directory/.mtg/data/deck */
+	public static final String DECK_PATH = mtgDataHome + PathUtil.FILE_SEPARATOR + "deck";
 	/** user home directory/.mtg/data/ability.json */
 	public static final String ABILITY_FILE_PATH = mtgDataHome + PathUtil.FILE_SEPARATOR + "ability.json";
 

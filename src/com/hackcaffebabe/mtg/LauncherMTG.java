@@ -1,15 +1,15 @@
 package com.hackcaffebabe.mtg;
 
 import static com.hackcaffebabe.mtg.gui.GUIUtils.displayError;
+import it.hackcaffebabe.logger.Logger;
+import it.hackcaffebabe.logger.Tag;
 import java.io.File;
 import java.io.PrintStream;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import it.hackcaffebabe.logger.Logger;
-import it.hackcaffebabe.logger.Tag;
 import com.hackcaffebabe.mtg.controller.DBCostants;
-import com.hackcaffebabe.mtg.gui.frame.*;
 import com.hackcaffebabe.mtg.controller.json.StoreManager;
+import com.hackcaffebabe.mtg.gui.frame.MTG;
 
 
 /**
@@ -71,6 +71,12 @@ public class LauncherMTG
 		if(!mtgJsonPath.exists()) {
 			mtgJsonPath.mkdirs();
 			Logger.getInstance().write( Tag.INFO, "creating path: " + mtgJsonPath.getAbsolutePath() );
+		}
+
+		File mtgDeckPath = new File( DBCostants.DECK_PATH );
+		if(!mtgDeckPath.exists()) {
+			mtgDeckPath.mkdirs();
+			Logger.getInstance().write( Tag.INFO, "creating path: " + mtgDeckPath.getAbsolutePath() );
 		}
 	}
 

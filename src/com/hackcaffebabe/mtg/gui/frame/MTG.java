@@ -24,6 +24,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
 import com.hackcaffebabe.mtg.gui.frame.listener.AboutActionListener;
+import com.hackcaffebabe.mtg.gui.frame.listener.DeckEditorActionListener;
 import com.hackcaffebabe.mtg.gui.frame.listener.ExportActionListener;
 import com.hackcaffebabe.mtg.gui.frame.listener.ImportActionListener;
 import com.hackcaffebabe.mtg.gui.frame.listener.SelectedImportActionListener;
@@ -101,7 +102,12 @@ public class MTG extends JFrame
 		file.add( fileExit );
 
 		JMenu edit = new JMenu( "Edit" );
-		JMenuItem editNewCard = new JMenuItem( "New Card" );
+		JMenuItem editDeckEditor = new JMenuItem( "Deck Editor" );
+		editDeckEditor.addActionListener( DeckEditorActionListener.getInstance() );
+		edit.add( editDeckEditor );
+		edit.addSeparator();
+
+		JMenuItem editNewCard = new JMenuItem( "New Card" );//TODO add accelerator
 		editNewCard.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_N, Event.CTRL_MASK ) );
 		editNewCard.addActionListener( NewCardActionListener.getInstance() );
 		edit.add( editNewCard );
