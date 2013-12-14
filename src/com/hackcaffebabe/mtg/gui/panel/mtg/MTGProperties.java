@@ -5,6 +5,7 @@ import it.hackcaffebabe.jx.table.JXTable;
 import it.hackcaffebabe.jx.table.JXTableColumnAdjuster;
 import it.hackcaffebabe.jx.table.model.DisplayableObject;
 import it.hackcaffebabe.jx.table.model.JXObjectModel;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Set;
@@ -14,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import net.miginfocom.swing.MigLayout;
 import com.hackcaffebabe.mtg.gui.frame.InsertUpdateCard;
@@ -68,7 +70,8 @@ public class MTGProperties extends JPanel
 	 */
 	public MTGProperties(){
 		super();
-		setBorder( new TitledBorder( "MTG Properties" ) );
+		setBorder( new TitledBorder( new LineBorder( new Color( 184, 207, 229 ) ), "MTG Properties",
+				TitledBorder.RIGHT, TitledBorder.TOP, null, null ) );
 		setLayout( new MigLayout( "", "[44.00][38.00][150.00][80.00][grow]",
 				"[][][][][][][150px,grow][][:96.00:100,grow][150px][]" ) );
 		this.initContent();

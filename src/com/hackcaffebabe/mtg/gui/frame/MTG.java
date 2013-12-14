@@ -28,6 +28,7 @@ import com.hackcaffebabe.mtg.gui.frame.listener.DeckEditorActionListener;
 import com.hackcaffebabe.mtg.gui.frame.listener.ExportActionListener;
 import com.hackcaffebabe.mtg.gui.frame.listener.ImportActionListener;
 import com.hackcaffebabe.mtg.gui.frame.listener.SelectedImportActionListener;
+import com.hackcaffebabe.mtg.gui.listener.DeleteCardActionListener;
 import com.hackcaffebabe.mtg.gui.listener.NewCardActionListener;
 import com.hackcaffebabe.mtg.gui.panel.mtg.MTGContent;
 
@@ -107,19 +108,15 @@ public class MTG extends JFrame
 		edit.add( editDeckEditor );
 		edit.addSeparator();
 
-		JMenuItem editNewCard = new JMenuItem( "New Card" );//TODO add accelerator
+		JMenuItem editNewCard = new JMenuItem( "New Card" );
 		editNewCard.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_N, Event.CTRL_MASK ) );
 		editNewCard.addActionListener( NewCardActionListener.getInstance() );
 		edit.add( editNewCard );
 
-		JMenuItem editDeleteCard = new JMenuItem( "Delete" );
-		editDeleteCard.addActionListener( new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e){
-				//TODO finish this
-			}
-		} );
-		edit.add( editDeleteCard );
+		JMenuItem editDelCard = new JMenuItem( "Delete" );
+		editDelCard.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_DELETE, Event.CTRL_MASK + Event.SHIFT_MASK ) );
+		editDelCard.addActionListener( DeleteCardActionListener.getInstance() );
+		edit.add( editDelCard );
 
 		JMenuItem editRefresh = new JMenuItem( "Refresh" );
 		editRefresh.setAccelerator( KeyStroke.getKeyStroke( "F5" ) );
@@ -140,12 +137,7 @@ public class MTG extends JFrame
 		bar.add( file );
 		bar.add( edit );
 		bar.add( help );
-//		bar.add( Box.createGlue() );
-//
-//		JButton p = new JButton( "+" );//TODO finish this
-//		p.setMargin( new Insets( 0, 5, 0, 5 ) );
-//
-//		bar.add( p );
+
 		setJMenuBar( bar );
 	}
 

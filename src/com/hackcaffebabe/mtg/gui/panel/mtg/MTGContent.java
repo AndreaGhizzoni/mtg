@@ -10,6 +10,7 @@ import it.hackcaffebabe.jx.table.JXTableColumnAdjuster;
 import it.hackcaffebabe.jx.table.model.JXObjectModel;
 import it.hackcaffebabe.logger.Logger;
 import it.hackcaffebabe.logger.Tag;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.AbstractAction;
@@ -19,12 +20,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import net.miginfocom.swing.MigLayout;
-import com.hackcaffebabe.mtg.gui.listener.DeleteCardActionListener;
-import com.hackcaffebabe.mtg.gui.listener.NewCardActionListener;
 import com.hackcaffebabe.mtg.gui.panel.mtg.listener.AdvanceSearchActionListener;
 import com.hackcaffebabe.mtg.gui.panel.mtg.listener.DoubleClickMouseAdapter;
 import com.hackcaffebabe.mtg.model.MTGCard;
@@ -48,9 +48,6 @@ public class MTGContent extends JPanel
 	private JTextField txtSearch;
 	private JButton btnAdvanceSearch;
 
-	private JButton btnNewCard;
-	private JButton btnDeleteCard;
-
 	private Logger log = Logger.getInstance();
 
 	/**
@@ -59,7 +56,7 @@ public class MTGContent extends JPanel
 	public MTGContent(){
 		super();
 		setSize( DIMENSION_MAIN_FRAME );
-		setLayout( new MigLayout( "", "[698.00,grow][190!][190!]", "[35][grow][60!]" ) );
+		setLayout( new MigLayout( "", "[698.00,grow][190!][190!]", "[grow][60!]" ) );
 		this.initContent();
 		refreshMTGTable();
 	}
@@ -69,22 +66,11 @@ public class MTGContent extends JPanel
 //===========================================================================================
 	/* initialize all components */
 	private void initContent(){
-		//button
-		this.btnDeleteCard = new JButton( "X" );
-		this.btnDeleteCard.addActionListener( DeleteCardActionListener.getInstance() );
-		this.btnDeleteCard.setEnabled( false );
-		add( this.btnDeleteCard, "cell 1 0,alignx center,aligny bottom" );
-
-		this.btnNewCard = new JButton( "+" );
-		this.btnNewCard.setMnemonic( KeyEvent.VK_N );
-		this.btnNewCard.addActionListener( NewCardActionListener.getInstance() );
-		add( this.btnNewCard, "cell 2 0,alignx center,aligny bottom" );
-
 		// MTG search
 		this.pnlSearch = new JPanel();
 		this.pnlSearch.setBorder( new TitledBorder( "Search by String:" ) );
 		this.pnlSearch.setLayout( new MigLayout( "", "[grow][150!]", "[]" ) );
-		add( this.pnlSearch, "cell 0 2,grow" );
+		add( this.pnlSearch, "cell 0 1,grow" );
 
 		this.txtSearch = new JTextField();
 		this.txtSearch.getInputMap().put( KeyStroke.getKeyStroke( "ESCAPE" ), "clear" );
@@ -103,9 +89,10 @@ public class MTGContent extends JPanel
 		this.pnlSearch.add( this.btnAdvanceSearch, "cell 1 0,growx,aligny top" );
 
 		// MTG list panel
-		this.pnlMTGList.setBorder( new TitledBorder( "MTG Cards" ) );
+		this.pnlMTGList.setBorder( new TitledBorder( new LineBorder( new Color( 184, 207, 229 ) ), "MTG Card List",
+				TitledBorder.CENTER, TitledBorder.TOP, null, null ) );
 		this.pnlMTGList.setLayout( new MigLayout( "", "[grow]", "[grow]" ) );
-		add( this.pnlMTGList, "cell 0 0 1 2,grow" );
+		add( this.pnlMTGList, "cell 0 0,grow" );
 
 		JXTABLE_MTG = new JXTable( new JXObjectModel<MTGCard>() );
 		JXTABLE_MTG.setFillsViewportHeight( true );
@@ -120,8 +107,7 @@ public class MTGContent extends JPanel
 
 		// MTG card properties
 		PNL_MTGPROPERTIES = new MTGProperties();
-		PNL_MTGPROPERTIES.setBorder( new TitledBorder( "MTG Properties" ) );
-		add( PNL_MTGPROPERTIES, "cell 1 1 2 2,grow" );
+		add( PNL_MTGPROPERTIES, "cell 1 0 2 2,grow" );
 	}
 
 //===========================================================================================
@@ -138,7 +124,6 @@ public class MTGContent extends JPanel
 				MTGCard c = ((JXObjectModel<MTGCard>) JXTABLE_MTG.getModel()).getObject( selRow );
 				PNL_MTGPROPERTIES.setMTGCardToView( c );
 				log.write( Tag.DEBUG, c.toString() );
-				btnDeleteCard.setEnabled( true );
 			}
 		}
 	}
