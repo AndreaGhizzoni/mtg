@@ -37,8 +37,8 @@ public class DeckEditor extends JFrame
 		setMinimumSize( GUIUtils.DIMENSION_DECK_EDITOR );
 
 		this.initMenuBar();
-		this.initContent();
 		this.initToolBar();
+		this.initContent();
 	}
 
 //===========================================================================================
@@ -59,7 +59,10 @@ public class DeckEditor extends JFrame
 		newFile.addActionListener( new EmptyFileActionListener() );
 
 		JButton save = new JButton( "s" );
+		save.addActionListener( new SaveCurrentActionListener() );
+
 		JButton saveAll = new JButton( "sa" );
+		saveAll.addActionListener( new SaveAllActionListener() );
 
 		JButton delFile = new JButton( "-" );
 		delFile.addActionListener( new DeleteFileActionListener() );
@@ -85,14 +88,52 @@ public class DeckEditor extends JFrame
 		menuFileNewEmptyFile.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_N, Event.CTRL_MASK ) );
 		menuFileNewEmptyFile.addActionListener( new EmptyFileActionListener() );
 
+		JMenuItem menuFileSave = new JMenuItem( "Save" );
+		menuFileSave.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_S, Event.CTRL_MASK ) );
+		menuFileSave.addActionListener( new SaveCurrentActionListener() );
+
+		JMenuItem menuFileSaveAll = new JMenuItem( "Save all" );//TODO figure out how to do accelerator like: Shift+Ctrl+S
+//		menuFileSaveAll.setAccelerator( );
+//		menuFileSaveAll.addActionListener( new SaveAllActionListener() );
+
 		JMenuItem menuFileClose = new JMenuItem( "Close" );
 		menuFileClose.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_Q, Event.CTRL_MASK ) );
+		menuFileClose.addActionListener( new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				dispose();
+			}
+		} );
 
 		menuFile.add( menuFileNewEmptyFile );
+		menuFile.addSeparator();
+		menuFile.add( menuFileSave );
+		menuFile.add( menuFileSaveAll );
 		menuFile.addSeparator();
 		menuFile.add( menuFileClose );
 
 		JMenu menuEdit = new JMenu( "Edit" );
+		JMenuItem menuEditDeleteCurrent = new JMenuItem( "Delete deck" );//TODO figure out how to do accelerator like: Shift+Ctrl+del
+//		menuEditDeleteCurrent.setAccelerator(  );
+//		menuEditDeleteCurrent.addActionListener(  );
+
+		JMenuItem menuEditRename = new JMenuItem( "Rename" );
+//		menuEditRename.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_R, Event.CTRL_MASK ) );
+
+		JMenuItem menuEditRefresh = new JMenuItem( "Refresh" );
+		menuEditRefresh.setAccelerator( KeyStroke.getKeyStroke( "F5" ) );
+		menuEditRefresh.addActionListener( new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				content.refreshSavedDeck();
+			}
+		} );
+
+		menuEdit.add( menuEditDeleteCurrent );
+		menuEdit.add( menuEditRename );
+		menuEdit.addSeparator();
+		menuEdit.add( menuEditRefresh );
+
 		JMenu menuHelp = new JMenu( "Help" );
 
 		menuBar.add( menuFile );
@@ -119,6 +160,24 @@ public class DeckEditor extends JFrame
 		@Override
 		public void actionPerformed(ActionEvent e){
 			content.deleteCurrentFile();
+		}
+	}
+
+	/* action listener to save all current opened tabs */
+	class SaveAllActionListener implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent e){
+			content.saveAll();
+		}
+	}
+
+	/* action listener to save selected tab */
+	class SaveCurrentActionListener implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent e){
+			content.saveCurrent();
 		}
 	}
 }

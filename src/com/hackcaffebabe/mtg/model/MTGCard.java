@@ -276,7 +276,7 @@ public abstract class MTGCard extends DisplayableObject implements Serializable
 		//check name
 		if(name == null) {
 			if(other.name != null)
-				return false;
+				return false;//TODO maybe leave all this ToLowerCase
 		} else if(!name.toLowerCase().replaceAll( " ", "" ).equals( other.name.replaceAll( " ", "" ).toLowerCase() ))
 			return false;
 
@@ -314,6 +314,28 @@ public abstract class MTGCard extends DisplayableObject implements Serializable
 		if(rarity != other.rarity)
 			return false;
 
+		//check ability
+		if(abilitis == null) {
+			if(other.abilitis != null)
+				return false;
+		} else if(!abilitis.equals( other.abilitis ))
+			return false;
+
+		//check effects
+		if(effects == null) {
+			if(other.effects != null)
+				return false;
+		} else if(!effects.equals( other.effects ))
+			return false;
+
+		//check primary effects
+		if(primaryEffect == null) {
+			if(other.primaryEffect != null)
+				return false;
+		} else if(!primaryEffect.equals( other.primaryEffect ))
+			return false;
+
 		return true;
 	}
+
 }

@@ -42,6 +42,7 @@ public class MTGBasicInfo extends JPanel
 	private JXAutocomplete txtSeriesAutocomplete;
 
 	private JTextField txtSubType;
+	private JXAutocomplete txtSubTypeAutocomplete;
 
 	private JCheckBox chbIsLegendary;
 	private JCheckBox chbIsArtifact;
@@ -106,6 +107,11 @@ public class MTGBasicInfo extends JPanel
 
 		add( new JLabel( "Sub Type:" ), "cell 6 2,alignx trailing" );
 		this.txtSubType = new JTextField();
+		this.txtSubTypeAutocomplete = new JXAutocomplete( this.txtSubType, StoreManager.getInstance()
+				.getInsertedSubTypes() );
+		this.txtSubType.getInputMap().put( KeyStroke.getKeyStroke( "TAB" ), "commit" );
+		this.txtSubType.getInputMap().put( KeyStroke.getKeyStroke( "ENTER" ), "commit" );
+		this.txtSubType.getActionMap().put( "commit", new CommitAction( this.txtSubTypeAutocomplete ) );
 		add( this.txtSubType, "cell 7 2 2 1,growx" );
 	}
 
@@ -139,6 +145,7 @@ public class MTGBasicInfo extends JPanel
 
 		// this is necessary to update the auto complete textFiled with new inserted series
 		this.txtSeriesAutocomplete.setKeywords( StoreManager.getInstance().getInsertedSeries() );
+		this.txtSubTypeAutocomplete.setKeywords( StoreManager.getInstance().getInsertedSubTypes() );
 	}
 
 //===========================================================================================

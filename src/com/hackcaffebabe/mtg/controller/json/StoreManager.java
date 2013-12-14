@@ -48,7 +48,9 @@ import com.hackcaffebabe.mtg.model.color.CardColor;
 public class StoreManager
 {
 	private HashSet<MTGCard> mtgSet = new HashSet<>();
+	// these are necessary for type-ahead
 	private List<String> lstSeries = new ArrayList<>();
+	private List<String> lstSubTypes = new ArrayList<>();
 
 	private Gson g;
 	private static StoreManager manager;
@@ -110,7 +112,8 @@ public class StoreManager
 					MTGCard c = loadFile( f );
 					if(c != null) {//if null continue
 						mtgSet.add( c );
-						addSeriesToList( c );
+						addSeriesToList( c.getSeries() );
+						addSubTypeToList( c.getSubType() );
 					}
 				}
 			}
@@ -153,7 +156,8 @@ public class StoreManager
 		f.flush();
 		f.close();
 		mtgSet.add( c );
-		addSeriesToList( c );
+		addSeriesToList( c.getSeries() );
+		addSubTypeToList( c.getSubType() );
 
 		log.write( Tag.INFO, String.format( "MTG card json file %s saved correctly.", c.getName() ) );
 		return true;
@@ -168,7 +172,6 @@ public class StoreManager
 	public boolean delete(MTGCard c) throws IllegalArgumentException{
 		if(c == null)
 			throw new IllegalArgumentException( "Card to delete can not to be null." );
-
 		if(!this.mtgSet.contains( c ))
 			return false;
 
@@ -222,15 +225,31 @@ public class StoreManager
 	}
 
 	/* this method add the series string if and only if isn't already inserted into this.lstSeries */
-	private void addSeriesToList(MTGCard c){
-		if(c != null) {
+	private void addSeriesToList(String s){
+		if(s != null && !s.isEmpty()) {
 			Collections.sort( this.lstSeries );
 			if(this.lstSeries.isEmpty()) {
-				this.lstSeries.add( c.getSeries() );
+				this.lstSeries.add( s );
 			} else {
-				int r = Collections.binarySearch( this.lstSeries, c.getSeries() );
+				int r = Collections.binarySearch( this.lstSeries, s );
 				if(r < 0)
-					this.lstSeries.add( c.getSeries() );
+					this.lstSeries.add( s );
+			}
+		}
+	}
+
+	//TODO maybe merge this two methods
+
+	/* this method add the primary effect string if and only if isn't already inserted into this.lstSubTypes */
+	private void addSubTypeToList(String pe){
+		if(pe != null && !pe.isEmpty()) {
+			Collections.sort( this.lstSubTypes );
+			if(this.lstSubTypes.isEmpty()) {
+				this.lstSubTypes.add( pe );
+			} else {
+				int r = Collections.binarySearch( this.lstSubTypes, pe );
+				if(r < 0)
+					this.lstSubTypes.add( pe );
 			}
 		}
 	}
@@ -241,6 +260,7 @@ public class StoreManager
 	public void refresh(){
 		this.mtgSet.clear();
 		this.lstSeries.clear();
+		this.lstSubTypes.clear();
 		this.load();
 	}
 
@@ -351,24 +371,23 @@ public class StoreManager
 //===========================================================================================
 // GETTER
 //===========================================================================================
-	/**
-	 * @return {@link HashSet} of all saved card.
-	 */
+	/** @return {@link HashSet} of all saved card. */
 	public HashSet<MTGCard> getAllCards(){
 		return this.mtgSet;
 	}
 
-	/**
-	 * @return {@link List} of all saved card.
-	 */
+	/** @return {@link List} of all saved card. */
 	public List<MTGCard> getAllCardsAsList(){
 		return new ArrayList<>( this.mtgSet );
 	}
 
-	/**
-	 * @return {@link List} list of inserted series.
-	 */
+	/** @return {@link List} list of inserted series. */
 	public List<String> getInsertedSeries(){
 		return this.lstSeries;
+	}
+
+	/** @return {@link List} list of inserted sun types. */
+	public List<String> getInsertedSubTypes(){
+		return this.lstSubTypes;
 	}
 }

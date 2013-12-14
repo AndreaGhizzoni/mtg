@@ -4,7 +4,6 @@ import it.hackcaffebabe.ioutil.file.PathUtil;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.io.IOException;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -130,6 +129,22 @@ public class DeckEditorContent extends JPanel
 			tabDeckOpened.remove( index );
 	}
 
+	/**
+	 * Entry point to call the save action for all opened tabs
+	 */
+	public void saveAll(){
+		for(int i = 0; i < this.tabDeckOpened.getTabCount() - 1; i++) {
+			((TabContent) this.tabDeckOpened.getTabComponentAt( i )).save();
+		}
+	}
+
+	/**
+	 * Entry point to call the save action for selected tab
+	 */
+	public void saveCurrent(){
+		((TabContent) this.tabDeckOpened.getSelectedComponent()).save();
+	}
+
 //===========================================================================================
 // INNER CLASS
 //===========================================================================================
@@ -140,13 +155,8 @@ public class DeckEditorContent extends JPanel
 		public void mouseClicked(MouseEvent e){
 			if(e.getClickCount() == 2 && SwingUtilities.isLeftMouseButton( e )) {
 				String fileName = lstSavedDeck.getSelectedValue();
-				File f = new File( String.format( DBCostants.DECK_PATH + PathUtil.FILE_SEPARATOR + "%s.mtgdeck",
-						fileName ) );
-				try {//TODO modify this
-					openTab( lstSavedDeck.getSelectedValue(), PathUtil.readContent( f ) );
-				} catch(IOException e1) {
-					e1.printStackTrace();
-				}
+				String f = String.format( DBCostants.DECK_PATH + PathUtil.FILE_SEPARATOR + "%s.mtgdeck", fileName );
+				openTab( lstSavedDeck.getSelectedValue(), PathUtil.forceReadContent( new File( f ) ) );
 			}
 		}
 	}
