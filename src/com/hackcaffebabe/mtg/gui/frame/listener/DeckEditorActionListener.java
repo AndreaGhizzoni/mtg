@@ -14,6 +14,7 @@ import com.hackcaffebabe.mtg.gui.frame.DeckEditor;
 public class DeckEditorActionListener implements ActionListener
 {
 	private static DeckEditorActionListener listener;
+	private DeckEditor frame;
 
 	/**
 	 * @return {@link DeckEditorActionListener} 
@@ -29,6 +30,8 @@ public class DeckEditorActionListener implements ActionListener
 
 	@Override
 	public void actionPerformed(ActionEvent e){
-		new DeckEditor().setVisible( true );
+		if(frame == null)
+			frame = new DeckEditor();
+		frame.setVisible( true );
 	}
 }

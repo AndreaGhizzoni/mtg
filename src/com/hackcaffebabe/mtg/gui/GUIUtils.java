@@ -76,7 +76,7 @@ public class GUIUtils
 	/** Dimension of insert card frame */
 	public static final Dimension DIMENSION_INSERT_CARD = new Dimension( 660, 700 );
 	/** Dimension of advance search frame */
-	public static final Dimension DIMENSION_ADVANCE_SEARCH = new Dimension( 485, 190 );
+	public static final Dimension DIMENSION_ADVANCE_SEARCH = new Dimension( 485, 250 );
 	/** Dimension of Deck editor */
 	public static final Dimension DIMENSION_DECK_EDITOR = new Dimension( 700, 535 );
 

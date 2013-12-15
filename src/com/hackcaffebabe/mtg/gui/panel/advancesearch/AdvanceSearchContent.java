@@ -7,9 +7,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
@@ -54,13 +54,15 @@ public class AdvanceSearchContent extends JPanel
 	private JCheckBox chbHasPrimaryeffect;
 	private JCheckBox chbHasEffect;
 	private JCheckBox chbHasAbility;
+	private JButton btnClear;
+	private JButton btnApply;
 
 	/**
 	 * Create the panel.
 	 */
 	public AdvanceSearchContent(){
 		super();
-		setLayout( new MigLayout( "", "[52.00][100.00][83.00][27.00][190.00]", "[][][][]" ) );
+		setLayout( new MigLayout( "", "[209.00][148.00][190.00]", "[][][][][]" ) );
 		this.initContent();
 		setFocusTraversalPolicy( new FocusTraversalOnArray( new Component[] { chbBlack, chbGreen, chbRed, chbBlue,
 				chbWhite, cmbRarity, cmbSeries, chbIsLegendary, chbHasPrimaryeffect, chbHasEffect, chbHasAbility,
@@ -76,7 +78,6 @@ public class AdvanceSearchContent extends JPanel
 		JPanel pnlCardColor = new JPanel();
 		pnlCardColor.setBorder( new TitledBorder( "Color" ) );
 		pnlCardColor.setLayout( new MigLayout( "", "[][][][][]", "[]" ) );
-		add( pnlCardColor, "cell 0 0 4 1,grow" );
 
 		this.colorsActionListener = new ColorsActionListener();
 		this.chbRed = new JCheckBox( "Red" );
@@ -103,76 +104,101 @@ public class AdvanceSearchContent extends JPanel
 		this.chbWhite.setActionCommand( BasicColors.getAbbraviation( BasicColors.WHITE ) );
 		this.chbWhite.addActionListener( colorsActionListener );
 		pnlCardColor.add( this.chbWhite, "cell 4 0" );
+		add( pnlCardColor, "cell 0 0 2 1,grow" );
 
 		// Rarity
 		JPanel pnlRarity = new JPanel();
 		pnlRarity.setBorder( new TitledBorder( "Rarity" ) );
 		pnlRarity.setLayout( new MigLayout( "", "[]", "[]" ) );
-		add( pnlRarity, "cell 4 0,grow" );
-
 		this.cmbRarity = new JComboBox<>( getRartyCB() );
 		this.cmbRarity.addActionListener( new RarityActionListener() );
 		pnlRarity.add( this.cmbRarity, "cell 0 0,growx" );
-
-		// Series
-		add( new JLabel( "Series:" ), "cell 0 1,alignx trailing" );
-		this.cmbSeries = new JComboBox<String>( getSeriesCB() );
-		this.cmbSeries.addActionListener( new SeriesActionListener() );
-		add( this.cmbSeries, "cell 1 1 2 1,growx" );
+		add( pnlRarity, "cell 2 0,grow" );
 
 		// Converted Mana Cost
 		JPanel pnlConvertedManaCost = new JPanel();
 		pnlConvertedManaCost.setBorder( new TitledBorder( "Conv. Mana Cost" ) );
 		pnlConvertedManaCost.setLayout( new MigLayout( "", "[168.00]", "[]" ) );
-		add( pnlConvertedManaCost, "cell 4 2 1 2,grow" );
-
 		this.spinManaCost = new JSpinner( new SpinnerNumberModel( 0, 0, 100, 1 ) );
 		this.spinManaCost.addChangeListener( new ManaCostChangeListener() );
 		JSpinner.DefaultEditor editor = (JSpinner.DefaultEditor) this.spinManaCost.getEditor();
-		editor.getTextField().setEnabled( true );
+		editor.getTextField().setEnabled( false );
 		editor.getTextField().setEditable( false );
 		pnlConvertedManaCost.add( this.spinManaCost, "cell 0 0,growx,aligny center" );
+		add( pnlConvertedManaCost, "cell 2 1,grow" );
+
+		// Series
+		JPanel pnlSeries = new JPanel();
+		pnlSeries.setBorder( new TitledBorder( "Series" ) );
+		pnlSeries.setLayout( new MigLayout( "", "[grow]", "[]" ) );
+		this.cmbSeries = new JComboBox<String>( getSeriesCB() );
+		this.cmbSeries.addActionListener( new SeriesActionListener() );
+		pnlSeries.add( this.cmbSeries, "cell 0 0,growx" );
+		add( pnlSeries, "cell 0 1 2 1,growx" );
+
+		// Has effect
+		this.chbHasEffect = new JCheckBox( "Has Effect?" );
+		this.chbHasEffect.addActionListener( new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				criteria = criteria.byHasEffect( chbHasEffect.isSelected() ? true : false );
+//				applyCriteriaChanges();
+			}
+		} );
+		add( this.chbHasEffect, "cell 0 3" );
+
+		// Has primary effect
+		this.chbHasPrimaryeffect = new JCheckBox( "Has Primary Effect?" );
+		this.chbHasPrimaryeffect.addActionListener( new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				criteria = criteria.byHasPrimaryEffect( chbHasPrimaryeffect.isSelected() ? true : false );
+//				applyCriteriaChanges();
+			}
+		} );
+		add( this.chbHasPrimaryeffect, "cell 0 2" );
 
 		// Flag
 		this.chbIsLegendary = new JCheckBox( "Is Legendary?" );
 		this.chbIsLegendary.addActionListener( new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e){
-				criteria = criteria.byIsLegendary( chbIsLegendary.isSelected() ? true : null );
-				applyCriteriaChanges();
+				criteria = criteria.byIsLegendary( chbIsLegendary.isSelected() ? true : false );
+//				applyCriteriaChanges();
 			}
 		} );
-		add( this.chbIsLegendary, "cell 0 2 2 1" );
+		add( this.chbIsLegendary, "cell 1 2" );
 
-		this.chbHasPrimaryeffect = new JCheckBox( "Has Primary Effect?" );
-		this.chbHasPrimaryeffect.addActionListener( new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e){
-				criteria = criteria.byHasPrimaryEffect( chbHasPrimaryeffect.isSelected() ? true : null );
-				applyCriteriaChanges();
-			}
-		} );
-		add( this.chbHasPrimaryeffect, "cell 2 2 2 1" );
-
-		this.chbHasEffect = new JCheckBox( "Has Effect?" );
-		this.chbHasEffect.addActionListener( new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e){
-				criteria = criteria.byHasEffect( chbHasEffect.isSelected() ? true : null );
-				applyCriteriaChanges();
-			}
-		} );
-		add( this.chbHasEffect, "cell 0 3 2 1" );
-
+		// Has Ability
 		this.chbHasAbility = new JCheckBox( "Has Ability?" );
 		this.chbHasAbility.addActionListener( new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e){
-				criteria = criteria.byHasAbility( chbHasAbility.isSelected() ? true : null );
+				criteria = criteria.byHasAbility( chbHasAbility.isSelected() ? true : false );
+//				applyCriteriaChanges();
+			}
+		} );
+		add( this.chbHasAbility, "cell 1 3" );
+
+		this.btnClear = new JButton( "Clear" );
+		this.btnClear.addActionListener( new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				criteria = new Criteria();
 				applyCriteriaChanges();
 			}
 		} );
-		add( this.chbHasAbility, "cell 2 3 2 1" );
+		add( this.btnClear, "cell 0 4,growx" );
+
+		this.btnApply = new JButton( "Apply" );
+		this.btnApply.addActionListener( new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				applyCriteriaChanges();
+			}
+		} );
+		add( this.btnApply, "cell 1 4 2 1,growx" );
+
 	}
 
 	/* return the rarity as combo box model. */
@@ -227,7 +253,7 @@ public class AdvanceSearchContent extends JPanel
 			} else {// WHITE
 				criteria = criteria.byBasiColors( BasicColors.WHITE );
 			}
-			applyCriteriaChanges();
+//			applyCriteriaChanges();
 		}
 	}
 
@@ -238,7 +264,7 @@ public class AdvanceSearchContent extends JPanel
 		public void actionPerformed(ActionEvent e){
 			String sel = (String) cmbSeries.getSelectedItem();
 			criteria = criteria.bySeries( sel.equals( "-------------" ) ? null : sel );
-			applyCriteriaChanges();
+//			applyCriteriaChanges();
 		}
 	}
 
@@ -259,7 +285,7 @@ public class AdvanceSearchContent extends JPanel
 			} else {// "--------"
 				criteria = criteria.byRarity( null );
 			}
-			applyCriteriaChanges();
+//			applyCriteriaChanges();
 		}
 	}
 
@@ -271,7 +297,7 @@ public class AdvanceSearchContent extends JPanel
 			JSpinner s = (JSpinner) e.getSource();
 			int val = (Integer) s.getValue();
 			criteria = criteria.byConvertedManaCost( val == 0 ? null : val );
-			applyCriteriaChanges();
+//			applyCriteriaChanges();
 		}
 	}
 }

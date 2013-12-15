@@ -25,11 +25,8 @@ public class NewCardActionListener implements ActionListener
 
 	@Override
 	public void actionPerformed(ActionEvent e){
-		if(frame == null) {
+		if(frame == null)
 			frame = new InsertUpdateCard( null );
-		} else {
-			frame.toFront();
-		}
 		frame.setVisible( true );
 	}
 }

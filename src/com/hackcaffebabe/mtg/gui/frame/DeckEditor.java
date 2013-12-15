@@ -112,10 +112,10 @@ public class DeckEditor extends JFrame
 		menuFile.add( menuFileClose );
 
 		JMenu menuEdit = new JMenu( "Edit" );
-		JMenuItem menuEditDeleteCurrent = new JMenuItem( "Delete deck" );
-		menuEditDeleteCurrent.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_DELETE, Event.CTRL_MASK
+		JMenuItem menuEditDelCurrent = new JMenuItem( "Delete deck" );
+		menuEditDelCurrent.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_DELETE, Event.CTRL_MASK
 				+ Event.SHIFT_MASK ) );
-		menuEditDeleteCurrent.addActionListener( new DeleteFileActionListener() );
+		menuEditDelCurrent.addActionListener( new DeleteFileActionListener() );
 
 		JMenuItem menuEditRename = new JMenuItem( "Rename" );
 		menuEditRename.setAccelerator( KeyStroke.getKeyStroke( "F2" ) );
@@ -129,7 +129,7 @@ public class DeckEditor extends JFrame
 			}
 		} );
 
-		menuEdit.add( menuEditDeleteCurrent );
+		menuEdit.add( menuEditDelCurrent );
 		menuEdit.add( menuEditRename );
 		menuEdit.addSeparator();
 		menuEdit.add( menuEditRefresh );

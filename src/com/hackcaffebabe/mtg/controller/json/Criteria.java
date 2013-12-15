@@ -2,6 +2,14 @@ package com.hackcaffebabe.mtg.controller.json;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.hackcaffebabe.mtg.model.Artifact;
+import com.hackcaffebabe.mtg.model.Creature;
+import com.hackcaffebabe.mtg.model.Enchantment;
+import com.hackcaffebabe.mtg.model.Instant;
+import com.hackcaffebabe.mtg.model.Land;
+import com.hackcaffebabe.mtg.model.MTGCard;
+import com.hackcaffebabe.mtg.model.Planeswalker;
+import com.hackcaffebabe.mtg.model.Sorcery;
 import com.hackcaffebabe.mtg.model.card.Rarity;
 import com.hackcaffebabe.mtg.model.color.BasicColors;
 
@@ -27,12 +35,91 @@ public class Criteria
 
 	private Boolean isLegendary = null;
 	private Boolean hasPrimaryEffect = null;
+
 	private Boolean hasEffect = null;
-	private Boolean hasAbility = null;
+	private Boolean hasAbility = null;//TODO maybe filter by ability
 
 //===========================================================================================
 // METHOD
 //===========================================================================================
+	public boolean exactlyMatch(){
+		return false;
+	}
+
+	public boolean match(MTGCard mtg){
+		if(mtg == null || isEmpty())
+			return true;// if no criteria was set, every card match whit this criteria
+
+		if(name != null) {
+			if(mtg.getName().equals( name ))
+				return true;
+		}
+
+		if(convertedManaCost != null) {
+			if(!(mtg instanceof Land)) {
+				int mc = -1;
+				if(mtg instanceof Creature)
+					mc = ((Creature) mtg).getManaCost().getConvertedManaCost();
+				else if(mtg instanceof Sorcery)
+					mc = ((Sorcery) mtg).getManaCost().getConvertedManaCost();
+				else if(mtg instanceof Instant)
+					mc = ((Instant) mtg).getManaCost().getConvertedManaCost();
+				else if(mtg instanceof Enchantment)
+					mc = ((Enchantment) mtg).getManaCost().getConvertedManaCost();
+				else if(mtg instanceof Planeswalker)
+					mc = ((Planeswalker) mtg).getManaCost().getConvertedManaCost();
+				else mc = ((Artifact) mtg).getManaCost().getConvertedManaCost();
+				if(convertedManaCost.equals( mc ))
+					return true;
+			}
+		}
+
+		if(subType != null) {
+			if(mtg.getSubType().equals( subType ))
+				return true;
+		}
+
+		if(series != null) {
+			if(mtg.getSeries().equals( series ))
+				return true;
+		}
+
+		for(BasicColors b: colors) {
+			if(mtg.getCardColor().getBasicColors().contains( b ))
+				return true;
+		}
+
+		if(rarity != null) {
+			if(mtg.getRarity().equals( rarity ))
+				return true;
+		}
+
+		if(isLegendary != null) {
+			if(mtg.isLegendary() == isLegendary)
+				return true;
+		}
+
+		if(hasPrimaryEffect != null && mtg.getPrimaryEffect() != null) {
+			if(!mtg.getPrimaryEffect().isEmpty() == hasPrimaryEffect)
+				return true;
+		}
+
+		if(hasEffect != null) {
+			if(!mtg.getEffects().isEmpty())
+				return true;
+		}
+
+		if(hasAbility != null) {
+			boolean hasPWAbilitis = false;
+			if(mtg instanceof Planeswalker)
+				hasPWAbilitis = true;// if is a PW, it has abilities
+			if(!mtg.getAbilities().isEmpty() || hasPWAbilitis)
+				return true;
+		}
+
+		return false;
+	}
+
 	/**
 	 * This method set the criteria by name.
 	 * @param n {@link String} the name to search.

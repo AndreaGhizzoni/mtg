@@ -83,7 +83,7 @@ public class DeckEditorContent extends JPanel
 		if(i != -1) {
 			tabDeckOpened.setSelectedIndex( i );
 		} else {
-			TabContent tabContent = new TabContent( content );
+			TabContent tabContent = new TabContent( tabName, content );
 			tabDeckOpened.add( tabName == null ? "null" : tabName, tabContent );
 			tabDeckOpened.setTabComponentAt( tabDeckOpened.getTabCount() - 1, new TabComponent( tabDeckOpened ) );
 			tabDeckOpened.setSelectedIndex( tabDeckOpened.getTabCount() - 1 );// set focus on the last tab
@@ -133,8 +133,8 @@ public class DeckEditorContent extends JPanel
 	 * Entry point to call the save action for all opened tabs
 	 */
 	public void saveAll(){
-		for(int i = 0; i < this.tabDeckOpened.getTabCount() - 1; i++) {
-			((TabContent) this.tabDeckOpened.getTabComponentAt( i )).save();
+		for(int i = 0; i < this.tabDeckOpened.getTabCount(); i++) {
+			((TabContent) this.tabDeckOpened.getComponentAt( i )).save();
 		}
 	}
 
@@ -142,7 +142,9 @@ public class DeckEditorContent extends JPanel
 	 * Entry point to call the save action for selected tab
 	 */
 	public void saveCurrent(){
-		((TabContent) this.tabDeckOpened.getSelectedComponent()).save();
+		TabContent b = (TabContent) this.tabDeckOpened.getSelectedComponent();
+		if(b != null)
+			b.save();
 	}
 
 //===========================================================================================

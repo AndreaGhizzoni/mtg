@@ -22,20 +22,12 @@ import com.hackcaffebabe.mtg.controller.json.adapter.MTGCardAdapter;
 import com.hackcaffebabe.mtg.controller.json.adapter.ManaCostAdapter;
 import com.hackcaffebabe.mtg.controller.json.adapter.PlanesAbilityAdapter;
 import com.hackcaffebabe.mtg.controller.json.adapter.StrengthAdapter;
-import com.hackcaffebabe.mtg.model.Artifact;
-import com.hackcaffebabe.mtg.model.Creature;
-import com.hackcaffebabe.mtg.model.Enchantment;
-import com.hackcaffebabe.mtg.model.Instant;
-import com.hackcaffebabe.mtg.model.Land;
 import com.hackcaffebabe.mtg.model.MTGCard;
-import com.hackcaffebabe.mtg.model.Planeswalker;
-import com.hackcaffebabe.mtg.model.Sorcery;
 import com.hackcaffebabe.mtg.model.card.Ability;
 import com.hackcaffebabe.mtg.model.card.Effect;
 import com.hackcaffebabe.mtg.model.card.ManaCost;
 import com.hackcaffebabe.mtg.model.card.PlanesAbility;
 import com.hackcaffebabe.mtg.model.card.Strength;
-import com.hackcaffebabe.mtg.model.color.BasicColors;
 import com.hackcaffebabe.mtg.model.color.CardColor;
 
 
@@ -266,84 +258,17 @@ public class StoreManager
 
 	/**
 	 * This method search a card with some {@link Criteria}.
-	 * @param c {@link Criteria} to search the card.
+	 * @param criteria {@link Criteria} to search the card.
 	 * @return {@link List} of {@link MTGCard}
 	 */
-	public List<MTGCard> searchBy(Criteria c){
-		if(c == null || c.isEmpty())
+	public List<MTGCard> searchBy(Criteria criteria){
+		if(criteria == null || criteria.isEmpty())
 			return getAllCardsAsList();
 
 		HashSet<MTGCard> set = new HashSet<>();
 		for(MTGCard m: this.mtgSet) {
-			if(c.getName() != null) {
-				if(c.getName().replaceAll( " ", "" ).toLowerCase()
-						.equals( m.getName().replaceAll( " ", "" ).toLowerCase() ))
-					set.add( m );
-			}
-
-			if(c.getConvertedManaCost() != null) {
-				if(!(m instanceof Land)) {
-					int mc = -1;
-					if(m instanceof Creature)
-						mc = ((Creature) m).getManaCost().getConvertedManaCost();
-					else if(m instanceof Sorcery)
-						mc = ((Sorcery) m).getManaCost().getConvertedManaCost();
-					else if(m instanceof Instant)
-						mc = ((Instant) m).getManaCost().getConvertedManaCost();
-					else if(m instanceof Enchantment)
-						mc = ((Enchantment) m).getManaCost().getConvertedManaCost();
-					else if(m instanceof Planeswalker)
-						mc = ((Planeswalker) m).getManaCost().getConvertedManaCost();
-					else mc = ((Artifact) m).getManaCost().getConvertedManaCost();
-
-					if(c.getConvertedManaCost().equals( mc ))
-						set.add( m );
-				}
-			}
-
-			if(c.getSubType() != null) {
-				if(c.getSubType().replaceAll( " ", "" ).toLowerCase()
-						.equals( m.getSubType().replaceAll( " ", "" ).toLowerCase() ))
-					set.add( m );
-			}
-
-			if(c.getSeries() != null) {
-				if(c.getSeries().replaceAll( " ", "" ).toLowerCase()
-						.equals( m.getSeries().replaceAll( " ", "" ).toLowerCase() ))
-					set.add( m );
-			}
-
-			for(BasicColors a: c.getColors()) {
-				if(m.getCardColor().getBasicColors().contains( a )) {
-					set.add( m );
-					break;
-				}
-			}
-
-			if(c.getRarity() != null) {
-				if(c.getRarity() == m.getRarity())
-					set.add( m );
-			}
-
-			if(c.getIsLegendary() != null) {
-				if(c.getIsLegendary() && m.isLegendary())
-					set.add( m );
-			}
-
-			if(c.getHasPrimaryEffect() != null && c.getHasPrimaryEffect()) {
-				if(m.getPrimaryEffect() != null && !m.getPrimaryEffect().isEmpty())
-					set.add( m );
-			}
-
-			if(c.getHasEffect() != null && c.getHasEffect()) {
-				if(!m.getEffects().isEmpty())
-					set.add( m );
-			}
-
-			if(c.getHasAbility() != null && c.getHasAbility()) {
-				if(!m.getAbilities().isEmpty())
-					set.add( m );
-			}
+			if(criteria.match( m ))
+				set.add( m );
 		}
 		return new ArrayList<>( set );
 	}
