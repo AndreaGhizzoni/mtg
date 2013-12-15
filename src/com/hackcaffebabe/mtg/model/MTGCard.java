@@ -236,8 +236,8 @@ public abstract class MTGCard extends DisplayableObject implements Serializable
 	 */
 	public String getJSONFileName(){
 		StringBuilder r = new StringBuilder();
-		String name = this.getName().toLowerCase();
-		String series = this.getSeries().toLowerCase();
+		String name = DBCostants.normalizeForStorage( getName().toLowerCase().replaceAll( " ", "" ) );
+		String series = DBCostants.normalizeForStorage( getSeries().toLowerCase().replaceAll( " ", "" ) );
 		String name_series = String.format( "%s_%s.json", name, series );
 		r.append( DBCostants.JSON_PATH );
 		r.append( PathUtil.FILE_SEPARATOR );

@@ -1,6 +1,20 @@
 package com.hackcaffebabe.mtg.controller.json.adapter;
 
-import static com.hackcaffebabe.mtg.controller.DBCostants.*;
+import static com.hackcaffebabe.mtg.controller.DBCostants.JSON_TAG_ABILITIES;
+import static com.hackcaffebabe.mtg.controller.DBCostants.JSON_TAG_CARD_COLOR;
+import static com.hackcaffebabe.mtg.controller.DBCostants.JSON_TAG_EFFECTS;
+import static com.hackcaffebabe.mtg.controller.DBCostants.JSON_TAG_IS_ARTIFACT;
+import static com.hackcaffebabe.mtg.controller.DBCostants.JSON_TAG_IS_LEGENDARY;
+import static com.hackcaffebabe.mtg.controller.DBCostants.JSON_TAG_LIFE;
+import static com.hackcaffebabe.mtg.controller.DBCostants.JSON_TAG_MANA_COST;
+import static com.hackcaffebabe.mtg.controller.DBCostants.JSON_TAG_NAME;
+import static com.hackcaffebabe.mtg.controller.DBCostants.JSON_TAG_PLANES_ABILITY;
+import static com.hackcaffebabe.mtg.controller.DBCostants.JSON_TAG_PRIMARY_EFFECT;
+import static com.hackcaffebabe.mtg.controller.DBCostants.JSON_TAG_RARITY;
+import static com.hackcaffebabe.mtg.controller.DBCostants.JSON_TAG_SERIES;
+import static com.hackcaffebabe.mtg.controller.DBCostants.JSON_TAG_STRENGTH;
+import static com.hackcaffebabe.mtg.controller.DBCostants.JSON_TAG_SUB_TYPE;
+import static com.hackcaffebabe.mtg.controller.DBCostants.JSON_TAG_TYPE;
 import java.lang.reflect.Type;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,7 +26,13 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-import com.hackcaffebabe.mtg.model.*;
+import com.hackcaffebabe.mtg.model.Artifact;
+import com.hackcaffebabe.mtg.model.Creature;
+import com.hackcaffebabe.mtg.model.Enchantment;
+import com.hackcaffebabe.mtg.model.Instant;
+import com.hackcaffebabe.mtg.model.MTGCard;
+import com.hackcaffebabe.mtg.model.Planeswalker;
+import com.hackcaffebabe.mtg.model.Sorcery;
 import com.hackcaffebabe.mtg.model.card.ManaCost;
 import com.hackcaffebabe.mtg.model.card.PlanesAbility;
 import com.hackcaffebabe.mtg.model.card.Strength;
@@ -92,6 +112,8 @@ public class MTGCardAdapter implements JsonSerializer<MTGCard>, JsonDeserializer
 					Class.forName( "com.hackcaffebabe.mtg.model.color.CardColor" ) );
 			c.setCardColor( cc );
 			c.setColumnNames( new String[] { "Name", "Card Color", "Type", "Sub Type", "Rarity" } );
+			c.setLegendary( json.getAsJsonObject().get( JSON_TAG_IS_LEGENDARY ).getAsBoolean() );
+			c.setArtifact( json.getAsJsonObject().get( JSON_TAG_IS_ARTIFACT ).getAsBoolean() );
 			String subType = json.getAsJsonObject().get( JSON_TAG_SUB_TYPE ).getAsString();
 			if(subType != null)
 				c.setSubType( subType );

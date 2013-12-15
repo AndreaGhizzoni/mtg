@@ -40,7 +40,8 @@ public class DeleteCardActionListener implements ActionListener
 				try {
 					StoreManager.getInstance().delete( card );
 					PNL_MTGPROPERTIES.clearAll();
-					((JButton) e.getSource()).setEnabled( false );
+					if(e.getSource() instanceof JButton)
+						((JButton) e.getSource()).setEnabled( false );
 					refreshMTGTable();
 					JOptionPane.showMessageDialog( null, card.getName() + " delete correctly!", "Operation complete!",
 							JOptionPane.INFORMATION_MESSAGE );

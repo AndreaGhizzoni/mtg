@@ -172,7 +172,7 @@ public class Criteria
 	/**
 	 * This method set the criteria by {@link BasicColors}.
 	 * @param b {@link BasicColors} the basic to search.
-	 * @return
+	 * @return {@link Criteria} with the basic color flag set.
 	 */
 	public Criteria byBasiColors(BasicColors b){
 		if(b != null) {
@@ -181,6 +181,8 @@ public class Criteria
 			} else {
 				this.colors.add( b );
 			}
+		} else {
+			this.colors.clear();
 		}
 		return this;
 	}

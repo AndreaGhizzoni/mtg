@@ -2,7 +2,6 @@ package com.hackcaffebabe.mtg.gui.panel.advancesearch;
 
 import static com.hackcaffebabe.mtg.gui.GUIUtils.JXTABLE_MTG;
 import it.hackcaffebabe.jx.table.model.JXObjectModel;
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -14,13 +13,10 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import net.miginfocom.swing.MigLayout;
 import com.hackcaffebabe.mtg.controller.json.Criteria;
 import com.hackcaffebabe.mtg.controller.json.StoreManager;
 import com.hackcaffebabe.mtg.gui.frame.AdvanceSearch;
-import com.hackcaffebabe.mtg.gui.panel.FocusTraversalOnArray;
 import com.hackcaffebabe.mtg.model.MTGCard;
 import com.hackcaffebabe.mtg.model.card.Rarity;
 import com.hackcaffebabe.mtg.model.color.BasicColors;
@@ -37,7 +33,6 @@ public class AdvanceSearchContent extends JPanel
 	private static final long serialVersionUID = 1L;
 	private Criteria criteria = new Criteria();
 
-	private ColorsActionListener colorsActionListener;
 	private JCheckBox chbRed;
 	private JCheckBox chbBlack;
 	private JCheckBox chbGreen;
@@ -50,23 +45,13 @@ public class AdvanceSearchContent extends JPanel
 
 	private JSpinner spinManaCost;
 
-	private JCheckBox chbIsLegendary;
-	private JCheckBox chbHasPrimaryeffect;
-	private JCheckBox chbHasEffect;
-	private JCheckBox chbHasAbility;
-	private JButton btnClear;
-	private JButton btnApply;
-
 	/**
 	 * Create the panel.
 	 */
 	public AdvanceSearchContent(){
 		super();
-		setLayout( new MigLayout( "", "[209.00][148.00][190.00]", "[][][][][]" ) );
+		setLayout( new MigLayout( "", "[209.00][148.00][190.00]", "[][][]" ) );
 		this.initContent();
-		setFocusTraversalPolicy( new FocusTraversalOnArray( new Component[] { chbBlack, chbGreen, chbRed, chbBlue,
-				chbWhite, cmbRarity, cmbSeries, chbIsLegendary, chbHasPrimaryeffect, chbHasEffect, chbHasAbility,
-				spinManaCost } ) );
 	}
 
 //===========================================================================================
@@ -79,30 +64,24 @@ public class AdvanceSearchContent extends JPanel
 		pnlCardColor.setBorder( new TitledBorder( "Color" ) );
 		pnlCardColor.setLayout( new MigLayout( "", "[][][][][]", "[]" ) );
 
-		this.colorsActionListener = new ColorsActionListener();
 		this.chbRed = new JCheckBox( "Red" );
 		this.chbRed.setActionCommand( BasicColors.getAbbraviation( BasicColors.RED ) );
-		this.chbRed.addActionListener( colorsActionListener );
 		pnlCardColor.add( this.chbRed, "cell 0 0" );
 
 		this.chbBlack = new JCheckBox( "Black" );
 		this.chbBlack.setActionCommand( BasicColors.getAbbraviation( BasicColors.BLACK ) );
-		this.chbBlack.addActionListener( colorsActionListener );
 		pnlCardColor.add( this.chbBlack, "cell 1 0" );
 
 		this.chbGreen = new JCheckBox( "Green" );
 		this.chbGreen.setActionCommand( BasicColors.getAbbraviation( BasicColors.GREEN ) );
-		this.chbGreen.addActionListener( colorsActionListener );
 		pnlCardColor.add( this.chbGreen, "cell 2 0" );
 
 		this.chbBlue = new JCheckBox( "Blue" );
 		this.chbBlue.setActionCommand( BasicColors.getAbbraviation( BasicColors.BLUE ) );
-		this.chbBlue.addActionListener( colorsActionListener );
 		pnlCardColor.add( this.chbBlue, "cell 3 0" );
 
 		this.chbWhite = new JCheckBox( "White" );
 		this.chbWhite.setActionCommand( BasicColors.getAbbraviation( BasicColors.WHITE ) );
-		this.chbWhite.addActionListener( colorsActionListener );
 		pnlCardColor.add( this.chbWhite, "cell 4 0" );
 		add( pnlCardColor, "cell 0 0 2 1,grow" );
 
@@ -111,7 +90,6 @@ public class AdvanceSearchContent extends JPanel
 		pnlRarity.setBorder( new TitledBorder( "Rarity" ) );
 		pnlRarity.setLayout( new MigLayout( "", "[]", "[]" ) );
 		this.cmbRarity = new JComboBox<>( getRartyCB() );
-		this.cmbRarity.addActionListener( new RarityActionListener() );
 		pnlRarity.add( this.cmbRarity, "cell 0 0,growx" );
 		add( pnlRarity, "cell 2 0,grow" );
 
@@ -120,9 +98,7 @@ public class AdvanceSearchContent extends JPanel
 		pnlConvertedManaCost.setBorder( new TitledBorder( "Conv. Mana Cost" ) );
 		pnlConvertedManaCost.setLayout( new MigLayout( "", "[168.00]", "[]" ) );
 		this.spinManaCost = new JSpinner( new SpinnerNumberModel( 0, 0, 100, 1 ) );
-		this.spinManaCost.addChangeListener( new ManaCostChangeListener() );
 		JSpinner.DefaultEditor editor = (JSpinner.DefaultEditor) this.spinManaCost.getEditor();
-		editor.getTextField().setEnabled( false );
 		editor.getTextField().setEditable( false );
 		pnlConvertedManaCost.add( this.spinManaCost, "cell 0 0,growx,aligny center" );
 		add( pnlConvertedManaCost, "cell 2 1,grow" );
@@ -132,73 +108,22 @@ public class AdvanceSearchContent extends JPanel
 		pnlSeries.setBorder( new TitledBorder( "Series" ) );
 		pnlSeries.setLayout( new MigLayout( "", "[grow]", "[]" ) );
 		this.cmbSeries = new JComboBox<String>( getSeriesCB() );
-		this.cmbSeries.addActionListener( new SeriesActionListener() );
 		pnlSeries.add( this.cmbSeries, "cell 0 0,growx" );
 		add( pnlSeries, "cell 0 1 2 1,growx" );
 
-		// Has effect
-		this.chbHasEffect = new JCheckBox( "Has Effect?" );
-		this.chbHasEffect.addActionListener( new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e){
-				criteria = criteria.byHasEffect( chbHasEffect.isSelected() ? true : false );
-//				applyCriteriaChanges();
-			}
-		} );
-		add( this.chbHasEffect, "cell 0 3" );
-
-		// Has primary effect
-		this.chbHasPrimaryeffect = new JCheckBox( "Has Primary Effect?" );
-		this.chbHasPrimaryeffect.addActionListener( new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e){
-				criteria = criteria.byHasPrimaryEffect( chbHasPrimaryeffect.isSelected() ? true : false );
-//				applyCriteriaChanges();
-			}
-		} );
-		add( this.chbHasPrimaryeffect, "cell 0 2" );
-
-		// Flag
-		this.chbIsLegendary = new JCheckBox( "Is Legendary?" );
-		this.chbIsLegendary.addActionListener( new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e){
-				criteria = criteria.byIsLegendary( chbIsLegendary.isSelected() ? true : false );
-//				applyCriteriaChanges();
-			}
-		} );
-		add( this.chbIsLegendary, "cell 1 2" );
-
-		// Has Ability
-		this.chbHasAbility = new JCheckBox( "Has Ability?" );
-		this.chbHasAbility.addActionListener( new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e){
-				criteria = criteria.byHasAbility( chbHasAbility.isSelected() ? true : false );
-//				applyCriteriaChanges();
-			}
-		} );
-		add( this.chbHasAbility, "cell 1 3" );
-
-		this.btnClear = new JButton( "Clear" );
-		this.btnClear.addActionListener( new ActionListener(){
+		JButton btnClear = new JButton( "Clear" );
+		btnClear.addActionListener( new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e){
 				criteria = new Criteria();
 				applyCriteriaChanges();
 			}
 		} );
-		add( this.btnClear, "cell 0 4,growx" );
+		add( btnClear, "cell 0 2,growx" );
 
-		this.btnApply = new JButton( "Apply" );
-		this.btnApply.addActionListener( new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e){
-				applyCriteriaChanges();
-			}
-		} );
-		add( this.btnApply, "cell 1 4 2 1,growx" );
-
+		JButton btnApply = new JButton( "Apply" );
+		btnApply.addActionListener( new ApplyActionListener() );
+		add( btnApply, "cell 1 2 2 1,growx" );
 	}
 
 	/* return the rarity as combo box model. */
@@ -236,68 +161,46 @@ public class AdvanceSearchContent extends JPanel
 //===========================================================================================
 // INNER CLASS
 //===========================================================================================
-	/* event on click on Colors */
-	private class ColorsActionListener implements ActionListener
+	/* event handle of apply button */
+	private class ApplyActionListener implements ActionListener
 	{
 		@Override
 		public void actionPerformed(ActionEvent e){
-			String ac = e.getActionCommand();
-			if(ac.equals( BasicColors.getAbbraviation( BasicColors.RED ) )) {
-				criteria = criteria.byBasiColors( BasicColors.RED );
-			} else if(ac.equals( BasicColors.getAbbraviation( BasicColors.BLACK ) )) {
-				criteria = criteria.byBasiColors( BasicColors.BLACK );
-			} else if(ac.equals( BasicColors.getAbbraviation( BasicColors.GREEN ) )) {
-				criteria = criteria.byBasiColors( BasicColors.GREEN );
-			} else if(ac.equals( BasicColors.getAbbraviation( BasicColors.BLUE ) )) {
-				criteria = criteria.byBasiColors( BasicColors.BLUE );
-			} else {// WHITE
-				criteria = criteria.byBasiColors( BasicColors.WHITE );
-			}
-//			applyCriteriaChanges();
-		}
-	}
+			if(chbRed.isSelected())
+				criteria.byBasiColors( BasicColors.RED );
+			if(chbBlack.isSelected())
+				criteria.byBasiColors( BasicColors.BLACK );
+			if(chbGreen.isSelected())
+				criteria.byBasiColors( BasicColors.GREEN );
+			if(chbBlue.isSelected())
+				criteria.byBasiColors( BasicColors.BLUE );
+			if(chbWhite.isSelected())
+				criteria.byBasiColors( BasicColors.WHITE );
+			boolean noColorSel = !chbRed.isSelected() && !chbBlack.isSelected() && !chbGreen.isSelected()
+					&& !chbBlue.isSelected() && !chbWhite.isSelected();
+			if(noColorSel)
+				criteria.byBasiColors( null );
 
-	/* event on click on Series */
-	private class SeriesActionListener implements ActionListener
-	{
-		@Override
-		public void actionPerformed(ActionEvent e){
-			String sel = (String) cmbSeries.getSelectedItem();
-			criteria = criteria.bySeries( sel.equals( "-------------" ) ? null : sel );
-//			applyCriteriaChanges();
-		}
-	}
-
-	/* event on change the rarity */
-	private class RarityActionListener implements ActionListener
-	{
-		@Override
-		public void actionPerformed(ActionEvent e){
-			String sel = (String) cmbRarity.getSelectedItem();
-			if(sel.equals( Rarity.COMMON.toString() )) {
-				criteria = criteria.byRarity( Rarity.COMMON );
-			} else if(sel.equals( Rarity.NON_COMMON.toString() )) {
-				criteria = criteria.byRarity( Rarity.NON_COMMON );
-			} else if(sel.equals( Rarity.RARE.toString() )) {
-				criteria = criteria.byRarity( Rarity.RARE );
-			} else if(sel.equals( Rarity.MYTHIC.toString() )) {
-				criteria = criteria.byRarity( Rarity.MYTHIC );
+			String rar = (String) cmbRarity.getSelectedItem();
+			if(rar.equals( Rarity.COMMON.toString() )) {
+				criteria.byRarity( Rarity.COMMON );
+			} else if(rar.equals( Rarity.NON_COMMON.toString() )) {
+				criteria.byRarity( Rarity.NON_COMMON );
+			} else if(rar.equals( Rarity.RARE.toString() )) {
+				criteria.byRarity( Rarity.RARE );
+			} else if(rar.equals( Rarity.MYTHIC.toString() )) {
+				criteria.byRarity( Rarity.MYTHIC );
 			} else {// "--------"
-				criteria = criteria.byRarity( null );
+				criteria.byRarity( null );
 			}
-//			applyCriteriaChanges();
-		}
-	}
 
-	/* event on change mana cost */
-	private class ManaCostChangeListener implements ChangeListener
-	{
-		@Override
-		public void stateChanged(ChangeEvent e){
-			JSpinner s = (JSpinner) e.getSource();
-			int val = (Integer) s.getValue();
-			criteria = criteria.byConvertedManaCost( val == 0 ? null : val );
-//			applyCriteriaChanges();
+			String s = (String) cmbSeries.getSelectedItem();
+			criteria.bySeries( s.equals( "-------------" ) ? null : s );
+
+			int val = (Integer) spinManaCost.getValue();
+			criteria.byConvertedManaCost( val == 0 ? null : val );
+
+			applyCriteriaChanges();
 		}
 	}
 }
