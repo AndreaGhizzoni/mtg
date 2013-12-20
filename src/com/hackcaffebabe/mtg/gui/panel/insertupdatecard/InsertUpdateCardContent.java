@@ -287,7 +287,7 @@ public class InsertUpdateCardContent extends JPanel
 		tableEffects.setModel( new JXObjectModel<>() );
 	}
 
-	/* reset ALL int the form */
+	/* reset ALL the form */
 	private void resetTheForm(){
 		disableAllInPanel();
 		clearEffectsAndAbilityTable();
@@ -329,8 +329,7 @@ public class InsertUpdateCardContent extends JPanel
 			}
 		}
 		//this is to call action event
-		this.MTGTypeListener
-				.actionPerformed( new ActionEvent( new Object(), 1, cardToUpdate.getClass().getSimpleName() ) );
+		this.MTGTypeListener.actionPerformed( new ActionEvent( this, 1, cardToUpdate.getClass().getSimpleName() ) );
 
 		this.pnlMTGBasicInfo.setData( cardToUpdate );
 		this.txtPrimaryEffect.setText( cardToUpdate.getPrimaryEffect() );

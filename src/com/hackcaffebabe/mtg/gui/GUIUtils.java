@@ -116,8 +116,6 @@ public class GUIUtils
 				List<MTGCard> lst = StoreManager.getInstance().getAllCardsAsList();
 				if(!lst.isEmpty()) {
 					JXTABLE_MTG.setModel( new JXObjectModel<MTGCard>( lst ) );
-
-					//update sorter and text search
 					JXTABLE_MTG.refreshRowSorter();
 					JXTABLE_MTG_COLUMN_ADJUSTER.adjustColumns();
 				} else {

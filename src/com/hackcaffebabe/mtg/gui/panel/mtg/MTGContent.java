@@ -101,7 +101,7 @@ public class MTGContent extends JPanel
 		JXTABLE_MTG.getSelectionModel().setSelectionMode( ListSelectionModel.SINGLE_SELECTION );
 		JXTABLE_MTG.getSelectionModel().addListSelectionListener( this.tableSelectionListener );
 		JXTABLE_MTG.addMouseListener( new DoubleClickMouseAdapter() );
-		JXTABLE_MTG_COLUMN_ADJUSTER = new JXTableColumnAdjuster( JXTABLE_MTG );
+		JXTABLE_MTG_COLUMN_ADJUSTER = new JXTableColumnAdjuster( JXTABLE_MTG, 5 );
 		pnlMTGList.add( new JScrollPane( JXTABLE_MTG, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED ), "cell 0 0,grow" );
 
