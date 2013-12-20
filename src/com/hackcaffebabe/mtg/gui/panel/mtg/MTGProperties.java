@@ -184,8 +184,8 @@ public class MTGProperties extends JPanel
 			for(T a: setOfAbilityClaxx)
 				model.addObject( a );
 			this.tableAbility.setModel( model );
-			this.tableColumnAdjusterAbility.adjustColumns();
 			this.tableAbility.getColumnModel().getColumn( 1 ).setCellRenderer( new CellRendererAsTextArea() );
+			this.tableColumnAdjusterAbility.adjustColumns();
 		}
 
 		if(!setOfEffects.isEmpty()) {
@@ -193,8 +193,8 @@ public class MTGProperties extends JPanel
 			for(Effect e: setOfEffects)
 				model.addObject( e );
 			this.tableEffects.setModel( model );
-			this.tableColumnAdjusterEffects.adjustColumns();
 			this.tableEffects.getColumnModel().getColumn( 1 ).setCellRenderer( new CellRendererAsTextArea() );
+			this.tableColumnAdjusterEffects.adjustColumns();
 		}
 	}
 

@@ -24,7 +24,7 @@ public class PlanesAbility extends DisplayableObject implements Serializable
 	 */
 	public PlanesAbility(int cost, String description) throws IllegalArgumentException{
 		super( PlanesAbility.class );
-		setColumnNames( new String[] { "Name", "Description" } );
+		setColumnNames( new String[] { "Life", "Description" } );
 
 		this.setCost( cost );
 		this.setDescription( description );

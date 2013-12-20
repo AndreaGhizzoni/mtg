@@ -1,9 +1,7 @@
 package com.hackcaffebabe.mtg.gui.panel.insertupdatecard;
 
-import static com.hackcaffebabe.mtg.controller.DBCostants.normalize;
 import static com.hackcaffebabe.mtg.controller.DBCostants.normalizeForStorage;
 import static com.hackcaffebabe.mtg.controller.DBCostants.removeAccentCharacters;
-import static com.hackcaffebabe.mtg.controller.DBCostants.removeSpaceStartEnd;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.AC_ARTIFACT;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.AC_CREATURE;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.AC_ENCHANTMENT;
@@ -84,14 +82,14 @@ public class InsertUpdateCardContent extends JPanel
 
 	private MTGBasicInfo pnlMTGBasicInfo;
 
-	private JXTable tableAbility;
+	private JXTable tableAbility;//TODO add double click to modify the ability (but maybe will be more complicated to update ability.json file"
 	private JXTableColumnAdjuster tableAbilityColumnAdjuster;
 	private JButton btnAddAbility;
 	private JButton btnDelAbility;
 
 	private JTextArea txtPrimaryEffect;
 
-	private JXTable tableEffects;
+	private JXTable tableEffects;//TODO add double click to modify the effects (that is so easy)
 	private JXTableColumnAdjuster tableEffectsColumnAdjuster;
 	private JButton btnAddEffect;
 	private JButton btnDelEffect;
@@ -289,6 +287,14 @@ public class InsertUpdateCardContent extends JPanel
 		tableEffects.setModel( new JXObjectModel<>() );
 	}
 
+	/* reset ALL int the form */
+	private void resetTheForm(){
+		disableAllInPanel();
+		clearEffectsAndAbilityTable();
+		mtgCardType.clearSelection();
+		MTGTypeListener.lastActionCommand = "";
+	}
+
 	/* this method populate all the content with data of cardToUpdate */
 	private void populateContent(){
 		//this stuff is for select appropriate mtgType button
@@ -370,10 +376,7 @@ public class InsertUpdateCardContent extends JPanel
 			if(cardToUpdate == null) {
 				if(StoreManager.getInstance().store( m )) {
 					//reset all the form
-					disableAllInPanel();
-					clearEffectsAndAbilityTable();
-					mtgCardType.clearSelection();
-					MTGTypeListener.lastActionCommand = "";
+					resetTheForm();
 					refreshMTGTable();
 
 					JOptionPane.showMessageDialog( this, "Card saved correctly!", "Succes!",
@@ -566,11 +569,7 @@ public class InsertUpdateCardContent extends JPanel
 	{
 		@Override
 		public void actionPerformed(ActionEvent e){
-			//reset all the form
-			disableAllInPanel();
-			clearEffectsAndAbilityTable();
-			mtgCardType.clearSelection();
-			MTGTypeListener.lastActionCommand = "";
+			resetTheForm();
 		}
 	}
 
@@ -589,7 +588,7 @@ public class InsertUpdateCardContent extends JPanel
 			log.write( Tag.INFO, "New card start to save..." );
 			log.write( Tag.DEBUG, "type to save = " + mtgCardType );
 
-			String mtgName = normalizeForStorage( pnlMTGBasicInfo.getNames() );
+			String mtgName = normalizeForStorage( pnlMTGBasicInfo.getNames() ).trim();
 			log.write( Tag.DEBUG, "name = " + mtgName );
 
 			Rarity mtgRarity = pnlMTGBasicInfo.getRarity();
@@ -601,10 +600,10 @@ public class InsertUpdateCardContent extends JPanel
 			boolean isLegendary = pnlMTGBasicInfo.isLegendarySelected();
 			log.write( Tag.DEBUG, "is legendary = " + isLegendary );
 
-			String mtgSeries = removeSpaceStartEnd( normalizeForStorage( pnlMTGBasicInfo.getSeries() ) );
+			String mtgSeries = normalizeForStorage( pnlMTGBasicInfo.getSeries() ).trim();
 			log.write( Tag.DEBUG, "series = " + mtgSeries );
 
-			String mtgSubType = normalize( pnlMTGBasicInfo.getSubType() );
+			String mtgSubType = removeAccentCharacters( pnlMTGBasicInfo.getSubType() );
 			if(mtgSubType == null)
 				mtgSubType = "";
 			log.write( Tag.DEBUG, "sub type = " + mtgSubType );

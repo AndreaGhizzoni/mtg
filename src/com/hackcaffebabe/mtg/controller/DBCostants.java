@@ -112,42 +112,4 @@ public class DBCostants
 			return s;
 		}
 	}
-
-	/**
-	 * This method remove all the white spaces before and after a given string.<br>
-	 * For example this string <code>"**my*fantastic*string******"</code> where "*" (no quotes) are spaces,
-	 * by calling <code>removeSpaceStartEnd("**my*fantastic*string******")</code> will return: 
-	 * <code>my*fantastic*string</code>.
-	 * @param s {@link String} the string to normalize.
-	 * @return {@link String} without spaces before and after.
-	 */
-	public static String removeSpaceStartEnd(String s){
-		if(s != null && !s.isEmpty()) {
-			int i;// string index of the first non-white-space character.
-			for(i = 0; i < s.length() - 1; i++) {
-				if(!Character.isWhitespace( s.charAt( i ) ))
-					break;
-			}
-			if(i != 0)// if index != 0 remove all the white space before
-				s = s.substring( i, s.length() - 1 );
-
-			// if string is empty don't continue 
-			// but returns empty string
-			if(s.isEmpty())
-				return s;
-
-			int cont = 0;// white space counter from the bottom of the string
-			for(int j = s.length() - 1; j >= 0; j--) {
-				if(Character.isWhitespace( s.charAt( j ) ))
-					cont++;
-			}
-			if(cont == 0) {// if no white space are countered
-				return s;// return the string
-			} else {
-				return s.substring( 0, s.length() - cont );// otherwise cut the string.
-			}
-		} else {
-			return s;
-		}
-	}
 }

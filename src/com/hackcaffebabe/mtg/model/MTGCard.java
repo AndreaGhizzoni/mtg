@@ -276,23 +276,22 @@ public abstract class MTGCard extends DisplayableObject implements Serializable
 		//check name
 		if(name == null) {
 			if(other.name != null)
-				return false;//TODO maybe leave all this ToLowerCase
-		} else if(!name.toLowerCase().replaceAll( " ", "" ).equals( other.name.replaceAll( " ", "" ).toLowerCase() ))
+				return false;
+		} else if(!name.equals( other.name ))
 			return false;
 
 		//check series
 		if(series == null) {
 			if(other.series != null)
 				return false;
-		} else if(!series.toLowerCase().replaceAll( " ", "" ).equals( other.series.replaceAll( " ", "" ).toLowerCase() ))
+		} else if(!series.equals( other.series ))
 			return false;
 
 		//check sub type
 		if(subType == null) {
 			if(other.subType != null)
 				return false;
-		} else if(!subType.toLowerCase().replaceAll( " ", "" )
-				.equals( other.subType.replaceAll( " ", "" ).toLowerCase() ))
+		} else if(!subType.equals( other.subType ))
 			return false;
 
 		//check color

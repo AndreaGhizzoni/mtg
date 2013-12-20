@@ -2,16 +2,20 @@ package com.hackcaffebabe.mtg.gui.panel.advancesearch;
 
 import static com.hackcaffebabe.mtg.gui.GUIUtils.JXTABLE_MTG;
 import it.hackcaffebabe.jx.table.model.JXObjectModel;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import net.miginfocom.swing.MigLayout;
 import com.hackcaffebabe.mtg.controller.json.Criteria;
@@ -33,6 +37,9 @@ public class AdvanceSearchContent extends JPanel
 	private static final long serialVersionUID = 1L;
 	private Criteria criteria = new Criteria();
 
+	private JRadioButton rdbtnLazy;
+	private JRadioButton rdbtnSpecific;
+
 	private JCheckBox chbRed;
 	private JCheckBox chbBlack;
 	private JCheckBox chbGreen;
@@ -43,6 +50,8 @@ public class AdvanceSearchContent extends JPanel
 
 	private JComboBox<String> cmbSeries;
 
+	private JComboBox<String> cmbSubType;
+
 	private JSpinner spinManaCost;
 
 	/**
@@ -50,7 +59,7 @@ public class AdvanceSearchContent extends JPanel
 	 */
 	public AdvanceSearchContent(){
 		super();
-		setLayout( new MigLayout( "", "[209.00][148.00][190.00]", "[][][]" ) );
+		setLayout( new MigLayout( "", "[209.00,grow][148.00][190.00]", "[25.00][][][][30]" ) );
 		this.initContent();
 	}
 
@@ -59,6 +68,20 @@ public class AdvanceSearchContent extends JPanel
 //===========================================================================================
 	/* initialize all components */
 	private void initContent(){
+		JPanel pnlModeSelector = new JPanel();
+		pnlModeSelector.setBorder( new TitledBorder( new LineBorder( new Color( 184, 207, 229 ) ), "Search Mode:",
+				TitledBorder.CENTER, TitledBorder.TOP, null, null ) );
+		pnlModeSelector.setLayout( new MigLayout( "", "[][grow]", "[:15:15][]" ) );
+		this.rdbtnLazy = new JRadioButton( "Lazy" );
+		this.rdbtnLazy.setSelected( true );// default selection
+		this.rdbtnSpecific = new JRadioButton( "Specific" );
+		ButtonGroup g = new ButtonGroup();
+		g.add( this.rdbtnLazy );
+		g.add( this.rdbtnSpecific );
+		pnlModeSelector.add( this.rdbtnLazy, "cell 0 0" );
+		pnlModeSelector.add( this.rdbtnSpecific, "cell 1 0,alignx right" );
+		add( pnlModeSelector, "cell 0 0 3 1,grow" );
+
 		// Color
 		JPanel pnlCardColor = new JPanel();
 		pnlCardColor.setBorder( new TitledBorder( "Color" ) );
@@ -83,33 +106,42 @@ public class AdvanceSearchContent extends JPanel
 		this.chbWhite = new JCheckBox( "White" );
 		this.chbWhite.setActionCommand( BasicColors.getAbbraviation( BasicColors.WHITE ) );
 		pnlCardColor.add( this.chbWhite, "cell 4 0" );
-		add( pnlCardColor, "cell 0 0 2 1,grow" );
+		add( pnlCardColor, "cell 0 1 2 1,grow" );
 
 		// Rarity
 		JPanel pnlRarity = new JPanel();
-		pnlRarity.setBorder( new TitledBorder( "Rarity" ) );
+		pnlRarity.setBorder( new TitledBorder( null, "Rarity", TitledBorder.RIGHT, TitledBorder.TOP, null, null ) );
 		pnlRarity.setLayout( new MigLayout( "", "[]", "[]" ) );
-		this.cmbRarity = new JComboBox<>( getRartyCB() );
+		this.cmbRarity = new JComboBox<>( getCB( Rarity.getAllRarity() ) );
 		pnlRarity.add( this.cmbRarity, "cell 0 0,growx" );
-		add( pnlRarity, "cell 2 0,grow" );
+		add( pnlRarity, "cell 2 1,grow" );
 
 		// Converted Mana Cost
 		JPanel pnlConvertedManaCost = new JPanel();
-		pnlConvertedManaCost.setBorder( new TitledBorder( "Conv. Mana Cost" ) );
+		pnlConvertedManaCost.setBorder( new TitledBorder( null, "Conv. Mana Cost", TitledBorder.RIGHT,
+				TitledBorder.TOP, null, null ) );
 		pnlConvertedManaCost.setLayout( new MigLayout( "", "[168.00]", "[]" ) );
 		this.spinManaCost = new JSpinner( new SpinnerNumberModel( 0, 0, 100, 1 ) );
 		JSpinner.DefaultEditor editor = (JSpinner.DefaultEditor) this.spinManaCost.getEditor();
 		editor.getTextField().setEditable( false );
 		pnlConvertedManaCost.add( this.spinManaCost, "cell 0 0,growx,aligny center" );
-		add( pnlConvertedManaCost, "cell 2 1,grow" );
+		add( pnlConvertedManaCost, "cell 2 2,grow" );
 
 		// Series
 		JPanel pnlSeries = new JPanel();
 		pnlSeries.setBorder( new TitledBorder( "Series" ) );
 		pnlSeries.setLayout( new MigLayout( "", "[grow]", "[]" ) );
-		this.cmbSeries = new JComboBox<String>( getSeriesCB() );
+		this.cmbSeries = new JComboBox<>( getCB( StoreManager.getInstance().getInsertedSeries() ) );
 		pnlSeries.add( this.cmbSeries, "cell 0 0,growx" );
-		add( pnlSeries, "cell 0 1 2 1,growx" );
+		add( pnlSeries, "cell 0 2 2 1,growx" );
+
+		// Sub Type
+		JPanel pnlSubType = new JPanel();
+		pnlSubType.setBorder( new TitledBorder( "Sub Type" ) );
+		pnlSubType.setLayout( new MigLayout( "", "[grow]", "[]" ) );
+		this.cmbSubType = new JComboBox<>( getCB( StoreManager.getInstance().getInsertedSubTypes() ) );
+		pnlSubType.add( this.cmbSubType, "cell 0 0,growx" );
+		add( pnlSubType, "cell 0 3 3 1,grow" );
 
 		JButton btnClear = new JButton( "Clear" );
 		btnClear.addActionListener( new ActionListener(){
@@ -119,35 +151,36 @@ public class AdvanceSearchContent extends JPanel
 				applyCriteriaChanges();
 			}
 		} );
-		add( btnClear, "cell 0 2,growx" );
+		add( btnClear, "cell 0 4,growx,aligny bottom" );
 
 		JButton btnApply = new JButton( "Apply" );
 		btnApply.addActionListener( new ApplyActionListener() );
-		add( btnApply, "cell 1 2 2 1,growx" );
+		add( btnApply, "cell 1 4 2 1,growx,aligny bottom" );
 	}
 
-	/* return the rarity as combo box model. */
-	private DefaultComboBoxModel<String> getRartyCB(){
+	//TODO bind F5 to rebuild the panel whit the data from StoreManager
+	/* returns the appropriate combo box model for the list of object given */
+	private DefaultComboBoxModel<String> getCB(List< ? > lst){
 		DefaultComboBoxModel<String> s = new DefaultComboBoxModel<>();
 		s.addElement( "-------------" );
-		for(Rarity r: Rarity.getAllRarity())
-			s.addElement( r.toString() );
+		for(Object a: lst)
+			s.addElement( a.toString() );
 		return s;
 	}
 
-	/* return the series as combo box model. */
-	private DefaultComboBoxModel<String> getSeriesCB(){
-		DefaultComboBoxModel<String> s = new DefaultComboBoxModel<>();
-		s.addElement( "-------------" );
-		for(String a: StoreManager.getInstance().getInsertedSeries())
-			s.addElement( a );
-		return s;
+	/* returns the criteria mode */
+	private Criteria.Mode getCriteriaMode(){
+		if(this.rdbtnLazy.isSelected())
+			return Criteria.Mode.LAZY;
+		else if(this.rdbtnSpecific.isSelected())
+			return Criteria.Mode.SPECIFIC;
+		else return Criteria.Mode.LAZY;//if no selected returns the default > LAZY
 	}
 
 	/* apply on the table the criteria */
 	@SuppressWarnings("unchecked")
 	private void applyCriteriaChanges(){
-		List<MTGCard> lst = StoreManager.getInstance().searchBy( this.criteria );
+		List<MTGCard> lst = StoreManager.getInstance().searchBy( this.criteria, this.getCriteriaMode() );
 		if(!lst.isEmpty()) {
 			JXObjectModel<MTGCard> model = (JXObjectModel<MTGCard>) JXTABLE_MTG.getModel();
 			model.removeAll();
@@ -199,6 +232,9 @@ public class AdvanceSearchContent extends JPanel
 
 			int val = (Integer) spinManaCost.getValue();
 			criteria.byConvertedManaCost( val == 0 ? null : val );
+
+			String a = (String) cmbSubType.getSelectedItem();
+			criteria.bySubType( a.equals( "-------------" ) ? null : a );
 
 			applyCriteriaChanges();
 		}

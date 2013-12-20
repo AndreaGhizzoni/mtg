@@ -118,6 +118,7 @@ public class MTGContent extends JPanel
 	{
 		@Override
 		@SuppressWarnings("unchecked")
+		// TODO this event is performed two times for click!
 		public void valueChanged(ListSelectionEvent e){
 			int selRow = JXTABLE_MTG.getSelectedModelRow();
 			if(selRow != -1) {

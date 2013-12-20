@@ -16,12 +16,21 @@ import com.hackcaffebabe.mtg.model.color.BasicColors;
 
 /**
  * Criteria to query the MTGCard.
- *  
+ * TODO add toString() and eventually hashCode() 
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
  */
 public class Criteria
 {
+	public enum Mode
+	{
+		/** Whit this mode the card match if at least one criteria matches */
+		LAZY,
+
+		/** Whit this mode the card match if and only if all the criteria are verify. */
+		SPECIFIC;
+	}
+
 	private String name = null;
 	private Integer convertedManaCost = null;
 
@@ -33,6 +42,7 @@ public class Criteria
 
 	private Rarity rarity = null;
 
+	//those are effectually not used
 	private Boolean isLegendary = null;
 	private Boolean hasPrimaryEffect = null;
 
@@ -42,13 +52,30 @@ public class Criteria
 //===========================================================================================
 // METHOD
 //===========================================================================================
-	public boolean exactlyMatch(){
+	/**
+	 * This method check if a card given match whit the criteria set.
+	 * @param mtg {@link MTGCard} to check.
+	 * @param mode {@link Criteria.Mode} the mode to match the card.
+	 * @return {@link Boolean} if the card given match with the criteria.
+	 */
+	public boolean match(MTGCard mtg, Mode mode){
+		if(mode == Mode.LAZY)
+			return match( mtg );
+		else if(mode == Mode.SPECIFIC)
+			return exactlyMatch( mtg );
+		else return false;
+	}
+
+	//TODO finish this
+	/* TODO add doc */
+	private boolean exactlyMatch(MTGCard mtg){
 		return false;
 	}
 
-	public boolean match(MTGCard mtg){
-		if(mtg == null || isEmpty())
-			return true;// if no criteria was set, every card match whit this criteria
+	/* match the card given in lazy mode */
+	private boolean match(MTGCard mtg){
+		if(mtg == null || isCriteriaEmpty())
+			return true;// if no criteria was set, every card matches
 
 		if(name != null) {
 			if(mtg.getName().equals( name ))
@@ -245,7 +272,7 @@ public class Criteria
 	 * Check if criteria is void.
 	 * @return {@link Boolean} if there is no criteria inserted.
 	 */
-	public boolean isEmpty(){
+	public boolean isCriteriaEmpty(){
 		return (name == null) && (convertedManaCost == null) && (subType == null) && (series == null)
 				&& (colors.isEmpty()) && (rarity == null) && (isLegendary == null) && (hasPrimaryEffect == null)
 				&& (hasEffect == null) && (hasAbility == null);

@@ -1,6 +1,7 @@
 package com.hackcaffebabe.mtg.gui.frame;
 
-import static com.hackcaffebabe.mtg.gui.GUIUtils.*;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.DIMENSION_ADVANCE_SEARCH;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.TITLE_ADVANCE_SEARCH;
 import it.hackcaffebabe.jx.table.JXTable;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
@@ -28,6 +29,7 @@ public class AdvanceSearch extends JFrame
 		setLocation( (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - (DIMENSION_ADVANCE_SEARCH.width / 2),
 				(Toolkit.getDefaultToolkit().getScreenSize().height / 2) - (DIMENSION_ADVANCE_SEARCH.height / 2) );
 		this.initContent();
+		pack();
 	}
 
 //===========================================================================================

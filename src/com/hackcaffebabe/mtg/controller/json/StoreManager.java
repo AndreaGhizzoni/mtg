@@ -41,8 +41,10 @@ public class StoreManager
 {
 	private HashSet<MTGCard> mtgSet = new HashSet<>();
 	// these are necessary for type-ahead
-	private List<String> lstSeries = new ArrayList<>();
-	private List<String> lstSubTypes = new ArrayList<>();
+	private HashSet<String> setSeries = new HashSet<>();
+	private HashSet<String> setSubType = new HashSet<>();
+//	private List<String> lstSeries = new ArrayList<>();
+//	private List<String> lstSubTypes = new ArrayList<>();
 
 	private Gson g;
 	private static StoreManager manager;
@@ -104,8 +106,8 @@ public class StoreManager
 					MTGCard c = loadFile( f );
 					if(c != null) {//if null continue
 						mtgSet.add( c );
-						addSeriesToList( c.getSeries() );
-						addSubTypeToList( c.getSubType() );
+						setSeries.add( c.getSeries() );
+						setSubType.add( c.getSubType() );
 					}
 				}
 			}
@@ -147,9 +149,9 @@ public class StoreManager
 		f.write( json );
 		f.flush();
 		f.close();
-		mtgSet.add( c );
-		addSeriesToList( c.getSeries() );
-		addSubTypeToList( c.getSubType() );
+		this.mtgSet.add( c );
+		this.setSeries.add( c.getSeries() );
+		this.setSubType.add( c.getSubType() );
 
 		log.write( Tag.INFO, String.format( "MTG card json file %s saved correctly.", c.getName() ) );
 		return true;
@@ -173,9 +175,16 @@ public class StoreManager
 		log.write( Tag.DEBUG, c.getName() + " removed correctly from data structure." );
 
 		//update series list
-		if(searchBy( new Criteria().bySeries( c.getSeries() ) ).isEmpty()) {
-			this.lstSeries.remove( c.getSeries() );
+		if(searchBy( new Criteria().bySeries( c.getSeries() ), Criteria.Mode.LAZY ).isEmpty()) {
+			this.setSeries.remove( c.getSeries() );
 			log.write( Tag.DEBUG, c.getSeries() + " removed because its frequency == 1" );
+		}
+		//update sub type list
+		if(c.getSubType() != null && !c.getSubType().isEmpty()) {
+			if(searchBy( new Criteria().bySubType( c.getSubType() ), Criteria.Mode.LAZY ).isEmpty()) {
+				this.setSubType.remove( c.getSubType() );
+				log.write( Tag.DEBUG, c.getSubType() + " removed because its frequency == 1" );
+			}
 		}
 
 		String path = c.getJSONFileName();
@@ -216,58 +225,29 @@ public class StoreManager
 		return true;
 	}
 
-	/* this method add the series string if and only if isn't already inserted into this.lstSeries */
-	private void addSeriesToList(String s){
-		if(s != null && !s.isEmpty()) {
-			Collections.sort( this.lstSeries );
-			if(this.lstSeries.isEmpty()) {
-				this.lstSeries.add( s );
-			} else {
-				int r = Collections.binarySearch( this.lstSeries, s );
-				if(r < 0)
-					this.lstSeries.add( s );
-			}
-		}
-	}
-
-	//TODO maybe merge this two methods
-
-	/* this method add the primary effect string if and only if isn't already inserted into this.lstSubTypes */
-	private void addSubTypeToList(String pe){
-		if(pe != null && !pe.isEmpty()) {
-			Collections.sort( this.lstSubTypes );
-			if(this.lstSubTypes.isEmpty()) {
-				this.lstSubTypes.add( pe );
-			} else {
-				int r = Collections.binarySearch( this.lstSubTypes, pe );
-				if(r < 0)
-					this.lstSubTypes.add( pe );
-			}
-		}
-	}
-
 	/**
 	 * This method read all files into data/mtg.
 	 */
 	public void refresh(){
 		this.mtgSet.clear();
-		this.lstSeries.clear();
-		this.lstSubTypes.clear();
+		this.setSeries.clear();
+		this.setSubType.clear();
 		this.load();
 	}
 
 	/**
 	 * This method search a card with some {@link Criteria}.
-	 * @param criteria {@link Criteria} to search the card.
+	 * @param criteria {@link Criteria} to search the card. 
+	 * @param mode {@link Criteria.Mode} to search by
 	 * @return {@link List} of {@link MTGCard}
 	 */
-	public List<MTGCard> searchBy(Criteria criteria){
-		if(criteria == null || criteria.isEmpty())
+	public List<MTGCard> searchBy(Criteria criteria, Criteria.Mode mode){
+		if(criteria == null || criteria.isCriteriaEmpty())
 			return getAllCardsAsList();
 
 		HashSet<MTGCard> set = new HashSet<>();
 		for(MTGCard m: this.mtgSet) {
-			if(criteria.match( m ))
+			if(criteria.match( m, mode ))
 				set.add( m );
 		}
 		return new ArrayList<>( set );
@@ -282,8 +262,7 @@ public class StoreManager
 		if(destinationFile == null)
 			return;
 
-		log.write( Tag.INFO,
-				String.format( "%s %s", "Try to backup of all stored files on", destinationFile.getAbsolutePath() ) );
+		log.write( Tag.INFO, "Try to backup of all stored files on :" + destinationFile.getAbsolutePath() );
 		if(destinationFile.exists() && !destinationFile.delete()) {
 			log.write( Tag.ERRORS, "Error on delete exists backup." );
 		}
@@ -308,11 +287,15 @@ public class StoreManager
 
 	/** @return {@link List} list of inserted series. */
 	public List<String> getInsertedSeries(){
-		return this.lstSeries;
+		ArrayList<String> lst = new ArrayList<>( this.setSeries );
+		Collections.sort( lst );
+		return lst;
 	}
 
 	/** @return {@link List} list of inserted sun types. */
 	public List<String> getInsertedSubTypes(){
-		return this.lstSubTypes;
+		ArrayList<String> lst = new ArrayList<>( this.setSubType );
+		Collections.sort( lst );
+		return lst;
 	}
 }
