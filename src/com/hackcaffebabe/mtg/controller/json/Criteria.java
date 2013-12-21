@@ -16,7 +16,6 @@ import com.hackcaffebabe.mtg.model.color.BasicColors;
 
 /**
  * Criteria to query the MTGCard.
- * TODO add toString() and eventually hashCode() 
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
  */
@@ -329,5 +328,84 @@ public class Criteria
 	/** @return {@link Boolean} the has ability flag */
 	public Boolean getHasAbility(){
 		return hasAbility;
+	}
+
+//===========================================================================================
+// OVERRIDE
+//===========================================================================================
+	@Override
+	public int hashCode(){
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((colors == null) ? 0 : colors.hashCode());
+		result = prime * result + ((convertedManaCost == null) ? 0 : convertedManaCost.hashCode());
+		result = prime * result + ((hasAbility == null) ? 0 : hasAbility.hashCode());
+		result = prime * result + ((hasEffect == null) ? 0 : hasEffect.hashCode());
+		result = prime * result + ((hasPrimaryEffect == null) ? 0 : hasPrimaryEffect.hashCode());
+		result = prime * result + ((isLegendary == null) ? 0 : isLegendary.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((rarity == null) ? 0 : rarity.hashCode());
+		result = prime * result + ((series == null) ? 0 : series.hashCode());
+		result = prime * result + ((subType == null) ? 0 : subType.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj){
+		if(this == obj)
+			return true;
+		if(obj == null)
+			return false;
+		if(getClass() != obj.getClass())
+			return false;
+		Criteria other = (Criteria) obj;
+		if(colors == null) {
+			if(other.colors != null)
+				return false;
+		} else if(!colors.equals( other.colors ))
+			return false;
+		if(convertedManaCost == null) {
+			if(other.convertedManaCost != null)
+				return false;
+		} else if(!convertedManaCost.equals( other.convertedManaCost ))
+			return false;
+		if(hasAbility == null) {
+			if(other.hasAbility != null)
+				return false;
+		} else if(!hasAbility.equals( other.hasAbility ))
+			return false;
+		if(hasEffect == null) {
+			if(other.hasEffect != null)
+				return false;
+		} else if(!hasEffect.equals( other.hasEffect ))
+			return false;
+		if(hasPrimaryEffect == null) {
+			if(other.hasPrimaryEffect != null)
+				return false;
+		} else if(!hasPrimaryEffect.equals( other.hasPrimaryEffect ))
+			return false;
+		if(isLegendary == null) {
+			if(other.isLegendary != null)
+				return false;
+		} else if(!isLegendary.equals( other.isLegendary ))
+			return false;
+		if(name == null) {
+			if(other.name != null)
+				return false;
+		} else if(!name.equals( other.name ))
+			return false;
+		if(rarity != other.rarity)
+			return false;
+		if(series == null) {
+			if(other.series != null)
+				return false;
+		} else if(!series.equals( other.series ))
+			return false;
+		if(subType == null) {
+			if(other.subType != null)
+				return false;
+		} else if(!subType.equals( other.subType ))
+			return false;
+		return true;
 	}
 }

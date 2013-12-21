@@ -43,7 +43,7 @@ import com.hackcaffebabe.mtg.gui.frame.InsertUpdateCard;
 import com.hackcaffebabe.mtg.gui.listener.AddEffectActionListener;
 import com.hackcaffebabe.mtg.gui.listener.DelAbilityActionListener;
 import com.hackcaffebabe.mtg.gui.listener.DelEffectActionListener;
-import com.hackcaffebabe.mtg.gui.panel.listener.EditEffectsMouseAdapter;
+import com.hackcaffebabe.mtg.gui.panel.insertupdatecard.listener.EditEffectsMouseAdapter;
 import com.hackcaffebabe.mtg.model.Artifact;
 import com.hackcaffebabe.mtg.model.Creature;
 import com.hackcaffebabe.mtg.model.Enchantment;
@@ -91,7 +91,7 @@ public class InsertUpdateCardContent extends JPanel
 
 	private JTextArea txtPrimaryEffect;
 
-	private JXTable tableEffects;//TODO add double click to modify the effects (that is so easy)
+	private JXTable tableEffects;
 	private JXTableColumnAdjuster tableEffectsColumnAdjuster;
 	private JButton btnAddEffect;
 	private JButton btnDelEffect;
