@@ -55,8 +55,7 @@ public class ImportActionListener implements ActionListener
 				refreshMTGTable();
 				displayFiles( lst );
 			} catch(IOException ex) {
-				displayError( null, "Error while reading backup file.\nLog is reported." );
-				ex.printStackTrace( Logger.getInstance().getPrintStream() );
+				displayError( null, new Exception( "Error while reading backup file." ) );
 			}
 			src.setCursor( null );
 		}

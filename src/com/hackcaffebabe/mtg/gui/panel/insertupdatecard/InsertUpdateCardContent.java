@@ -12,6 +12,8 @@ import static com.hackcaffebabe.mtg.gui.GUIUtils.AC_SORCERY;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.DIMENSION_INSERT_CARD;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.PNL_MTGPROPERTIES;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.displayError;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.displaySuccessMessage;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.displayWarningMessage;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.refreshMTGTable;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.showAbilityDialog;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.showPlanesAbilityDialog;
@@ -29,7 +31,6 @@ import java.util.Set;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -42,6 +43,7 @@ import com.hackcaffebabe.mtg.gui.frame.InsertUpdateCard;
 import com.hackcaffebabe.mtg.gui.listener.AddEffectActionListener;
 import com.hackcaffebabe.mtg.gui.listener.DelAbilityActionListener;
 import com.hackcaffebabe.mtg.gui.listener.DelEffectActionListener;
+import com.hackcaffebabe.mtg.gui.panel.listener.EditEffectsMouseAdapter;
 import com.hackcaffebabe.mtg.model.Artifact;
 import com.hackcaffebabe.mtg.model.Creature;
 import com.hackcaffebabe.mtg.model.Enchantment;
@@ -126,12 +128,11 @@ public class InsertUpdateCardContent extends JPanel
 			public void run(){
 				if(cardToUpdate == null) { // if card to update is null, user want to insert new card
 					disableAllInPanel();
-					btnSaveOrUpdate.setText( "Save" );
 				} else { // otherwise user want to update passing card
 					populateContent();
-					btnSaveOrUpdate.setText( "Update" );
 					disableUnnecessaryComponentsForUpdates();
 				}
+				btnSaveOrUpdate.setText( cardToUpdate == null ? "Save" : "Update" );
 			}
 		} );
 	}
@@ -217,6 +218,7 @@ public class InsertUpdateCardContent extends JPanel
 		//================== Other Effect
 		pnlMTG.add( new JLabel( "Other Effects:" ), "cell 0 7" );
 		this.tableEffects = new JXTable( new JXObjectModel<>() );
+		this.tableEffects.addMouseListener( new EditEffectsMouseAdapter() );
 		this.tableEffectsColumnAdjuster = new JXTableColumnAdjuster( this.tableEffects );
 		pnlMTG.add( new JScrollPane( this.tableEffects, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED ), "cell 0 8 7 2,grow" );
@@ -378,29 +380,24 @@ public class InsertUpdateCardContent extends JPanel
 					resetTheForm();
 					refreshMTGTable();
 
-					JOptionPane.showMessageDialog( this, "Card saved correctly!", "Succes!",
-							JOptionPane.INFORMATION_MESSAGE );
+					displaySuccessMessage( this, "Card saved correctly!" );
 				} else {
-					JOptionPane.showMessageDialog( this, "Card is already saved!", "Bad Luck!",
-							JOptionPane.INFORMATION_MESSAGE );
+					displayWarningMessage( this, "Card is already saved!" );
 				}
 			} else {
 				// cardToUpdate is the oldest card, m is the newest.
 				if(StoreManager.getInstance().applyDifference( cardToUpdate, m )) {
-					JOptionPane.showMessageDialog( this, "Card updated correctly!", "Succes!",
-							JOptionPane.INFORMATION_MESSAGE );
 					refreshMTGTable();
 					PNL_MTGPROPERTIES.clearAll();
+
+					displaySuccessMessage( this, "Card updated correctly!" );
 					this.parent.close();
 				} else {
-					JOptionPane.showMessageDialog( this, "No changes found.\nNothing to update.", "Bad Luck!",
-							JOptionPane.INFORMATION_MESSAGE );
+					displayWarningMessage( this, "No changes found.\nNothing to update." );
 				}
 			}
 		} catch(Exception e) {
-			String s = String.format( "%s\nLog is reported.", e.getMessage() );
-			log.write( Tag.ERRORS, e.getMessage() );
-			displayError( this, s );
+			displayError( this, e );
 		}
 	}
 
@@ -416,14 +413,12 @@ public class InsertUpdateCardContent extends JPanel
 		// =============== check the name
 		String mtgName = pnlMTGBasicInfo.getNames();
 		if(mtgName == null || mtgName.isEmpty()) {
-			displayError( this, "Name of MTG Card can not be void." );
-			log.write( Tag.ERRORS, "Name of MTG card missing." );
+			displayError( this, new Exception( "Name of MTG Card can not be void." ) );
 			pnlMTGBasicInfo.requestFocus();
 			return false;
 		}
 		if(normalizeForStorage( mtgName ).isEmpty()) {// if user insert "...." or "/////" as name.
-			displayError( this, "Name not valid" );
-			log.write( Tag.ERRORS, String.format( "Name %s not valid", mtgName ) );
+			displayError( this, new Exception( "Name not valid" ) );
 			pnlMTGBasicInfo.requestFocus();
 			return false;
 		}
@@ -431,14 +426,12 @@ public class InsertUpdateCardContent extends JPanel
 		// =============== check the series
 		String mtgSeries = pnlMTGBasicInfo.getSeries();
 		if(mtgSeries == null || mtgSeries.isEmpty()) {
-			displayError( this, "Series of MTG can not be void." );
-			log.write( Tag.ERRORS, "Series of MTG card missing." );
+			displayError( this, new Exception( "Series of MTG can not be void." ) );
 			pnlMTGBasicInfo.requestFocus();
 			return false;
 		}
 		if(normalizeForStorage( mtgSeries ).isEmpty()) {// if user insert "...." or "/////" as series.
-			displayError( this, "Series not valid" );
-			log.write( Tag.ERRORS, String.format( "Series %s not valid", mtgSeries ) );
+			displayError( this, new Exception( "Series not valid" ) );
 			pnlMTGBasicInfo.requestFocus();
 			return false;
 		}
@@ -447,8 +440,7 @@ public class InsertUpdateCardContent extends JPanel
 		if(!mtgCardType.equals( AC_LAND )) {
 			ManaCost mtgManaCost = pnlManaCost.getManaCost();
 			if(mtgManaCost == null) {
-				displayError( this, "Mana cost of MTG Card can not be void." );
-				log.write( Tag.ERRORS, "Mana cost of MTG card missing." );
+				displayError( this, new Exception( "Mana cost of MTG Card can not be void." ) );
 				pnlManaCost.requestFocus();
 				return false;
 			}
@@ -458,8 +450,7 @@ public class InsertUpdateCardContent extends JPanel
 		if(mtgCardType.equals( AC_CREATURE )) {
 			Strength creatureStrength = pnlCreatureInfo.getStrength();
 			if(creatureStrength == null) {
-				displayError( this, "Creature info missing." );
-				log.write( Tag.ERRORS, "Creature strength missing." );
+				displayError( this, new Exception( "Creature info missing." ) );
 				pnlCreatureInfo.requestFocus();
 				return false;
 			}
@@ -469,8 +460,7 @@ public class InsertUpdateCardContent extends JPanel
 		if(mtgCardType.equals( AC_INSTANT ) || mtgCardType.equals( AC_SORCERY ) || mtgCardType.equals( AC_ENCHANTMENT )) {
 			String mtgPrimaryEffect = normalizeForStorage( txtPrimaryEffect.getText() );
 			if(mtgPrimaryEffect == null) {
-				displayError( this, mtgCardType + " have a primary effect." );
-				log.write( Tag.ERRORS, mtgCardType + "primary effect of MTG card missing." );
+				displayError( this, new Exception( mtgCardType + " have a primary effect." ) );
 				txtPrimaryEffect.requestFocus();
 				return false;
 			}
@@ -481,8 +471,7 @@ public class InsertUpdateCardContent extends JPanel
 			@SuppressWarnings("unchecked")
 			List<Effect> mtgEffects = ((JXObjectModel<Effect>) tableEffects.getModel()).getObjects();
 			if(mtgEffects.isEmpty()) {
-				displayError( this, "Land must have at least one effect." );
-				log.write( Tag.ERRORS, "Land primary effect of MTG card missing." );
+				displayError( this, new Exception( "Land must have at least one effect." ) );
 				tableEffects.requestFocus();
 				return false;
 			}

@@ -127,12 +127,34 @@ public class GUIUtils
 	}
 
 	/**
-	 * Display an error message.
+	 * This method display an exception and report the that on log.
 	 * @param parent {@link Component} the parent component of error message.
-	 * @param msg {@link String} the message error.
+	 * @param ex {@link Exception} to log.
 	 */
-	public static void displayError(Component parent, String msg){
-		JOptionPane.showMessageDialog( parent, msg, "Error", JOptionPane.ERROR_MESSAGE );
+	public static void displayError(Component parent, Exception ex){
+		String m = String.format( "%s\nLog is Reported.", ex.getMessage() );
+		JOptionPane.showMessageDialog( parent, m, "Error", JOptionPane.ERROR_MESSAGE );
+
+		Logger.getInstance().write( Tag.ERRORS, ex.getMessage() );
+		ex.printStackTrace( Logger.getInstance().getPrintStream() );
+	}
+
+	/**
+	 * This method display a success message
+	 * @param parent {@link Component} the parent component of error message.
+	 * @param msg {@link String} the message.
+	 */
+	public static void displaySuccessMessage(Component parent, String msg){
+		JOptionPane.showMessageDialog( parent, msg, "Succes!", JOptionPane.INFORMATION_MESSAGE );
+	}
+
+	/**
+	 * This method display a warning message
+	 * @param parent {@link Component} the parent component of error message.
+	 * @param msg {@link String} the message.
+	 */
+	public static void displayWarningMessage(Component parent, String msg){
+		JOptionPane.showMessageDialog( parent, msg, "Bad Luck!", JOptionPane.WARNING_MESSAGE );
 	}
 
 	/**
@@ -185,9 +207,11 @@ public class GUIUtils
 
 	/**
 	 * This method show a pop up to get the effect info.
-	 * @return {@link Effect}
+	 * @param parent {@link Component} to show the pop up
+	 * @param e {@link Effect} to edit, null to get new one
+	 * @return {@link Effect} if argument give are correct, null otherwise.
 	 */
-	public static Effect showEffectDialog(final Component parent){
+	public static Effect showEffectDialog(final Component parent, Effect e){
 		class myActionListener implements ActionListener
 		{
 			private JTextField txt;
@@ -205,15 +229,18 @@ public class GUIUtils
 		}
 
 		JTextField txtMana = new JTextField( 10 );
+		txtMana.setText( e == null ? "" : e.getManaCost().toString() );
 		txtMana.setEditable( false );
 
 		JButton btnSetMana = new JButton( "Set effect's cost" );
 		myActionListener action = new myActionListener( txtMana );
+		action.cost = e == null ? null : e.getManaCost();
 		btnSetMana.addActionListener( action );
 
 		JTextArea txtDescription = new JTextArea( 10, 20 );
 		txtDescription.setWrapStyleWord( true );
 		txtDescription.setLineWrap( true );
+		txtDescription.setText( e == null ? "" : e.getText() );
 
 		JPanel p = new JPanel();
 		p.add( txtMana );

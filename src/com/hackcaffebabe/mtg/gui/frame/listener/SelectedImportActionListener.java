@@ -73,8 +73,7 @@ public class SelectedImportActionListener implements ActionListener
 					displayFiles( lstFileUnzipped );
 				}
 			} catch(IOException ex) {
-				displayError( null, "Error while reading backup file.\nLog is reported." );
-				ex.printStackTrace( Logger.getInstance().getPrintStream() );
+				displayError( null, new Exception( "Error while reading backup file." ) );
 			}
 		}
 	}

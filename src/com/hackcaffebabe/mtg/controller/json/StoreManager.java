@@ -43,8 +43,6 @@ public class StoreManager
 	// these are necessary for type-ahead
 	private HashSet<String> setSeries = new HashSet<>();
 	private HashSet<String> setSubType = new HashSet<>();
-//	private List<String> lstSeries = new ArrayList<>();
-//	private List<String> lstSubTypes = new ArrayList<>();
 
 	private Gson g;
 	private static StoreManager manager;

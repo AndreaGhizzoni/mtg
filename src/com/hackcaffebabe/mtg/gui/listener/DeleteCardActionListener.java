@@ -2,6 +2,7 @@ package com.hackcaffebabe.mtg.gui.listener;
 
 import static com.hackcaffebabe.mtg.gui.GUIUtils.PNL_MTGPROPERTIES;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.displayError;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.displaySuccessMessage;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.refreshMTGTable;
 import it.hackcaffebabe.logger.Logger;
 import it.hackcaffebabe.logger.Tag;
@@ -43,12 +44,10 @@ public class DeleteCardActionListener implements ActionListener
 					if(e.getSource() instanceof JButton)
 						((JButton) e.getSource()).setEnabled( false );
 					refreshMTGTable();
-					JOptionPane.showMessageDialog( null, card.getName() + " delete correctly!", "Operation complete!",
-							JOptionPane.INFORMATION_MESSAGE );
+					
+					displaySuccessMessage( null, card.getName() + " delete correctly!" );
 				} catch(Exception ex) {
-					Logger.getInstance().write( Tag.ERRORS, ex.getMessage() );
-					ex.printStackTrace( Logger.getInstance().getPrintStream() );
-					displayError( null, "Error to delete " + card.getName() );
+					displayError( null, new Exception( "Error to delete " + card.getName() ) );
 				}
 			}
 		}

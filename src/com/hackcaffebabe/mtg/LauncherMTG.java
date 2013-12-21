@@ -37,10 +37,7 @@ public class LauncherMTG
 			} );
 
 		} catch(Exception e) {
-			String s = String.format( "%s\nLog is reported.", e.getMessage() );
-			Logger.getInstance().write( Tag.ERRORS, e.getMessage() );
-			displayError( null, s );
-			e.printStackTrace( Logger.getInstance().getPrintStream() );
+			displayError( null, e );
 		}
 	}
 

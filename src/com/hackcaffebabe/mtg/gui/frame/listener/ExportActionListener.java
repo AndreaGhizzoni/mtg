@@ -1,8 +1,8 @@
 package com.hackcaffebabe.mtg.gui.frame.listener;
 
 import static com.hackcaffebabe.mtg.gui.GUIUtils.displayError;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.displaySuccessMessage;
 import it.hackcaffebabe.ioutil.file.PathUtil;
-import it.hackcaffebabe.logger.Logger;
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,7 +10,6 @@ import java.io.File;
 import java.io.IOException;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import com.hackcaffebabe.mtg.controller.DBCostants;
 import com.hackcaffebabe.mtg.controller.json.StoreManager;
 import com.hackcaffebabe.mtg.gui.frame.MTG;
@@ -37,10 +36,9 @@ public class ExportActionListener implements ActionListener
 				StoreManager.getInstance().createBackup( backupFile );
 
 				String msg = String.format( "Backup file saved correctly on %s", backupFile.getAbsolutePath() );
-				JOptionPane.showMessageDialog( src, msg, "Success!", JOptionPane.INFORMATION_MESSAGE );
+				displaySuccessMessage( src, msg );
 			} catch(IOException ex) {
-				displayError( null, "Error to export.\nLog is reported." );
-				ex.printStackTrace( Logger.getInstance().getPrintStream() );
+				displayError( null, new Exception( "Error to export." ) );
 			}
 			src.setCursor( null );
 		}

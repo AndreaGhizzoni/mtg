@@ -38,7 +38,7 @@ public class AddEffectActionListener implements ActionListener
 	@Override
 	@SuppressWarnings("unchecked")
 	public void actionPerformed(ActionEvent e){
-		Effect ef = showEffectDialog( this.parent );
+		Effect ef = showEffectDialog( this.parent, null );
 		if(ef != null) {
 			JXObjectModel<Effect> model = (JXObjectModel<Effect>) this.table.getModel();
 			if(model.getRowCount() == 0) {
