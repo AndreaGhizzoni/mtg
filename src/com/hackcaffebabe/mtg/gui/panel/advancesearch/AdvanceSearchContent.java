@@ -158,7 +158,6 @@ public class AdvanceSearchContent extends JPanel
 		add( btnApply, "cell 1 4 2 1,growx,aligny bottom" );
 	}
 
-	//TODO bind F5 to rebuild the panel whit the data from StoreManager
 	/* returns the appropriate combo box model for the list of object given */
 	private DefaultComboBoxModel<String> getCB(List< ? > lst){
 		DefaultComboBoxModel<String> s = new DefaultComboBoxModel<>();

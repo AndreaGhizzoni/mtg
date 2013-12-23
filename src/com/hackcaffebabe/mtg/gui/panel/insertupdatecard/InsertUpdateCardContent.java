@@ -257,50 +257,15 @@ public class InsertUpdateCardContent extends JPanel
 //===========================================================================================
 // METHOD
 //===========================================================================================
-	/* in the case of cardToUpdate != null, selection card type MUST be disable */
-	private void disableUnnecessaryComponentsForUpdates(){
-		this.rdbCreature.setEnabled( false );
-		this.rdbArtifact.setEnabled( false );
-		this.rdbInstant.setEnabled( false );
-		this.rdbSorcery.setEnabled( false );
-		this.rdbEnchantment.setEnabled( false );
-		this.rdbLand.setEnabled( false );
-		this.rdbPlanedwalker.setEnabled( false );
-		this.btnClear.setEnabled( false );
-	}
-
-	/* Reset all the panel and components into the panel */
-	private void disableAllInPanel(){
-		this.pnlMTGBasicInfo.reset();
-		this.pnlManaCost.disableAllComponents();
-		this.pnlCreatureInfo.disableAllComponents();
-		this.pnlPlaneswalkerInfo.disableAllComponents();
-		this.btnAddEffect.setEnabled( true );
-		this.btnDelEffect.setEnabled( true );
-		this.btnAddAbility.setEnabled( true );
-		this.btnDelAbility.setEnabled( true );
-		this.txtPrimaryEffect.setText( "" );
-		this.txtPrimaryEffect.setEditable( true );
-	}
-
-	/* Reset the table effects and table abilities */
-	private void clearEffectsAndAbilityTable(){
-		tableAbility.setModel( new JXObjectModel<>() );
-		tableEffects.setModel( new JXObjectModel<>() );
-	}
-
-	/* reset ALL the form */
-	private void resetTheForm(){
-		disableAllInPanel();
-		clearEffectsAndAbilityTable();
-		mtgCardType.clearSelection();
-		MTGTypeListener.lastActionCommand = "";
-	}
-
-	/* this method populate all the content with data of cardToUpdate */
-	private void populateContent(){
+	/**
+	 * Select the appropriate type card for the view component.
+	 * @param ac {@link String} from one of GUIUtils.AC_*, otherwise nothing.
+	 */
+	public void selectCardType(String ac){
+		if(ac == null || ac.isEmpty())
+			return;
 		//this stuff is for select appropriate mtgType button
-		switch( cardToUpdate.getClass().getSimpleName() ) {
+		switch( ac ) {
 			case AC_CREATURE: {
 				rdbCreature.setSelected( true );
 				break;
@@ -329,9 +294,60 @@ public class InsertUpdateCardContent extends JPanel
 				rdbPlanedwalker.setSelected( true );
 				break;
 			}
+			default:
+				return;
 		}
 		//this is to call action event
-		this.MTGTypeListener.actionPerformed( new ActionEvent( this, 1, cardToUpdate.getClass().getSimpleName() ) );
+		this.MTGTypeListener.actionPerformed( new ActionEvent( this, 1, ac ) );
+	}
+
+	/**
+	 * Reset all the panel and components into the panel
+	 */
+	public void disableAllInPanel(){
+		this.pnlMTGBasicInfo.reset();
+		this.pnlManaCost.disableAllComponents();
+		this.pnlCreatureInfo.disableAllComponents();
+		this.pnlPlaneswalkerInfo.disableAllComponents();
+		this.btnAddEffect.setEnabled( true );
+		this.btnDelEffect.setEnabled( true );
+		this.btnAddAbility.setEnabled( true );
+		this.btnDelAbility.setEnabled( true );
+		this.txtPrimaryEffect.setText( "" );
+		this.txtPrimaryEffect.setEditable( true );
+	}
+
+	/**
+	 * Reset the table effects and table abilities
+	 */
+	public void clearEffectsAndAbilityTable(){
+		this.tableAbility.setModel( new JXObjectModel<>() );
+		this.tableEffects.setModel( new JXObjectModel<>() );
+	}
+
+	/* in the case of cardToUpdate != null, selection card type MUST be disable */
+	private void disableUnnecessaryComponentsForUpdates(){
+		this.rdbCreature.setEnabled( false );
+		this.rdbArtifact.setEnabled( false );
+		this.rdbInstant.setEnabled( false );
+		this.rdbSorcery.setEnabled( false );
+		this.rdbEnchantment.setEnabled( false );
+		this.rdbLand.setEnabled( false );
+		this.rdbPlanedwalker.setEnabled( false );
+		this.btnClear.setEnabled( false );
+	}
+
+	/* reset ALL the form */
+	private void resetTheForm(){
+		disableAllInPanel();
+		clearEffectsAndAbilityTable();
+		mtgCardType.clearSelection();
+		MTGTypeListener.lastActionCommand = "";
+	}
+
+	/* this method populate all the content with data of cardToUpdate */
+	private void populateContent(){
+		selectCardType( cardToUpdate.getClass().getSimpleName() );
 
 		this.pnlMTGBasicInfo.setData( cardToUpdate );
 		this.txtPrimaryEffect.setText( cardToUpdate.getPrimaryEffect() );
@@ -376,7 +392,6 @@ public class InsertUpdateCardContent extends JPanel
 		try {
 			if(cardToUpdate == null) {
 				if(StoreManager.getInstance().store( m )) {
-					//reset all the form
 					resetTheForm();
 					refreshMTGTable();
 
@@ -401,10 +416,7 @@ public class InsertUpdateCardContent extends JPanel
 		}
 	}
 
-	/**
-	 * This method check the data from the user.
-	 * @return {@link Boolean}
-	 */
+	/* This method check the data from the user. */
 	private boolean checkUserData(){
 		String mtgCardType = MTGTypeListener.lastActionCommand;
 		if(mtgCardType.equals( "" ))
@@ -594,6 +606,7 @@ public class InsertUpdateCardContent extends JPanel
 			String mtgSubType = removeAccentCharacters( pnlMTGBasicInfo.getSubType() );
 			if(mtgSubType == null)
 				mtgSubType = "";
+			else mtgSubType = mtgSubType.trim();
 			log.write( Tag.DEBUG, "sub type = " + mtgSubType );
 
 			// if no text is inserted, "" is returned by getText()

@@ -42,11 +42,11 @@ public class Criteria
 	private Rarity rarity = null;
 
 	//those are effectually not used
-	private Boolean isLegendary = null;
-	private Boolean hasPrimaryEffect = null;
-
-	private Boolean hasEffect = null;
-	private Boolean hasAbility = null;//TODO maybe filter by ability
+//	private Boolean isLegendary = null;
+//	private Boolean hasPrimaryEffect = null;
+//
+//	private Boolean hasEffect = null;
+//	private Boolean hasAbility = null;//TODO maybe filter by ability
 
 //===========================================================================================
 // METHOD
@@ -120,28 +120,28 @@ public class Criteria
 				return true;
 		}
 
-		if(isLegendary != null) {
-			if(mtg.isLegendary() == isLegendary)
-				return true;
-		}
-
-		if(hasPrimaryEffect != null && mtg.getPrimaryEffect() != null) {
-			if(!mtg.getPrimaryEffect().isEmpty() == hasPrimaryEffect)
-				return true;
-		}
-
-		if(hasEffect != null) {
-			if(!mtg.getEffects().isEmpty())
-				return true;
-		}
-
-		if(hasAbility != null) {
-			boolean hasPWAbilitis = false;
-			if(mtg instanceof Planeswalker)
-				hasPWAbilitis = true;// if is a PW, it has abilities
-			if(!mtg.getAbilities().isEmpty() || hasPWAbilitis)
-				return true;
-		}
+//		if(isLegendary != null) {
+//			if(mtg.isLegendary() == isLegendary)
+//				return true;
+//		}
+//
+//		if(hasPrimaryEffect != null && mtg.getPrimaryEffect() != null) {
+//			if(!mtg.getPrimaryEffect().isEmpty() == hasPrimaryEffect)
+//				return true;
+//		}
+//
+//		if(hasEffect != null) {
+//			if(!mtg.getEffects().isEmpty())
+//				return true;
+//		}
+//
+//		if(hasAbility != null) {
+//			boolean hasPWAbilitis = false;
+//			if(mtg instanceof Planeswalker)
+//				hasPWAbilitis = true;// if is a PW, it has abilities
+//			if(!mtg.getAbilities().isEmpty() || hasPWAbilitis)
+//				return true;
+//		}
 
 		return false;
 	}
@@ -229,43 +229,43 @@ public class Criteria
 	 * @param isLegendary {@link Boolean}.
 	 * @return {@link Criteria} with the legendary flag set.
 	 */
-	public Criteria byIsLegendary(Boolean isLegendary){
-		this.isLegendary = isLegendary;
-		return this;
-	}
-
-	/**
-	 * This method set the criteria by if has a primary effect.<br>
-	 * Set to null to cancel the has primary effect criteria.
-	 * @param hasPrimaryEffect {@link Boolean} .
-	 * @return {@link Criteria} with has primary effect flag set.
-	 */
-	public Criteria byHasPrimaryEffect(Boolean hasPrimaryEffect){
-		this.hasPrimaryEffect = hasPrimaryEffect;
-		return this;
-	}
-
-	/**
-	 * This method set the criteria by if has at least one effect.<br>
-	 * Set to null to cancel the has effect criteria.
-	 * @param hasEffect {@link Boolean}.
-	 * @return {@link Criteria} with has at least one effect flag set.
-	 */
-	public Criteria byHasEffect(Boolean hasEffect){
-		this.hasEffect = hasEffect;
-		return this;
-	}
-
-	/**
-	 * This method set the criteria by if has at least one ability.<br>
-	 * Set to null to cancel the has ability criteria.
-	 * @param hasAblility {@link Boolean}.
-	 * @return {@link Criteria} with has at least one ability flag set.
-	 */
-	public Criteria byHasAbility(Boolean hasAblility){
-		this.hasAbility = hasAblility;
-		return this;
-	}
+//	public Criteria byIsLegendary(Boolean isLegendary){
+//		this.isLegendary = isLegendary;
+//		return this;
+//	}
+//
+//	/**
+//	 * This method set the criteria by if has a primary effect.<br>
+//	 * Set to null to cancel the has primary effect criteria.
+//	 * @param hasPrimaryEffect {@link Boolean} .
+//	 * @return {@link Criteria} with has primary effect flag set.
+//	 */
+//	public Criteria byHasPrimaryEffect(Boolean hasPrimaryEffect){
+//		this.hasPrimaryEffect = hasPrimaryEffect;
+//		return this;
+//	}
+//
+//	/**
+//	 * This method set the criteria by if has at least one effect.<br>
+//	 * Set to null to cancel the has effect criteria.
+//	 * @param hasEffect {@link Boolean}.
+//	 * @return {@link Criteria} with has at least one effect flag set.
+//	 */
+//	public Criteria byHasEffect(Boolean hasEffect){
+//		this.hasEffect = hasEffect;
+//		return this;
+//	}
+//
+//	/**
+//	 * This method set the criteria by if has at least one ability.<br>
+//	 * Set to null to cancel the has ability criteria.
+//	 * @param hasAblility {@link Boolean}.
+//	 * @return {@link Criteria} with has at least one ability flag set.
+//	 */
+//	public Criteria byHasAbility(Boolean hasAblility){
+//		this.hasAbility = hasAblility;
+//		return this;
+//	}
 
 	/**
 	 * Check if criteria is void.
@@ -273,8 +273,8 @@ public class Criteria
 	 */
 	public boolean isCriteriaEmpty(){
 		return (name == null) && (convertedManaCost == null) && (subType == null) && (series == null)
-				&& (colors.isEmpty()) && (rarity == null) && (isLegendary == null) && (hasPrimaryEffect == null)
-				&& (hasEffect == null) && (hasAbility == null);
+				&& (colors.isEmpty()) && (rarity == null) /*&& (isLegendary == null) && (hasPrimaryEffect == null)
+															&& (hasEffect == null) && (hasAbility == null)*/;
 	}
 
 //===========================================================================================
@@ -310,25 +310,25 @@ public class Criteria
 		return rarity;
 	}
 
-	/** @return {@link Boolean} the isLegendary flag */
-	public Boolean getIsLegendary(){
-		return isLegendary;
-	}
-
-	/** @return {@link Boolean} the has primary effect flag */
-	public Boolean getHasPrimaryEffect(){
-		return hasPrimaryEffect;
-	}
-
-	/** @return {@link Boolean} the has effect flag */
-	public Boolean getHasEffect(){
-		return hasEffect;
-	}
-
-	/** @return {@link Boolean} the has ability flag */
-	public Boolean getHasAbility(){
-		return hasAbility;
-	}
+//	/** @return {@link Boolean} the isLegendary flag */
+//	public Boolean getIsLegendary(){
+//		return isLegendary;
+//	}
+//
+//	/** @return {@link Boolean} the has primary effect flag */
+//	public Boolean getHasPrimaryEffect(){
+//		return hasPrimaryEffect;
+//	}
+//
+//	/** @return {@link Boolean} the has effect flag */
+//	public Boolean getHasEffect(){
+//		return hasEffect;
+//	}
+//
+//	/** @return {@link Boolean} the has ability flag */
+//	public Boolean getHasAbility(){
+//		return hasAbility;
+//	}
 
 //===========================================================================================
 // OVERRIDE
@@ -339,10 +339,10 @@ public class Criteria
 		int result = 1;
 		result = prime * result + ((colors == null) ? 0 : colors.hashCode());
 		result = prime * result + ((convertedManaCost == null) ? 0 : convertedManaCost.hashCode());
-		result = prime * result + ((hasAbility == null) ? 0 : hasAbility.hashCode());
-		result = prime * result + ((hasEffect == null) ? 0 : hasEffect.hashCode());
-		result = prime * result + ((hasPrimaryEffect == null) ? 0 : hasPrimaryEffect.hashCode());
-		result = prime * result + ((isLegendary == null) ? 0 : isLegendary.hashCode());
+//		result = prime * result + ((hasAbility == null) ? 0 : hasAbility.hashCode());
+//		result = prime * result + ((hasEffect == null) ? 0 : hasEffect.hashCode());
+//		result = prime * result + ((hasPrimaryEffect == null) ? 0 : hasPrimaryEffect.hashCode());
+//		result = prime * result + ((isLegendary == null) ? 0 : isLegendary.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((rarity == null) ? 0 : rarity.hashCode());
 		result = prime * result + ((series == null) ? 0 : series.hashCode());
@@ -369,26 +369,26 @@ public class Criteria
 				return false;
 		} else if(!convertedManaCost.equals( other.convertedManaCost ))
 			return false;
-		if(hasAbility == null) {
-			if(other.hasAbility != null)
-				return false;
-		} else if(!hasAbility.equals( other.hasAbility ))
-			return false;
-		if(hasEffect == null) {
-			if(other.hasEffect != null)
-				return false;
-		} else if(!hasEffect.equals( other.hasEffect ))
-			return false;
-		if(hasPrimaryEffect == null) {
-			if(other.hasPrimaryEffect != null)
-				return false;
-		} else if(!hasPrimaryEffect.equals( other.hasPrimaryEffect ))
-			return false;
-		if(isLegendary == null) {
-			if(other.isLegendary != null)
-				return false;
-		} else if(!isLegendary.equals( other.isLegendary ))
-			return false;
+//		if(hasAbility == null) {
+//			if(other.hasAbility != null)
+//				return false;
+//		} else if(!hasAbility.equals( other.hasAbility ))
+//			return false;
+//		if(hasEffect == null) {
+//			if(other.hasEffect != null)
+//				return false;
+//		} else if(!hasEffect.equals( other.hasEffect ))
+//			return false;
+//		if(hasPrimaryEffect == null) {
+//			if(other.hasPrimaryEffect != null)
+//				return false;
+//		} else if(!hasPrimaryEffect.equals( other.hasPrimaryEffect ))
+//			return false;
+//		if(isLegendary == null) {
+//			if(other.isLegendary != null)
+//				return false;
+//		} else if(!isLegendary.equals( other.isLegendary ))
+//			return false;
 		if(name == null) {
 			if(other.name != null)
 				return false;

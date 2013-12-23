@@ -1,17 +1,27 @@
 package com.hackcaffebabe.mtg.gui.frame;
 
-import static com.hackcaffebabe.mtg.gui.GUIUtils.TITLE_UPDATE_CARD;
-import static com.hackcaffebabe.mtg.gui.GUIUtils.TITLE_INSERT_CARD;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.AC_ARTIFACT;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.AC_CREATURE;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.AC_ENCHANTMENT;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.AC_INSTANT;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.AC_LAND;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.AC_PLANESWALKER;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.AC_SORCERY;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.DIMENSION_INSERT_CARD;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.TITLE_INSERT_CARD;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.TITLE_UPDATE_CARD;
 import java.awt.Event;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.Arrays;
+import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.KeyStroke;
 import com.hackcaffebabe.mtg.gui.panel.insertupdatecard.InsertUpdateCardContent;
 import com.hackcaffebabe.mtg.model.MTGCard;
@@ -26,6 +36,7 @@ public class InsertUpdateCard extends JFrame
 {
 	private static final long serialVersionUID = 1L;
 	private InsertUpdateCardContent content;
+	private MTGCard cardToView;
 
 	/**
 	 * Instance a frame to view or update a {@link MTGCard}
@@ -36,8 +47,9 @@ public class InsertUpdateCard extends JFrame
 		setMinimumSize( DIMENSION_INSERT_CARD );
 		setLocation( (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - (DIMENSION_INSERT_CARD.width / 2),
 				(Toolkit.getDefaultToolkit().getScreenSize().height / 2) - (DIMENSION_INSERT_CARD.height / 2) );
-		this.initContent( cardToView );
+		this.cardToView = cardToView;
 		this.initMenuBar();
+		this.initContent( cardToView );
 	}
 
 //===========================================================================================
@@ -64,10 +76,40 @@ public class InsertUpdateCard extends JFrame
 		} );
 		file.add( fileClose );
 
-		JMenu edit = new JMenu( "Edit" );
-
 		bar.add( file );
-		bar.add( edit );
+
+		// generate the Type menu of type based on the ActionCommand name if is not in update mode.
+		if(this.cardToView == null) {
+			JMenu type = new JMenu( "Type" );
+
+			ButtonGroup buttonGroup = new ButtonGroup();
+			for(final String s: Arrays.asList( AC_CREATURE, AC_ARTIFACT, AC_PLANESWALKER, AC_INSTANT, AC_SORCERY,
+					AC_ENCHANTMENT, AC_LAND )) {
+				JRadioButtonMenuItem currentTypeSelector = new JRadioButtonMenuItem( s );
+				currentTypeSelector.addActionListener( new ActionListener(){
+					@Override
+					public void actionPerformed(ActionEvent e){
+						content.selectCardType( s );
+					}
+				} );
+				buttonGroup.add( currentTypeSelector );
+				type.add( currentTypeSelector );
+			}
+			type.addSeparator();
+
+			JMenuItem typeClear = new JMenuItem( "Clear" );
+			typeClear.addActionListener( new ActionListener(){
+				@Override
+				public void actionPerformed(ActionEvent e){
+					content.disableAllInPanel();
+					content.clearEffectsAndAbilityTable();
+				}
+			} );
+			type.add( typeClear );
+
+			bar.add( type );
+		}
+
 		setJMenuBar( bar );
 	}
 
