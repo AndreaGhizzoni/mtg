@@ -389,37 +389,8 @@ public class InsertUpdateCardContent extends JPanel
 		}
 	}
 
-	/* save the MTG card with appropriate message */
-	private void storeOrUpdate(MTGCard m){
-		try {
-			if(cardToUpdate == null) {
-				if(StoreManager.getInstance().store( m )) {
-					resetTheForm();
-					refreshMTGTable();
-
-					displaySuccessMessage( this, "Card saved correctly!" );
-				} else {
-					displayWarningMessage( this, "Card is already saved!" );
-				}
-			} else {
-				// cardToUpdate is the oldest card, m is the newest.
-				if(StoreManager.getInstance().applyDifference( cardToUpdate, m )) {
-					refreshMTGTable();
-					PNL_MTGPROPERTIES.clearAll();
-
-					displaySuccessMessage( this, "Card updated correctly!" );
-					this.parent.close();
-				} else {
-					displayWarningMessage( this, "No changes found.\nNothing to update." );
-				}
-			}
-		} catch(Exception e) {
-			displayError( this, e );
-		}
-	}
-
 	/* This method check the data from the user. */
-	private boolean checkUserData(){
+	private boolean checkUserCard(){
 		String mtgCardType = MTGTypeListener.lastActionCommand;
 		if(mtgCardType.equals( "" ))
 			return false;
@@ -578,12 +549,46 @@ public class InsertUpdateCardContent extends JPanel
 	/* inner class that describe the action on btnSave */
 	private class SaveOrUpdateActionListener implements ActionListener
 	{
-		@SuppressWarnings("unchecked")
+
 		@Override
 		public void actionPerformed(ActionEvent e){
-			if(!checkUserData())
+			if(!checkUserCard())
 				return;
+			MTGCard c = getInsertedUserCard();
+			storeOrUpdate( c );
+		}
 
+		/* save the MTG card with appropriate message */
+		private void storeOrUpdate(MTGCard m){
+			try {
+				if(cardToUpdate == null) {
+					if(StoreManager.getInstance().store( m )) {
+						resetTheForm();
+						refreshMTGTable();
+
+						displaySuccessMessage( null, "Card saved correctly!" );
+					} else {
+						displayWarningMessage( null, "Card is already saved!" );
+					}
+				} else {
+					// cardToUpdate is the oldest card, m is the newest.
+					if(StoreManager.getInstance().applyDifference( cardToUpdate, m )) {
+						refreshMTGTable();
+						PNL_MTGPROPERTIES.clearAll();
+
+						displaySuccessMessage( null, "Card updated correctly!" );
+						parent.close();
+					} else {
+						displayWarningMessage( null, "No changes found.\nNothing to update." );
+					}
+				}
+			} catch(Exception e) {
+				displayError( null, e );
+			}
+		}
+
+		@SuppressWarnings("unchecked")
+		private MTGCard getInsertedUserCard(){
 			//at this point all the data are correct and ready to store or update.			
 			String mtgCardType = MTGTypeListener.lastActionCommand;
 
@@ -650,9 +655,7 @@ public class InsertUpdateCardContent extends JPanel
 					}
 
 					log.write( Tag.DEBUG, finalCreature.toString() );
-					storeOrUpdate( finalCreature );
-
-					break;
+					return finalCreature;
 				}
 				case AC_ARTIFACT: {
 					List<Ability> mtgAbility = ((JXObjectModel<Ability>) tableAbility.getModel()).getObjects();
@@ -671,9 +674,7 @@ public class InsertUpdateCardContent extends JPanel
 					}
 
 					log.write( Tag.DEBUG, finalArtifact.toString() );
-					storeOrUpdate( finalArtifact );
-
-					break;
+					return finalArtifact;
 				}
 				case AC_PLANESWALKER: {
 					int mtgLife = pnlPlaneswalkerInfo.getPlaneswalkerLife();
@@ -692,9 +693,7 @@ public class InsertUpdateCardContent extends JPanel
 					}
 
 					log.write( Tag.DEBUG, finalPlaneswalker.toString() );
-					storeOrUpdate( finalPlaneswalker );
-
-					break;
+					return finalPlaneswalker;
 				}
 				case AC_INSTANT: {
 					List<Ability> mtgAbility = ((JXObjectModel<Ability>) tableAbility.getModel()).getObjects();
@@ -710,9 +709,7 @@ public class InsertUpdateCardContent extends JPanel
 					}
 
 					log.write( Tag.DEBUG, finalInstant.toString() );
-					storeOrUpdate( finalInstant );
-
-					break;
+					return finalInstant;
 				}
 				case AC_SORCERY: {
 					List<Ability> mtgAbility = ((JXObjectModel<Ability>) tableAbility.getModel()).getObjects();
@@ -728,9 +725,7 @@ public class InsertUpdateCardContent extends JPanel
 					}
 
 					log.write( Tag.DEBUG, finalSorcery.toString() );
-					storeOrUpdate( finalSorcery );
-
-					break;
+					return finalSorcery;
 				}
 				case AC_ENCHANTMENT: {
 					List<Ability> mtgAbility = ((JXObjectModel<Ability>) tableAbility.getModel()).getObjects();
@@ -749,9 +744,7 @@ public class InsertUpdateCardContent extends JPanel
 					}
 
 					log.write( Tag.DEBUG, finalEnchantment.toString() );
-					storeOrUpdate( finalEnchantment );
-
-					break;
+					return finalEnchantment;
 				}
 				case AC_LAND: {
 					Land finalLand = new Land( mtgName, mtgRarity );
@@ -763,10 +756,10 @@ public class InsertUpdateCardContent extends JPanel
 					}
 
 					log.write( Tag.DEBUG, finalLand.toString() );
-					storeOrUpdate( finalLand );
-
-					break;
+					return finalLand;
 				}
+				default:
+					return null;
 			}
 		}
 	}
