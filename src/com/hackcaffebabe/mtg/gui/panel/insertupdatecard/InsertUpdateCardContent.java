@@ -347,7 +347,7 @@ public class InsertUpdateCardContent extends JPanel
 		MTGTypeListener.lastActionCommand = "";
 	}
 
-	/* this method populate all the content with data of cardToUpdate */
+	/* this method populate all the content with data in cardToUpdate */
 	private void populateContent(){
 		selectCardType( cardToUpdate.getClass().getSimpleName() );
 
@@ -387,82 +387,6 @@ public class InsertUpdateCardContent extends JPanel
 			this.tableEffects.setModel( model );
 			this.tableEffectsColumnAdjuster.adjustColumns();
 		}
-	}
-
-	/* This method check the data from the user. */
-	private boolean checkUserCard(){
-		String mtgCardType = MTGTypeListener.lastActionCommand;
-		if(mtgCardType.equals( "" ))
-			return false;
-
-		// =============== check the name
-		String mtgName = pnlMTGBasicInfo.getNames();
-		if(mtgName == null || mtgName.isEmpty()) {
-			displayError( this, new Exception( "Name of MTG Card can not be void." ) );
-			pnlMTGBasicInfo.requestFocus();
-			return false;
-		}
-		if(normalizeForStorage( mtgName ).isEmpty()) {// if user insert "...." or "/////" as name.
-			displayError( this, new Exception( "Name not valid" ) );
-			pnlMTGBasicInfo.requestFocus();
-			return false;
-		}
-
-		// =============== check the series
-		String mtgSeries = pnlMTGBasicInfo.getSeries();
-		if(mtgSeries == null || mtgSeries.isEmpty()) {
-			displayError( this, new Exception( "Series of MTG can not be void." ) );
-			pnlMTGBasicInfo.requestFocus();
-			return false;
-		}
-		if(normalizeForStorage( mtgSeries ).isEmpty()) {// if user insert "...." or "/////" as series.
-			displayError( this, new Exception( "Series not valid" ) );
-			pnlMTGBasicInfo.requestFocus();
-			return false;
-		}
-
-		// =============== get mana cost
-		if(!mtgCardType.equals( AC_LAND )) {
-			ManaCost mtgManaCost = pnlManaCost.getManaCost();
-			if(mtgManaCost == null) {
-				displayError( this, new Exception( "Mana cost of MTG Card can not be void." ) );
-				pnlManaCost.requestFocus();
-				return false;
-			}
-		}
-
-		// =============== get creature strength
-		if(mtgCardType.equals( AC_CREATURE )) {
-			Strength creatureStrength = pnlCreatureInfo.getStrength();
-			if(creatureStrength == null) {
-				displayError( this, new Exception( "Creature info missing." ) );
-				pnlCreatureInfo.requestFocus();
-				return false;
-			}
-		}
-
-		// =============== get primary effect
-		if(mtgCardType.equals( AC_INSTANT ) || mtgCardType.equals( AC_SORCERY ) || mtgCardType.equals( AC_ENCHANTMENT )) {
-			String mtgPrimaryEffect = normalizeForStorage( txtPrimaryEffect.getText() );
-			if(mtgPrimaryEffect == null) {
-				displayError( this, new Exception( mtgCardType + " have a primary effect." ) );
-				txtPrimaryEffect.requestFocus();
-				return false;
-			}
-		}
-
-		// =============== get land basic effect
-		if(mtgCardType.equals( AC_LAND )) {
-			@SuppressWarnings("unchecked")
-			List<Effect> mtgEffects = ((JXObjectModel<Effect>) tableEffects.getModel()).getObjects();
-			if(mtgEffects.isEmpty()) {
-				displayError( this, new Exception( "Land must have at least one effect." ) );
-				tableEffects.requestFocus();
-				return false;
-			}
-		}
-
-		return true;
 	}
 
 //===========================================================================================
@@ -549,13 +473,89 @@ public class InsertUpdateCardContent extends JPanel
 	/* inner class that describe the action on btnSave */
 	private class SaveOrUpdateActionListener implements ActionListener
 	{
-
 		@Override
 		public void actionPerformed(ActionEvent e){
 			if(!checkUserCard())
 				return;
 			MTGCard c = getInsertedUserCard();
 			storeOrUpdate( c );
+		}
+
+		/* This method check the data from the user. */
+		private boolean checkUserCard(){
+			String mtgCardType = MTGTypeListener.lastActionCommand;
+			if(mtgCardType.equals( "" ))
+				return false;
+
+			// =============== check the name
+			String mtgName = pnlMTGBasicInfo.getNames();
+			if(mtgName == null || mtgName.isEmpty()) {
+				displayError( null, new Exception( "Name of MTG Card can not be void." ) );
+				pnlMTGBasicInfo.requestFocus();
+				return false;
+			}
+			if(normalizeForStorage( mtgName ).isEmpty()) {// if user insert "...." or "/////" as name.
+				displayError( null, new Exception( "Name not valid" ) );
+				pnlMTGBasicInfo.requestFocus();
+				return false;
+			}
+
+			// =============== check the series
+			String mtgSeries = pnlMTGBasicInfo.getSeries();
+			if(mtgSeries == null || mtgSeries.isEmpty()) {
+				displayError( null, new Exception( "Series of MTG can not be void." ) );
+				pnlMTGBasicInfo.requestFocus();
+				return false;
+			}
+			if(normalizeForStorage( mtgSeries ).isEmpty()) {// if user insert "...." or "/////" as series.
+				displayError( null, new Exception( "Series not valid" ) );
+				pnlMTGBasicInfo.requestFocus();
+				return false;
+			}
+
+			// =============== get mana cost
+			if(!mtgCardType.equals( AC_LAND )) {
+				ManaCost mtgManaCost = pnlManaCost.getManaCost();
+				if(mtgManaCost == null) {
+					displayError( null, new Exception( "Mana cost of MTG Card can not be void." ) );
+					pnlManaCost.requestFocus();
+					return false;
+				}
+			}
+
+			// =============== get creature strength
+			if(mtgCardType.equals( AC_CREATURE )) {
+				Strength creatureStrength = pnlCreatureInfo.getStrength();
+				if(creatureStrength == null) {
+					displayError( null, new Exception( "Creature info missing." ) );
+					pnlCreatureInfo.requestFocus();
+					return false;
+				}
+			}
+
+			// =============== get primary effect
+			if(mtgCardType.equals( AC_INSTANT ) || mtgCardType.equals( AC_SORCERY )
+					|| mtgCardType.equals( AC_ENCHANTMENT )) {
+				String mtgPrimaryEffect = normalizeForStorage( txtPrimaryEffect.getText() );
+				if(mtgPrimaryEffect == null) {
+					displayError( null, new Exception( mtgCardType + " have a primary effect." ) );
+					txtPrimaryEffect.requestFocus();
+					return false;
+				}
+			}
+
+			// =============== get land basic effect
+			if(mtgCardType.equals( AC_LAND )) {
+				@SuppressWarnings("unchecked")
+				List<Effect> mtgEffects = ((JXObjectModel<Effect>) tableEffects.getModel()).getObjects();
+				if(mtgEffects.isEmpty()) {
+					displayError( null, new Exception( "Land must have at least one effect." ) );
+					tableEffects.requestFocus();
+					return false;
+				}
+			}
+
+			return true;
 		}
 
 		/* save the MTG card with appropriate message */
