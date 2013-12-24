@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -185,17 +186,36 @@ public class DeckEditor extends JFrame
 		}
 	}
 
-	/* TODO Add doc */
-	private class MyButton extends JButton
+	/* inner class that renders a JButton whit no border for JToolBar */
+	class MyButton extends JButton
 	{
 		private static final long serialVersionUID = 1L;
 
 		/**
-		 * Creates a new tool-bar button.
-		 * @param txt {@link String} The button text.
+		 * Creates a new tool-bar button whit a text.
+		 * @param text {@link String}.
 		 */
-		public MyButton(String txt){
-			super( txt );
+		public MyButton(String text){
+			super( text );
+			initialize();
+		}
+
+		/**
+		 * Creates a new tool-bar button with only an icon.
+		 * @param icon {@link Icon}
+		 */
+		public MyButton(Icon icon){
+			super( icon );
+			initialize();
+		}
+
+		/**
+		 * Creates a new tool-bar button with a icon and a text.
+		 * @param text {@link String}
+		 * @param icon {@link Icon}
+		 */
+		public MyButton(String text, Icon icon){
+			super( text, icon );
 			initialize();
 		}
 

@@ -5,6 +5,8 @@ import it.hackcaffebabe.jx.table.JXTable;
 import it.hackcaffebabe.jx.table.JXTableColumnAdjuster;
 import it.hackcaffebabe.jx.table.model.DisplayableObject;
 import it.hackcaffebabe.jx.table.model.JXObjectModel;
+import it.hackcaffebabe.logger.Logger;
+import it.hackcaffebabe.logger.Tag;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -213,6 +215,8 @@ public class MTGProperties extends JPanel
 		//do not display the same card that is already displayed.
 		if(this.displayedMTGCard != null && this.displayedMTGCard.hashCode() == c.hashCode())
 			return;
+
+		Logger.getInstance().write( Tag.DEBUG, c.toString() );
 
 		this.clearAll();// reset the form from the previous MTG card view
 

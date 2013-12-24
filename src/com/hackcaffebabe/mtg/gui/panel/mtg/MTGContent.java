@@ -8,8 +8,6 @@ import static com.hackcaffebabe.mtg.gui.GUIUtils.refreshMTGTable;
 import it.hackcaffebabe.jx.table.JXTable;
 import it.hackcaffebabe.jx.table.JXTableColumnAdjuster;
 import it.hackcaffebabe.jx.table.model.JXObjectModel;
-import it.hackcaffebabe.logger.Logger;
-import it.hackcaffebabe.logger.Tag;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -44,8 +42,6 @@ public class MTGContent extends JPanel
 
 	private JTextField txtSearch;
 	private JButton btnAdvanceSearch;
-
-	private Logger log = Logger.getInstance();
 
 	/**
 	 * Create the panel.
@@ -122,13 +118,14 @@ public class MTGContent extends JPanel
 	{
 		@Override
 		@SuppressWarnings("unchecked")
-		// TODO this event is performed two times for click!
 		public void valueChanged(ListSelectionEvent e){
+			// this event is performed two times for click
+			// but setMTGCardToView(c) set the card if and only if 
+			// the card passed is not equal of that is already displayed.
 			int selRow = JXTABLE_MTG.getSelectedModelRow();
 			if(selRow != -1) {
 				MTGCard c = ((JXObjectModel<MTGCard>) JXTABLE_MTG.getModel()).getObject( selRow );
 				PNL_MTGPROPERTIES.setMTGCardToView( c );
-				log.write( Tag.DEBUG, c.toString() );
 			}
 		}
 	}

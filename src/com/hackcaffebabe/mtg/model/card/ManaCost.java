@@ -8,6 +8,7 @@ import com.hackcaffebabe.mtg.model.color.BasicColors;
 
 /**
  * Represents the mana cost of a MTG card.
+ * TODO [!!!] figure out how to implement mana cost like this: X.X.R
  *  
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0

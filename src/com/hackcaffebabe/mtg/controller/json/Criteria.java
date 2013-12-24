@@ -65,9 +65,9 @@ public class Criteria
 		else return false;
 	}
 
-	//TODO finish this
-	/* TODO add doc */
+	/* match the given card in specific mode */
 	private boolean exactlyMatch(MTGCard mtg){
+		//TODO finish this
 		return false;
 	}
 
