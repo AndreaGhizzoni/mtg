@@ -437,16 +437,16 @@ public class InsertUpdateCardContent extends JPanel
 						pnlMTGBasicInfo.setAllColorsEnable( true );
 						pnlMTGBasicInfo.setIsArtifactEnable( false );
 						pnlManaCost.enableAllComponents();
-						btnAddEffect.setEnabled( false );
-						btnDelEffect.setEnabled( false );
+						btnAddEffect.setEnabled( true );
+						btnDelEffect.setEnabled( true );
 						break;
 					}
 					case AC_SORCERY: {
 						pnlMTGBasicInfo.setAllColorsEnable( true );
 						pnlManaCost.enableAllComponents();
 						pnlMTGBasicInfo.setIsArtifactEnable( false );
-						btnAddEffect.setEnabled( false );
-						btnDelEffect.setEnabled( false );
+						btnAddEffect.setEnabled( true );
+						btnDelEffect.setEnabled( true );
 						break;
 					}
 					case AC_ENCHANTMENT: {
@@ -707,6 +707,9 @@ public class InsertUpdateCardContent extends JPanel
 					for(Ability abi: mtgAbility) {
 						finalInstant.addAbility( abi );
 					}
+					for(Effect ef: mtgEffects) {
+						finalInstant.addEffect( ef );
+					}
 
 					log.write( Tag.DEBUG, finalInstant.toString() );
 					return finalInstant;
@@ -722,6 +725,9 @@ public class InsertUpdateCardContent extends JPanel
 					finalSorcery.setLegendary( isLegendary );
 					for(Ability abi: mtgAbility) {
 						finalSorcery.addAbility( abi );
+					}
+					for(Effect ef: mtgEffects) {
+						finalSorcery.addEffect( ef );
 					}
 
 					log.write( Tag.DEBUG, finalSorcery.toString() );
