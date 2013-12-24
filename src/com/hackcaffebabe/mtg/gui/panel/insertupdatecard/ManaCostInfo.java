@@ -1,6 +1,14 @@
 package com.hackcaffebabe.mtg.gui.panel.insertupdatecard;
 
 import static com.hackcaffebabe.mtg.gui.GUIUtils.showManaCost;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
+import net.miginfocom.swing.MigLayout;
 import com.hackcaffebabe.mtg.model.Artifact;
 import com.hackcaffebabe.mtg.model.Creature;
 import com.hackcaffebabe.mtg.model.Enchantment;
@@ -10,13 +18,7 @@ import com.hackcaffebabe.mtg.model.MTGCard;
 import com.hackcaffebabe.mtg.model.Planeswalker;
 import com.hackcaffebabe.mtg.model.Sorcery;
 import com.hackcaffebabe.mtg.model.card.ManaCost;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.border.TitledBorder;
-import net.miginfocom.swing.MigLayout;
+import com.hackcaffebabe.mtg.model.card.Strength;
 
 
 /**
@@ -41,6 +43,7 @@ public class ManaCostInfo extends JPanel
 		setBorder( new TitledBorder( "Mana Cost Info" ) );
 		setLayout( new MigLayout( "", "[grow][]", "[]" ) );
 		this.initContent();
+		this.initShortcut();
 	}
 
 	/* initialize all components */
@@ -52,6 +55,11 @@ public class ManaCostInfo extends JPanel
 		this.btnSetManaCost = new JButton( "Set Mana Cost" );
 		this.btnSetManaCost.addActionListener( new ManaActionListener() );
 		add( this.btnSetManaCost, "cell 1 0" );
+	}
+
+	/* this method initialize the shortcut */
+	private void initShortcut(){
+		this.btnSetManaCost.setMnemonic( KeyEvent.VK_M );
 	}
 
 //===========================================================================================

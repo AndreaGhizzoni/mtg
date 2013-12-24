@@ -67,6 +67,9 @@ public class Criteria
 
 	/* match the given card in specific mode */
 	private boolean exactlyMatch(MTGCard mtg){
+		if(mtg == null || isCriteriaEmpty())
+			return true;// if no criteria was set, every card matches
+
 		//TODO finish this
 		return false;
 	}

@@ -119,6 +119,7 @@ public class InsertUpdateCardContent extends JPanel
 		setLayout( new MigLayout( "", "[grow][grow]", "[60!][grow][60!]" ) );
 		this.cardToUpdate = cardToUpdate;
 		this.initContent();
+		this.initShortcut();
 		this.chois();
 	}
 
@@ -134,7 +135,6 @@ public class InsertUpdateCardContent extends JPanel
 					disableUnnecessaryComponentsForUpdates();
 				}
 				btnSaveOrUpdate.setText( cardToUpdate == null ? "Save" : "Update" );
-				btnSaveOrUpdate.setMnemonic( cardToUpdate == null ? KeyEvent.VK_S : KeyEvent.VK_U );
 			}
 		} );
 	}
@@ -210,7 +210,9 @@ public class InsertUpdateCardContent extends JPanel
 		pnlMTG.add( this.btnDelAbility, "cell 7 5,alignx center,growy" );
 
 		//================== Primary Effect
-		pnlMTG.add( new JLabel( "Primary Effect:" ), "cell 0 6" );
+		JLabel lblPrimaryEffect = new JLabel( "Primary Effect:" );
+		lblPrimaryEffect.setDisplayedMnemonic( KeyEvent.VK_P );
+		pnlMTG.add( lblPrimaryEffect, "cell 0 6" );
 		this.txtPrimaryEffect = new JTextArea();
 		this.txtPrimaryEffect.setLineWrap( true );
 		this.txtPrimaryEffect.setWrapStyleWord( true );
@@ -256,6 +258,15 @@ public class InsertUpdateCardContent extends JPanel
 		add( pnlOptions, "cell 0 2 2 1,grow" );
 	}
 
+	/* this method initialize the shortcut */
+	private void initShortcut(){
+		this.btnAddAbility.setMnemonic( KeyEvent.VK_A );
+		this.txtPrimaryEffect.setFocusAccelerator( 'p' );
+		this.btnAddEffect.setMnemonic( KeyEvent.VK_E );
+		this.btnSaveOrUpdate.setMnemonic( cardToUpdate == null ? KeyEvent.VK_S : KeyEvent.VK_U );
+		this.btnClear.setMnemonic( KeyEvent.VK_L );
+	}
+
 //===========================================================================================
 // METHOD
 //===========================================================================================
@@ -270,30 +281,37 @@ public class InsertUpdateCardContent extends JPanel
 		switch( ac ) {
 			case AC_CREATURE: {
 				rdbCreature.setSelected( true );
+				rdbCreature.requestFocus();
 				break;
 			}
 			case AC_ARTIFACT: {
 				rdbArtifact.setSelected( true );
+				rdbArtifact.requestFocus();
 				break;
 			}
 			case AC_INSTANT: {
 				rdbInstant.setSelected( true );
+				rdbInstant.requestFocus();
 				break;
 			}
 			case AC_SORCERY: {
 				rdbSorcery.setSelected( true );
+				rdbSorcery.requestFocus();
 				break;
 			}
 			case AC_ENCHANTMENT: {
 				rdbEnchantment.setSelected( true );
+				rdbEnchantment.requestFocus();
 				break;
 			}
 			case AC_LAND: {
 				rdbLand.setSelected( true );
+				rdbLand.requestFocus();
 				break;
 			}
 			case AC_PLANESWALKER: {
 				rdbPlanedwalker.setSelected( true );
+				rdbPlanedwalker.requestFocus();
 				break;
 			}
 			default:

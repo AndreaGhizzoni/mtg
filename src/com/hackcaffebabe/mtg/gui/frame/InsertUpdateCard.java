@@ -16,6 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
+import java.util.List;
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -78,20 +79,24 @@ public class InsertUpdateCard extends JFrame
 
 		bar.add( file );
 
-		// generate the Type menu of type based on the ActionCommand name if is not in update mode.
+		// generate the Type menu of type ( if is in insert mode )
+		// based on the ActionCommand name if is not in update mode.
 		if(this.cardToView == null) {
 			JMenu type = new JMenu( "Type" );
 
 			ButtonGroup buttonGroup = new ButtonGroup();
-			for(final String s: Arrays.asList( AC_CREATURE, AC_ARTIFACT, AC_PLANESWALKER, AC_INSTANT, AC_SORCERY,
-					AC_ENCHANTMENT, AC_LAND )) {
+			List<Integer> vks = Arrays.asList( KeyEvent.VK_1, KeyEvent.VK_2, KeyEvent.VK_3, KeyEvent.VK_4,
+					KeyEvent.VK_5, KeyEvent.VK_6, KeyEvent.VK_7 );
+			int i = 0;
+			for(final String s: Arrays.asList( AC_CREATURE, AC_ARTIFACT, AC_PLANESWALKER, AC_LAND, AC_ENCHANTMENT,
+					AC_SORCERY, AC_INSTANT )) {
 				JRadioButtonMenuItem currentTypeSelector = new JRadioButtonMenuItem( s );
 				currentTypeSelector.addActionListener( new ActionListener(){
-					@Override
 					public void actionPerformed(ActionEvent e){
 						content.selectCardType( s );
 					}
 				} );
+				currentTypeSelector.setAccelerator( KeyStroke.getKeyStroke( vks.get( i++ ), Event.CTRL_MASK ) );
 				buttonGroup.add( currentTypeSelector );
 				type.add( currentTypeSelector );
 			}
