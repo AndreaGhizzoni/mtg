@@ -1,7 +1,9 @@
 package com.hackcaffebabe.mtg.controller.json;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import com.hackcaffebabe.mtg.model.Artifact;
 import com.hackcaffebabe.mtg.model.Creature;
 import com.hackcaffebabe.mtg.model.Enchantment;
@@ -37,7 +39,7 @@ public class Criteria
 
 	private String series = null;
 
-	private List<BasicColors> colors = new ArrayList<>();
+	private Set<BasicColors> colors = new HashSet<>();
 
 	private Rarity rarity = null;
 
@@ -58,9 +60,9 @@ public class Criteria
 	 * @return {@link Boolean} if the card given match with the criteria.
 	 */
 	public boolean match(MTGCard mtg, Mode mode){
-		if(mode == Mode.LAZY)
-			return match( mtg );
-		else if(mode == Mode.SPECIFIC)
+		if(mode.equals( Mode.LAZY ))
+			return lazyMatch( mtg );
+		else if(mode.equals( Mode.SPECIFIC ))
 			return exactlyMatch( mtg );
 		else return false;
 	}
@@ -70,12 +72,55 @@ public class Criteria
 		if(mtg == null || isCriteriaEmpty())
 			return true;// if no criteria was set, every card matches
 
-		//TODO finish this
-		return false;
+		ArrayList<Boolean> listOfChecking = new ArrayList<>();
+
+		if(name != null) {
+			listOfChecking.add( mtg.getName().equals( name ) );
+		}
+
+		if(convertedManaCost != null) {
+			if(!(mtg instanceof Land)) {
+				int mc = -1;
+				if(mtg instanceof Creature)
+					mc = ((Creature) mtg).getManaCost().getConvertedManaCost();
+				else if(mtg instanceof Sorcery)
+					mc = ((Sorcery) mtg).getManaCost().getConvertedManaCost();
+				else if(mtg instanceof Instant)
+					mc = ((Instant) mtg).getManaCost().getConvertedManaCost();
+				else if(mtg instanceof Enchantment)
+					mc = ((Enchantment) mtg).getManaCost().getConvertedManaCost();
+				else if(mtg instanceof Planeswalker)
+					mc = ((Planeswalker) mtg).getManaCost().getConvertedManaCost();
+				else mc = ((Artifact) mtg).getManaCost().getConvertedManaCost();
+				listOfChecking.add( convertedManaCost.equals( mc ) );
+			}
+		}
+
+		if(subType != null) {
+			listOfChecking.add( mtg.getSubType().equals( subType ) );
+		}
+
+		if(series != null) {
+			listOfChecking.add( mtg.getSeries().equals( series ) );
+		}
+
+		if(colors != null) {
+			listOfChecking.add( colors.equals( mtg.getCardColor().getBasicColors() ) );
+		}
+
+		if(rarity != null) {
+			listOfChecking.add( mtg.getRarity().equals( rarity ) );
+		}
+
+		if(listOfChecking.isEmpty())
+			return false;
+		else if(listOfChecking.contains( false ))
+			return false;
+		else return true;
 	}
 
 	/* match the card given in lazy mode */
-	private boolean match(MTGCard mtg){
+	private boolean lazyMatch(MTGCard mtg){
 		if(mtg == null || isCriteriaEmpty())
 			return true;// if no criteria was set, every card matches
 
@@ -122,29 +167,6 @@ public class Criteria
 			if(mtg.getRarity().equals( rarity ))
 				return true;
 		}
-
-//		if(isLegendary != null) {
-//			if(mtg.isLegendary() == isLegendary)
-//				return true;
-//		}
-//
-//		if(hasPrimaryEffect != null && mtg.getPrimaryEffect() != null) {
-//			if(!mtg.getPrimaryEffect().isEmpty() == hasPrimaryEffect)
-//				return true;
-//		}
-//
-//		if(hasEffect != null) {
-//			if(!mtg.getEffects().isEmpty())
-//				return true;
-//		}
-//
-//		if(hasAbility != null) {
-//			boolean hasPWAbilitis = false;
-//			if(mtg instanceof Planeswalker)
-//				hasPWAbilitis = true;// if is a PW, it has abilities
-//			if(!mtg.getAbilities().isEmpty() || hasPWAbilitis)
-//				return true;
-//		}
 
 		return false;
 	}
@@ -305,7 +327,7 @@ public class Criteria
 
 	/** @return {@link List} of {@link BasicColors} */
 	public List<BasicColors> getColors(){
-		return this.colors;
+		return new ArrayList<>( colors );
 	}
 
 	/** @return {@link Rarity} the rarity */

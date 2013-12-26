@@ -35,8 +35,6 @@ import com.hackcaffebabe.mtg.model.color.BasicColors;
 public class AdvanceSearchContent extends JPanel
 {
 	private static final long serialVersionUID = 1L;
-	private Criteria criteria = new Criteria();
-
 	private JRadioButton rdbtnLazy;
 	private JRadioButton rdbtnSpecific;
 
@@ -147,8 +145,7 @@ public class AdvanceSearchContent extends JPanel
 		btnClear.addActionListener( new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e){
-				criteria = new Criteria();
-				applyCriteriaChanges();
+				applyCriteriaChanges( null );
 			}
 		} );
 		add( btnClear, "cell 0 4,growx,aligny bottom" );
@@ -178,8 +175,9 @@ public class AdvanceSearchContent extends JPanel
 
 	/* apply on the table the criteria */
 	@SuppressWarnings("unchecked")
-	private void applyCriteriaChanges(){
-		List<MTGCard> lst = StoreManager.getInstance().searchBy( this.criteria, this.getCriteriaMode() );
+	private void applyCriteriaChanges(Criteria c){
+		List<MTGCard> lst = StoreManager.getInstance()
+				.searchBy( c == null ? new Criteria() : c, this.getCriteriaMode() );
 		if(!lst.isEmpty()) {
 			JXObjectModel<MTGCard> model = (JXObjectModel<MTGCard>) JXTABLE_MTG.getModel();
 			model.removeAll();
@@ -198,6 +196,8 @@ public class AdvanceSearchContent extends JPanel
 	{
 		@Override
 		public void actionPerformed(ActionEvent e){
+			Criteria criteria = new Criteria();
+
 			if(chbRed.isSelected())
 				criteria.byBasiColors( BasicColors.RED );
 			if(chbBlack.isSelected())
@@ -235,7 +235,7 @@ public class AdvanceSearchContent extends JPanel
 			String a = (String) cmbSubType.getSelectedItem();
 			criteria.bySubType( a.equals( "-------------" ) ? null : a );
 
-			applyCriteriaChanges();
+			applyCriteriaChanges( criteria );
 		}
 	}
 }
