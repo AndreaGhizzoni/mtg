@@ -26,9 +26,9 @@ import javax.swing.KeyStroke;
 import com.hackcaffebabe.mtg.gui.frame.listener.AboutActionListener;
 import com.hackcaffebabe.mtg.gui.frame.listener.DeckEditorActionListener;
 import com.hackcaffebabe.mtg.gui.frame.listener.ExportActionListener;
-import com.hackcaffebabe.mtg.gui.frame.listener.ExportActionListener.MODE;
-import com.hackcaffebabe.mtg.gui.frame.listener.ImportAllCardsActionListener;
-import com.hackcaffebabe.mtg.gui.frame.listener.SelectedImportCardsActionListener;
+import com.hackcaffebabe.mtg.gui.frame.listener.ExportActionListener.WhatToExport;
+import com.hackcaffebabe.mtg.gui.frame.listener.ImportActionListener;
+import com.hackcaffebabe.mtg.gui.frame.listener.ImportActionListener.WhatToImport;
 import com.hackcaffebabe.mtg.gui.listener.DeleteCardActionListener;
 import com.hackcaffebabe.mtg.gui.listener.NewCardActionListener;
 import com.hackcaffebabe.mtg.gui.panel.mtg.MTGContent;
@@ -79,17 +79,17 @@ public class MTG extends JFrame
 		JMenu file = new JMenu( "File" );
 		JMenuItem fileImport = new JMenuItem( "Import..." );
 		fileImport.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_I, Event.CTRL_MASK ) );
-		fileImport.addActionListener( new ImportAllCardsActionListener() );
+		fileImport.addActionListener( new ImportActionListener( WhatToImport.ALL_CARDS ) );
 		file.add( fileImport );
 
 		JMenuItem fileImportSelected = new JMenuItem( "Selected Import..." );
 		fileImportSelected.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_U, Event.CTRL_MASK ) );
-		fileImportSelected.addActionListener( new SelectedImportCardsActionListener() );
+		fileImportSelected.addActionListener( new ImportActionListener( WhatToImport.SELECTIVE_CARDS ) );
 		file.add( fileImportSelected );
 
 		JMenuItem fileExport = new JMenuItem( "Export..." );
 		fileExport.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_E, Event.CTRL_MASK ) );
-		fileExport.addActionListener( new ExportActionListener( MODE.ALL_CARDS ) );
+		fileExport.addActionListener( new ExportActionListener( WhatToExport.ALL_CARDS ) );
 		file.add( fileExport );
 
 		file.add( new JSeparator() );

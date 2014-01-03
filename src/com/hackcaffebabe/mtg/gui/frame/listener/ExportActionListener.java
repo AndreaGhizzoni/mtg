@@ -24,7 +24,7 @@ import com.hackcaffebabe.mtg.controller.json.StoreManager;
 public class ExportActionListener implements ActionListener
 {
 	/** Enumeration that describe the perform action */
-	public enum MODE
+	public enum WhatToExport
 	{
 		/** export all cards */
 		ALL_CARDS,
@@ -32,7 +32,7 @@ public class ExportActionListener implements ActionListener
 		ALL_DECKS,
 	}
 
-	private MODE whatExport = null;
+	private WhatToExport whatToExport = null;
 	private String lastLocationUserSelection = PathUtil.USER_HOME;
 
 	/**
@@ -40,10 +40,10 @@ public class ExportActionListener implements ActionListener
 	 * @param whatExport mode to export
 	 * @throws IllegalArgumentException if argument given is null.
 	 */
-	public ExportActionListener(MODE whatExport) throws IllegalArgumentException{
+	public ExportActionListener(WhatToExport whatExport) throws IllegalArgumentException{
 		if(whatExport == null)
 			throw new IllegalArgumentException( "Argument given can not be null." );
-		this.whatExport = whatExport;
+		this.whatToExport = whatExport;
 	}
 
 	/**
@@ -52,7 +52,7 @@ public class ExportActionListener implements ActionListener
 	 * @param defaultExportlocation {@link String} the default location to export, is user don't choose differently.
 	 * @throws IllegalArgumentException if argument given is null or empty string.
 	 */
-	public ExportActionListener(MODE whatExport, String defaultExportlocation) throws IllegalArgumentException{
+	public ExportActionListener(WhatToExport whatExport, String defaultExportlocation) throws IllegalArgumentException{
 		this( whatExport );
 		if(defaultExportlocation != null && !defaultExportlocation.isEmpty())
 			this.lastLocationUserSelection = defaultExportlocation;
@@ -63,9 +63,9 @@ public class ExportActionListener implements ActionListener
 		// if user select a valid location to export.
 		if(showUserLocationChooser()) {
 			enableDisableSource( e.getSource(), false );
-
+			//TODO maybe add some log (as info) around here.
 			try {
-				switch( whatExport ) {
+				switch( whatToExport ) {
 					case ALL_CARDS: {
 						StoreManager.getInstance().createCardsBackup( makeBackupFile() );
 						break;
@@ -118,9 +118,9 @@ public class ExportActionListener implements ActionListener
 
 	/* this method creates the appropriate File object according to the mode and the last location user selection */
 	private File makeBackupFile(){
-		if(whatExport.equals( MODE.ALL_DECKS )) {
+		if(whatToExport.equals( WhatToExport.ALL_DECKS )) {
 			return new File( lastLocationUserSelection + PathUtil.FILE_SEPARATOR + DBCostants.BCK_DECKS_NAME );
-		} else if(whatExport.equals( MODE.ALL_CARDS )) {
+		} else if(whatToExport.equals( WhatToExport.ALL_CARDS )) {
 			return new File( lastLocationUserSelection + PathUtil.FILE_SEPARATOR + DBCostants.BCK_CALLS_NAME );
 		} else {
 			return null;
