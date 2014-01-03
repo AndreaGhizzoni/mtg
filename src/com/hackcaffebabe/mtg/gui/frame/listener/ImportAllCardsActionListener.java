@@ -27,7 +27,7 @@ import com.hackcaffebabe.mtg.gui.frame.MTG;
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.5
  */
-public class ImportActionListener implements ActionListener
+public class ImportAllCardsActionListener implements ActionListener
 {
 	@Override
 	public void actionPerformed(ActionEvent e){

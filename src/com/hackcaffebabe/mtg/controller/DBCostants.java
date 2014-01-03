@@ -26,10 +26,13 @@ public class DBCostants
 	/** Flag for logging on file */
 	public static final boolean DB_LOG_ON_FILE = false;
 
-	private static final String BCK_FILE_NAME = "MTG_Cards_Backup";
+	private static final String BCK_FILE_DECKS_FILE_NAME = "MTG_Decks_Backup";
+	private static final String BCK_FILE_CARDS_NAME = "MTG_Cards_Backup";
 	private static final String BCK_FILE_EXTENSION = "zip";
-	/** Represents the backup name */
-	public static final String BCK_NAME = BCK_FILE_NAME + "." + BCK_FILE_EXTENSION;
+	/** Represents the card backup file name */
+	public static final String BCK_CALLS_NAME = BCK_FILE_CARDS_NAME + "." + BCK_FILE_EXTENSION;
+	/** Represents the decks backup file name */
+	public static final String BCK_DECKS_NAME = BCK_FILE_DECKS_FILE_NAME + "+" + BCK_FILE_EXTENSION;
 
 	/* JSON tag */
 	public static final String JSON_TAG_NAME = "name";

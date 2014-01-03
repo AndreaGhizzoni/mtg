@@ -256,7 +256,7 @@ public class StoreManager
 	 * @param destinationFile {@link File} the file represents .zip.
 	 * @throws IOException if backup creation fail.
 	 */
-	public void createBackup(File destinationFile) throws IOException{
+	public void createCardsBackup(File destinationFile) throws IOException{
 		if(destinationFile == null)
 			return;
 
