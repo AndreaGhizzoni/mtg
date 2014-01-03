@@ -130,8 +130,13 @@ public class ImportActionListener implements ActionListener
 
 			@Override
 			public boolean accept(File f){
-				//TODO [!!!] this is not clear, because user can select a card's zip file when it's expected deck's zip file.
-				return f.isDirectory() || f.getName().endsWith( ".zip" );
+				if(whatToImport.equals( WhatToImport.ALL_CARDS ) || whatToImport.equals( WhatToImport.SELECTIVE_CARDS ))
+					return f.isDirectory() || f.getName().endsWith( DBCostants.BCK_CARDS_EXT );
+
+				if(whatToImport.equals( WhatToImport.ALL_DECKS ) || whatToImport.equals( WhatToImport.SELECTIVE_DECKS ))
+					return f.isDirectory() || f.getName().endsWith( DBCostants.BCK_DECKS_EXT );
+
+				return false;
 			}
 		} );
 		if(f.showDialog( null, "Open" ) == JFileChooser.APPROVE_OPTION) {

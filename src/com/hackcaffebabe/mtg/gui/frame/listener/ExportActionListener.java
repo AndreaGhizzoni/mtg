@@ -121,7 +121,7 @@ public class ExportActionListener implements ActionListener
 		if(whatToExport.equals( WhatToExport.ALL_DECKS )) {
 			return new File( lastLocationUserSelection + PathUtil.FILE_SEPARATOR + DBCostants.BCK_DECKS_NAME );
 		} else if(whatToExport.equals( WhatToExport.ALL_CARDS )) {
-			return new File( lastLocationUserSelection + PathUtil.FILE_SEPARATOR + DBCostants.BCK_CALLS_NAME );
+			return new File( lastLocationUserSelection + PathUtil.FILE_SEPARATOR + DBCostants.BCK_CARDS_NAME );
 		} else {
 			return null;
 		}
