@@ -5,6 +5,8 @@ import static com.hackcaffebabe.mtg.gui.GUIUtils.PNL_MTGPROPERTIES;
 import it.hackcaffebabe.jx.table.model.JXObjectModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 import com.hackcaffebabe.mtg.gui.frame.InsertUpdateCard;
 import com.hackcaffebabe.mtg.model.MTGCard;
@@ -31,8 +33,8 @@ public class ClickMTGListMouseAdapter extends MouseAdapter
 
 		if(SwingUtilities.isRightMouseButton( e )) {
 			if(e.getClickCount() == 1) {
-//				doSingleLeftClick( e );
-//				doSingleRightClick( e );
+				doSingleLeftClick( e );
+				doSingleRightClick( e );
 			}
 		}
 	}
@@ -41,6 +43,7 @@ public class ClickMTGListMouseAdapter extends MouseAdapter
 	private void doSingleLeftClick(MouseEvent e){
 		int r = JXTABLE_MTG.rowAtPoint( e.getPoint() );
 		if(r != -1) {
+			JXTABLE_MTG.getSelectionModel().setSelectionInterval( r, r );
 			MTGCard c = ((JXObjectModel<MTGCard>) JXTABLE_MTG.getModel()).getObject( r );
 			PNL_MTGPROPERTIES.setMTGCardToView( c );
 		}
@@ -55,9 +58,9 @@ public class ClickMTGListMouseAdapter extends MouseAdapter
 		}
 	}
 
-//	private void doSingleRightClick(MouseEvent e){
-//		JPopupMenu menu = new JPopupMenu();
-//		menu.add( new JMenuItem( "Click Me!" ) );
-//		menu.show( e.getComponent(), e.getX(), e.getY() );
-//	}
+	private void doSingleRightClick(MouseEvent e){
+		JPopupMenu menu = new JPopupMenu();
+		menu.add( new JMenuItem( "Click Me!" ) );
+		menu.show( e.getComponent(), e.getX(), e.getY() );
+	}
 }

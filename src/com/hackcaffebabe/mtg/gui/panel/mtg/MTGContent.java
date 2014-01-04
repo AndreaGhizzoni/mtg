@@ -80,7 +80,6 @@ public class MTGContent extends JPanel
 		JXTABLE_MTG.setShowVerticalLines( false );
 		JXTABLE_MTG.setRowSorter( this.txtSearch );
 		JXTABLE_MTG.getSelectionModel().setSelectionMode( ListSelectionModel.SINGLE_SELECTION );
-//		JXTABLE_MTG.getSelectionModel().addListSelectionListener( new MTGCardListSelectionListener() );
 		JXTABLE_MTG.addMouseListener( new ClickMTGListMouseAdapter() );
 		JXTABLE_MTG_COLUMN_ADJUSTER = new JXTableColumnAdjuster( JXTABLE_MTG, 5 );
 		pnlMTGList.add( new JScrollPane( JXTABLE_MTG, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -107,24 +106,4 @@ public class MTGContent extends JPanel
 		this.btnAdvanceSearch.setMnemonic( KeyEvent.VK_S );
 		this.btnAdvanceSearch.addActionListener( new AdvanceSearchActionListener() );
 	}
-
-//===========================================================================================
-// INNER CLASS
-//===========================================================================================
-//	/* Event handle on row selection */
-//	private class MTGCardListSelectionListener implements ListSelectionListener
-//	{
-//		@Override
-//		@SuppressWarnings("unchecked")
-//		public void valueChanged(ListSelectionEvent e){
-//			// this event is performed two times for click
-//			// but setMTGCardToView(c) set the card if and only if 
-//			// the card passed is not equal of that is already displayed.
-//			int selRow = JXTABLE_MTG.getSelectedModelRow();
-//			if(selRow != -1) {
-//				MTGCard c = ((JXObjectModel<MTGCard>) JXTABLE_MTG.getModel()).getObject( selRow );
-//				PNL_MTGPROPERTIES.setMTGCardToView( c );
-//			}
-//		}
-//	}
 }
