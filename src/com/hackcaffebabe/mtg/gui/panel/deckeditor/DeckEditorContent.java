@@ -62,6 +62,18 @@ public class DeckEditorContent extends JPanel
 		add( pnlInfo, "cell 1 1 2 1,grow" );
 	}
 
+	/* open a new tab with given name and content. */
+	private void openTab(String tabName, String content){
+		int i = tabDeckOpened.indexOfTab( tabName );
+		if(i != -1) {
+			tabDeckOpened.setSelectedIndex( i );
+		} else {
+			tabDeckOpened.add( tabName, new TabContent( this.tabDeckOpened, content ) );
+			tabDeckOpened.setTabComponentAt( this.tabDeckOpened.getTabCount() - 1, new TabTopRender( tabDeckOpened ) );
+			tabDeckOpened.setSelectedIndex( this.tabDeckOpened.getTabCount() - 1 );// set focus on the last tab
+		}
+	}
+
 	/**
 	 * Refresh and read all the saved deck into
 	 */
@@ -75,19 +87,6 @@ public class DeckEditorContent extends JPanel
 				lstSavedDeck.setModel( model );
 			}
 		} );
-	}
-
-	/* open a new tab with given name and content. */
-	private void openTab(String tabName, String content){
-		int i = tabDeckOpened.indexOfTab( tabName );
-		if(i != -1) {
-			tabDeckOpened.setSelectedIndex( i );
-		} else {
-			TabContent tabContent = new TabContent( tabName, content );
-			tabDeckOpened.add( tabName == null ? "null" : tabName, tabContent );
-			tabDeckOpened.setTabComponentAt( tabDeckOpened.getTabCount() - 1, new TabComponent( tabDeckOpened ) );
-			tabDeckOpened.setSelectedIndex( tabDeckOpened.getTabCount() - 1 );// set focus on the last tab
-		}
 	}
 
 	/**

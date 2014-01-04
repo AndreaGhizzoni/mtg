@@ -26,12 +26,12 @@ import javax.swing.plaf.basic.BasicButtonUI;
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
  */
-class TabComponent extends JPanel
+class TabTopRender extends JPanel
 {
 	private static final long serialVersionUID = 1L;
 	private final JTabbedPane pane;
 
-	public TabComponent(final JTabbedPane pane){
+	public TabTopRender(final JTabbedPane pane){
 		//set default FlowLayout' gaps
 		super( new FlowLayout( FlowLayout.LEFT, 0, 0 ) );
 		if(pane == null)
@@ -47,7 +47,7 @@ class TabComponent extends JPanel
 			private static final long serialVersionUID = 1L;
 
 			public String getText(){
-				int i = pane.indexOfTabComponent( TabComponent.this );
+				int i = pane.indexOfTabComponent( TabTopRender.this );
 				if(i != -1)
 					return pane.getTitleAt( i );
 				return null;
@@ -100,7 +100,7 @@ class TabComponent extends JPanel
 		}
 
 		public void actionPerformed(ActionEvent e){
-			int i = pane.indexOfTabComponent( TabComponent.this );
+			int i = pane.indexOfTabComponent( TabTopRender.this );
 			//TODO check if the last file changes has been saved.
 			//if not: ask user if wants to save the changes or not.
 			if(i != -1) {

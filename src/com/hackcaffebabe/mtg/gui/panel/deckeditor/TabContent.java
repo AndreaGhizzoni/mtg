@@ -1,10 +1,15 @@
 package com.hackcaffebabe.mtg.gui.panel.deckeditor;
 
+import it.hackcaffebabe.logger.Logger;
+import it.hackcaffebabe.logger.Tag;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import net.miginfocom.swing.MigLayout;
 import com.hackcaffebabe.mtg.gui.panel.deckeditor.listener.SaveAction;
 
@@ -20,19 +25,22 @@ public class TabContent extends JPanel
 	private static final long serialVersionUID = 1L;
 	private static final String SAVE_KEY = "save";
 
-	private String title;
+	private JTabbedPane tabbedpaneParent;
 	private JTextArea textDeckContent = new JTextArea();
 
 	/**
 	 * Instance the tab content whit his string content.
 	 * @param contOfTextArea {@link String} the content.
 	 */
-	public TabContent(String title, String contOfTextArea){
+	public TabContent(JTabbedPane parent, String contOfTextArea){
 		super();
 		setLayout( new MigLayout( "", "[grow]", "[grow]" ) );
 		this.initContent();
+		this.tabbedpaneParent = parent;
 		this.textDeckContent.setText( (contOfTextArea == null || contOfTextArea.isEmpty()) ? "" : contOfTextArea );
-		this.title = title != null && !title.isEmpty() ? title : "null";
+		this.textDeckContent.getDocument().addDocumentListener( new MyDocumentListener( contOfTextArea ) );
+		this.textDeckContent.getDocument().putProperty( "src", this.textDeckContent );
+		this.textDeckContent.getDocument().putProperty( "parent", this.tabbedpaneParent );
 		this.requestFocus();
 	}
 
@@ -70,8 +78,50 @@ public class TabContent extends JPanel
 		return getTextArea().getText();
 	}
 
-	/** @return {@link String} the title of {@link TabContent} */
-	public String getTitle(){
-		return this.title;
+//===========================================================================================
+// INNER CLASS
+//===========================================================================================
+	class MyDocumentListener implements DocumentListener
+	{
+		private final String initalText;
+		private boolean needToSave = false;
+
+		public MyDocumentListener(String initialText){
+			this.initalText = initialText;
+		}
+
+		@Override
+		public void insertUpdate(DocumentEvent e){
+			JTextArea src = ((JTextArea) e.getDocument().getProperty( "src" ));
+			needToSave = (initalText.hashCode() != src.getText().hashCode());
+			updateTabTopRender( (JTabbedPane) e.getDocument().getProperty( "parent" ) );
+			Logger.getInstance().write( Tag.DEBUG, "insert called. need to save ? " + needToSave );
+		}
+
+		@Override
+		public void removeUpdate(DocumentEvent e){
+			JTextArea src = ((JTextArea) e.getDocument().getProperty( "src" ));
+			needToSave = (initalText.hashCode() != src.getText().hashCode());
+			updateTabTopRender( (JTabbedPane) e.getDocument().getProperty( "parent" ) );
+			Logger.getInstance().write( Tag.DEBUG, "remove called. need to save ? " + needToSave );
+
+		}
+
+		/* method to append "*" string on the top of the title top bar */
+		private void updateTabTopRender(JTabbedPane parent){
+			int i = parent.getSelectedIndex();
+			String oldTitle = parent.getTitleAt( i );
+			if(needToSave) {
+				//need to append "*" on the title
+				if(!oldTitle.startsWith( "*" ))
+					parent.setTitleAt( i, "*" + oldTitle );
+			} else {
+				//remove "*" from the title
+				parent.setTitleAt( i, oldTitle.substring( 1, oldTitle.length() ) );
+			}
+		}
+
+		@Override
+		public void changedUpdate(DocumentEvent e){}
 	}
 }
