@@ -3,12 +3,15 @@ package com.hackcaffebabe.mtg.gui.panel.mtg.listener;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.JXTABLE_MTG;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.PNL_MTGPROPERTIES;
 import it.hackcaffebabe.jx.table.model.JXObjectModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 import com.hackcaffebabe.mtg.gui.frame.InsertUpdateCard;
+import com.hackcaffebabe.mtg.gui.listener.DeleteCardActionListener;
 import com.hackcaffebabe.mtg.model.MTGCard;
 
 
@@ -39,6 +42,7 @@ public class ClickMTGListMouseAdapter extends MouseAdapter
 		}
 	}
 
+	/* dispatcher event when mouse do left click on JXTABLE_MTG */
 	@SuppressWarnings("unchecked")
 	private void doSingleLeftClick(MouseEvent e){
 		int r = JXTABLE_MTG.rowAtPoint( e.getPoint() );
@@ -49,6 +53,7 @@ public class ClickMTGListMouseAdapter extends MouseAdapter
 		}
 	}
 
+	/* dispatcher event when mouse do double left click on JXTABLE_MTG */
 	@SuppressWarnings("unchecked")
 	private void doDoubleLeftClick(MouseEvent e){
 		JXObjectModel<MTGCard> model = (JXObjectModel<MTGCard>) JXTABLE_MTG.getModel();
@@ -58,9 +63,23 @@ public class ClickMTGListMouseAdapter extends MouseAdapter
 		}
 	}
 
-	private void doSingleRightClick(MouseEvent e){//TODO still finish this
+	/* dispatcher event when mouse do right click on JXTABLE_MTG */
+	private void doSingleRightClick(MouseEvent e){
 		JPopupMenu menu = new JPopupMenu();
-		menu.add( new JMenuItem( "Click Me!" ) );
+
+		JMenuItem update = new JMenuItem( "Update" );
+		update.addActionListener( new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				doDoubleLeftClick( null );
+			}
+		} );
+		menu.add( update );
+
+		JMenuItem delete = new JMenuItem( "Delete" );
+		delete.addActionListener( DeleteCardActionListener.getInstance() );
+		menu.add( delete );
+
 		menu.show( e.getComponent(), e.getX(), e.getY() );
 	}
 }
