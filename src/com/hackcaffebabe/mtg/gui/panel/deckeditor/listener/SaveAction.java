@@ -23,7 +23,7 @@ public class SaveAction extends AbstractAction
 	public void actionPerformed(ActionEvent e){
 		if(e.getSource() instanceof TabContent) {
 			TabContent src = ((TabContent) e.getSource());
-			log.write( Tag.INFO, "Save action called... try to save: " + src.getTitle() );
+			log.write( Tag.INFO, "Save action called..." );
 		}
 	}
 }

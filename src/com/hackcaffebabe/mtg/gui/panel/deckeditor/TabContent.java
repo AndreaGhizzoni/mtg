@@ -26,7 +26,8 @@ public class TabContent extends JPanel
 	private static final String SAVE_KEY = "save";
 
 	private JTabbedPane tabbedpaneParent;
-	private JTextArea textDeckContent = new JTextArea();
+	private MyDocumentListener textDeckDocumentListener;
+	private JTextArea textDeck = new JTextArea();
 
 	/**
 	 * Instance the tab content whit his string content.
@@ -37,10 +38,11 @@ public class TabContent extends JPanel
 		setLayout( new MigLayout( "", "[grow]", "[grow]" ) );
 		this.initContent();
 		this.tabbedpaneParent = parent;
-		this.textDeckContent.setText( (contOfTextArea == null || contOfTextArea.isEmpty()) ? "" : contOfTextArea );
-		this.textDeckContent.getDocument().addDocumentListener( new MyDocumentListener( contOfTextArea ) );
-		this.textDeckContent.getDocument().putProperty( "src", this.textDeckContent );
-		this.textDeckContent.getDocument().putProperty( "parent", this.tabbedpaneParent );
+		this.textDeck.setText( (contOfTextArea == null || contOfTextArea.isEmpty()) ? "" : contOfTextArea );
+		this.textDeckDocumentListener = new MyDocumentListener( contOfTextArea );
+		this.textDeck.getDocument().addDocumentListener( this.textDeckDocumentListener );
+		this.textDeck.getDocument().putProperty( "src", this.textDeck );
+		this.textDeck.getDocument().putProperty( "parent", this.tabbedpaneParent );
 		this.requestFocus();
 	}
 
@@ -49,20 +51,21 @@ public class TabContent extends JPanel
 //===========================================================================================
 	/* Initialize all the content. */
 	private void initContent(){
-		this.textDeckContent.setWrapStyleWord( true );
-		this.textDeckContent.setLineWrap( true );
-		this.textDeckContent.setFont( new Font( Font.MONOSPACED, Font.PLAIN, 12 ) );
+		this.textDeck.setWrapStyleWord( true );
+		this.textDeck.setLineWrap( true );
+		this.textDeck.setFont( new Font( Font.MONOSPACED, Font.PLAIN, 12 ) );
 		// don't uncomment this because crtl+s is already bind on frame that TabContent is content in.
 		//this.textDeckContent.getInputMap().put( KeyStroke.getKeyStroke( KeyEvent.VK_S, Event.CTRL_MASK ), SAVE_KEY );
-		this.textDeckContent.getActionMap().put( SAVE_KEY, new SaveAction() );
-		add( new JScrollPane( this.textDeckContent ), "cell 0 0,grow" );
+		this.textDeck.getActionMap().put( SAVE_KEY, new SaveAction() );
+		add( new JScrollPane( this.textDeck ), "cell 0 0,grow" );
 	}
 
 	/**
 	 * Entry point of tab pane to SaveAll action
 	 */
 	public void save(){
-		this.textDeckContent.getActionMap().get( SAVE_KEY ).actionPerformed( new ActionEvent( this, 1, SAVE_KEY ) );
+		if(this.textDeckDocumentListener.isChangingFind())
+			this.textDeck.getActionMap().get( SAVE_KEY ).actionPerformed( new ActionEvent( this, 1, SAVE_KEY ) );
 	}
 
 //===========================================================================================
@@ -70,12 +73,17 @@ public class TabContent extends JPanel
 //===========================================================================================
 	/** @return {@link JTextArea} */
 	public JTextArea getTextArea(){
-		return this.textDeckContent;
+		return this.textDeck;
 	}
 
 	/** @return {@link String} the content of {@link TabContent} as string*/
 	public String getText(){
 		return getTextArea().getText();
+	}
+
+	/** @return {@link JTabbedPane} return the parent tabbed pane reference */
+	public JTabbedPane getTabbedPane(){
+		return this.tabbedpaneParent;
 	}
 
 //===========================================================================================
@@ -93,18 +101,25 @@ public class TabContent extends JPanel
 		@Override
 		public void insertUpdate(DocumentEvent e){
 			JTextArea src = ((JTextArea) e.getDocument().getProperty( "src" ));
-			needToSave = (initalText.hashCode() != src.getText().hashCode());
-			updateTabTopRender( (JTabbedPane) e.getDocument().getProperty( "parent" ) );
+			JTabbedPane pane = ((JTabbedPane) e.getDocument().getProperty( "parent" ));
+			needToSave = checkHasBeenModify( src );
+			updateTabTopRender( pane );
 			Logger.getInstance().write( Tag.DEBUG, "insert called. need to save ? " + needToSave );
 		}
 
 		@Override
 		public void removeUpdate(DocumentEvent e){
 			JTextArea src = ((JTextArea) e.getDocument().getProperty( "src" ));
-			needToSave = (initalText.hashCode() != src.getText().hashCode());
-			updateTabTopRender( (JTabbedPane) e.getDocument().getProperty( "parent" ) );
+			JTabbedPane pane = ((JTabbedPane) e.getDocument().getProperty( "parent" ));
+			needToSave = checkHasBeenModify( src );
+			updateTabTopRender( pane );
 			Logger.getInstance().write( Tag.DEBUG, "remove called. need to save ? " + needToSave );
 
+		}
+
+		/* this method check if the text from JTextArea given has been modify according to the initial text */
+		private boolean checkHasBeenModify(JTextArea src){
+			return initalText.hashCode() != src.getText().hashCode();
 		}
 
 		/* method to append "*" string on the top of the title top bar */
@@ -123,5 +138,10 @@ public class TabContent extends JPanel
 
 		@Override
 		public void changedUpdate(DocumentEvent e){}
+
+		/** @return {@link Boolean} true if file has been modify, otherwhise false */
+		public boolean isChangingFind(){
+			return needToSave;
+		}
 	}
 }
