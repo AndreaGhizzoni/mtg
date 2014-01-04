@@ -20,11 +20,9 @@ import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import net.miginfocom.swing.MigLayout;
 import com.hackcaffebabe.mtg.gui.panel.mtg.listener.AdvanceSearchActionListener;
-import com.hackcaffebabe.mtg.gui.panel.mtg.listener.DoubleClickMouseAdapter;
+import com.hackcaffebabe.mtg.gui.panel.mtg.listener.ClickMTGListMouseAdapter;
 import com.hackcaffebabe.mtg.model.MTGCard;
 
 
@@ -82,8 +80,8 @@ public class MTGContent extends JPanel
 		JXTABLE_MTG.setShowVerticalLines( false );
 		JXTABLE_MTG.setRowSorter( this.txtSearch );
 		JXTABLE_MTG.getSelectionModel().setSelectionMode( ListSelectionModel.SINGLE_SELECTION );
-		JXTABLE_MTG.getSelectionModel().addListSelectionListener( new MTGCardListSelectionListener() );
-		JXTABLE_MTG.addMouseListener( new DoubleClickMouseAdapter() );
+//		JXTABLE_MTG.getSelectionModel().addListSelectionListener( new MTGCardListSelectionListener() );
+		JXTABLE_MTG.addMouseListener( new ClickMTGListMouseAdapter() );
 		JXTABLE_MTG_COLUMN_ADJUSTER = new JXTableColumnAdjuster( JXTABLE_MTG, 5 );
 		pnlMTGList.add( new JScrollPane( JXTABLE_MTG, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED ), "cell 0 0,grow" );
@@ -113,20 +111,20 @@ public class MTGContent extends JPanel
 //===========================================================================================
 // INNER CLASS
 //===========================================================================================
-	/* Event handle on row selection */
-	private class MTGCardListSelectionListener implements ListSelectionListener
-	{
-		@Override
-		@SuppressWarnings("unchecked")
-		public void valueChanged(ListSelectionEvent e){
-			// this event is performed two times for click
-			// but setMTGCardToView(c) set the card if and only if 
-			// the card passed is not equal of that is already displayed.
-			int selRow = JXTABLE_MTG.getSelectedModelRow();
-			if(selRow != -1) {
-				MTGCard c = ((JXObjectModel<MTGCard>) JXTABLE_MTG.getModel()).getObject( selRow );
-				PNL_MTGPROPERTIES.setMTGCardToView( c );
-			}
-		}
-	}
+//	/* Event handle on row selection */
+//	private class MTGCardListSelectionListener implements ListSelectionListener
+//	{
+//		@Override
+//		@SuppressWarnings("unchecked")
+//		public void valueChanged(ListSelectionEvent e){
+//			// this event is performed two times for click
+//			// but setMTGCardToView(c) set the card if and only if 
+//			// the card passed is not equal of that is already displayed.
+//			int selRow = JXTABLE_MTG.getSelectedModelRow();
+//			if(selRow != -1) {
+//				MTGCard c = ((JXObjectModel<MTGCard>) JXTABLE_MTG.getModel()).getObject( selRow );
+//				PNL_MTGPROPERTIES.setMTGCardToView( c );
+//			}
+//		}
+//	}
 }
