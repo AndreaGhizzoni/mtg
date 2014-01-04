@@ -1,13 +1,10 @@
 package com.hackcaffebabe.mtg.gui.panel.deckeditor;
 
-import java.awt.Event;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.KeyStroke;
 import net.miginfocom.swing.MigLayout;
 import com.hackcaffebabe.mtg.gui.panel.deckeditor.listener.SaveAction;
 
@@ -47,7 +44,8 @@ public class TabContent extends JPanel
 		this.textDeckContent.setWrapStyleWord( true );
 		this.textDeckContent.setLineWrap( true );
 		this.textDeckContent.setFont( new Font( Font.MONOSPACED, Font.PLAIN, 12 ) );
-		this.textDeckContent.getInputMap().put( KeyStroke.getKeyStroke( KeyEvent.VK_S, Event.CTRL_MASK ), SAVE_KEY );
+		// don't uncomment this because crtl+s is already bind on frame that TabContent is content in.
+		//this.textDeckContent.getInputMap().put( KeyStroke.getKeyStroke( KeyEvent.VK_S, Event.CTRL_MASK ), SAVE_KEY );
 		this.textDeckContent.getActionMap().put( SAVE_KEY, new SaveAction() );
 		add( new JScrollPane( this.textDeckContent ), "cell 0 0,grow" );
 	}

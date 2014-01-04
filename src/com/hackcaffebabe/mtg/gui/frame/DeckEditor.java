@@ -16,6 +16,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
+import javax.swing.text.DefaultEditorKit;
 import com.hackcaffebabe.mtg.gui.GUIUtils;
 import com.hackcaffebabe.mtg.gui.panel.deckeditor.DeckEditorContent;
 
@@ -68,7 +69,16 @@ public class DeckEditor extends JFrame
 		MyButton saveAll = new MyButton( "sa" );
 		saveAll.addActionListener( new SaveAllActionListener() );
 
-		MyButton delFile = new MyButton( "-" );
+		MyButton copy = new MyButton( "copy" );
+		copy.addActionListener( new DefaultEditorKit.CopyAction() );
+
+		MyButton cut = new MyButton( "cut" );
+		cut.addActionListener( new DefaultEditorKit.CutAction() );
+
+		MyButton paste = new MyButton( "paste" );
+		paste.addActionListener( new DefaultEditorKit.PasteAction() );
+
+		MyButton delFile = new MyButton( "del" );
 		delFile.addActionListener( new DeleteFileActionListener() );
 
 		MyButton renameFile = new MyButton( "r" );
@@ -76,6 +86,10 @@ public class DeckEditor extends JFrame
 		toolBar.add( newFile );
 		toolBar.add( save );
 		toolBar.add( saveAll );
+		toolBar.addSeparator();
+		toolBar.add( copy );
+		toolBar.add( cut );
+		toolBar.add( paste );
 		toolBar.addSeparator();
 		toolBar.add( delFile );
 		toolBar.addSeparator();

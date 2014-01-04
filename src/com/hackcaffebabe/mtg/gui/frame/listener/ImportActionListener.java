@@ -1,6 +1,5 @@
 package com.hackcaffebabe.mtg.gui.frame.listener;
 
-import static com.hackcaffebabe.mtg.gui.GUIUtils.displayError;
 import it.hackcaffebabe.ioutil.file.PathUtil;
 import it.hackcaffebabe.ioutil.file.UnZipper;
 import it.hackcaffebabe.jx.checklist.JXCheckList;
@@ -108,7 +107,7 @@ public class ImportActionListener implements ActionListener
 
 				}
 			} catch(IOException ex) {
-				displayError( null, new Exception( "Error while reading backup file.\n" + ex.getMessage() ) );
+				GUIUtils.displayError( null, new Exception( "Error while reading backup file.\n" + ex.getMessage() ) );
 			}
 
 			enableDisableSource( e.getSource(), true );

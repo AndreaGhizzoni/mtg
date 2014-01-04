@@ -142,9 +142,10 @@ public class DeckEditorContent extends JPanel
 	 * Entry point to call the save action for selected tab
 	 */
 	public void saveCurrent(){
-		TabContent b = (TabContent) this.tabDeckOpened.getSelectedComponent();
-		if(b != null)
-			b.save();
+		int selTab = this.tabDeckOpened.getSelectedIndex();
+		if(selTab != -1) {
+			((TabContent) this.tabDeckOpened.getComponentAt( selTab )).save();
+		}
 	}
 
 //===========================================================================================

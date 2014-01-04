@@ -21,7 +21,9 @@ public class SaveAction extends AbstractAction
 
 	@Override
 	public void actionPerformed(ActionEvent e){
-		TabContent src = ((TabContent) e.getSource());
-		log.write( Tag.INFO, "Save action called... try to save: " + src.getTitle() );
+		if(e.getSource() instanceof TabContent) {
+			TabContent src = ((TabContent) e.getSource());
+			log.write( Tag.INFO, "Save action called... try to save: " + src.getTitle() );
+		}
 	}
 }
