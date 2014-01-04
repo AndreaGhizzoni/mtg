@@ -58,7 +58,7 @@ public class ClickMTGListMouseAdapter extends MouseAdapter
 		}
 	}
 
-	private void doSingleRightClick(MouseEvent e){
+	private void doSingleRightClick(MouseEvent e){//TODO still finish this
 		JPopupMenu menu = new JPopupMenu();
 		menu.add( new JMenuItem( "Click Me!" ) );
 		menu.show( e.getComponent(), e.getX(), e.getY() );

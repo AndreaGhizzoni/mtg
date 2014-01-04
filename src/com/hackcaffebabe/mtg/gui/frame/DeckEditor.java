@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.Box;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,6 +19,7 @@ import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.text.DefaultEditorKit;
 import com.hackcaffebabe.mtg.gui.GUIUtils;
+import com.hackcaffebabe.mtg.gui.frame.listener.AboutActionListener;
 import com.hackcaffebabe.mtg.gui.panel.deckeditor.DeckEditorContent;
 
 
@@ -90,7 +92,7 @@ public class DeckEditor extends JFrame
 		toolBar.add( copy );
 		toolBar.add( cut );
 		toolBar.add( paste );
-		toolBar.addSeparator();
+		toolBar.add( Box.createGlue() );
 		toolBar.add( delFile );
 		toolBar.addSeparator();
 		toolBar.add( renameFile );
@@ -154,6 +156,10 @@ public class DeckEditor extends JFrame
 		menuEdit.add( menuEditRefresh );
 
 		JMenu menuHelp = new JMenu( "Help" );
+		JMenuItem helpAbout = new JMenuItem( "About" );
+		helpAbout.setAccelerator( KeyStroke.getKeyStroke( "F1" ) );
+		helpAbout.addActionListener( new AboutActionListener() );
+		menuHelp.add( helpAbout );
 
 		menuBar.add( menuFile );
 		menuBar.add( menuEdit );

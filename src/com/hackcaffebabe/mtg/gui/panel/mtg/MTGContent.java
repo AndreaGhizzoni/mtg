@@ -38,8 +38,8 @@ public class MTGContent extends JPanel
 
 	private JPanel pnlMTGList = new JPanel();
 
-	private JTextField txtSearch;
-	private JButton btnAdvanceSearch;
+	private JTextField txtSearch = new JTextField();
+	private JButton btnAdvanceSearch = new JButton( "Advance Search" );
 
 	/**
 	 * Create the panel.
@@ -62,13 +62,9 @@ public class MTGContent extends JPanel
 		JPanel pnlSearch = new JPanel();
 		pnlSearch.setBorder( new TitledBorder( "Search by String:" ) );
 		pnlSearch.setLayout( new MigLayout( "", "[grow][150!]", "[]" ) );
-		add( pnlSearch, "cell 0 1,grow" );
-
-		this.txtSearch = new JTextField();
 		pnlSearch.add( this.txtSearch, "cell 0 0,growx,aligny center" );
-
-		this.btnAdvanceSearch = new JButton( "Advance Search" );
 		pnlSearch.add( this.btnAdvanceSearch, "cell 1 0,growx,aligny top" );
+		add( pnlSearch, "cell 0 1,grow" );
 
 		// MTG list panel
 		this.pnlMTGList.setBorder( new TitledBorder( new LineBorder( new Color( 184, 207, 229 ) ), "MTG Card List",
