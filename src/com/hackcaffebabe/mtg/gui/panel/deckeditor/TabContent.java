@@ -1,16 +1,13 @@
 package com.hackcaffebabe.mtg.gui.panel.deckeditor;
 
-import it.hackcaffebabe.logger.Logger;
-import it.hackcaffebabe.logger.Tag;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import net.miginfocom.swing.MigLayout;
+import com.hackcaffebabe.mtg.gui.panel.deckeditor.listener.ModifyTextDocumentListener;
 import com.hackcaffebabe.mtg.gui.panel.deckeditor.listener.SaveAction;
 
 
@@ -26,7 +23,7 @@ public class TabContent extends JPanel
 	private static final String SAVE_KEY = "save";
 
 	private JTabbedPane tabbedpaneParent;
-	private MyDocumentListener textDeckDocumentListener;
+	private ModifyTextDocumentListener textDeckDocumentListener;
 	private JTextArea textDeck = new JTextArea();
 
 	/**
@@ -39,7 +36,7 @@ public class TabContent extends JPanel
 		this.initContent();
 		this.tabbedpaneParent = parent;
 		this.textDeck.setText( (contOfTextArea == null || contOfTextArea.isEmpty()) ? "" : contOfTextArea );
-		this.textDeckDocumentListener = new MyDocumentListener( contOfTextArea );
+		this.textDeckDocumentListener = new ModifyTextDocumentListener( contOfTextArea );
 		this.textDeck.getDocument().addDocumentListener( this.textDeckDocumentListener );
 		this.textDeck.getDocument().putProperty( "src", this.textDeck );
 		this.textDeck.getDocument().putProperty( "parent", this.tabbedpaneParent );
@@ -64,7 +61,7 @@ public class TabContent extends JPanel
 	 * Entry point of tab pane to SaveAll action
 	 */
 	public void save(){
-		if(this.textDeckDocumentListener.isChangingFind())
+		if(hasBeenModify())
 			this.textDeck.getActionMap().get( SAVE_KEY ).actionPerformed( new ActionEvent( this, 1, SAVE_KEY ) );
 	}
 
@@ -76,72 +73,18 @@ public class TabContent extends JPanel
 		return this.textDeck;
 	}
 
-	/** @return {@link String} the content of {@link TabContent} as string*/
+	/** @return {@link String} the content of {@link TabContent} as string. */
 	public String getText(){
 		return getTextArea().getText();
 	}
 
-	/** @return {@link JTabbedPane} return the parent tabbed pane reference */
+	/** @return {@link JTabbedPane} return the parent tabbed pane reference. */
 	public JTabbedPane getTabbedPane(){
 		return this.tabbedpaneParent;
 	}
 
-//===========================================================================================
-// INNER CLASS
-//===========================================================================================
-	class MyDocumentListener implements DocumentListener
-	{
-		private final String initalText;
-		private boolean needToSave = false;
-
-		public MyDocumentListener(String initialText){
-			this.initalText = initialText;
-		}
-
-		@Override
-		public void insertUpdate(DocumentEvent e){
-			JTextArea src = ((JTextArea) e.getDocument().getProperty( "src" ));
-			JTabbedPane pane = ((JTabbedPane) e.getDocument().getProperty( "parent" ));
-			needToSave = checkHasBeenModify( src );
-			updateTabTopRender( pane );
-			Logger.getInstance().write( Tag.DEBUG, "insert called. need to save ? " + needToSave );
-		}
-
-		@Override
-		public void removeUpdate(DocumentEvent e){
-			JTextArea src = ((JTextArea) e.getDocument().getProperty( "src" ));
-			JTabbedPane pane = ((JTabbedPane) e.getDocument().getProperty( "parent" ));
-			needToSave = checkHasBeenModify( src );
-			updateTabTopRender( pane );
-			Logger.getInstance().write( Tag.DEBUG, "remove called. need to save ? " + needToSave );
-
-		}
-
-		/* this method check if the text from JTextArea given has been modify according to the initial text */
-		private boolean checkHasBeenModify(JTextArea src){
-			return initalText.hashCode() != src.getText().hashCode();
-		}
-
-		/* method to append "*" string on the top of the title top bar */
-		private void updateTabTopRender(JTabbedPane parent){
-			int i = parent.getSelectedIndex();
-			String oldTitle = parent.getTitleAt( i );
-			if(needToSave) {
-				//need to append "*" on the title
-				if(!oldTitle.startsWith( "*" ))
-					parent.setTitleAt( i, "*" + oldTitle );
-			} else {
-				//remove "*" from the title
-				parent.setTitleAt( i, oldTitle.substring( 1, oldTitle.length() ) );
-			}
-		}
-
-		@Override
-		public void changedUpdate(DocumentEvent e){}
-
-		/** @return {@link Boolean} true if file has been modify, otherwhise false */
-		public boolean isChangingFind(){
-			return needToSave;
-		}
+	/** @return boolean if this tab has a changed text that is not already saved. */
+	public boolean hasBeenModify(){
+		return this.textDeckDocumentListener.isFindingChanges();
 	}
 }

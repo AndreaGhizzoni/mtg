@@ -75,7 +75,7 @@ public class DeckEditorContent extends JPanel
 	}
 
 	/**
-	 * Refresh and read all the saved deck into
+	 * Refresh and read all the saved deck into.
 	 */
 	public void refreshSavedDeck(){
 		SwingUtilities.invokeLater( new Runnable(){
@@ -129,7 +129,7 @@ public class DeckEditorContent extends JPanel
 	}
 
 	/**
-	 * Entry point to call the save action for all opened tabs
+	 * Entry point to call the save action for all opened tabs.
 	 */
 	public void saveAll(){
 		for(int i = 0; i < this.tabDeckOpened.getTabCount(); i++) {
@@ -138,13 +138,23 @@ public class DeckEditorContent extends JPanel
 	}
 
 	/**
-	 * Entry point to call the save action for selected tab
+	 * Entry point to call the save action for selected tab.
 	 */
 	public void saveCurrent(){
 		int selTab = this.tabDeckOpened.getSelectedIndex();
 		if(selTab != -1) {
 			((TabContent) this.tabDeckOpened.getComponentAt( selTab )).save();
 		}
+	}
+
+//===========================================================================================
+// GETTER
+//===========================================================================================
+	/**
+	 * @return boolean true if there is at least one tab open, otherwhise false.
+	 */
+	public boolean isAtLeastOneTabOpen(){
+		return this.tabDeckOpened.getTabCount() == 0 ? false : true;
 	}
 
 //===========================================================================================
