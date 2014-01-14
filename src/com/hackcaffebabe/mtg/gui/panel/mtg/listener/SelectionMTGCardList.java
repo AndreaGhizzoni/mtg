@@ -10,6 +10,8 @@ import java.awt.event.MouseEvent;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import com.hackcaffebabe.mtg.gui.frame.InsertUpdateCard;
 import com.hackcaffebabe.mtg.gui.listener.DeleteCardActionListener;
 import com.hackcaffebabe.mtg.model.MTGCard;
@@ -21,7 +23,7 @@ import com.hackcaffebabe.mtg.model.MTGCard;
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
  */
-public class ClickMTGListMouseAdapter extends MouseAdapter
+public class SelectionMTGCardList extends MouseAdapter implements ListSelectionListener
 {
 	@Override
 	public void mouseClicked(MouseEvent e){
@@ -39,6 +41,16 @@ public class ClickMTGListMouseAdapter extends MouseAdapter
 				doSingleLeftClick( e );
 				doSingleRightClick( e );
 			}
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void valueChanged(ListSelectionEvent e){
+		int r = JXTABLE_MTG.getSelectedModelRow();
+		if(r != -1) {
+			MTGCard c = ((JXObjectModel<MTGCard>) JXTABLE_MTG.getModel()).getObject( r );
+			PNL_MTGPROPERTIES.setMTGCardToView( c );
 		}
 	}
 

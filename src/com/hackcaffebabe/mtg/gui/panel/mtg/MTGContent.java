@@ -22,7 +22,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import net.miginfocom.swing.MigLayout;
 import com.hackcaffebabe.mtg.gui.panel.mtg.listener.AdvanceSearchActionListener;
-import com.hackcaffebabe.mtg.gui.panel.mtg.listener.ClickMTGListMouseAdapter;
+import com.hackcaffebabe.mtg.gui.panel.mtg.listener.SelectionMTGCardList;
 import com.hackcaffebabe.mtg.model.MTGCard;
 
 
@@ -75,9 +75,13 @@ public class MTGContent extends JPanel
 		JXTABLE_MTG.setFillsViewportHeight( true );
 		JXTABLE_MTG.setShowVerticalLines( false );
 		JXTABLE_MTG.setRowSorter( this.txtSearch );
-		JXTABLE_MTG.getSelectionModel().setSelectionMode( ListSelectionModel.SINGLE_SELECTION );
-		JXTABLE_MTG.addMouseListener( new ClickMTGListMouseAdapter() );
 		JXTABLE_MTG_COLUMN_ADJUSTER = new JXTableColumnAdjuster( JXTABLE_MTG, 5 );
+
+		SelectionMTGCardList x = new SelectionMTGCardList();
+		JXTABLE_MTG.addMouseListener( x );
+		JXTABLE_MTG.getSelectionModel().addListSelectionListener( x );
+		JXTABLE_MTG.getSelectionModel().setSelectionMode( ListSelectionModel.SINGLE_SELECTION );
+
 		pnlMTGList.add( new JScrollPane( JXTABLE_MTG, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED ), "cell 0 0,grow" );
 
