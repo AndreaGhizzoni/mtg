@@ -24,7 +24,7 @@ public class ManaCost implements Comparable<ManaCost>, Serializable
 	 * Pass zero arguments to specify the cost equal zero.<br>
 	 * Use:<br>
 	 * - ( "BasicColor", N ) 		   -> to specify classic mana cost,<br>
-	 * - ( BasicColor.COLOR_LESS, -1 ) -> to specify X mana cost,<br>
+	 * - ( BasicColor.COLOR_LESS, -1 ) -> to specify X mana cost,<br> 
 	 * - ( null, -1 ) 				   -> to specify the TAP action<br>
 	 * 
 	 * @param entries {@link Map.Entry} of {@link BasicColors} and {@link Integer}.
