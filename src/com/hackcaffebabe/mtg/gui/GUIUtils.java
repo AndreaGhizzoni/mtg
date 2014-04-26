@@ -78,7 +78,7 @@ public class GUIUtils
 	/** Dimension of advance search frame */
 	public static final Dimension DIMENSION_ADVANCE_SEARCH = new Dimension( 485, 325 );
 	/** Dimension of Deck editor */
-	public static final Dimension DIMENSION_DECK_EDITOR = new Dimension( 700, 750 );
+	public static final Dimension DIMENSION_DECK_EDITOR = new Dimension( 700, 720 );
 
 	/* Action Command */
 	public static final String AC_CREATURE = "Creature";

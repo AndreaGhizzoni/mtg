@@ -47,6 +47,7 @@ public class SelectionMTGCardList extends MouseAdapter implements ListSelectionL
 	@SuppressWarnings("unchecked")
 	@Override
 	public void valueChanged(ListSelectionEvent e){
+		//TODO do this better: separate function to display selected card.
 		int r = JXTABLE_MTG.getSelectedModelRow();
 		if(r != -1) {
 			MTGCard c = ((JXObjectModel<MTGCard>) JXTABLE_MTG.getModel()).getObject( r );
