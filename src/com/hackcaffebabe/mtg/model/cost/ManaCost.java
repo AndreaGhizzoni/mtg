@@ -20,19 +20,19 @@ public class ManaCost implements Comparable<ManaCost>
 	public ManaCost(Tuple<_Mana, Integer>... tuples) throws IllegalArgumentException{
 		for(Tuple<_Mana, Integer> t: tuples) {
 			if(t == null)
-				throw new IllegalArgumentException( "Mana Cost can not be null" );
+				throw new IllegalArgumentException( "Mana can not be null" );
 
 			boolean TequalstoTAP = t.getFirstObj().equals( _Mana.TAP );
 			boolean TequalstoX = t.getFirstObj().equals( _Mana.X );
 			if(TequalstoTAP && t.getSecondObj() != -1)
-				throw new IllegalArgumentException( "ManaColor malformed for tap action with value " + t.getSecondObj() );
+				throw new IllegalArgumentException( "Mana malformed for tap action with value " + t.getSecondObj() );
 
 			if(TequalstoX && t.getSecondObj() != -1)
-				throw new IllegalArgumentException( "ManaColor malformed for X action " + t.getSecondObj() );
+				throw new IllegalArgumentException( "Mana malformed for X action " + t.getSecondObj() );
 
 			boolean isAcolor = !TequalstoTAP && !TequalstoX;
 			if(isAcolor && t.getSecondObj() <= 0)
-				throw new IllegalArgumentException( "ManaColor malformed for color" );
+				throw new IllegalArgumentException( "Mana malformed for color" );
 
 			this.cost.add( t );
 		}
