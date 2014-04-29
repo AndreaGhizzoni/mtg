@@ -10,7 +10,7 @@ import java.util.List;
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
  */
-public enum BasicColors
+public enum OLD_BasicColors
 {
 	BLACK, RED, WHITE, GREEN, BLUE, COLOR_LESS;
 
@@ -18,7 +18,7 @@ public enum BasicColors
 	 * Returns all possible colors of MTG cards.
 	 * @return {@link List} all possible color of MTG cards.
 	 */
-	public static List<BasicColors> getColorsList(){
+	public static List<OLD_BasicColors> getColorsList(){
 		return Arrays.asList( BLACK, RED, WHITE, GREEN, BLUE, COLOR_LESS );
 	}
 
@@ -32,11 +32,11 @@ public enum BasicColors
 	}
 
 	/**
-	 * This method converts a {@link BasicColors} in short string.
-	 * @param c {@link BasicColors} to convert.
-	 * @return {@link String} the string of {@link BasicColors} given.
+	 * This method converts a {@link OLD_BasicColors} in short string.
+	 * @param c {@link OLD_BasicColors} to convert.
+	 * @return {@link String} the string of {@link OLD_BasicColors} given.
 	 */
-	public static String getAbbraviation(BasicColors c){
+	public static String getAbbraviation(OLD_BasicColors c){
 		switch( c ) {
 			case BLACK:
 				return "B";

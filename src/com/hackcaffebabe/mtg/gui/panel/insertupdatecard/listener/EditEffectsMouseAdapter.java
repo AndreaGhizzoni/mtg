@@ -6,7 +6,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.SwingUtilities;
 import com.hackcaffebabe.mtg.gui.GUIUtils;
-import com.hackcaffebabe.mtg.model.card.Effect;
+import com.hackcaffebabe.mtg.model.card.OLD_Effect;
 
 
 /**
@@ -24,9 +24,9 @@ public class EditEffectsMouseAdapter extends MouseAdapter
 		if(e.getClickCount() == 2 && SwingUtilities.isLeftMouseButton( e )) {
 			int r = table.getSelectedModelRow();
 			if(r != -1) {
-				JXObjectModel<Effect> model = (JXObjectModel<Effect>) table.getModel();
-				Effect oldEffect = model.getObject( r );
-				Effect editEffect = GUIUtils.showEffectDialog( null, oldEffect );
+				JXObjectModel<OLD_Effect> model = (JXObjectModel<OLD_Effect>) table.getModel();
+				OLD_Effect oldEffect = model.getObject( r );
+				OLD_Effect editEffect = GUIUtils.showEffectDialog( null, oldEffect );
 
 				// edit effect != null because if equals to null, something went wrong with user data.
 				// if the oldest is not equal to the edited one, remove the oldest and add the edited.

@@ -4,11 +4,11 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import com.hackcaffebabe.mtg.model.card.Ability;
-import com.hackcaffebabe.mtg.model.card.Effect;
-import com.hackcaffebabe.mtg.model.card.ManaCost;
+import com.hackcaffebabe.mtg.model.card.OLD_Effect;
+import com.hackcaffebabe.mtg.model.card.OLD_ManaCost;
 import com.hackcaffebabe.mtg.model.card.PlanesAbility;
 import com.hackcaffebabe.mtg.model.card.Rarity;
-import com.hackcaffebabe.mtg.model.color.CardColor;
+import com.hackcaffebabe.mtg.model.color.OLD_CardColor;
 
 
 /**
@@ -20,20 +20,20 @@ import com.hackcaffebabe.mtg.model.color.CardColor;
 public class Planeswalker extends MTGCard implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	private ManaCost cost;
+	private OLD_ManaCost cost;
 	private int life;
 	private Set<PlanesAbility> planesAbility = new HashSet<>();
 
 	/**
 	 * Instance a planes walker card.
 	 * @param name {@link String} the name of planes walker.
-	 * @param cost {@link ManaCost} the mana cost of planes walker.
+	 * @param cost {@link OLD_ManaCost} the mana cost of planes walker.
 	 * @param life {@link Integer} the file of planes walker.
-	 * @param color {@link CardColor}  the color of planes walker.
+	 * @param color {@link OLD_CardColor}  the color of planes walker.
 	 * @param rarity {@link Rarity} the rarity of planes walker.
 	 * @throws IllegalArgumentException if some arguments are null or empty string.
 	 */
-	public Planeswalker(String name, ManaCost cost, int life, CardColor color, Rarity rarity)
+	public Planeswalker(String name, OLD_ManaCost cost, int life, OLD_CardColor color, Rarity rarity)
 			throws IllegalArgumentException{
 		super( name, color, rarity );
 		this.setLife( life );
@@ -60,10 +60,10 @@ public class Planeswalker extends MTGCard implements Serializable
 //===========================================================================================
 	/**
 	 * Set the Mana cost of Artifact.
-	 * @param cost {@link ManaCost} the mana cost of Artifact.
+	 * @param cost {@link OLD_ManaCost} the mana cost of Artifact.
 	 * @throws IllegalArgumentException if argument given is null or is TAP action.
 	 */
-	public void setManaCost(ManaCost cost) throws IllegalArgumentException{
+	public void setManaCost(OLD_ManaCost cost) throws IllegalArgumentException{
 		if(cost == null)
 			throw new IllegalArgumentException( "Mana cost of Artifact can not be null." );
 
@@ -100,9 +100,9 @@ public class Planeswalker extends MTGCard implements Serializable
 //===========================================================================================
 	/**
 	 * Returns the mana cost of Planes walker.
-	 * @return {@link ManaCost} the mana cost of Planes walker.
+	 * @return {@link OLD_ManaCost} the mana cost of Planes walker.
 	 */
-	public ManaCost getManaCost(){
+	public OLD_ManaCost getManaCost(){
 		return this.cost;
 	}
 
@@ -134,7 +134,7 @@ public class Planeswalker extends MTGCard implements Serializable
 	public void addAbility(Ability ability) throws IllegalArgumentException{}
 
 	@Override
-	public void addEffect(Effect effect) throws IllegalArgumentException{}
+	public void addEffect(OLD_Effect effect) throws IllegalArgumentException{}
 
 	@Override
 	public int hashCode(){

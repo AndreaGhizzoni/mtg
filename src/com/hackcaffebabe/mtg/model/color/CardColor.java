@@ -8,6 +8,7 @@ import java.util.Set;
 
 /**
  * Represents the color of MTG card.
+ * TODO add doc
  *  
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.1
@@ -15,7 +16,7 @@ import java.util.Set;
 public class CardColor implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	private Set<BasicColors> colors = new HashSet<>();
+	private Set<Mana> colors = new HashSet<>();
 	private TypeColor type = null;
 
 	/**
@@ -27,33 +28,23 @@ public class CardColor implements Serializable
 
 	/**
 	 * Instance a Mono color card.
-	 * @param c {@link BasicColors} the basic color.
-	 * @throws IllegalArgumentException if argument given is null.
 	 */
-	public CardColor(BasicColors c) throws IllegalArgumentException{
-		if(c == null)
-			throw new IllegalArgumentException( "Basic color given can not be null." );
-
+	public CardColor(Mana c) throws IllegalArgumentException{
+		this.checkMana( c );
 		this.colors.add( c );
 		this.type = TypeColor.MONO_COLOR;
 	}
 
 	/**
 	 * Instance an Hybrid color card.<br>
-	 * These two colors can not be the same and can not be a COLOR_LESS.
-	 * @param first {@link BasicColors} the first basic color.
-	 * @param second {@link BasicColors} the second basic color.
-	 * @throws IllegalArgumentException if arguments given are null.
+	 * These two colors can not be the same and can not be a COLOR_LESS || X || TAP.
 	 */
-	public CardColor(BasicColors first, BasicColors second) throws IllegalArgumentException{
-		if(first == null || second == null)
-			throw new IllegalArgumentException( "Basics colors given can not be null." );
+	public CardColor(Mana first, Mana second) throws IllegalArgumentException{
+		this.checkMana( first );
+		this.checkMana( second );
 
-		if(first == second)
-			throw new IllegalArgumentException( "Basics colors can not be the same." );
-
-		if(first == BasicColors.COLOR_LESS || second == BasicColors.COLOR_LESS)
-			throw new IllegalArgumentException( "Basics Colors can not be COLOR_LESS with two arguments constructor." );
+		if(first.equals( second ))
+			throw new IllegalArgumentException( "Mana given can not be the same." );
 
 		this.colors.add( first );
 		this.colors.add( second );
@@ -63,24 +54,38 @@ public class CardColor implements Serializable
 	/**
 	 * Instance an Multicolor card.<br>
 	 * These two colors can not be the same and can not be a COLOR_LESS.
-	 * @param colors all {@link BasicColors} of Multicolor card.
-	 * @throws IllegalArgumentException if argument given is null.
 	 */
-	public CardColor(List<BasicColors> colors) throws IllegalArgumentException{
-		if(colors == null || colors.size() == 0)
-			throw new IllegalArgumentException( "Basics colors given can not be null." );
+	public CardColor(List<Mana> c) throws IllegalArgumentException{
+		if(c == null || c.size() == 0)
+			throw new IllegalArgumentException( "Mana given can not be null." );
 
-		if(colors.contains( BasicColors.COLOR_LESS ))
+		if(c.contains( Mana.COLOR_LESS ) && c.contains( Mana.TAP ) && c.contains( Mana.X ))
 			throw new IllegalArgumentException( "Basics Colors can not be COLOR_LESS with two arguments constructor." );
 
-		for(BasicColors c: colors)
-			this.colors.add( c );
+		for(Mana i: c)
+			this.colors.add( i );
 		this.type = TypeColor.MULTI_COLOR;
 	}
 
 //===========================================================================================
 // METHOD
 //===========================================================================================
+	private void checkMana(Mana m) throws IllegalArgumentException{
+		if(m == null)
+			throw new IllegalArgumentException( "Mana given can not be null." );
+		else {
+			String msg = null;
+			if(m.equals( Mana.TAP ))
+				msg = "Mana malformed for color card: TAP action";
+			else if(m.equals( Mana.X ))
+				msg = "Mana malformed for color card: X action";
+			else if(m.equals( Mana.COLOR_LESS ))
+				msg = "Mana given can not be COLOR_LESS for CardColor whit this constructor.";
+
+			if(msg != null)
+				throw new IllegalArgumentException( msg );
+		}
+	}
 
 //===========================================================================================
 // GETTER
@@ -95,9 +100,8 @@ public class CardColor implements Serializable
 
 	/**
 	 * Returns the Basics Colors of a card.
-	 * @return {@link Set} of Basics Colors.
 	 */
-	public final Set<BasicColors> getBasicColors(){
+	public final Set<Mana> getBasicColors(){
 		return this.colors;
 	}
 
@@ -107,8 +111,9 @@ public class CardColor implements Serializable
 	@Override
 	public String toString(){
 		StringBuilder builder = new StringBuilder();
-		for(BasicColors b: this.colors) {
-			builder.append( BasicColors.getAbbraviation( b ) + "/" );
+		for(Mana c: this.colors) {
+			String tmp = String.format( "%s/", Mana.getAbbraviation( c ) );
+			builder.append( tmp );
 		}
 		return builder.toString().isEmpty() ? "CL" : builder.deleteCharAt( builder.toString().length() - 1 ).toString();
 	}

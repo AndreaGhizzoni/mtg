@@ -23,7 +23,7 @@ import com.hackcaffebabe.mtg.controller.json.StoreManager;
 import com.hackcaffebabe.mtg.gui.frame.AdvanceSearch;
 import com.hackcaffebabe.mtg.model.MTGCard;
 import com.hackcaffebabe.mtg.model.card.Rarity;
-import com.hackcaffebabe.mtg.model.color.BasicColors;
+import com.hackcaffebabe.mtg.model.color.OLD_BasicColors;
 
 
 /**
@@ -86,23 +86,23 @@ public class AdvanceSearchContent extends JPanel
 		pnlCardColor.setLayout( new MigLayout( "", "[][][][][]", "[]" ) );
 
 		this.chbRed = new JCheckBox( "Red" );
-		this.chbRed.setActionCommand( BasicColors.getAbbraviation( BasicColors.RED ) );
+		this.chbRed.setActionCommand( OLD_BasicColors.getAbbraviation( OLD_BasicColors.RED ) );
 		pnlCardColor.add( this.chbRed, "cell 0 0" );
 
 		this.chbBlack = new JCheckBox( "Black" );
-		this.chbBlack.setActionCommand( BasicColors.getAbbraviation( BasicColors.BLACK ) );
+		this.chbBlack.setActionCommand( OLD_BasicColors.getAbbraviation( OLD_BasicColors.BLACK ) );
 		pnlCardColor.add( this.chbBlack, "cell 1 0" );
 
 		this.chbGreen = new JCheckBox( "Green" );
-		this.chbGreen.setActionCommand( BasicColors.getAbbraviation( BasicColors.GREEN ) );
+		this.chbGreen.setActionCommand( OLD_BasicColors.getAbbraviation( OLD_BasicColors.GREEN ) );
 		pnlCardColor.add( this.chbGreen, "cell 2 0" );
 
 		this.chbBlue = new JCheckBox( "Blue" );
-		this.chbBlue.setActionCommand( BasicColors.getAbbraviation( BasicColors.BLUE ) );
+		this.chbBlue.setActionCommand( OLD_BasicColors.getAbbraviation( OLD_BasicColors.BLUE ) );
 		pnlCardColor.add( this.chbBlue, "cell 3 0" );
 
 		this.chbWhite = new JCheckBox( "White" );
-		this.chbWhite.setActionCommand( BasicColors.getAbbraviation( BasicColors.WHITE ) );
+		this.chbWhite.setActionCommand( OLD_BasicColors.getAbbraviation( OLD_BasicColors.WHITE ) );
 		pnlCardColor.add( this.chbWhite, "cell 4 0" );
 		add( pnlCardColor, "cell 0 1 2 1,grow" );
 
@@ -199,15 +199,15 @@ public class AdvanceSearchContent extends JPanel
 			Criteria criteria = new Criteria();
 
 			if(chbRed.isSelected())
-				criteria.byBasiColors( BasicColors.RED );
+				criteria.byBasiColors( OLD_BasicColors.RED );
 			if(chbBlack.isSelected())
-				criteria.byBasiColors( BasicColors.BLACK );
+				criteria.byBasiColors( OLD_BasicColors.BLACK );
 			if(chbGreen.isSelected())
-				criteria.byBasiColors( BasicColors.GREEN );
+				criteria.byBasiColors( OLD_BasicColors.GREEN );
 			if(chbBlue.isSelected())
-				criteria.byBasiColors( BasicColors.BLUE );
+				criteria.byBasiColors( OLD_BasicColors.BLUE );
 			if(chbWhite.isSelected())
-				criteria.byBasiColors( BasicColors.WHITE );
+				criteria.byBasiColors( OLD_BasicColors.WHITE );
 			boolean noColorSel = !chbRed.isSelected() && !chbBlack.isSelected() && !chbGreen.isSelected()
 					&& !chbBlue.isSelected() && !chbWhite.isSelected();
 			if(noColorSel)

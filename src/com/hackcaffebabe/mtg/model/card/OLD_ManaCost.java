@@ -3,7 +3,7 @@ package com.hackcaffebabe.mtg.model.card;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-import com.hackcaffebabe.mtg.model.color.BasicColors;
+import com.hackcaffebabe.mtg.model.color.OLD_BasicColors;
 
 
 /**
@@ -13,13 +13,13 @@ import com.hackcaffebabe.mtg.model.color.BasicColors;
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
  */
-public class ManaCost implements Comparable<ManaCost>, Serializable
+public class OLD_ManaCost implements Comparable<OLD_ManaCost>, Serializable
 {
 	private static final long serialVersionUID = 1L;
-	private Map<BasicColors, Integer> cost = new HashMap<>();
+	private Map<OLD_BasicColors, Integer> cost = new HashMap<>();
 
 	/**
-	 * Instance a mana cost with entry of {@link BasicColors} and 
+	 * Instance a mana cost with entry of {@link OLD_BasicColors} and 
 	 * an {@link Integer} that represents the amount of basic color.<br>
 	 * Pass zero arguments to specify the cost equal zero.<br>
 	 * Use:<br>
@@ -27,12 +27,12 @@ public class ManaCost implements Comparable<ManaCost>, Serializable
 	 * - ( BasicColor.COLOR_LESS, -1 ) -> to specify X mana cost,<br> 
 	 * - ( null, -1 ) 				   -> to specify the TAP action<br>
 	 * 
-	 * @param entries {@link Map.Entry} of {@link BasicColors} and {@link Integer}.
+	 * @param entries {@link Map.Entry} of {@link OLD_BasicColors} and {@link Integer}.
 	 * @throws IllegalArgumentException if some argument passed are null.
 	 */
 	@SafeVarargs
-	public ManaCost(Map.Entry<BasicColors, Integer>... entries) throws IllegalArgumentException{
-		for(Map.Entry<BasicColors, Integer> e: entries) {
+	public OLD_ManaCost(Map.Entry<OLD_BasicColors, Integer>... entries) throws IllegalArgumentException{
+		for(Map.Entry<OLD_BasicColors, Integer> e: entries) {
 			if(e == null)
 				throw new IllegalArgumentException( "Mana cost can not be null." );
 
@@ -51,7 +51,7 @@ public class ManaCost implements Comparable<ManaCost>, Serializable
 	}
 
 	/**
-	 * Instance a mana cost with a {@link Map} of {@link BasicColors} and 
+	 * Instance a mana cost with a {@link Map} of {@link OLD_BasicColors} and 
 	 * an {@link Integer} that represents the amount of basic color.<br>
 	 * Pass zero arguments to specify the cost equal zero.<br>
 	 * Use:<br>
@@ -59,11 +59,11 @@ public class ManaCost implements Comparable<ManaCost>, Serializable
 	 * - ( BasicColor.COLOR_LESS, -1 ) -> to specify X mana cost,<br>
 	 * - ( null, -1 ) 				   -> to specify the TAP action<br>
 	 * 
-	 * @param map {@link Map} of {@link BasicColors} and {@link Integer}.
+	 * @param map {@link Map} of {@link OLD_BasicColors} and {@link Integer}.
 	 * @throws IllegalArgumentException if some argument passed are null.
 	 */
-	public ManaCost(Map<BasicColors, Integer> map) throws IllegalArgumentException{
-		for(Map.Entry<BasicColors, Integer> e: map.entrySet()) {
+	public OLD_ManaCost(Map<OLD_BasicColors, Integer> map) throws IllegalArgumentException{
+		for(Map.Entry<OLD_BasicColors, Integer> e: map.entrySet()) {
 			if(e == null)
 				throw new IllegalArgumentException( "Mana cost can not be null." );
 
@@ -84,11 +84,11 @@ public class ManaCost implements Comparable<ManaCost>, Serializable
 // GETTER
 //===========================================================================================
 	/**
-	 * Returns the Cost of MTG card mana cost as map of {@link BasicColors} and {@link Integer}.
+	 * Returns the Cost of MTG card mana cost as map of {@link OLD_BasicColors} and {@link Integer}.
 	 * e.g (RED, 2) (BLACK, 2) ...
-	 * @return {@link Map} of {@link BasicColors} and {@link Integer}.
+	 * @return {@link Map} of {@link OLD_BasicColors} and {@link Integer}.
 	 */
-	public final Map<BasicColors, Integer> getCost(){
+	public final Map<OLD_BasicColors, Integer> getCost(){
 		return this.cost;
 	}
 
@@ -104,7 +104,7 @@ public class ManaCost implements Comparable<ManaCost>, Serializable
 		if(this.cost.containsValue( -1 ))
 			return res;
 
-		for(Map.Entry<BasicColors, Integer> e: this.cost.entrySet()) {
+		for(Map.Entry<OLD_BasicColors, Integer> e: this.cost.entrySet()) {
 			res += e.getValue();
 		}
 		return res;
@@ -117,20 +117,20 @@ public class ManaCost implements Comparable<ManaCost>, Serializable
 	public String toString(){
 		StringBuilder builder = new StringBuilder();
 
-		if(this.cost.containsKey( BasicColors.COLOR_LESS )) {
-			if(this.cost.get( BasicColors.COLOR_LESS ) > -1) {
-				builder.append( this.cost.get( BasicColors.COLOR_LESS ) + "." );
+		if(this.cost.containsKey( OLD_BasicColors.COLOR_LESS )) {
+			if(this.cost.get( OLD_BasicColors.COLOR_LESS ) > -1) {
+				builder.append( this.cost.get( OLD_BasicColors.COLOR_LESS ) + "." );
 			} else {
 				builder.append( "X." );
 			}
 		}
 
-		for(Map.Entry<BasicColors, Integer> e: this.cost.entrySet()) {
+		for(Map.Entry<OLD_BasicColors, Integer> e: this.cost.entrySet()) {
 			if(e.getKey() == null) {
 				builder.append( "TAP." );
 			} else {
-				if(e.getKey() != BasicColors.COLOR_LESS) {
-					String bc = BasicColors.getAbbraviation( e.getKey() );
+				if(e.getKey() != OLD_BasicColors.COLOR_LESS) {
+					String bc = OLD_BasicColors.getAbbraviation( e.getKey() );
 					for(int i = 1; i <= e.getValue(); i++)
 						builder.append( bc + "." );
 				}
@@ -144,7 +144,7 @@ public class ManaCost implements Comparable<ManaCost>, Serializable
 	 * Compare the converted mana cost.
 	 */
 	@Override
-	public int compareTo(ManaCost o){
+	public int compareTo(OLD_ManaCost o){
 		int cmthis = this.getConvertedManaCost();
 		int cmo = o.getConvertedManaCost();
 
@@ -172,7 +172,7 @@ public class ManaCost implements Comparable<ManaCost>, Serializable
 		if(getClass() != obj.getClass())
 			return false;
 
-		ManaCost other = (ManaCost) obj;
+		OLD_ManaCost other = (OLD_ManaCost) obj;
 		if(cost == null) {
 			if(other.cost != null)
 				return false;

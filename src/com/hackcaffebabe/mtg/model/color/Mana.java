@@ -6,16 +6,16 @@ package com.hackcaffebabe.mtg.model.color;
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
  */
-public enum _Mana
+public enum Mana
 {
 	BLACK, RED, WHITE, GREEN, BLUE, COLOR_LESS, X, TAP;
 
 	/**
-	 * This method converts a {@link _Mana} in short string.
-	 * @param c {@link _Mana} to convert.
-	 * @return {@link String} the string of {@link _Mana} given.
+	 * This method converts a {@link Mana} in short string.
+	 * @param c {@link Mana} to convert.
+	 * @return {@link String} the string of {@link Mana} given.
 	 */
-	public static String getAbbraviation(_Mana c){
+	public static String getAbbraviation(Mana c){
 		switch( c ) {
 			case BLACK:
 				return "B";

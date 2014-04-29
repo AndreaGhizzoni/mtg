@@ -2,7 +2,6 @@ package com.hackcaffebabe.mtg.model.card;
 
 import it.hackcaffebabe.jx.table.model.DisplayableObject;
 import java.io.Serializable;
-import com.hackcaffebabe.mtg.model.color.Mana;
 
 
 /**
@@ -11,17 +10,20 @@ import com.hackcaffebabe.mtg.model.color.Mana;
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
  */
-public class Effect extends DisplayableObject implements Serializable
+public class OLD_Effect extends DisplayableObject implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	private Mana cost;
+	private OLD_ManaCost cost;
 	private String text;
 
 	/**
 	 * Instance a card Effect. If Effect has no Mana cost, set it to null.
+	 * @param cost {@link OLD_ManaCost} the cost of effect.
+	 * @param text {@link String} the text of effect.
+	 * @throws IllegalArgumentException if text given is null or empty string.
 	 */
-	public Effect(Mana cost, String text) throws IllegalArgumentException{
-		super( Effect.class );
+	public OLD_Effect(OLD_ManaCost cost, String text) throws IllegalArgumentException{
+		super( OLD_Effect.class );
 		setColumnNames( new String[] { "Cost", "Description" } );
 		this.setManaCost( cost );
 		this.setText( text );
@@ -33,7 +35,7 @@ public class Effect extends DisplayableObject implements Serializable
 	/**
 	 * Set the mana cost of ability.
 	 */
-	private void setManaCost(Mana c) /*throws IllegalArgumentException*/{
+	private void setManaCost(OLD_ManaCost c) /*throws IllegalArgumentException*/{
 //		if( c == null )
 //			throw new IllegalArgumentException( "Mana cost of Effect can not be null" );
 
@@ -59,7 +61,7 @@ public class Effect extends DisplayableObject implements Serializable
 	 * Returns the Mana cost of effect.
 	 * @return {@link OLD_ManaCost} the Mana cost of effect.
 	 */
-	public final Mana getManaCost(){
+	public final OLD_ManaCost getManaCost(){
 		return this.cost;
 	}
 

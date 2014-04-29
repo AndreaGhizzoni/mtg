@@ -7,10 +7,10 @@ import java.util.HashSet;
 import java.util.Set;
 import com.hackcaffebabe.mtg.controller.DBCostants;
 import com.hackcaffebabe.mtg.model.card.Ability;
-import com.hackcaffebabe.mtg.model.card.Effect;
+import com.hackcaffebabe.mtg.model.card.OLD_Effect;
 import com.hackcaffebabe.mtg.model.card.PlanesAbility;
 import com.hackcaffebabe.mtg.model.card.Rarity;
-import com.hackcaffebabe.mtg.model.color.CardColor;
+import com.hackcaffebabe.mtg.model.color.OLD_CardColor;
 
 
 /**
@@ -25,7 +25,7 @@ public abstract class MTGCard extends DisplayableObject implements Serializable
 
 	//These fields are used for equal and hash code.
 	private String name;
-	private CardColor color;
+	private OLD_CardColor color;
 	private Rarity rarity;
 	private String series;
 	private String subType;
@@ -33,17 +33,17 @@ public abstract class MTGCard extends DisplayableObject implements Serializable
 	private boolean isArtifact = false;
 
 	private String primaryEffect;
-	private Set<Effect> effects = new HashSet<>();
+	private Set<OLD_Effect> effects = new HashSet<>();
 	private Set<Ability> abilitis = new HashSet<>();
 
 	/**
 	 * Creates the common information of MTG Card.
 	 * @param name {@link String} the name of card.
-	 * @param color {@link CardColor} the color of of card.
+	 * @param color {@link OLD_CardColor} the color of of card.
 	 * @param rarity {@link Rarity} the rarity of card.
 	 * @throws IllegalArgumentException if some argument are null or empty string.
 	 */
-	public MTGCard(String name, CardColor color, Rarity rarity) throws IllegalArgumentException{
+	public MTGCard(String name, OLD_CardColor color, Rarity rarity) throws IllegalArgumentException{
 		super( MTGCard.class );
 		setColumnNames( new String[] { "Name", "Card Color", "Type", "Sub Type", "Rarity" } );
 
@@ -72,10 +72,10 @@ public abstract class MTGCard extends DisplayableObject implements Serializable
 	/**
 	 * This method adds an Effect at MTG Card.<br>
 	 * The ability can not to be added on {@link Planeswalker}.
-	 * @param effect {@link Effect} the effect to add.
+	 * @param effect {@link OLD_Effect} the effect to add.
 	 * @throws IllegalArgumentException if argument is null.
 	 */
-	public void addEffect(Effect effect) throws IllegalArgumentException{
+	public void addEffect(OLD_Effect effect) throws IllegalArgumentException{
 		if(effect == null)
 			throw new IllegalArgumentException( "Effect to add can not be null." );
 
@@ -99,10 +99,10 @@ public abstract class MTGCard extends DisplayableObject implements Serializable
 
 	/**
 	 * Set the Color of MTG Card.
-	 * @param color {@link CardColor} the Color of MTG Card.
+	 * @param color {@link OLD_CardColor} the Color of MTG Card.
 	 * @throws IllegalArgumentException if color is null.
 	 */
-	public void setCardColor(CardColor color) throws IllegalArgumentException{
+	public void setCardColor(OLD_CardColor color) throws IllegalArgumentException{
 		if(color == null)
 			throw new IllegalArgumentException( "Card Color can not be null." );
 
@@ -178,8 +178,8 @@ public abstract class MTGCard extends DisplayableObject implements Serializable
 		return name;
 	}
 
-	/** @return {@link CardColor} the color of MTG Card. */
-	public CardColor getCardColor(){
+	/** @return {@link OLD_CardColor} the color of MTG Card. */
+	public OLD_CardColor getCardColor(){
 		return color;
 	}
 
@@ -204,7 +204,7 @@ public abstract class MTGCard extends DisplayableObject implements Serializable
 	}
 
 	/** @return {@link Set} the set of effects. */
-	public Set<Effect> getEffects(){
+	public Set<OLD_Effect> getEffects(){
 		return this.effects;
 	}
 

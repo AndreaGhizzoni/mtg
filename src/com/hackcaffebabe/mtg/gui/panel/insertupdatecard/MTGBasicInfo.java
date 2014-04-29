@@ -15,8 +15,8 @@ import com.hackcaffebabe.mtg.controller.json.StoreManager;
 import com.hackcaffebabe.mtg.gui.listener.BasicColorActionListener;
 import com.hackcaffebabe.mtg.model.MTGCard;
 import com.hackcaffebabe.mtg.model.card.Rarity;
-import com.hackcaffebabe.mtg.model.color.BasicColors;
-import com.hackcaffebabe.mtg.model.color.CardColor;
+import com.hackcaffebabe.mtg.model.color.OLD_BasicColors;
+import com.hackcaffebabe.mtg.model.color.OLD_CardColor;
 
 
 /**
@@ -71,23 +71,23 @@ public class MTGBasicInfo extends JPanel
 		add( new JLabel( "Color:" ), "cell 0 1" );
 		this.basicColorActionListener = new BasicColorActionListener();
 		this.chbRed = new JCheckBox( "Red" );
-		this.chbRed.setActionCommand( BasicColors.getAbbraviation( BasicColors.RED ) );
+		this.chbRed.setActionCommand( OLD_BasicColors.getAbbraviation( OLD_BasicColors.RED ) );
 		this.chbRed.addActionListener( basicColorActionListener );
 		add( chbRed, "cell 1 1" );
 		this.chbBlack = new JCheckBox( "Black" );
-		this.chbBlack.setActionCommand( BasicColors.getAbbraviation( BasicColors.BLACK ) );
+		this.chbBlack.setActionCommand( OLD_BasicColors.getAbbraviation( OLD_BasicColors.BLACK ) );
 		this.chbBlack.addActionListener( basicColorActionListener );
 		add( chbBlack, "cell 2 1" );
 		this.chbGreen = new JCheckBox( "Green" );
-		this.chbGreen.setActionCommand( BasicColors.getAbbraviation( BasicColors.GREEN ) );
+		this.chbGreen.setActionCommand( OLD_BasicColors.getAbbraviation( OLD_BasicColors.GREEN ) );
 		this.chbGreen.addActionListener( basicColorActionListener );
 		add( chbGreen, "cell 3 1" );
 		this.chbBlue = new JCheckBox( "Blue" );
-		this.chbBlue.setActionCommand( BasicColors.getAbbraviation( BasicColors.BLUE ) );
+		this.chbBlue.setActionCommand( OLD_BasicColors.getAbbraviation( OLD_BasicColors.BLUE ) );
 		this.chbBlue.addActionListener( basicColorActionListener );
 		add( chbBlue, "cell 4 1" );
 		this.chbWhite = new JCheckBox( "White" );
-		this.chbWhite.setActionCommand( BasicColors.getAbbraviation( BasicColors.WHITE ) );
+		this.chbWhite.setActionCommand( OLD_BasicColors.getAbbraviation( OLD_BasicColors.WHITE ) );
 		this.chbWhite.addActionListener( basicColorActionListener );
 		add( chbWhite, "cell 5 1" );
 
@@ -161,16 +161,16 @@ public class MTGBasicInfo extends JPanel
 			this.cmbRarity.setSelectedItem( c.getRarity() );
 			this.txtSeries.setText( c.getSeries() );
 			this.txtSubType.setText( c.getSubType() );
-			for(BasicColors s: c.getCardColor().getBasicColors()) {
-				if(s.equals( BasicColors.RED ))
+			for(OLD_BasicColors s: c.getCardColor().getBasicColors()) {
+				if(s.equals( OLD_BasicColors.RED ))
 					chbRed.setSelected( true );
-				else if(s.equals( BasicColors.BLACK ))
+				else if(s.equals( OLD_BasicColors.BLACK ))
 					chbBlack.setSelected( true );
-				else if(s.equals( BasicColors.BLUE ))
+				else if(s.equals( OLD_BasicColors.BLUE ))
 					chbBlue.setSelected( true );
-				else if(s.equals( BasicColors.GREEN ))
+				else if(s.equals( OLD_BasicColors.GREEN ))
 					chbGreen.setSelected( true );
-				else if(s.equals( BasicColors.WHITE ))
+				else if(s.equals( OLD_BasicColors.WHITE ))
 					chbWhite.setSelected( true );
 			}
 			this.basicColorActionListener.setCardColor( c.getCardColor() );
@@ -228,9 +228,9 @@ public class MTGBasicInfo extends JPanel
 
 	/**
 	 * Returns the MTG card color
-	 * @return {@link CardColor}
+	 * @return {@link OLD_CardColor}
 	 */
-	public CardColor getCardColor(){
+	public OLD_CardColor getCardColor(){
 		return basicColorActionListener.getCardColor();
 	}
 

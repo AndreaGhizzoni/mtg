@@ -8,11 +8,11 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
-import com.hackcaffebabe.mtg.model.card.Effect;
+import com.hackcaffebabe.mtg.model.card.OLD_Effect;
 
 
 /**
- * Action Listener to get new {@link Effect} from the user.
+ * Action Listener to get new {@link OLD_Effect} from the user.
  *  
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
@@ -24,8 +24,8 @@ public class AddEffectActionListener implements ActionListener
 	private Component parent;
 
 	/**
-	 * Instance a listener of {@link Effect} object.
-	 * @param parent {@link Component} to anchor the pop-up menu to get {@link Effect} object.
+	 * Instance a listener of {@link OLD_Effect} object.
+	 * @param parent {@link Component} to anchor the pop-up menu to get {@link OLD_Effect} object.
 	 * @param table {@link JXTable} to get the model
 	 * @param columnAdjuster {@link JXTableColumnAdjuster} to adjust the columns with new data.
 	 */
@@ -38,11 +38,11 @@ public class AddEffectActionListener implements ActionListener
 	@Override
 	@SuppressWarnings("unchecked")
 	public void actionPerformed(ActionEvent e){
-		Effect ef = showEffectDialog( this.parent, null );
+		OLD_Effect ef = showEffectDialog( this.parent, null );
 		if(ef != null) {
-			JXObjectModel<Effect> model = (JXObjectModel<Effect>) this.table.getModel();
+			JXObjectModel<OLD_Effect> model = (JXObjectModel<OLD_Effect>) this.table.getModel();
 			if(model.getRowCount() == 0) {
-				this.table.setModel( new JXObjectModel<Effect>( Arrays.asList( ef ) ) );
+				this.table.setModel( new JXObjectModel<OLD_Effect>( Arrays.asList( ef ) ) );
 			} else {
 				model.addObject( ef );
 			}

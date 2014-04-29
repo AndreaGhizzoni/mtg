@@ -2,7 +2,7 @@ package com.hackcaffebabe.mtg.model.cost;
 
 import java.util.HashSet;
 import java.util.Set;
-import com.hackcaffebabe.mtg.model.color._Mana;
+import com.hackcaffebabe.mtg.model.color.Mana;
 
 
 /**
@@ -13,17 +13,17 @@ import com.hackcaffebabe.mtg.model.color._Mana;
  */
 public class ManaCost implements Comparable<ManaCost>
 {
-	private Set<Tuple<_Mana, Integer>> cost = new HashSet<>();
+	private Set<Tuple<Mana, Integer>> cost = new HashSet<>();
 	private Integer cmc = 0;
 
 	@SafeVarargs
-	public ManaCost(Tuple<_Mana, Integer>... tuples) throws IllegalArgumentException{
-		for(Tuple<_Mana, Integer> t: tuples) {
+	public ManaCost(Tuple<Mana, Integer>... tuples) throws IllegalArgumentException{
+		for(Tuple<Mana, Integer> t: tuples) {
 			if(t == null)
 				throw new IllegalArgumentException( "Mana can not be null" );
 
-			boolean TequalstoTAP = t.getFirstObj().equals( _Mana.TAP );
-			boolean TequalstoX = t.getFirstObj().equals( _Mana.X );
+			boolean TequalstoTAP = t.getFirstObj().equals( Mana.TAP );
+			boolean TequalstoX = t.getFirstObj().equals( Mana.X );
 			if(TequalstoTAP && t.getSecondObj() != -1)
 				throw new IllegalArgumentException( "Mana malformed for tap action with value " + t.getSecondObj() );
 
@@ -42,15 +42,15 @@ public class ManaCost implements Comparable<ManaCost>
 //===========================================================================================
 // SETTER
 //===========================================================================================
-	public void addCost(_Mana mana, Integer f){
-		this.cost.add( new Tuple<_Mana, Integer>( mana, f ) );
+	public void addCost(Mana mana, Integer f){
+		this.cost.add( new Tuple<Mana, Integer>( mana, f ) );
 		this.calculateCMC();
 	}
 
 //===========================================================================================
 // GETTER
 //===========================================================================================
-	public final Set<Tuple<_Mana, Integer>> getCost(){
+	public final Set<Tuple<Mana, Integer>> getCost(){
 		return this.cost;
 	}
 
@@ -63,7 +63,7 @@ public class ManaCost implements Comparable<ManaCost>
 //===========================================================================================
 	private void calculateCMC(){
 		Integer res = 0;
-		for(Tuple<_Mana, Integer> t: this.cost) {
+		for(Tuple<Mana, Integer> t: this.cost) {
 			if(t.getSecondObj() != -1)
 				res += t.getSecondObj();
 		}
@@ -79,13 +79,13 @@ public class ManaCost implements Comparable<ManaCost>
 		String tap = "";
 		String x = "";
 
-		for(Tuple<_Mana, Integer> t: this.cost) {
-			if(t.getFirstObj().equals( _Mana.TAP ))
+		for(Tuple<Mana, Integer> t: this.cost) {
+			if(t.getFirstObj().equals( Mana.TAP ))
 				tap = "TAP.";
-			else if(t.getFirstObj().equals( _Mana.X ))
+			else if(t.getFirstObj().equals( Mana.X ))
 				x = "X.";
 			else for(int i = 0; i < t.getSecondObj(); i++) {
-				bColor.append( _Mana.getAbbraviation( t.getFirstObj() ) );
+				bColor.append( Mana.getAbbraviation( t.getFirstObj() ) );
 				bColor.append( "." );
 			}
 		}

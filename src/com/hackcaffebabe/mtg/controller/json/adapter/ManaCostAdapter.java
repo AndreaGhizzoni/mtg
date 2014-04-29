@@ -11,8 +11,8 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-import com.hackcaffebabe.mtg.model.card.ManaCost;
-import com.hackcaffebabe.mtg.model.color.BasicColors;
+import com.hackcaffebabe.mtg.model.card.OLD_ManaCost;
+import com.hackcaffebabe.mtg.model.color.OLD_BasicColors;
 
 
 /**
@@ -20,25 +20,25 @@ import com.hackcaffebabe.mtg.model.color.BasicColors;
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
  */
-public class ManaCostAdapter implements JsonSerializer<ManaCost>, JsonDeserializer<ManaCost>
+public class ManaCostAdapter implements JsonSerializer<OLD_ManaCost>, JsonDeserializer<OLD_ManaCost>
 {
 	@Override
-	public JsonElement serialize(ManaCost arg0, Type arg1, JsonSerializationContext arg2){
+	public JsonElement serialize(OLD_ManaCost arg0, Type arg1, JsonSerializationContext arg2){
 		JsonObject result = new JsonObject();
-		for(Map.Entry<BasicColors, Integer> i: arg0.getCost().entrySet())
+		for(Map.Entry<OLD_BasicColors, Integer> i: arg0.getCost().entrySet())
 			result.add( i.getKey() == null ? "null" : i.getKey().toString(), new JsonPrimitive( i.getValue() ) );
 		return result;
 	}
 
 	@Override
-	public ManaCost deserialize(JsonElement arg0, Type arg1, JsonDeserializationContext arg2) throws JsonParseException{
-		ManaCost result = null;
+	public OLD_ManaCost deserialize(JsonElement arg0, Type arg1, JsonDeserializationContext arg2) throws JsonParseException{
+		OLD_ManaCost result = null;
 		JsonObject manaCostAsJsonObject = arg0.getAsJsonObject();
-		HashMap<BasicColors, Integer> mana = new HashMap<>();
+		HashMap<OLD_BasicColors, Integer> mana = new HashMap<>();
 		for(Map.Entry<String, JsonElement> i: manaCostAsJsonObject.entrySet()) {
-			mana.put( i.getKey().equals( "null" ) ? null : BasicColors.valueOf( i.getKey() ), i.getValue().getAsInt() );
+			mana.put( i.getKey().equals( "null" ) ? null : OLD_BasicColors.valueOf( i.getKey() ), i.getValue().getAsInt() );
 		}
-		result = new ManaCost( mana );
+		result = new OLD_ManaCost( mana );
 		return result;
 	}
 }

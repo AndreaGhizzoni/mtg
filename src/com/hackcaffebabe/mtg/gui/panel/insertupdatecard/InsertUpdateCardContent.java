@@ -54,12 +54,12 @@ import com.hackcaffebabe.mtg.model.MTGCard;
 import com.hackcaffebabe.mtg.model.Planeswalker;
 import com.hackcaffebabe.mtg.model.Sorcery;
 import com.hackcaffebabe.mtg.model.card.Ability;
-import com.hackcaffebabe.mtg.model.card.Effect;
-import com.hackcaffebabe.mtg.model.card.ManaCost;
+import com.hackcaffebabe.mtg.model.card.OLD_Effect;
+import com.hackcaffebabe.mtg.model.card.OLD_ManaCost;
 import com.hackcaffebabe.mtg.model.card.PlanesAbility;
 import com.hackcaffebabe.mtg.model.card.Rarity;
 import com.hackcaffebabe.mtg.model.card.Strength;
-import com.hackcaffebabe.mtg.model.color.CardColor;
+import com.hackcaffebabe.mtg.model.color.OLD_CardColor;
 
 
 /**
@@ -389,7 +389,7 @@ public class InsertUpdateCardContent extends JPanel
 
 	/* this method populate the table ability and effects */
 	private <T extends DisplayableObject> void populateTables(Class<T> abilityClaxx, Set<T> setOfAbilityClaxx,
-			Set<Effect> setOfEffects){
+			Set<OLD_Effect> setOfEffects){
 		if(!setOfAbilityClaxx.isEmpty()) {
 			JXObjectModel<T> model = new JXObjectModel<>();
 			for(T a: setOfAbilityClaxx)
@@ -399,8 +399,8 @@ public class InsertUpdateCardContent extends JPanel
 		}
 
 		if(!setOfEffects.isEmpty()) {
-			JXObjectModel<Effect> model = new JXObjectModel<>();
-			for(Effect e: setOfEffects)
+			JXObjectModel<OLD_Effect> model = new JXObjectModel<>();
+			for(OLD_Effect e: setOfEffects)
 				model.addObject( e );
 			this.tableEffects.setModel( model );
 			this.tableEffectsColumnAdjuster.adjustColumns();
@@ -533,7 +533,7 @@ public class InsertUpdateCardContent extends JPanel
 
 			// =============== get mana cost
 			if(!mtgCardType.equals( AC_LAND )) {
-				ManaCost mtgManaCost = pnlManaCost.getManaCost();
+				OLD_ManaCost mtgManaCost = pnlManaCost.getManaCost();
 				if(mtgManaCost == null) {
 					displayError( null, new Exception( "Mana cost of MTG Card can not be void." ) );
 					pnlManaCost.requestFocus();
@@ -565,7 +565,7 @@ public class InsertUpdateCardContent extends JPanel
 			// =============== get land basic effect
 			if(mtgCardType.equals( AC_LAND )) {
 				@SuppressWarnings("unchecked")
-				List<Effect> mtgEffects = ((JXObjectModel<Effect>) tableEffects.getModel()).getObjects();
+				List<OLD_Effect> mtgEffects = ((JXObjectModel<OLD_Effect>) tableEffects.getModel()).getObjects();
 				if(mtgEffects.isEmpty()) {
 					displayError( null, new Exception( "Land must have at least one effect." ) );
 					tableEffects.requestFocus();
@@ -619,7 +619,7 @@ public class InsertUpdateCardContent extends JPanel
 			Rarity mtgRarity = pnlMTGBasicInfo.getRarity();
 			log.write( Tag.DEBUG, "rarity = " + mtgRarity );
 
-			CardColor mtgCardColor = pnlMTGBasicInfo.getCardColor();
+			OLD_CardColor mtgCardColor = pnlMTGBasicInfo.getCardColor();
 			log.write( Tag.DEBUG, "card color = " + mtgCardColor.toString() );
 
 			boolean isLegendary = pnlMTGBasicInfo.isLegendarySelected();
@@ -638,10 +638,10 @@ public class InsertUpdateCardContent extends JPanel
 			String mtgPrimaryEffect = removeAccentCharacters( txtPrimaryEffect.getText() );
 			log.write( Tag.DEBUG, "primary effect = " + mtgPrimaryEffect );
 
-			List<Effect> mtgEffects = ((JXObjectModel<Effect>) tableEffects.getModel()).getObjects();
+			List<OLD_Effect> mtgEffects = ((JXObjectModel<OLD_Effect>) tableEffects.getModel()).getObjects();
 			log.write( Tag.DEBUG, "effects = " + mtgEffects.toString() );
 
-			ManaCost mtgManaCost = null;
+			OLD_ManaCost mtgManaCost = null;
 			if(!mtgCardType.equals( AC_LAND )) {
 				mtgManaCost = pnlManaCost.getManaCost();
 				log.write( Tag.DEBUG, "mana cost = " + mtgManaCost );
@@ -665,7 +665,7 @@ public class InsertUpdateCardContent extends JPanel
 					finalCreature.setSubType( mtgSubType );
 					finalCreature.setLegendary( isLegendary );
 					finalCreature.setPrimaryEffect( mtgPrimaryEffect );
-					for(Effect eff: mtgEffects) {
+					for(OLD_Effect eff: mtgEffects) {
 						finalCreature.addEffect( eff );
 					}
 					for(Ability abi: mtgAbility) {
@@ -684,7 +684,7 @@ public class InsertUpdateCardContent extends JPanel
 					finalArtifact.setSeries( mtgSeries );
 					finalArtifact.setSubType( mtgSubType );
 					finalArtifact.setPrimaryEffect( mtgPrimaryEffect );
-					for(Effect eff: mtgEffects) {
+					for(OLD_Effect eff: mtgEffects) {
 						finalArtifact.addEffect( eff );
 					}
 					for(Ability abi: mtgAbility) {
@@ -725,7 +725,7 @@ public class InsertUpdateCardContent extends JPanel
 					for(Ability abi: mtgAbility) {
 						finalInstant.addAbility( abi );
 					}
-					for(Effect ef: mtgEffects) {
+					for(OLD_Effect ef: mtgEffects) {
 						finalInstant.addEffect( ef );
 					}
 
@@ -744,7 +744,7 @@ public class InsertUpdateCardContent extends JPanel
 					for(Ability abi: mtgAbility) {
 						finalSorcery.addAbility( abi );
 					}
-					for(Effect ef: mtgEffects) {
+					for(OLD_Effect ef: mtgEffects) {
 						finalSorcery.addEffect( ef );
 					}
 
@@ -763,7 +763,7 @@ public class InsertUpdateCardContent extends JPanel
 					for(Ability abi: mtgAbility) {
 						finalEnchantment.addAbility( abi );
 					}
-					for(Effect eff: mtgEffects) {
+					for(OLD_Effect eff: mtgEffects) {
 						finalEnchantment.addEffect( eff );
 					}
 
@@ -775,7 +775,7 @@ public class InsertUpdateCardContent extends JPanel
 					finalLand.setPrimaryEffect( mtgPrimaryEffect );
 					finalLand.setSeries( mtgSeries );
 					finalLand.setSubType( mtgSubType );
-					for(Effect eff: mtgEffects) {
+					for(OLD_Effect eff: mtgEffects) {
 						finalLand.addEffect( eff );
 					}
 
