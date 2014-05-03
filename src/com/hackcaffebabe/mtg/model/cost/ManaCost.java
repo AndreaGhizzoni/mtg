@@ -19,6 +19,8 @@ public class ManaCost implements Comparable<ManaCost>
 	@SafeVarargs
 	public ManaCost(Tuple<Mana, Integer>... tuples) throws IllegalArgumentException{
 		for(Tuple<Mana, Integer> t: tuples) {
+			if(t.getSecondObj() == 0)// this is necessary for GUIUtils.showManaCost
+				continue;
 			this.checkTuple( t );
 			this.cost.add( t );
 		}
@@ -27,6 +29,8 @@ public class ManaCost implements Comparable<ManaCost>
 
 	public ManaCost(Set<Tuple<Mana, Integer>> cost) throws IllegalArgumentException{
 		for(Tuple<Mana, Integer> t: cost) {
+			if(t.getSecondObj() == 0)// this is necessary for GUIUtils.showManaCost
+				continue;
 			this.checkTuple( t );
 			this.cost.add( t );
 		}
@@ -87,7 +91,7 @@ public class ManaCost implements Comparable<ManaCost>
 			throw new IllegalArgumentException( "Mana malformed for X action " + t.getSecondObj() );
 
 		boolean isAcolor = !TequalstoTAP && !TequalstoX;
-		if(isAcolor && t.getSecondObj() <= 0)
+		if(isAcolor && t.getSecondObj() < 0)
 			throw new IllegalArgumentException( "Mana malformed for color" );
 	}
 
