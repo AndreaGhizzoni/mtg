@@ -8,5 +8,5 @@ package com.hackcaffebabe.mtg.model.color;
  */
 public enum TypeColor
 {
-	COLOR_LESS, MONO_COLOR, MULTI_COLOR, IBRID,
+	COLOR_LESS, MONO_COLOR, MULTI_COLOR, HYBRID,
 }

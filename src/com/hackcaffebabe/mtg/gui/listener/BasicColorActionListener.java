@@ -73,7 +73,7 @@ public class BasicColorActionListener implements ActionListener
 			this.colors = new ArrayList<>( c.getColors() );
 			if(c.getType() == TypeColor.MULTI_COLOR)
 				isHybrid = 0;
-			else if(c.getType() == TypeColor.IBRID)
+			else if(c.getType() == TypeColor.HYBRID)
 				isHybrid = 1;
 			else if(c.getType() == TypeColor.MONO_COLOR)
 				isHybrid = 2;

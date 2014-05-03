@@ -7,10 +7,9 @@ import com.hackcaffebabe.mtg.model.cost.ManaCost;
 
 /**
  * Represents a single effect of MTG card.
- * TODO add doc
  *  
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
- * @version 1.0
+ * @version 2.0
  */
 public class Effect extends DisplayableObject implements Serializable
 {
@@ -20,6 +19,8 @@ public class Effect extends DisplayableObject implements Serializable
 
 	/**
 	 * Instance a card Effect. If Effect has no Mana cost, set it to null.
+	 * @param cost {@link ManaCost} the cost of effect. if no cost pass null.
+	 * @param text {@link String} the text of effect.
 	 */
 	public Effect(ManaCost cost, String text) throws IllegalArgumentException{
 		super( Effect.class );
@@ -32,12 +33,10 @@ public class Effect extends DisplayableObject implements Serializable
 // SETTER
 //===========================================================================================
 	/**
-	 * Set the mana cost of ability.
+	 * Set the mana cost of Effect.
+	 * @param c {@link ManaCost} the cost of effect. 
 	 */
-	private void setManaCost(ManaCost c) /*throws IllegalArgumentException*/{
-//		if( c == null ) TODO but.. why ??
-//			throw new IllegalArgumentException( "Mana cost of Effect can not be null" );
-
+	private void setManaCost(ManaCost c){
 		this.cost = c;
 	}
 
@@ -58,6 +57,7 @@ public class Effect extends DisplayableObject implements Serializable
 //===========================================================================================
 	/**
 	 * Returns the Mana cost of effect.
+	 * @return {@link ManaCost} the cost of effect.
 	 */
 	public final ManaCost getManaCost(){
 		return this.cost;

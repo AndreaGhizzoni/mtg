@@ -1,7 +1,7 @@
 package com.hackcaffebabe.mtg.model.cost;
 
 /**
- *TODO add doc 
+ * Represents the Tuple object.
  *  
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
@@ -13,8 +13,16 @@ public class Tuple <T, K>
 	private T f = null;
 	private K s = null;
 
+	/**
+	 * Instance an empty Tuple.
+	 */
 	public Tuple(){}
 
+	/**
+	 * Instance an empty tuple with two value given.
+	 * @param firstObj
+	 * @param secondObj
+	 */
 	public Tuple(T firstObj, K secondObj){
 		this.set( firstObj, secondObj );
 	}
@@ -22,15 +30,28 @@ public class Tuple <T, K>
 //===========================================================================================
 // SETTER
 //===========================================================================================
+	/**
+	 * Set the two values of the tuple.
+	 * @param firstObj
+	 * @param secondObj
+	 */
 	public void set(T firstObj, K secondObj){
 		this.setFirstObj( firstObj );
 		this.setSecondObj( secondObj );
 	}
 
+	/**
+	 * Set the first object in the tuple.
+	 * @param firstObj
+	 */
 	public void setFirstObj(T firstObj){
 		this.f = firstObj;
 	}
 
+	/**
+	 * Set the second  object in the tuple.
+	 * @param secondObj
+	 */
 	public void setSecondObj(K secondObj){
 		this.s = secondObj;
 	}
@@ -38,10 +59,16 @@ public class Tuple <T, K>
 //===========================================================================================
 // GETTER
 //===========================================================================================
+	/**
+	 * returns the first object in the tuple.
+	 */
 	public T getFirstObj(){
 		return this.f;
 	}
 
+	/**
+	 * returns the second object in the tuple.
+	 */
 	public K getSecondObj(){
 		return this.s;
 	}
@@ -49,6 +76,7 @@ public class Tuple <T, K>
 //===========================================================================================
 // OVERRIDE 
 //===========================================================================================
+	@Override
 	public String toString(){
 		return String.format( "(%s,%s)", this.f, this.s );
 	}

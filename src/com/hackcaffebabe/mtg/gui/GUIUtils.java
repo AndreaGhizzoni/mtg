@@ -399,7 +399,6 @@ public class GUIUtils
 		JTextField txtX = new JTextField( "0" );
 		((AbstractDocument) txtX.getDocument()).setDocumentFilter( docFilter );
 
-//		JCheckBox chbX = new JCheckBox( "X" );
 		JCheckBox chbTap = new JCheckBox( "TAP" );
 
 		JComponent[] input;
@@ -431,27 +430,12 @@ public class GUIUtils
 		Tuple<Mana, Integer> blue = new Tuple<Mana, Integer>( Mana.BLUE, manaBlue );
 		Tuple<Mana, Integer> x = new Tuple<Mana, Integer>( Mana.X, manaX );
 
-//		Tuple<Mana, Integer> x = null;
-//		if(chbX.isSelected())
-//			x = new Tuple<Mana, Integer>( Mana.X, -1 );
-
 		if(isForCardCost) {
 			return new ManaCost( cl, red, bck, green, white, blue, x );
-//			if(chbX.isSelected())
-//				return new ManaCost( cl, red, bck, green, white, blue, x );
-//			else return new ManaCost( cl, red, bck, green, white, blue );
 		} else {
-			return new ManaCost( cl, red, bck, green, white, blue, new Tuple<>( Mana.TAP, -1 ) );
-//			Tuple<Mana, Integer> tap = null;
-//			if(chbTap.isSelected())
-//				tap = new Tuple<>( Mana.TAP, -1 );
-//			if(chbTap.isSelected() && chbX.isSelected())
-//				return new ManaCost( cl, red, bck, green, white, blue, tap, x );
-//			else if(chbTap.isSelected())
-//				return new ManaCost( cl, red, bck, green, white, blue, tap );
-//			else if(chbX.isSelected())
-//				return new ManaCost( cl, red, bck, green, white, blue, x );
-//			else return new ManaCost( cl, red, bck, green, white, blue );
+			if(chbTap.isSelected())
+				return new ManaCost( cl, red, bck, green, white, blue, x, new Tuple<>( Mana.TAP, -1 ) );
+			else return new ManaCost( cl, red, bck, green, white, blue, x );
 		}
 	}
 }

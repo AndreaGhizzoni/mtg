@@ -53,7 +53,7 @@ public class CardColorAdapter implements JsonSerializer<CardColor>, JsonDeserial
 				result = new CardColor();
 				break;
 			}
-			case IBRID: {
+			case HYBRID: {
 				result = new CardColor( list.get( 0 ), list.get( 1 ) );
 				break;
 			}

@@ -8,10 +8,9 @@ import java.util.Set;
 
 /**
  * Represents the color of MTG card.
- * TODO add doc
  *  
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
- * @version 1.1
+ * @version 2.0
  */
 public class CardColor implements Serializable
 {
@@ -28,6 +27,8 @@ public class CardColor implements Serializable
 
 	/**
 	 * Instance a Mono color card.
+	 * @param c {@link Mana} the mana color.
+	 * @throws if c equals Mana.TAP or Mana.X of Mana.COLOR_LESS
 	 */
 	public CardColor(Mana c) throws IllegalArgumentException{
 		this.checkMana( c );
@@ -36,7 +37,10 @@ public class CardColor implements Serializable
 	}
 
 	/**
-	 * Instance an Hybrid color card.<br>
+	 * Instance an Hybrid color card.
+	 * @param first {@link Mana} the first color of hybrid card.
+	 * @param second {@link Mana} the second color of hybrid card.
+	 * @throws if c equals Mana.TAP or Mana.X of Mana.COLOR_LESS or the arguments are the same.
 	 */
 	public CardColor(Mana first, Mana second) throws IllegalArgumentException{
 		this.checkMana( first );
@@ -47,27 +51,32 @@ public class CardColor implements Serializable
 
 		this.colors.add( first );
 		this.colors.add( second );
-		this.type = TypeColor.IBRID;
+		this.type = TypeColor.HYBRID;
 	}
 
 	/**
-	 * Instance an Multicolor card.<br>
-	d	 */
+	 * Instance an Multicolor card.
+	 * @param c {@link List} of Mana.
+	 * @throws if c equals Mana.TAP or Mana.X of Mana.COLOR_LESS or list is null or size == 0.
+	 */
 	public CardColor(List<Mana> c) throws IllegalArgumentException{
 		if(c == null || c.size() == 0)
 			throw new IllegalArgumentException( "Mana given can not be null." );
 
-		if(c.contains( Mana.COLOR_LESS ) || c.contains( Mana.TAP ) || c.contains( Mana.X ))
-			throw new IllegalArgumentException( "Mana c not be COLOR_LESS, TAP or X action in CardColor." );
+		for(Mana m: c) {
+			this.checkMana( m );
+		}
 
-		for(Mana i: c)
-			this.colors.add( i );
+		this.colors.addAll( c );
 		this.type = TypeColor.MULTI_COLOR;
 	}
 
 //===========================================================================================
 // METHOD
 //===========================================================================================
+	/**
+	 * Check if mana given is not equal of TAP, X or COLOR_LESS
+	 */
 	private void checkMana(Mana m) throws IllegalArgumentException{
 		if(m == null)
 			throw new IllegalArgumentException( "Mana given can not be null." );
@@ -98,6 +107,7 @@ public class CardColor implements Serializable
 
 	/**
 	 * Returns the Colors of a card.
+	 * @return {@link Set} of {@link Mana}
 	 */
 	public final Set<Mana> getColors(){
 		return this.colors;

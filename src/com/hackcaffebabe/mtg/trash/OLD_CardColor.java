@@ -58,7 +58,7 @@ public class OLD_CardColor implements Serializable
 
 		this.colors.add( first );
 		this.colors.add( second );
-		this.type = TypeColor.IBRID;
+		this.type = TypeColor.HYBRID;
 	}
 
 	/**
