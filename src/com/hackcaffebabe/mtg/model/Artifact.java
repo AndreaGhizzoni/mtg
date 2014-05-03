@@ -1,9 +1,9 @@
 package com.hackcaffebabe.mtg.model;
 
 import java.io.Serializable;
-import com.hackcaffebabe.mtg.model.card.OLD_ManaCost;
 import com.hackcaffebabe.mtg.model.card.Rarity;
-import com.hackcaffebabe.mtg.model.color.OLD_CardColor;
+import com.hackcaffebabe.mtg.model.color.CardColor;
+import com.hackcaffebabe.mtg.model.cost.ManaCost;
 
 
 /**
@@ -15,18 +15,18 @@ import com.hackcaffebabe.mtg.model.color.OLD_CardColor;
 public class Artifact extends MTGCard implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	private OLD_ManaCost cost;
+	private ManaCost cost;
 
 	/**
 	 * Instance an Artifact.
 	 * @param name {@link String} the name of artifact.
-	 * @param cost {@link OLD_ManaCost} the mana cost of artifact.
-	 * @param color {@link OLD_CardColor} the color of artifact.
+	 * @param cost {@link ManaCost} the mana cost of artifact.
+	 * @param color {@link CardColor} the color of artifact.
 	 * @param rarity {@link Rarity} the rarity of artifact.
 	 * @throws IllegalArgumentException f some arguments are null, 
 	 *                                  empty string or mana cost is TAP action.
 	 */
-	public Artifact(String name, OLD_ManaCost cost, OLD_CardColor color, Rarity rarity) throws IllegalArgumentException{
+	public Artifact(String name, ManaCost cost, CardColor color, Rarity rarity) throws IllegalArgumentException{
 		super( name, color, rarity );
 		this.setManaCost( cost );
 	}
@@ -36,14 +36,14 @@ public class Artifact extends MTGCard implements Serializable
 //===========================================================================================
 	/**
 	 * Set the Mana cost of Artifact.
-	 * @param cost {@link OLD_ManaCost} the mana cost of Artifact.
+	 * @param cost {@link ManaCost} the mana cost of Artifact.
 	 * @throws IllegalArgumentException if argument given is null or is TAP action.
 	 */
-	public void setManaCost(OLD_ManaCost cost) throws IllegalArgumentException{
+	public void setManaCost(ManaCost cost) throws IllegalArgumentException{
 		if(cost == null)
 			throw new IllegalArgumentException( "Mana cost of Artifact can not be null." );
 
-		if(cost.getCost().containsKey( null ))
+		if(cost.containsTAP())
 			throw new IllegalArgumentException( "Mana cost of Artifact can not be TAP action." );
 
 		this.cost = cost;
@@ -57,9 +57,9 @@ public class Artifact extends MTGCard implements Serializable
 //===========================================================================================
 	/**
 	 * Returns the mana cost of Artifact.
-	 * @return {@link OLD_ManaCost} the mana cost of Artifact.
+	 * @return {@link ManaCost} the mana cost of Artifact.
 	 */
-	public OLD_ManaCost getManaCost(){
+	public ManaCost getManaCost(){
 		return this.cost;
 	}
 

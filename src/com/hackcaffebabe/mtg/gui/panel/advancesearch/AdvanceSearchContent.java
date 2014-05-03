@@ -23,7 +23,7 @@ import com.hackcaffebabe.mtg.controller.json.StoreManager;
 import com.hackcaffebabe.mtg.gui.frame.AdvanceSearch;
 import com.hackcaffebabe.mtg.model.MTGCard;
 import com.hackcaffebabe.mtg.model.card.Rarity;
-import com.hackcaffebabe.mtg.model.color.OLD_BasicColors;
+import com.hackcaffebabe.mtg.model.color.Mana;
 
 
 /**
@@ -86,23 +86,23 @@ public class AdvanceSearchContent extends JPanel
 		pnlCardColor.setLayout( new MigLayout( "", "[][][][][]", "[]" ) );
 
 		this.chbRed = new JCheckBox( "Red" );
-		this.chbRed.setActionCommand( OLD_BasicColors.getAbbraviation( OLD_BasicColors.RED ) );
+		this.chbRed.setActionCommand( Mana.getAbbraviation( Mana.RED ) );
 		pnlCardColor.add( this.chbRed, "cell 0 0" );
 
 		this.chbBlack = new JCheckBox( "Black" );
-		this.chbBlack.setActionCommand( OLD_BasicColors.getAbbraviation( OLD_BasicColors.BLACK ) );
+		this.chbBlack.setActionCommand( Mana.getAbbraviation( Mana.BLACK ) );
 		pnlCardColor.add( this.chbBlack, "cell 1 0" );
 
 		this.chbGreen = new JCheckBox( "Green" );
-		this.chbGreen.setActionCommand( OLD_BasicColors.getAbbraviation( OLD_BasicColors.GREEN ) );
+		this.chbGreen.setActionCommand( Mana.getAbbraviation( Mana.GREEN ) );
 		pnlCardColor.add( this.chbGreen, "cell 2 0" );
 
 		this.chbBlue = new JCheckBox( "Blue" );
-		this.chbBlue.setActionCommand( OLD_BasicColors.getAbbraviation( OLD_BasicColors.BLUE ) );
+		this.chbBlue.setActionCommand( Mana.getAbbraviation( Mana.BLUE ) );
 		pnlCardColor.add( this.chbBlue, "cell 3 0" );
 
 		this.chbWhite = new JCheckBox( "White" );
-		this.chbWhite.setActionCommand( OLD_BasicColors.getAbbraviation( OLD_BasicColors.WHITE ) );
+		this.chbWhite.setActionCommand( Mana.getAbbraviation( Mana.WHITE ) );
 		pnlCardColor.add( this.chbWhite, "cell 4 0" );
 		add( pnlCardColor, "cell 0 1 2 1,grow" );
 
@@ -199,19 +199,19 @@ public class AdvanceSearchContent extends JPanel
 			Criteria criteria = new Criteria();
 
 			if(chbRed.isSelected())
-				criteria.byBasiColors( OLD_BasicColors.RED );
+				criteria.byColors( Mana.RED );
 			if(chbBlack.isSelected())
-				criteria.byBasiColors( OLD_BasicColors.BLACK );
+				criteria.byColors( Mana.BLACK );
 			if(chbGreen.isSelected())
-				criteria.byBasiColors( OLD_BasicColors.GREEN );
+				criteria.byColors( Mana.GREEN );
 			if(chbBlue.isSelected())
-				criteria.byBasiColors( OLD_BasicColors.BLUE );
+				criteria.byColors( Mana.BLUE );
 			if(chbWhite.isSelected())
-				criteria.byBasiColors( OLD_BasicColors.WHITE );
+				criteria.byColors( Mana.WHITE );
 			boolean noColorSel = !chbRed.isSelected() && !chbBlack.isSelected() && !chbGreen.isSelected()
 					&& !chbBlue.isSelected() && !chbWhite.isSelected();
 			if(noColorSel)
-				criteria.byBasiColors( null );
+				criteria.byColors( null );
 
 			String rar = (String) cmbRarity.getSelectedItem();
 			if(rar.equals( Rarity.COMMON.toString() )) {

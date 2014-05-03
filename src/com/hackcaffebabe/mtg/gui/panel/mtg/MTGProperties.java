@@ -30,10 +30,10 @@ import com.hackcaffebabe.mtg.model.MTGCard;
 import com.hackcaffebabe.mtg.model.Planeswalker;
 import com.hackcaffebabe.mtg.model.Sorcery;
 import com.hackcaffebabe.mtg.model.card.Ability;
-import com.hackcaffebabe.mtg.model.card.OLD_Effect;
-import com.hackcaffebabe.mtg.model.card.OLD_ManaCost;
+import com.hackcaffebabe.mtg.model.card.Effect;
 import com.hackcaffebabe.mtg.model.card.PlanesAbility;
 import com.hackcaffebabe.mtg.model.card.Strength;
+import com.hackcaffebabe.mtg.model.cost.ManaCost;
 
 
 /**
@@ -138,7 +138,7 @@ public class MTGProperties extends JPanel
 		JPanel pnlOtherEffects = new JPanel();
 		pnlOtherEffects.setBorder( new TitledBorder( "Other Effects:" ) );
 		pnlOtherEffects.setLayout( new MigLayout( "", "[grow]", "[grow][grow]" ) );
-		this.tableEffects = new JXTable( new JXObjectModel<OLD_Effect>() );
+		this.tableEffects = new JXTable( new JXObjectModel<Effect>() );
 		this.tableColumnAdjusterEffects = new JXTableColumnAdjuster( this.tableEffects );
 		pnlOtherEffects.add( new JScrollPane( this.tableEffects, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED ), "cell 0 0 1 2,grow" );
@@ -180,7 +180,7 @@ public class MTGProperties extends JPanel
 
 	/* this method populate the table ability and effects */
 	private <T extends DisplayableObject> void populateTables(Class<T> abilityClaxx, Set<T> setOfAbilityClaxx,
-			Set<OLD_Effect> setOfEffects){
+			Set<Effect> setOfEffects){
 		if(!setOfAbilityClaxx.isEmpty()) {
 			JXObjectModel<T> model = new JXObjectModel<>();
 			for(T a: setOfAbilityClaxx)
@@ -191,8 +191,8 @@ public class MTGProperties extends JPanel
 		}
 
 		if(!setOfEffects.isEmpty()) {
-			JXObjectModel<OLD_Effect> model = new JXObjectModel<>();
-			for(OLD_Effect e: setOfEffects)
+			JXObjectModel<Effect> model = new JXObjectModel<>();
+			for(Effect e: setOfEffects)
 				model.addObject( e );
 			this.tableEffects.setModel( model );
 			this.tableEffects.getColumnModel().getColumn( 1 ).setCellRenderer( new CellRendererAsTextArea() );
@@ -222,7 +222,7 @@ public class MTGProperties extends JPanel
 
 		Strength creatureStrength = null;
 		Integer planeswalkerLife = -1;
-		OLD_ManaCost manaCost = null;
+		ManaCost manaCost = null;
 		String type = null;
 		if(c instanceof Creature) {
 			manaCost = ((Creature) c).getManaCost();

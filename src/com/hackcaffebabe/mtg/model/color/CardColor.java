@@ -37,14 +37,13 @@ public class CardColor implements Serializable
 
 	/**
 	 * Instance an Hybrid color card.<br>
-	 * These two colors can not be the same and can not be a COLOR_LESS || X || TAP.
 	 */
 	public CardColor(Mana first, Mana second) throws IllegalArgumentException{
 		this.checkMana( first );
 		this.checkMana( second );
 
 		if(first.equals( second ))
-			throw new IllegalArgumentException( "Mana given can not be the same." );
+			throw new IllegalArgumentException( "The two Mana given can not be the same." );
 
 		this.colors.add( first );
 		this.colors.add( second );
@@ -53,14 +52,13 @@ public class CardColor implements Serializable
 
 	/**
 	 * Instance an Multicolor card.<br>
-	 * These two colors can not be the same and can not be a COLOR_LESS.
-	 */
+	d	 */
 	public CardColor(List<Mana> c) throws IllegalArgumentException{
 		if(c == null || c.size() == 0)
 			throw new IllegalArgumentException( "Mana given can not be null." );
 
-		if(c.contains( Mana.COLOR_LESS ) && c.contains( Mana.TAP ) && c.contains( Mana.X ))
-			throw new IllegalArgumentException( "Basics Colors can not be COLOR_LESS with two arguments constructor." );
+		if(c.contains( Mana.COLOR_LESS ) || c.contains( Mana.TAP ) || c.contains( Mana.X ))
+			throw new IllegalArgumentException( "Mana c not be COLOR_LESS, TAP or X action in CardColor." );
 
 		for(Mana i: c)
 			this.colors.add( i );
@@ -99,9 +97,9 @@ public class CardColor implements Serializable
 	}
 
 	/**
-	 * Returns the Basics Colors of a card.
+	 * Returns the Colors of a card.
 	 */
-	public final Set<Mana> getBasicColors(){
+	public final Set<Mana> getColors(){
 		return this.colors;
 	}
 

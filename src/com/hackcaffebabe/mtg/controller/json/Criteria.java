@@ -13,7 +13,7 @@ import com.hackcaffebabe.mtg.model.MTGCard;
 import com.hackcaffebabe.mtg.model.Planeswalker;
 import com.hackcaffebabe.mtg.model.Sorcery;
 import com.hackcaffebabe.mtg.model.card.Rarity;
-import com.hackcaffebabe.mtg.model.color.OLD_BasicColors;
+import com.hackcaffebabe.mtg.model.color.Mana;
 
 
 /**
@@ -39,7 +39,7 @@ public class Criteria
 
 	private String series = null;
 
-	private Set<OLD_BasicColors> colors = new HashSet<>();
+	private Set<Mana> colors = new HashSet<>();
 
 	private Rarity rarity = null;
 
@@ -105,7 +105,7 @@ public class Criteria
 		}
 
 		if(colors != null) {
-			listOfChecking.add( colors.equals( mtg.getCardColor().getBasicColors() ) );
+			listOfChecking.add( colors.equals( mtg.getCardColor().getColors() ) );
 		}
 
 		if(rarity != null) {
@@ -158,8 +158,8 @@ public class Criteria
 				return true;
 		}
 
-		for(OLD_BasicColors b: colors) {
-			if(mtg.getCardColor().getBasicColors().contains( b ))
+		for(Mana b: colors) {
+			if(mtg.getCardColor().getColors().contains( b ))
 				return true;
 		}
 
@@ -221,11 +221,11 @@ public class Criteria
 	}
 
 	/**
-	 * This method set the criteria by {@link OLD_BasicColors}.
-	 * @param b {@link OLD_BasicColors} the basic to search.
+	 * This method set the criteria by {@link Mana}.
+	 * @param b {@link Mana} the basic to search.
 	 * @return {@link Criteria} with the basic color flag set.
 	 */
-	public Criteria byBasiColors(OLD_BasicColors b){
+	public Criteria byColors(Mana b){
 		if(b != null) {
 			if(this.colors.contains( b )) {
 				this.colors.remove( b );
@@ -325,8 +325,8 @@ public class Criteria
 		return series;
 	}
 
-	/** @return {@link List} of {@link OLD_BasicColors} */
-	public List<OLD_BasicColors> getColors(){
+	/** @return {@link List} of {@link Mana} */
+	public List<Mana> getColors(){
 		return new ArrayList<>( colors );
 	}
 

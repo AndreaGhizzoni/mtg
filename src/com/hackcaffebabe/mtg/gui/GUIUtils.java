@@ -11,7 +11,6 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.AbstractMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -43,10 +42,11 @@ import com.hackcaffebabe.mtg.gui.panel.mtg.MTGProperties;
 import com.hackcaffebabe.mtg.model.MTGCard;
 import com.hackcaffebabe.mtg.model.card.Ability;
 import com.hackcaffebabe.mtg.model.card.AbilityFactory;
-import com.hackcaffebabe.mtg.model.card.OLD_Effect;
-import com.hackcaffebabe.mtg.model.card.OLD_ManaCost;
+import com.hackcaffebabe.mtg.model.card.Effect;
 import com.hackcaffebabe.mtg.model.card.PlanesAbility;
-import com.hackcaffebabe.mtg.model.color.OLD_BasicColors;
+import com.hackcaffebabe.mtg.model.color.Mana;
+import com.hackcaffebabe.mtg.model.cost.ManaCost;
+import com.hackcaffebabe.mtg.model.cost.Tuple;
 
 
 /**
@@ -208,14 +208,14 @@ public class GUIUtils
 	/**
 	 * This method show a pop up to get the effect info.
 	 * @param parent {@link Component} to show the pop up
-	 * @param e {@link OLD_Effect} to edit, null to get new one
-	 * @return {@link OLD_Effect} if argument give are correct, null otherwise.
+	 * @param e {@link Effect} to edit, null to get new one
+	 * @return {@link Effect} if argument give are correct, null otherwise.
 	 */
-	public static OLD_Effect showEffectDialog(final Component parent, OLD_Effect e){
+	public static Effect showEffectDialog(final Component parent, Effect e){
 		class myActionListener implements ActionListener
 		{
 			private JTextField txt;
-			private OLD_ManaCost cost;
+			private ManaCost cost;
 
 			public myActionListener(JTextField t){
 				txt = t;
@@ -252,7 +252,7 @@ public class GUIUtils
 		if(i == JOptionPane.CANCEL_OPTION || i == JOptionPane.CLOSED_OPTION)
 			return null;
 		try {
-			return new OLD_Effect( action.cost, DBCostants.removeAccentCharacters( txtDescription.getText() ) );
+			return new Effect( action.cost, DBCostants.removeAccentCharacters( txtDescription.getText() ) );
 		} catch(Exception ex) {
 			return null;
 		}
@@ -359,9 +359,9 @@ public class GUIUtils
 	/**
 	 * This method show a pop up to get the mana cost.
 	 * @param isForCardCost {@link Boolean} true if is for card cost, otherwise false if is for effects.
-	 * @return {@link OLD_ManaCost}
+	 * @return {@link ManaCost}
 	 */
-	public static OLD_ManaCost showManaCost(Component parent, boolean isForCardCost){
+	public static ManaCost showManaCost(Component parent, boolean isForCardCost){
 		DocumentFilter docFilter = new DocumentFilter(){
 			@Override
 			public void insertString(FilterBypass fb, int off, String str, AttributeSet attr)
@@ -419,40 +419,53 @@ public class GUIUtils
 		Integer manaWhite = Integer.parseInt( txtManaWhite.getText() );
 		Integer manaBlue = Integer.parseInt( txtManaBlue.getText() );
 
-		Map.Entry<OLD_BasicColors, Integer> cl = new AbstractMap.SimpleEntry<OLD_BasicColors, Integer>( OLD_BasicColors.COLOR_LESS,
-				manaColorLess );
-		Map.Entry<OLD_BasicColors, Integer> red = new AbstractMap.SimpleEntry<OLD_BasicColors, Integer>( OLD_BasicColors.RED,
-				manaRed );
-		Map.Entry<OLD_BasicColors, Integer> bck = new AbstractMap.SimpleEntry<OLD_BasicColors, Integer>( OLD_BasicColors.BLACK,
-				manaBlack );
-		Map.Entry<OLD_BasicColors, Integer> green = new AbstractMap.SimpleEntry<OLD_BasicColors, Integer>( OLD_BasicColors.GREEN,
-				manaGreen );
-		Map.Entry<OLD_BasicColors, Integer> white = new AbstractMap.SimpleEntry<OLD_BasicColors, Integer>( OLD_BasicColors.WHITE,
-				manaWhite );
-		Map.Entry<OLD_BasicColors, Integer> blue = new AbstractMap.SimpleEntry<OLD_BasicColors, Integer>( OLD_BasicColors.BLUE,
-				manaBlue );
+		Tuple<Mana, Integer> cl = new Tuple<Mana, Integer>( Mana.COLOR_LESS, manaColorLess );
+		Tuple<Mana, Integer> red = new Tuple<Mana, Integer>( Mana.RED, manaRed );
+		Tuple<Mana, Integer> bck = new Tuple<Mana, Integer>( Mana.BLACK, manaBlack );
+		Tuple<Mana, Integer> green = new Tuple<Mana, Integer>( Mana.GREEN, manaGreen );
+		Tuple<Mana, Integer> white = new Tuple<Mana, Integer>( Mana.WHITE, manaWhite );
+		Tuple<Mana, Integer> blue = new Tuple<Mana, Integer>( Mana.BLUE, manaBlue );
 
-		Map.Entry<OLD_BasicColors, Integer> x = null;
+//		Map.Entry<OLD_BasicColors, Integer> cl = new AbstractMap.SimpleEntry<OLD_BasicColors, Integer>(
+//				OLD_BasicColors.COLOR_LESS, manaColorLess );
+//		Map.Entry<OLD_BasicColors, Integer> red = new AbstractMap.SimpleEntry<OLD_BasicColors, Integer>(
+//				OLD_BasicColors.RED, manaRed );
+//		Map.Entry<OLD_BasicColors, Integer> bck = new AbstractMap.SimpleEntry<OLD_BasicColors, Integer>(
+//				OLD_BasicColors.BLACK, manaBlack );
+//		Map.Entry<OLD_BasicColors, Integer> green = new AbstractMap.SimpleEntry<OLD_BasicColors, Integer>(
+//				OLD_BasicColors.GREEN, manaGreen );
+//		Map.Entry<OLD_BasicColors, Integer> white = new AbstractMap.SimpleEntry<OLD_BasicColors, Integer>(
+//				OLD_BasicColors.WHITE, manaWhite );
+//		Map.Entry<OLD_BasicColors, Integer> blue = new AbstractMap.SimpleEntry<OLD_BasicColors, Integer>(
+//				OLD_BasicColors.BLUE, manaBlue );
+
+		Tuple<Mana, Integer> x = null;
 		if(chbX.isSelected())
-			x = new AbstractMap.SimpleEntry<OLD_BasicColors, Integer>( OLD_BasicColors.COLOR_LESS, -1 );
+			x = new Tuple<Mana, Integer>( Mana.X, -1 );
+
+//		Map.Entry<OLD_BasicColors, Integer> x = null;
+//		if(chbX.isSelected())
+//			x = new AbstractMap.SimpleEntry<OLD_BasicColors, Integer>( OLD_BasicColors.COLOR_LESS, -1 );
 
 		if(isForCardCost) {
 			if(chbX.isSelected())
-				return new OLD_ManaCost( cl, red, bck, green, white, blue, x );
-			else return new OLD_ManaCost( cl, red, bck, green, white, blue );
+				return new ManaCost( cl, red, bck, green, white, blue, x );
+			else return new ManaCost( cl, red, bck, green, white, blue );
 		} else {
-			Map.Entry<OLD_BasicColors, Integer> tap = null;
+			Tuple<Mana, Integer> tap = null;
+//			Map.Entry<OLD_BasicColors, Integer> tap = null;
 
 			if(chbTap.isSelected())
-				tap = new AbstractMap.SimpleEntry<OLD_BasicColors, Integer>( null, -1 );
+				tap = new Tuple<>( Mana.TAP, -1 );
+//				tap = new AbstractMap.SimpleEntry<OLD_BasicColors, Integer>( null, -1 );
 
 			if(chbTap.isSelected() && chbX.isSelected())
-				return new OLD_ManaCost( cl, red, bck, green, white, blue, tap, x );
+				return new ManaCost( cl, red, bck, green, white, blue, tap, x );
 			else if(chbTap.isSelected())
-				return new OLD_ManaCost( cl, red, bck, green, white, blue, tap );
+				return new ManaCost( cl, red, bck, green, white, blue, tap );
 			else if(chbX.isSelected())
-				return new OLD_ManaCost( cl, red, bck, green, white, blue, x );
-			else return new OLD_ManaCost( cl, red, bck, green, white, blue );
+				return new ManaCost( cl, red, bck, green, white, blue, x );
+			else return new ManaCost( cl, red, bck, green, white, blue );
 		}
 	}
 }

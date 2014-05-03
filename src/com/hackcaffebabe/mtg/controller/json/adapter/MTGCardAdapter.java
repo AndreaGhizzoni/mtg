@@ -33,10 +33,10 @@ import com.hackcaffebabe.mtg.model.Instant;
 import com.hackcaffebabe.mtg.model.MTGCard;
 import com.hackcaffebabe.mtg.model.Planeswalker;
 import com.hackcaffebabe.mtg.model.Sorcery;
-import com.hackcaffebabe.mtg.model.card.OLD_ManaCost;
 import com.hackcaffebabe.mtg.model.card.PlanesAbility;
 import com.hackcaffebabe.mtg.model.card.Strength;
-import com.hackcaffebabe.mtg.model.color.OLD_CardColor;
+import com.hackcaffebabe.mtg.model.color.CardColor;
+import com.hackcaffebabe.mtg.model.cost.ManaCost;
 
 
 /**
@@ -51,7 +51,7 @@ public class MTGCardAdapter implements JsonSerializer<MTGCard>, JsonDeserializer
 		JsonObject result = new JsonObject();
 		result.add( JSON_TAG_TYPE, new JsonPrimitive( c.getClass().getSimpleName() ) );
 		result.add( JSON_TAG_NAME, new JsonPrimitive( c.getName() ) );
-		result.add( JSON_TAG_CARD_COLOR, arg2.serialize( c.getCardColor(), OLD_CardColor.class ) );
+		result.add( JSON_TAG_CARD_COLOR, arg2.serialize( c.getCardColor(), CardColor.class ) );
 		result.add( JSON_TAG_RARITY, arg2.serialize( c.getRarity() ) );
 		result.add( JSON_TAG_SERIES, new JsonPrimitive( c.getSeries() ) );
 		result.add( JSON_TAG_SUB_TYPE, new JsonPrimitive( c.getSubType() ) );
@@ -65,35 +65,35 @@ public class MTGCardAdapter implements JsonSerializer<MTGCard>, JsonDeserializer
 		switch( c.getClass().getSimpleName() ) {
 			case "Creature": {
 				Creature x = ((Creature) c);
-				result.add( JSON_TAG_MANA_COST, arg2.serialize( x.getManaCost(), OLD_ManaCost.class ) );
+				result.add( JSON_TAG_MANA_COST, arg2.serialize( x.getManaCost(), ManaCost.class ) );
 				result.add( JSON_TAG_STRENGTH, arg2.serialize( x.getStrength(), Strength.class ) );
 				break;
 			}
 			case "Artifact": {
 				Artifact x = ((Artifact) c);
-				result.add( JSON_TAG_MANA_COST, arg2.serialize( x.getManaCost(), OLD_ManaCost.class ) );
+				result.add( JSON_TAG_MANA_COST, arg2.serialize( x.getManaCost(), ManaCost.class ) );
 				break;
 			}
 			case "Enchantment": {
 				Enchantment x = ((Enchantment) c);
-				result.add( JSON_TAG_MANA_COST, arg2.serialize( x.getManaCost(), OLD_ManaCost.class ) );
+				result.add( JSON_TAG_MANA_COST, arg2.serialize( x.getManaCost(), ManaCost.class ) );
 				break;
 			}
 			case "Instant": {
 				Instant x = ((Instant) c);
-				result.add( JSON_TAG_MANA_COST, arg2.serialize( x.getManaCost(), OLD_ManaCost.class ) );
+				result.add( JSON_TAG_MANA_COST, arg2.serialize( x.getManaCost(), ManaCost.class ) );
 				break;
 			}
 			case "Planeswalker": {
 				Planeswalker x = ((Planeswalker) c);
-				result.add( JSON_TAG_MANA_COST, arg2.serialize( x.getManaCost(), OLD_ManaCost.class ) );
+				result.add( JSON_TAG_MANA_COST, arg2.serialize( x.getManaCost(), ManaCost.class ) );
 				result.add( JSON_TAG_LIFE, new JsonPrimitive( x.getLife() ) );
 				result.add( JSON_TAG_PLANES_ABILITY, arg2.serialize( x.getPlanesAbilities() ) );
 				break;
 			}
 			case "Sorcery": {
 				Sorcery x = ((Sorcery) c);
-				result.add( JSON_TAG_MANA_COST, arg2.serialize( x.getManaCost(), OLD_ManaCost.class ) );
+				result.add( JSON_TAG_MANA_COST, arg2.serialize( x.getManaCost(), ManaCost.class ) );
 				break;
 			}
 		}
@@ -108,7 +108,7 @@ public class MTGCardAdapter implements JsonSerializer<MTGCard>, JsonDeserializer
 		json.getAsJsonObject().remove( JSON_TAG_TYPE );// remove this otherwise class dosn't full fit the class.
 		try {
 			MTGCard c = context.deserialize( json, Class.forName( "com.hackcaffebabe.mtg.model." + type ) );
-			OLD_CardColor cc = context.deserialize( json.getAsJsonObject().get( JSON_TAG_CARD_COLOR ),
+			CardColor cc = context.deserialize( json.getAsJsonObject().get( JSON_TAG_CARD_COLOR ),
 					Class.forName( "com.hackcaffebabe.mtg.model.color.CardColor" ) );
 			c.setCardColor( cc );
 			c.setColumnNames( new String[] { "Name", "Card Color", "Type", "Sub Type", "Rarity" } );
@@ -121,8 +121,8 @@ public class MTGCardAdapter implements JsonSerializer<MTGCard>, JsonDeserializer
 			if(c != null)
 				c.setPrimaryEffect( pe );
 			if(!type.equals( "Land" )) {
-				OLD_ManaCost cos = context.deserialize( json.getAsJsonObject().get( JSON_TAG_MANA_COST ),
-						Class.forName( "com.hackcaffebabe.mtg.model.card.ManaCost" ) );
+				ManaCost cos = context.deserialize( json.getAsJsonObject().get( JSON_TAG_MANA_COST ),
+						Class.forName( "com.hackcaffebabe.mtg.model.cost.ManaCost" ) );
 				if(c instanceof Creature) {
 					Strength s = context.deserialize( json.getAsJsonObject().get( JSON_TAG_STRENGTH ),
 							Class.forName( "com.hackcaffebabe.mtg.model.card.Strength" ) );

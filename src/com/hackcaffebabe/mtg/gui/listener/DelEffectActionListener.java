@@ -5,7 +5,7 @@ import it.hackcaffebabe.jx.table.JXTableColumnAdjuster;
 import it.hackcaffebabe.jx.table.model.JXObjectModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import com.hackcaffebabe.mtg.model.card.OLD_Effect;
+import com.hackcaffebabe.mtg.trash.OLD_Effect;
 
 
 /**

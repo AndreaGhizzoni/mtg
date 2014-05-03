@@ -1,9 +1,9 @@
 package com.hackcaffebabe.mtg.model;
 
 import java.io.Serializable;
-import com.hackcaffebabe.mtg.model.card.OLD_ManaCost;
 import com.hackcaffebabe.mtg.model.card.Rarity;
-import com.hackcaffebabe.mtg.model.color.OLD_CardColor;
+import com.hackcaffebabe.mtg.model.color.CardColor;
+import com.hackcaffebabe.mtg.model.cost.ManaCost;
 
 
 /**
@@ -15,18 +15,18 @@ import com.hackcaffebabe.mtg.model.color.OLD_CardColor;
 public class Sorcery extends MTGCard implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	private OLD_ManaCost cost;
+	private ManaCost cost;
 
 	/**
 	 * Instance a MTG sorcery card with all fields.
 	 * @param name {@link String} the name of sorcery.
-	 * @param cost {@link OLD_ManaCost} the name cost of sorcery.
-	 * @param color {@link OLD_CardColor} the card color of sorcery.
+	 * @param cost {@link ManaCost} the name cost of sorcery.
+	 * @param color {@link CardColor} the card color of sorcery.
 	 * @param rarity {@link Rarity} the rarity of sorcery.
 	 * @throws IllegalArgumentException if some argument are null, 
 	 *                                  empty string or mana cost is TAP action.
 	 */
-	public Sorcery(String name, OLD_ManaCost cost, OLD_CardColor color, Rarity rarity) throws IllegalArgumentException{
+	public Sorcery(String name, ManaCost cost, CardColor color, Rarity rarity) throws IllegalArgumentException{
 		super( name, color, rarity );
 		this.setManaCost( cost );
 	}
@@ -36,14 +36,14 @@ public class Sorcery extends MTGCard implements Serializable
 //===========================================================================================
 	/**
 	 * Set the sorcery Mana cost.
-	 * @param cost {@link OLD_ManaCost} the cost of mana.
+	 * @param cost {@link ManaCost} the cost of mana.
 	 * @throws IllegalArgumentException if argument given is null or is TAP action.
 	 */
-	public void setManaCost(OLD_ManaCost cost) throws IllegalArgumentException{
+	public void setManaCost(ManaCost cost) throws IllegalArgumentException{
 		if(cost == null)
 			throw new IllegalArgumentException( "Mana Cost of sorceryt can not be null." );
 
-		if(cost.getCost().containsKey( null ))
+		if(cost.containsTAP())
 			throw new IllegalArgumentException( "Mana cost of Enchantment can not be TAP action." );
 
 		this.cost = cost;
@@ -57,9 +57,9 @@ public class Sorcery extends MTGCard implements Serializable
 //===========================================================================================
 	/**
 	 * Returns the mana cost of sorcery.
-	 * @return {@link OLD_ManaCost} the mana cost of sorcery.
+	 * @return {@link ManaCost} the mana cost of sorcery.
 	 */
-	public OLD_ManaCost getManaCost(){
+	public ManaCost getManaCost(){
 		return this.cost;
 	}
 

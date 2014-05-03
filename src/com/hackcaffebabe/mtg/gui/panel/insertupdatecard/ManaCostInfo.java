@@ -17,8 +17,8 @@ import com.hackcaffebabe.mtg.model.Land;
 import com.hackcaffebabe.mtg.model.MTGCard;
 import com.hackcaffebabe.mtg.model.Planeswalker;
 import com.hackcaffebabe.mtg.model.Sorcery;
-import com.hackcaffebabe.mtg.model.card.OLD_ManaCost;
 import com.hackcaffebabe.mtg.model.card.Strength;
+import com.hackcaffebabe.mtg.model.cost.ManaCost;
 
 
 /**
@@ -33,10 +33,10 @@ public class ManaCostInfo extends JPanel
 	private JTextField txtManaCost;
 	private JButton btnSetManaCost;
 
-	private OLD_ManaCost viewManaCost = null;
+	private ManaCost viewManaCost = null;
 
 	/**
-	 * Create the Panel to get {@link OLD_ManaCost} from user.
+	 * Create the Panel to get {@link ManaCost} from user.
 	 */
 	public ManaCostInfo(){
 		super();
@@ -108,9 +108,9 @@ public class ManaCostInfo extends JPanel
 //===========================================================================================
 	/**
 	 * Returns the mana cost get from the user.
-	 * @return {@link com.hackcaffebabe.mtg.model.card.OLD_ManaCost}
+	 * @return {@link com.hackcaffebabe.mtg.trash.ManaCost}
 	 */
-	public OLD_ManaCost getManaCost(){
+	public ManaCost getManaCost(){
 		return this.viewManaCost;
 	}
 

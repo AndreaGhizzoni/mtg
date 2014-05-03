@@ -1,4 +1,4 @@
-package com.hackcaffebabe.mtg.model.card;
+package com.hackcaffebabe.mtg.trash;
 
 import it.hackcaffebabe.jx.table.model.DisplayableObject;
 import java.io.Serializable;

@@ -24,11 +24,11 @@ import com.hackcaffebabe.mtg.controller.json.adapter.PlanesAbilityAdapter;
 import com.hackcaffebabe.mtg.controller.json.adapter.StrengthAdapter;
 import com.hackcaffebabe.mtg.model.MTGCard;
 import com.hackcaffebabe.mtg.model.card.Ability;
-import com.hackcaffebabe.mtg.model.card.OLD_Effect;
-import com.hackcaffebabe.mtg.model.card.OLD_ManaCost;
+import com.hackcaffebabe.mtg.model.card.Effect;
 import com.hackcaffebabe.mtg.model.card.PlanesAbility;
 import com.hackcaffebabe.mtg.model.card.Strength;
-import com.hackcaffebabe.mtg.model.color.OLD_CardColor;
+import com.hackcaffebabe.mtg.model.color.CardColor;
+import com.hackcaffebabe.mtg.model.cost.ManaCost;
 
 
 /**
@@ -87,10 +87,10 @@ public class StoreManager
 		GsonBuilder b = new GsonBuilder().setPrettyPrinting().enableComplexMapKeySerialization();
 		b.registerTypeAdapter( PlanesAbility.class, new PlanesAbilityAdapter() );// register the JSON adapter for PlanesAbility class
 		b.registerTypeAdapter( Strength.class, new StrengthAdapter() );// register the JSON adapter for Strength class
-		b.registerTypeAdapter( OLD_CardColor.class, new CardColorAdapter() );// register the JSON adapter for CardColor class
-		b.registerTypeAdapter( OLD_ManaCost.class, new ManaCostAdapter() );// register the JSON adapter for ManaCost class
+		b.registerTypeAdapter( CardColor.class, new CardColorAdapter() );// register the JSON adapter for CardColor class
+		b.registerTypeAdapter( ManaCost.class, new ManaCostAdapter() );// register the JSON adapter for ManaCost class
 		b.registerTypeAdapter( MTGCard.class, new MTGCardAdapter() );// register the JSON adapter for MTGCard class
-		b.registerTypeAdapter( OLD_Effect.class, new EffectAdapter() );// register the JSON adapter for Effect class
+		b.registerTypeAdapter( Effect.class, new EffectAdapter() );// register the JSON adapter for Effect class
 		b.registerTypeAdapter( Ability.class, new AbilityAdapter() );// register the JSON adapter for Ability class		
 		g = b.create();
 	}

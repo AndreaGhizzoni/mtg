@@ -1,4 +1,4 @@
-package com.hackcaffebabe.mtg.model.color;
+package com.hackcaffebabe.mtg.trash;
 
 import java.util.Arrays;
 import java.util.List;

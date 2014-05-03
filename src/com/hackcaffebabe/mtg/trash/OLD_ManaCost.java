@@ -1,9 +1,8 @@
-package com.hackcaffebabe.mtg.model.card;
+package com.hackcaffebabe.mtg.trash;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-import com.hackcaffebabe.mtg.model.color.OLD_BasicColors;
 
 
 /**

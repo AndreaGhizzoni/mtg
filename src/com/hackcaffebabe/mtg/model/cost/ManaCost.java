@@ -19,21 +19,15 @@ public class ManaCost implements Comparable<ManaCost>
 	@SafeVarargs
 	public ManaCost(Tuple<Mana, Integer>... tuples) throws IllegalArgumentException{
 		for(Tuple<Mana, Integer> t: tuples) {
-			if(t == null)
-				throw new IllegalArgumentException( "Mana can not be null" );
+			this.checkTuple( t );
+			this.cost.add( t );
+		}
+		this.calculateCMC();
+	}
 
-			boolean TequalstoTAP = t.getFirstObj().equals( Mana.TAP );
-			boolean TequalstoX = t.getFirstObj().equals( Mana.X );
-			if(TequalstoTAP && t.getSecondObj() != -1)
-				throw new IllegalArgumentException( "Mana malformed for tap action with value " + t.getSecondObj() );
-
-			if(TequalstoX && t.getSecondObj() != -1)
-				throw new IllegalArgumentException( "Mana malformed for X action " + t.getSecondObj() );
-
-			boolean isAcolor = !TequalstoTAP && !TequalstoX;
-			if(isAcolor && t.getSecondObj() <= 0)
-				throw new IllegalArgumentException( "Mana malformed for color" );
-
+	public ManaCost(Set<Tuple<Mana, Integer>> cost) throws IllegalArgumentException{
+		for(Tuple<Mana, Integer> t: cost) {
+			this.checkTuple( t );
 			this.cost.add( t );
 		}
 		this.calculateCMC();
@@ -43,13 +37,23 @@ public class ManaCost implements Comparable<ManaCost>
 // SETTER
 //===========================================================================================
 	public void addCost(Mana mana, Integer f){
-		this.cost.add( new Tuple<Mana, Integer>( mana, f ) );
+		Tuple<Mana, Integer> t = new Tuple<Mana, Integer>( mana, f );
+		this.checkTuple( t );
+		this.cost.add( t );
 		this.calculateCMC();
 	}
 
 //===========================================================================================
 // GETTER
 //===========================================================================================
+	public boolean containsTAP(){
+		return getCost().contains( new Tuple<Mana, Integer>( Mana.TAP, -1 ) );
+	}
+
+	public boolean containsX(){
+		return getCost().contains( new Tuple<Mana, Integer>( Mana.X, -1 ) );
+	}
+
 	public final Set<Tuple<Mana, Integer>> getCost(){
 		return this.cost;
 	}
@@ -68,6 +72,23 @@ public class ManaCost implements Comparable<ManaCost>
 				res += t.getSecondObj();
 		}
 		this.cmc = res;
+	}
+
+	private void checkTuple(Tuple<Mana, Integer> t) throws IllegalArgumentException{
+		if(t == null)
+			throw new IllegalArgumentException( "Mana can not be null" );
+
+		boolean TequalstoTAP = t.getFirstObj().equals( Mana.TAP );
+		boolean TequalstoX = t.getFirstObj().equals( Mana.X );
+		if(TequalstoTAP && t.getSecondObj() != -1)
+			throw new IllegalArgumentException( "Mana malformed for tap action with value " + t.getSecondObj() );
+
+		if(TequalstoX && t.getSecondObj() != -1)
+			throw new IllegalArgumentException( "Mana malformed for X action " + t.getSecondObj() );
+
+		boolean isAcolor = !TequalstoTAP && !TequalstoX;
+		if(isAcolor && t.getSecondObj() <= 0)
+			throw new IllegalArgumentException( "Mana malformed for color" );
 	}
 
 //===========================================================================================

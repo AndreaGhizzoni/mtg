@@ -1,9 +1,11 @@
 package com.hackcaffebabe.mtg.controller.json.adapter;
 
-import static com.hackcaffebabe.mtg.controller.DBCostants.*;
+import static com.hackcaffebabe.mtg.controller.DBCostants.JSON_TAG_MANA_COST;
+import static com.hackcaffebabe.mtg.controller.DBCostants.JSON_TAG_TEXT;
 import java.lang.reflect.Type;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -12,9 +14,10 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-import com.hackcaffebabe.mtg.model.card.OLD_Effect;
-import com.hackcaffebabe.mtg.model.card.OLD_ManaCost;
-import com.hackcaffebabe.mtg.model.color.OLD_BasicColors;
+import com.hackcaffebabe.mtg.model.card.Effect;
+import com.hackcaffebabe.mtg.model.color.Mana;
+import com.hackcaffebabe.mtg.model.cost.ManaCost;
+import com.hackcaffebabe.mtg.model.cost.Tuple;
 
 
 /**
@@ -22,10 +25,10 @@ import com.hackcaffebabe.mtg.model.color.OLD_BasicColors;
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
  */
-public class EffectAdapter implements JsonSerializer<OLD_Effect>, JsonDeserializer<OLD_Effect>
+public class EffectAdapter implements JsonSerializer<Effect>, JsonDeserializer<Effect>
 {
 	@Override
-	public JsonElement serialize(OLD_Effect arg0, Type arg1, JsonSerializationContext arg2){
+	public JsonElement serialize(Effect arg0, Type arg1, JsonSerializationContext arg2){
 		JsonObject result = new JsonObject();
 		result.add( JSON_TAG_MANA_COST, arg2.serialize( arg0.getManaCost() ) );
 		result.add( JSON_TAG_TEXT, new JsonPrimitive( arg0.getText() ) );
@@ -33,18 +36,15 @@ public class EffectAdapter implements JsonSerializer<OLD_Effect>, JsonDeserializ
 	}
 
 	@Override
-	public OLD_Effect deserialize(JsonElement arg0, Type arg1, JsonDeserializationContext arg2) throws JsonParseException{
-		OLD_Effect result = null;
-
+	public Effect deserialize(JsonElement arg0, Type arg1, JsonDeserializationContext arg2) throws JsonParseException{
 		JsonObject effectAsJsonObject = arg0.getAsJsonObject();
-		JsonObject manacost = effectAsJsonObject.get( JSON_TAG_MANA_COST ).getAsJsonObject();
-		HashMap<OLD_BasicColors, Integer> cost = new HashMap<>();
-		for(Map.Entry<String, JsonElement> i: manacost.entrySet()) {
-			cost.put( i.getKey().equals( "null" ) ? null : OLD_BasicColors.valueOf( i.getKey() ), i.getValue().getAsInt() );
+		JsonObject manaCostAsJsonObject = effectAsJsonObject.get( JSON_TAG_MANA_COST ).getAsJsonObject();
+		Set<Tuple<Mana, Integer>> mana = new HashSet<>();
+		for(Map.Entry<String, JsonElement> i: manaCostAsJsonObject.entrySet()) {
+			mana.add( new Tuple<Mana, Integer>( Mana.valueOf( i.getKey() ), i.getValue().getAsInt() ) );
 		}
 		String text = effectAsJsonObject.get( JSON_TAG_TEXT ).getAsString();
 
-		result = new OLD_Effect( new OLD_ManaCost( cost ), text );
-		return result;
+		return new Effect( new ManaCost( mana ), text );
 	}
 }

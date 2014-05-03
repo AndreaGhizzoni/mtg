@@ -1,10 +1,10 @@
 package com.hackcaffebabe.mtg.model;
 
 import java.io.Serializable;
-import com.hackcaffebabe.mtg.model.card.OLD_ManaCost;
 import com.hackcaffebabe.mtg.model.card.Rarity;
 import com.hackcaffebabe.mtg.model.card.Strength;
-import com.hackcaffebabe.mtg.model.color.OLD_CardColor;
+import com.hackcaffebabe.mtg.model.color.CardColor;
+import com.hackcaffebabe.mtg.model.cost.ManaCost;
 
 
 /**
@@ -16,21 +16,21 @@ import com.hackcaffebabe.mtg.model.color.OLD_CardColor;
 public class Creature extends MTGCard implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	private OLD_ManaCost cost;
+	private ManaCost cost;
 	private Strength strength;
 
 	/**
 	 * Instance a MTG Creature card with all his fields.
 	 * @param name {@link String} the name of Creature.
-	 * @param color {@link OLD_CardColor} the color of Creature.
+	 * @param color {@link CardColor} the color of Creature.
 	 * @param strength {@link Strength} the strength of Creature. 
-	 * @param cost {@link OLD_ManaCost} the mana cost of Creature.
+	 * @param cost {@link ManaCost} the mana cost of Creature.
 	 * @param subType {@link String} the type's name of Creature.
 	 * @param rarity {@link Rarity} the rarity of Creature.
 	 * @throws IllegalArgumentException if some arguments are null, 
 	 *                                  empty string or mana cost is TAP action.
 	 */
-	public Creature(String name, OLD_CardColor color, Strength strength, OLD_ManaCost cost, String subType, Rarity rarity)
+	public Creature(String name, CardColor color, Strength strength, ManaCost cost, String subType, Rarity rarity)
 			throws IllegalArgumentException{
 		super( name, color, rarity );
 		this.setManaCost( cost );
@@ -43,14 +43,14 @@ public class Creature extends MTGCard implements Serializable
 //===========================================================================================
 	/**
 	 * Set the creature Mana cost.
-	 * @param cost {@link OLD_ManaCost} the cost of mana.
+	 * @param cost {@link ManaCost} the cost of mana.
 	 * @throws IllegalArgumentException if argument given is null or is a TAP action.
 	 */
-	public void setManaCost(OLD_ManaCost cost) throws IllegalArgumentException{
+	public void setManaCost(ManaCost cost) throws IllegalArgumentException{
 		if(cost == null)
 			throw new IllegalArgumentException( "Mana Cost of Creature can not be null." );
 
-		if(cost.getCost().containsKey( null ))
+		if(cost.containsTAP())
 			throw new IllegalArgumentException( "Mana cost of Enchantment can not be TAP action." );
 
 		this.cost = cost;
@@ -73,9 +73,9 @@ public class Creature extends MTGCard implements Serializable
 //===========================================================================================
 	/**
 	 * Returns the mana cost of creature.
-	 * @return {@link OLD_ManaCost} the mana cost of creature.
+	 * @return {@link ManaCost} the mana cost of creature.
 	 */
-	public OLD_ManaCost getManaCost(){
+	public ManaCost getManaCost(){
 		return this.cost;
 	}
 
