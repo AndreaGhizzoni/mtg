@@ -396,18 +396,21 @@ public class GUIUtils
 		JTextField txtManaBlue = new JTextField( "0" );
 		((AbstractDocument) txtManaBlue.getDocument()).setDocumentFilter( docFilter );
 
+		JTextField txtX = new JTextField( "0" );
+		((AbstractDocument) txtX.getDocument()).setDocumentFilter( docFilter );
+
+//		JCheckBox chbX = new JCheckBox( "X" );
 		JCheckBox chbTap = new JCheckBox( "TAP" );
-		JCheckBox chbX = new JCheckBox( "X" );
 
 		JComponent[] input;
 		if(isForCardCost) {
 			input = new JComponent[] { new JLabel( "Color Less:" ), txtManaColorLess, new JLabel( "Red:" ), txtManaRed,
 					new JLabel( "Black:" ), txtManaBlack, new JLabel( "Green:" ), txtManaGreen, new JLabel( "White:" ),
-					txtManaWhite, new JLabel( "Blue:" ), txtManaBlue, chbX };
+					txtManaWhite, new JLabel( "Blue:" ), txtManaBlue, new JLabel( "X" ), txtX };
 		} else {
 			input = new JComponent[] { new JLabel( "Color Less:" ), txtManaColorLess, new JLabel( "Red:" ), txtManaRed,
 					new JLabel( "Black:" ), txtManaBlack, new JLabel( "Green:" ), txtManaGreen, new JLabel( "White:" ),
-					txtManaWhite, new JLabel( "Blue:" ), txtManaBlue, chbTap, chbX };
+					txtManaWhite, new JLabel( "Blue:" ), txtManaBlue, new JLabel( "X" ), txtX, chbTap };
 		}
 
 		JOptionPane.showMessageDialog( parent, input, "Insert Mana Cost", JOptionPane.INFORMATION_MESSAGE );
@@ -418,6 +421,7 @@ public class GUIUtils
 		Integer manaGreen = Integer.parseInt( txtManaGreen.getText() );
 		Integer manaWhite = Integer.parseInt( txtManaWhite.getText() );
 		Integer manaBlue = Integer.parseInt( txtManaBlue.getText() );
+		Integer manaX = Integer.parseInt( txtX.getText() );
 
 		Tuple<Mana, Integer> cl = new Tuple<Mana, Integer>( Mana.COLOR_LESS, manaColorLess );
 		Tuple<Mana, Integer> red = new Tuple<Mana, Integer>( Mana.RED, manaRed );
@@ -425,47 +429,29 @@ public class GUIUtils
 		Tuple<Mana, Integer> green = new Tuple<Mana, Integer>( Mana.GREEN, manaGreen );
 		Tuple<Mana, Integer> white = new Tuple<Mana, Integer>( Mana.WHITE, manaWhite );
 		Tuple<Mana, Integer> blue = new Tuple<Mana, Integer>( Mana.BLUE, manaBlue );
+		Tuple<Mana, Integer> x = new Tuple<Mana, Integer>( Mana.X, manaX );
 
-//		Map.Entry<OLD_BasicColors, Integer> cl = new AbstractMap.SimpleEntry<OLD_BasicColors, Integer>(
-//				OLD_BasicColors.COLOR_LESS, manaColorLess );
-//		Map.Entry<OLD_BasicColors, Integer> red = new AbstractMap.SimpleEntry<OLD_BasicColors, Integer>(
-//				OLD_BasicColors.RED, manaRed );
-//		Map.Entry<OLD_BasicColors, Integer> bck = new AbstractMap.SimpleEntry<OLD_BasicColors, Integer>(
-//				OLD_BasicColors.BLACK, manaBlack );
-//		Map.Entry<OLD_BasicColors, Integer> green = new AbstractMap.SimpleEntry<OLD_BasicColors, Integer>(
-//				OLD_BasicColors.GREEN, manaGreen );
-//		Map.Entry<OLD_BasicColors, Integer> white = new AbstractMap.SimpleEntry<OLD_BasicColors, Integer>(
-//				OLD_BasicColors.WHITE, manaWhite );
-//		Map.Entry<OLD_BasicColors, Integer> blue = new AbstractMap.SimpleEntry<OLD_BasicColors, Integer>(
-//				OLD_BasicColors.BLUE, manaBlue );
-
-		Tuple<Mana, Integer> x = null;
-		if(chbX.isSelected())
-			x = new Tuple<Mana, Integer>( Mana.X, -1 );
-
-//		Map.Entry<OLD_BasicColors, Integer> x = null;
+//		Tuple<Mana, Integer> x = null;
 //		if(chbX.isSelected())
-//			x = new AbstractMap.SimpleEntry<OLD_BasicColors, Integer>( OLD_BasicColors.COLOR_LESS, -1 );
+//			x = new Tuple<Mana, Integer>( Mana.X, -1 );
 
 		if(isForCardCost) {
-			if(chbX.isSelected())
-				return new ManaCost( cl, red, bck, green, white, blue, x );
-			else return new ManaCost( cl, red, bck, green, white, blue );
+			return new ManaCost( cl, red, bck, green, white, blue, x );
+//			if(chbX.isSelected())
+//				return new ManaCost( cl, red, bck, green, white, blue, x );
+//			else return new ManaCost( cl, red, bck, green, white, blue );
 		} else {
-			Tuple<Mana, Integer> tap = null;
-//			Map.Entry<OLD_BasicColors, Integer> tap = null;
-
-			if(chbTap.isSelected())
-				tap = new Tuple<>( Mana.TAP, -1 );
-//				tap = new AbstractMap.SimpleEntry<OLD_BasicColors, Integer>( null, -1 );
-
-			if(chbTap.isSelected() && chbX.isSelected())
-				return new ManaCost( cl, red, bck, green, white, blue, tap, x );
-			else if(chbTap.isSelected())
-				return new ManaCost( cl, red, bck, green, white, blue, tap );
-			else if(chbX.isSelected())
-				return new ManaCost( cl, red, bck, green, white, blue, x );
-			else return new ManaCost( cl, red, bck, green, white, blue );
+			return new ManaCost( cl, red, bck, green, white, blue, new Tuple<>( Mana.TAP, -1 ) );
+//			Tuple<Mana, Integer> tap = null;
+//			if(chbTap.isSelected())
+//				tap = new Tuple<>( Mana.TAP, -1 );
+//			if(chbTap.isSelected() && chbX.isSelected())
+//				return new ManaCost( cl, red, bck, green, white, blue, tap, x );
+//			else if(chbTap.isSelected())
+//				return new ManaCost( cl, red, bck, green, white, blue, tap );
+//			else if(chbX.isSelected())
+//				return new ManaCost( cl, red, bck, green, white, blue, x );
+//			else return new ManaCost( cl, red, bck, green, white, blue );
 		}
 	}
 }

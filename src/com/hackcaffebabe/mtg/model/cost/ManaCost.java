@@ -81,17 +81,19 @@ public class ManaCost implements Comparable<ManaCost>
 	private void checkTuple(Tuple<Mana, Integer> t) throws IllegalArgumentException{
 		if(t == null)
 			throw new IllegalArgumentException( "Mana can not be null" );
+		if(t.getFirstObj() == null || t.getSecondObj() == null)
+			throw new IllegalArgumentException( "Mana contails null value" );
 
 		boolean TequalstoTAP = t.getFirstObj().equals( Mana.TAP );
-		boolean TequalstoX = t.getFirstObj().equals( Mana.X );
+//		boolean TequalstoX = t.getFirstObj().equals( Mana.X );
 		if(TequalstoTAP && t.getSecondObj() != -1)
 			throw new IllegalArgumentException( "Mana malformed for tap action with value " + t.getSecondObj() );
 
-		if(TequalstoX && t.getSecondObj() != -1)
-			throw new IllegalArgumentException( "Mana malformed for X action " + t.getSecondObj() );
+//		if(TequalstoX && t.getSecondObj() != -1)
+//			throw new IllegalArgumentException( "Mana malformed for X action " + t.getSecondObj() );
 
-		boolean isAcolor = !TequalstoTAP && !TequalstoX;
-		if(isAcolor && t.getSecondObj() < 0)
+		boolean isAcolorOrX = !TequalstoTAP /*&& !TequalstoX*/;
+		if(isAcolorOrX && t.getSecondObj() < 0)
 			throw new IllegalArgumentException( "Mana malformed for color" );
 	}
 
@@ -101,20 +103,23 @@ public class ManaCost implements Comparable<ManaCost>
 	@Override
 	public String toString(){
 		StringBuilder bColor = new StringBuilder();
+		StringBuilder x = new StringBuilder();
 		String tap = "";
-		String x = "";
 
 		for(Tuple<Mana, Integer> t: this.cost) {
 			if(t.getFirstObj().equals( Mana.TAP ))
 				tap = "TAP.";
-			else if(t.getFirstObj().equals( Mana.X ))
-				x = "X.";
 			else for(int i = 0; i < t.getSecondObj(); i++) {
-				bColor.append( Mana.getAbbraviation( t.getFirstObj() ) );
-				bColor.append( "." );
+				String abb = Mana.getAbbraviation( t.getFirstObj() );
+				if(abb.equals( "X" )) {
+					x.append( "X." );
+				} else {
+					bColor.append( Mana.getAbbraviation( t.getFirstObj() ) );
+					bColor.append( "." );
+				}
 			}
 		}
-		String res = tap + x + bColor.toString();
+		String res = tap + x.toString() + bColor.toString();
 		return res.isEmpty() ? "0" : res.substring( 0, res.length() - 1 );
 	}
 

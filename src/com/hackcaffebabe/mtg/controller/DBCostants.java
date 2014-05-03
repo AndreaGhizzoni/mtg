@@ -27,9 +27,9 @@ public class DBCostants
 	public static final boolean DB_LOG_ON_FILE = false;
 
 	/** cardsbck */
-	public static final String BCK_CARDS_EXT = "cardsbck";
+	public static final String BCK_CARDS_EXT = "zip";
 	/** decksbck */
-	public static final String BCK_DECKS_EXT = "decksbck";
+	public static final String BCK_DECKS_EXT = "zip";
 	/** Represents the card backup file name */
 	public static final String BCK_CARDS_NAME = "MTG_Cards_Backup." + BCK_CARDS_EXT;
 	/** Represents the decks backup file name */
