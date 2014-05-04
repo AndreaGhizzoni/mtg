@@ -63,7 +63,6 @@ public class ExportActionListener implements ActionListener
 		// if user select a valid location to export.
 		if(showUserLocationChooser()) {
 			enableDisableSource( e.getSource(), false );
-			//TODO maybe add some log (as info) around here.
 			try {
 				switch( whatToExport ) {
 					case ALL_CARDS: {

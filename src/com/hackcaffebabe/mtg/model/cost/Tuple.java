@@ -86,11 +86,9 @@ public class Tuple <T, K>
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((f == null) ? 0 : f.hashCode());
-		result = prime * result + ((s == null) ? 0 : s.hashCode());
 		return result;
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Override
 	public boolean equals(Object obj){
 		if(this == obj)
@@ -99,16 +97,12 @@ public class Tuple <T, K>
 			return false;
 		if(getClass() != obj.getClass())
 			return false;
+		@SuppressWarnings("rawtypes")
 		Tuple other = (Tuple) obj;
 		if(f == null) {
 			if(other.f != null)
 				return false;
 		} else if(!f.equals( other.f ))
-			return false;
-		if(s == null) {
-			if(other.s != null)
-				return false;
-		} else if(!s.equals( other.s ))
 			return false;
 		return true;
 	}

@@ -141,14 +141,16 @@ public class ManaCost implements Comparable<ManaCost>
 	public String toString(){
 		StringBuilder bColor = new StringBuilder();
 		StringBuilder x = new StringBuilder();
+		String cl = "";
 		String tap = "";
 
 		for(Tuple<Mana, Integer> t: this.cost) {
-			if(t.getFirstObj().equals( Mana.TAP ))
+			if(t.getFirstObj().equals( Mana.TAP )) {
 				tap = "TAP.";
-			else for(int i = 0; i < t.getSecondObj(); i++) {
-				String abb = Mana.getAbbraviation( t.getFirstObj() );
-				if(abb.equals( "X" )) {
+			} else if(Mana.getAbbraviation( t.getFirstObj() ).equals( "CL" )) {
+				cl = t.getSecondObj().toString() + ".";
+			} else for(int i = 0; i < t.getSecondObj(); i++) {
+				if(Mana.getAbbraviation( t.getFirstObj() ).equals( "X" )) {
 					x.append( "X." );
 				} else {
 					bColor.append( Mana.getAbbraviation( t.getFirstObj() ) );
@@ -156,7 +158,7 @@ public class ManaCost implements Comparable<ManaCost>
 				}
 			}
 		}
-		String res = tap + x.toString() + bColor.toString();
+		String res = tap + x.toString() + cl + bColor.toString();
 		return res.isEmpty() ? "0" : res.substring( 0, res.length() - 1 );
 	}
 

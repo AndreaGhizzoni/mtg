@@ -1,20 +1,20 @@
 package com.hackcaffebabe.mtg.gui.panel.insertupdatecard;
 
-import static com.hackcaffebabe.mtg.gui.GUIUtils.TP_PANEL_CREATURE_INFO;
-import com.hackcaffebabe.mtg.model.Creature;
-import com.hackcaffebabe.mtg.model.MTGCard;
-import com.hackcaffebabe.mtg.model.card.Strength;
-import net.miginfocom.swing.MigLayout;
 import java.awt.Component;
-import javax.swing.text.AttributeSet;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
-import javax.swing.SwingConstants;
+import net.miginfocom.swing.MigLayout;
+import com.hackcaffebabe.mtg.gui.TP;
+import com.hackcaffebabe.mtg.model.Creature;
+import com.hackcaffebabe.mtg.model.MTGCard;
+import com.hackcaffebabe.mtg.model.card.Strength;
 
 
 /**
@@ -36,7 +36,7 @@ public class CreatureInfo extends JPanel
 		super();
 		setBorder( new TitledBorder( "Creature Info" ) );
 		setLayout( new MigLayout( "", "[][grow][][grow]", "[pref!]" ) );
-		setToolTipText( TP_PANEL_CREATURE_INFO );
+		setToolTipText( TP.PNL_CREATURE_STRENGTH );
 		this.initContent();
 	}
 

@@ -89,9 +89,6 @@ public class GUIUtils
 	public static final String AC_SORCERY = "Sorcery";
 	public static final String AC_ENCHANTMENT = "Enchantment";
 
-	/* Tool Tip TODO maybe add some TP around the program */
-	public static final String TP_PANEL_CREATURE_INFO = "Creature strength like \"2/2\". Use * to indicate \"*/*\" or \"X/X\".";
-
 	/** Public access of JXStatsBar of Main frame */
 	public static JXStatusBar STATUS_BAR_MAIN_FRAME;
 	/** Public access of JXTable of Main frame */

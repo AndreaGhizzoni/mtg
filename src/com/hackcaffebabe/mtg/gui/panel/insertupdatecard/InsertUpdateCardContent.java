@@ -86,7 +86,7 @@ public class InsertUpdateCardContent extends JPanel
 
 	private MTGBasicInfo pnlMTGBasicInfo;
 
-	private JXTable tableAbility;//TODO add double click to modify the ability (but maybe will be more complicated to update ability.json file"
+	private JXTable tableAbility;
 	private JXTableColumnAdjuster tableAbilityColumnAdjuster;
 	private JButton btnAddAbility;
 	private JButton btnDelAbility;
