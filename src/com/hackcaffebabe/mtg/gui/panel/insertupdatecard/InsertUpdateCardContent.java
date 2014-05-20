@@ -45,6 +45,7 @@ import com.hackcaffebabe.mtg.gui.listener.AddEffectActionListener;
 import com.hackcaffebabe.mtg.gui.listener.DelAbilityActionListener;
 import com.hackcaffebabe.mtg.gui.listener.DelEffectActionListener;
 import com.hackcaffebabe.mtg.gui.panel.insertupdatecard.listener.EditEffectsMouseAdapter;
+import com.hackcaffebabe.mtg.gui.panel.insertupdatecard.listener.KeyboardShortcut;
 import com.hackcaffebabe.mtg.model.Artifact;
 import com.hackcaffebabe.mtg.model.Creature;
 import com.hackcaffebabe.mtg.model.Enchantment;
@@ -217,6 +218,8 @@ public class InsertUpdateCardContent extends JPanel
 		this.txtPrimaryEffect = new JTextArea();
 		this.txtPrimaryEffect.setLineWrap( true );
 		this.txtPrimaryEffect.setWrapStyleWord( true );
+		this.txtPrimaryEffect.getInputMap().put( KeyboardShortcut.KEYSTROKE, KeyboardShortcut.KEY );
+		this.txtPrimaryEffect.getActionMap().put( KeyboardShortcut.KEY, new KeyboardShortcut( this.txtPrimaryEffect ) );
 		pnlMTG.add( new JScrollPane( txtPrimaryEffect, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED ), "cell 1 6 6 2,grow" );
 
