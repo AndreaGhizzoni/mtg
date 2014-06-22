@@ -22,18 +22,25 @@ import com.hackcaffebabe.mtg.model.color.Mana;
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
  */
-public class KeyboardShortcut extends AbstractAction
+public class KeyboardAutoCompleteShortcuts extends AbstractAction
 {
 	private static final long serialVersionUID = 1L;
 	// [!!!] this keystroke works with CRTL+SPACE and SPACE+CTRL [!!!]
 	public static final KeyStroke KEYSTROKE = KeyStroke.getKeyStroke( KeyEvent.VK_SPACE, InputEvent.CTRL_DOWN_MASK );
 	// for simplicity the key of action is the name of this class
-	public static final String KEY = KeyboardShortcut.class.getName();
+	public static final String KEY = KeyboardAutoCompleteShortcuts.class.getName();
 
 	private JTextArea text;
 	private JPopupMenu menu;
 
-	public KeyboardShortcut(JTextArea t){
+	/**
+	 * Instance a KeyboardAutocompleteShortcuts object with his {@link JTextArea}.
+	 * @param t {@link JTextArea} to launch the menu.
+	 */
+	public KeyboardAutoCompleteShortcuts(JTextArea t) throws IllegalArgumentException{
+		if(t == null)
+			throw new IllegalArgumentException( "JTextArea given can not be null." );
+
 		text = t;
 		menu = this.getMenu();
 	}
@@ -74,6 +81,9 @@ public class KeyboardShortcut extends AbstractAction
 		return menu;
 	}
 
+	/**
+	 * Return the action listener related to the string given. 
+	 */
 	private ActionListener getProperActionListener(final String s){
 		return new ActionListener(){
 			@Override
