@@ -5,8 +5,11 @@ import it.hackcaffebabe.logger.Tag;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -126,5 +129,16 @@ public class AbilityFactory
 	 */
 	public final HashMap<String, String> getAbilities(){
 		return this.abilities;
+	}
+
+	/**
+	 * Returns the list abilities name as a list of string.
+	 * @return {@link List} of strings of all abilities.
+	 */
+	public final List<String> getAbilitiesAsList(){
+		List<String> l = new ArrayList<>();
+		for(Entry<String, String> s: this.abilities.entrySet())
+			l.add( s.getKey() );
+		return l;
 	}
 }

@@ -26,6 +26,7 @@ import com.hackcaffebabe.mtg.model.MTGCard;
 public class SelectionMTGCardList extends MouseAdapter implements ListSelectionListener
 {
 	@Override
+	/*this method is called for Mouse Adapter event*/
 	public void mouseClicked(MouseEvent e){
 		if(SwingUtilities.isLeftMouseButton( e )) {
 			if(e.getClickCount() == 1) {
@@ -46,8 +47,8 @@ public class SelectionMTGCardList extends MouseAdapter implements ListSelectionL
 
 	@SuppressWarnings("unchecked")
 	@Override
+	/*This method is called for ListenSelectionListener event*/
 	public void valueChanged(ListSelectionEvent e){
-		//TODO do this better: separate function to display selected card.
 		int r = JXTABLE_MTG.getSelectedModelRow();
 		if(r != -1) {
 			MTGCard c = ((JXObjectModel<MTGCard>) JXTABLE_MTG.getModel()).getObject( r );

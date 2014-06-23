@@ -34,13 +34,9 @@ public class Criteria
 
 	private String name = null;
 	private Integer convertedManaCost = null;
-
 	private String subType = null;
-
 	private String series = null;
-
 	private Set<Mana> colors = new HashSet<>();
-
 	private Rarity rarity = null;
 
 	//those are effectually not used

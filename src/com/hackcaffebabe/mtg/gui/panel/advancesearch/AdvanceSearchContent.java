@@ -5,6 +5,7 @@ import it.hackcaffebabe.jx.table.model.JXObjectModel;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
@@ -45,9 +46,7 @@ public class AdvanceSearchContent extends JPanel
 	private JCheckBox chbWhite;
 
 	private JComboBox<String> cmbRarity;
-
 	private JComboBox<String> cmbSeries;
-
 	private JComboBox<String> cmbSubType;
 
 	private JSpinner spinManaCost;
@@ -57,7 +56,7 @@ public class AdvanceSearchContent extends JPanel
 	 */
 	public AdvanceSearchContent(){
 		super();
-		setLayout( new MigLayout( "", "[209.00,grow][148.00][190.00]", "[25.00][][][][30]" ) );
+		setLayout( new MigLayout( "", "[209.00,grow][148.00][130.00,grow]", "[25.00][][][][30,grow]" ) );
 		this.initContent();
 	}
 
@@ -109,7 +108,7 @@ public class AdvanceSearchContent extends JPanel
 		// Rarity
 		JPanel pnlRarity = new JPanel();
 		pnlRarity.setBorder( new TitledBorder( null, "Rarity", TitledBorder.RIGHT, TitledBorder.TOP, null, null ) );
-		pnlRarity.setLayout( new MigLayout( "", "[]", "[]" ) );
+		pnlRarity.setLayout( new MigLayout( "", "[84.00,grow]", "[]" ) );
 		this.cmbRarity = new JComboBox<>( getCB( Rarity.getAllRarity() ) );
 		pnlRarity.add( this.cmbRarity, "cell 0 0,growx" );
 		add( pnlRarity, "cell 2 1,grow" );
@@ -148,10 +147,13 @@ public class AdvanceSearchContent extends JPanel
 				applyCriteriaChanges( null );
 			}
 		} );
+
+		btnClear.setMnemonic( KeyEvent.VK_C );
 		add( btnClear, "cell 0 4,growx,aligny bottom" );
 
 		JButton btnApply = new JButton( "Apply" );
 		btnApply.addActionListener( new ApplyActionListener() );
+		btnApply.setMnemonic( KeyEvent.VK_A );
 		add( btnApply, "cell 1 4 2 1,growx,aligny bottom" );
 	}
 
@@ -232,8 +234,8 @@ public class AdvanceSearchContent extends JPanel
 			int val = (Integer) spinManaCost.getValue();
 			criteria.byConvertedManaCost( val == 0 ? null : val );
 
-			String a = (String) cmbSubType.getSelectedItem();
-			criteria.bySubType( a.equals( "-------------" ) ? null : a );
+			String i = (String) cmbSubType.getSelectedItem();
+			criteria.bySubType( i.equals( "-------------" ) ? null : i );
 
 			applyCriteriaChanges( criteria );
 		}
