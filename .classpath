@@ -7,11 +7,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/about-2.0.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/ioutil-1.3.jar"/>
-	<classpathentry kind="lib" path="lib/jxcomponents-1.5.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/MTGProject/lib/jxcomponents-1.5.jar!/doc"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="lib" path="lib/simple.logger-1.3.1.jar"/>
+	<classpathentry kind="lib" path="lib/jxcomponents-1.5.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

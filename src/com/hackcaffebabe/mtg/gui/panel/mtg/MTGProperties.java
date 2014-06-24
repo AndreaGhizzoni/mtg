@@ -133,7 +133,7 @@ public class MTGProperties extends JPanel
 		this.textPrimaryEffects.setWrapStyleWord( true );
 		this.textPrimaryEffects.setEditable( false );
 		add( new JScrollPane( this.textPrimaryEffects, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED ), "cell 2 7 3 2,grow" );
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED ), "cell 0 8 5 1,grow" );
 
 		JPanel pnlOtherEffects = new JPanel();
 		pnlOtherEffects.setBorder( new TitledBorder( "Other Effects:" ) );
@@ -260,6 +260,8 @@ public class MTGProperties extends JPanel
 				type += " Legendary";
 		} else { // this type is land
 			type = Land.class.getSimpleName();
+			if(c.isArtifact())
+				type += " Artifact";
 			if(c.isLegendary())
 				type += " Legendary";
 		}

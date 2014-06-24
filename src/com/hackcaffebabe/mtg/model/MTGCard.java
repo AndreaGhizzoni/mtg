@@ -151,7 +151,7 @@ public abstract class MTGCard extends DisplayableObject implements Serializable
 
 	/**
 	 * This method set if the card is an artifact.<br>
-	 * If the MTGCard is instance of {@link Artifact}, {@link Instant}, {@link Enchantment} ,{@link Land}, 
+	 * If the MTGCard is instance of {@link Artifact}, {@link Instant}, {@link Enchantment}, 
 	 * {@link Planeswalker} and {@link Sorcery} this method is void.
 	 * @param isArtifact {@link Boolean}
 	 */

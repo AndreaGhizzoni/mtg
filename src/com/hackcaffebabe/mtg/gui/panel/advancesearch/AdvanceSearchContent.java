@@ -1,28 +1,31 @@
 package com.hackcaffebabe.mtg.gui.panel.advancesearch;
 
 import static com.hackcaffebabe.mtg.gui.GUIUtils.JXTABLE_MTG;
+import it.hackcaffebabe.jx.checklist.JXCheckList;
+import it.hackcaffebabe.jx.checklist.JXCheckListEntry;
 import it.hackcaffebabe.jx.table.model.JXObjectModel;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
+import javax.swing.JTabbedPane;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import net.miginfocom.swing.MigLayout;
 import com.hackcaffebabe.mtg.controller.json.Criteria;
 import com.hackcaffebabe.mtg.controller.json.StoreManager;
 import com.hackcaffebabe.mtg.gui.frame.AdvanceSearch;
 import com.hackcaffebabe.mtg.model.MTGCard;
+import com.hackcaffebabe.mtg.model.card.AbilityFactory;
 import com.hackcaffebabe.mtg.model.card.Rarity;
 import com.hackcaffebabe.mtg.model.color.Mana;
 
@@ -45,8 +48,13 @@ public class AdvanceSearchContent extends JPanel
 	private JCheckBox chbBlue;
 	private JCheckBox chbWhite;
 
-	private JComboBox<String> cmbRarity;
-	private JComboBox<String> cmbSeries;
+	private JCheckBox chbNonCommon;
+	private JCheckBox chbCommon;
+	private JCheckBox chbRare;
+	private JCheckBox chbMythic;
+
+	private JXCheckList<String> chlSeries = new JXCheckList<>();
+	private JXCheckList<String> chlAbilities = new JXCheckList<>();
 	private JComboBox<String> cmbSubType;
 
 	private JSpinner spinManaCost;
@@ -56,7 +64,7 @@ public class AdvanceSearchContent extends JPanel
 	 */
 	public AdvanceSearchContent(){
 		super();
-		setLayout( new MigLayout( "", "[209.00,grow][148.00][130.00,grow]", "[25.00][][][][30,grow]" ) );
+		setLayout( new MigLayout( "", "[207.00][100.00:100.00][170.00,grow]", "[25.00][grow][grow][grow][35.00]" ) );
 		this.initContent();
 	}
 
@@ -66,8 +74,8 @@ public class AdvanceSearchContent extends JPanel
 	/* initialize all components */
 	private void initContent(){
 		JPanel pnlModeSelector = new JPanel();
-		pnlModeSelector.setBorder( new TitledBorder( new LineBorder( new Color( 184, 207, 229 ) ), "Search Mode:",
-				TitledBorder.CENTER, TitledBorder.TOP, null, null ) );
+		pnlModeSelector.setBorder( new TitledBorder( null, "Search Mode:", TitledBorder.CENTER, TitledBorder.TOP, null,
+				null ) );
 		pnlModeSelector.setLayout( new MigLayout( "", "[][grow]", "[:15:15][]" ) );
 		this.rdbtnLazy = new JRadioButton( "Lazy" );
 		this.rdbtnLazy.setSelected( true );// default selection
@@ -82,64 +90,80 @@ public class AdvanceSearchContent extends JPanel
 		// Color
 		JPanel pnlCardColor = new JPanel();
 		pnlCardColor.setBorder( new TitledBorder( "Color" ) );
-		pnlCardColor.setLayout( new MigLayout( "", "[][][][][]", "[]" ) );
+		pnlCardColor.setLayout( new MigLayout( "", "[grow][grow][grow][grow][grow]", "[grow]" ) );
 
 		this.chbRed = new JCheckBox( "Red" );
 		this.chbRed.setActionCommand( Mana.getAbbraviation( Mana.RED ) );
-		pnlCardColor.add( this.chbRed, "cell 0 0" );
+		pnlCardColor.add( this.chbRed, "cell 0 0,aligny baseline" );
 
 		this.chbBlack = new JCheckBox( "Black" );
 		this.chbBlack.setActionCommand( Mana.getAbbraviation( Mana.BLACK ) );
-		pnlCardColor.add( this.chbBlack, "cell 1 0" );
+		pnlCardColor.add( this.chbBlack, "cell 1 0,aligny baseline" );
 
 		this.chbGreen = new JCheckBox( "Green" );
 		this.chbGreen.setActionCommand( Mana.getAbbraviation( Mana.GREEN ) );
-		pnlCardColor.add( this.chbGreen, "cell 2 0" );
+		pnlCardColor.add( this.chbGreen, "cell 2 0,aligny baseline" );
 
 		this.chbBlue = new JCheckBox( "Blue" );
 		this.chbBlue.setActionCommand( Mana.getAbbraviation( Mana.BLUE ) );
-		pnlCardColor.add( this.chbBlue, "cell 3 0" );
+		pnlCardColor.add( this.chbBlue, "cell 3 0,aligny baseline" );
 
 		this.chbWhite = new JCheckBox( "White" );
 		this.chbWhite.setActionCommand( Mana.getAbbraviation( Mana.WHITE ) );
-		pnlCardColor.add( this.chbWhite, "cell 4 0" );
+		pnlCardColor.add( this.chbWhite, "cell 4 0,aligny baseline" );
 		add( pnlCardColor, "cell 0 1 2 1,grow" );
 
 		// Rarity
 		JPanel pnlRarity = new JPanel();
-		pnlRarity.setBorder( new TitledBorder( null, "Rarity", TitledBorder.RIGHT, TitledBorder.TOP, null, null ) );
-		pnlRarity.setLayout( new MigLayout( "", "[84.00,grow]", "[]" ) );
-		this.cmbRarity = new JComboBox<>( getCB( Rarity.getAllRarity() ) );
-		pnlRarity.add( this.cmbRarity, "cell 0 0,growx" );
-		add( pnlRarity, "cell 2 1,grow" );
+		pnlRarity.setBorder( new TitledBorder( null, "Rarity", TitledBorder.LEFT, TitledBorder.TOP, null, null ) );
+		pnlRarity.setLayout( new MigLayout( "", "[grow][grow][grow][grow]", "[grow]" ) );
 
-		// Converted Mana Cost
-		JPanel pnlConvertedManaCost = new JPanel();
-		pnlConvertedManaCost.setBorder( new TitledBorder( null, "Conv. Mana Cost", TitledBorder.RIGHT,
-				TitledBorder.TOP, null, null ) );
-		pnlConvertedManaCost.setLayout( new MigLayout( "", "[168.00]", "[]" ) );
-		this.spinManaCost = new JSpinner( new SpinnerNumberModel( 0, 0, 100, 1 ) );
-		JSpinner.DefaultEditor editor = (JSpinner.DefaultEditor) this.spinManaCost.getEditor();
-		editor.getTextField().setEditable( false );
-		pnlConvertedManaCost.add( this.spinManaCost, "cell 0 0,growx,aligny center" );
-		add( pnlConvertedManaCost, "cell 2 2,grow" );
+		this.chbNonCommon = new JCheckBox( Rarity.NON_COMMON.toString() );
+		pnlRarity.add( this.chbNonCommon, "cell 0 0" );
 
-		// Series
-		JPanel pnlSeries = new JPanel();
-		pnlSeries.setBorder( new TitledBorder( "Series" ) );
-		pnlSeries.setLayout( new MigLayout( "", "[grow]", "[]" ) );
-		this.cmbSeries = new JComboBox<>( getCB( StoreManager.getInstance().getInsertedSeries() ) );
-		pnlSeries.add( this.cmbSeries, "cell 0 0,growx" );
-		add( pnlSeries, "cell 0 2 2 1,growx" );
+		this.chbCommon = new JCheckBox( Rarity.COMMON.toString() );
+		pnlRarity.add( this.chbCommon, "cell 1 0" );
+
+		this.chbRare = new JCheckBox( Rarity.RARE.toString() );
+		pnlRarity.add( this.chbRare, "cell 2 0" );
+
+		this.chbMythic = new JCheckBox( Rarity.MYTHIC.toString() );
+		pnlRarity.add( this.chbMythic, "cell 3 0" );
+		add( pnlRarity, "cell 0 2 2 1,grow" );
+
+		//Tabbed pane
+		JTabbedPane tabbedPane = new JTabbedPane( JTabbedPane.TOP );
+		JPanel tabpnlSeries = new JPanel( new MigLayout( "", "[grow]", "[grow]" ) );
+		this.loadCheckList( this.chlSeries, StoreManager.getInstance().getInsertedSeries(), 1 );
+		tabpnlSeries.add( this.chlSeries, "cell 0 0,growx,growy" );
+		tabbedPane.addTab( "Series", null, tabpnlSeries, null );
+
+		JPanel tabpnlAbilities = new JPanel( new MigLayout( "", "[grow]", "[grow]" ) );
+		this.loadCheckList( this.chlAbilities, AbilityFactory.getInstance().getAbilitiesAsList(), 0 );
+		tabpnlAbilities.add( this.chlAbilities, "cell 0 0,growx,growy" );
+		tabbedPane.addTab( "Abilities", null, tabpnlAbilities, null );
+		add( tabbedPane, "cell 2 1 1 3,grow" );
 
 		// Sub Type
 		JPanel pnlSubType = new JPanel();
 		pnlSubType.setBorder( new TitledBorder( "Sub Type" ) );
-		pnlSubType.setLayout( new MigLayout( "", "[grow]", "[]" ) );
+		pnlSubType.setLayout( new MigLayout( "", "[grow]", "[grow]" ) );
 		this.cmbSubType = new JComboBox<>( getCB( StoreManager.getInstance().getInsertedSubTypes() ) );
 		pnlSubType.add( this.cmbSubType, "cell 0 0,growx" );
-		add( pnlSubType, "cell 0 3 3 1,grow" );
+		add( pnlSubType, "cell 0 3,grow" );
 
+		// Converted Mana Cost
+		JPanel pnlConvertedManaCost = new JPanel();
+		pnlConvertedManaCost.setBorder( new TitledBorder( null, "Conv. Mana Cost", TitledBorder.LEFT, TitledBorder.TOP,
+				null, null ) );
+		pnlConvertedManaCost.setLayout( new MigLayout( "", "[168.00]", "[grow]" ) );
+		this.spinManaCost = new JSpinner( new SpinnerNumberModel( 0, 0, 100, 1 ) );
+		JSpinner.DefaultEditor editor = (JSpinner.DefaultEditor) this.spinManaCost.getEditor();
+		editor.getTextField().setEditable( false );
+		pnlConvertedManaCost.add( this.spinManaCost, "cell 0 0,growx,aligny center" );
+		add( pnlConvertedManaCost, "cell 1 3,grow" );
+
+		//Buttons
 		JButton btnClear = new JButton( "Clear" );
 		btnClear.addActionListener( new ActionListener(){
 			@Override
@@ -147,14 +171,21 @@ public class AdvanceSearchContent extends JPanel
 				applyCriteriaChanges( null );
 			}
 		} );
-
 		btnClear.setMnemonic( KeyEvent.VK_C );
-		add( btnClear, "cell 0 4,growx,aligny bottom" );
+		add( btnClear, "cell 0 4,growx,aligny center" );
 
 		JButton btnApply = new JButton( "Apply" );
 		btnApply.addActionListener( new ApplyActionListener() );
 		btnApply.setMnemonic( KeyEvent.VK_A );
-		add( btnApply, "cell 1 4 2 1,growx,aligny bottom" );
+		add( btnApply, "cell 1 4 2 1,growx,aligny center" );
+	}
+
+	/*load check list passed with list of string given*/
+	private void loadCheckList(JXCheckList<String> chl, List<String> list, int mod){
+		DefaultListModel<JXCheckListEntry<String>> model = new DefaultListModel<>();
+		for(String i: list)
+			model.addElement( new JXCheckListEntry<>( i, false ) );
+		chl.setModel( model );
 	}
 
 	/* returns the appropriate combo box model for the list of object given */
@@ -215,21 +246,20 @@ public class AdvanceSearchContent extends JPanel
 			if(noColorSel)
 				criteria.byColors( null );
 
-			String rar = (String) cmbRarity.getSelectedItem();
-			if(rar.equals( Rarity.COMMON.toString() )) {
-				criteria.byRarity( Rarity.COMMON );
-			} else if(rar.equals( Rarity.NON_COMMON.toString() )) {
+			if(chbNonCommon.isSelected())
 				criteria.byRarity( Rarity.NON_COMMON );
-			} else if(rar.equals( Rarity.RARE.toString() )) {
+			if(chbCommon.isSelected())
+				criteria.byRarity( Rarity.COMMON );
+			if(chbRare.isSelected())
 				criteria.byRarity( Rarity.RARE );
-			} else if(rar.equals( Rarity.MYTHIC.toString() )) {
+			if(chbMythic.isSelected())
 				criteria.byRarity( Rarity.MYTHIC );
-			} else {// "--------"
+			if(!chbNonCommon.isSelected() && !chbCommon.isSelected() && !chbRare.isSelected()
+					&& !chbMythic.isSelected())
 				criteria.byRarity( null );
-			}
 
-			String s = (String) cmbSeries.getSelectedItem();
-			criteria.bySeries( s.equals( "-------------" ) ? null : s );
+			for(String i: chlSeries.getCheckedObjects())
+				criteria.bySeries( i );
 
 			int val = (Integer) spinManaCost.getValue();
 			criteria.byConvertedManaCost( val == 0 ? null : val );

@@ -28,8 +28,8 @@ public class Land extends MTGCard implements Serializable
 //===========================================================================================
 // SETTER
 //===========================================================================================
-	@Override
-	public void setArtifact(boolean isArtifact){}
+//	@Override
+//	public void setArtifact(boolean isArtifact){}
 
 ////===========================================================================================
 //// GETTER
@@ -80,10 +80,10 @@ public class Land extends MTGCard implements Serializable
 //		return l;
 //	}
 
-	@Override
-	public boolean isArtifact(){
-		return false;
-	}
+//	@Override
+//	public boolean isArtifact(){
+//		return false;
+//	}
 
 //===========================================================================================
 // OVERRIDE
@@ -101,6 +101,8 @@ public class Land extends MTGCard implements Serializable
 	public String toString(){
 		String pattern = "%s [%s %s %s - %s %s]";
 		String type = "Land";
+		if(isArtifact())
+			type += " Artifact";
 		if(isLegendary())
 			type += " Legendary";
 		if(getSubType() != null && !getSubType().isEmpty())

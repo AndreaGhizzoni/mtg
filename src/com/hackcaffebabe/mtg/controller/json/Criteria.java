@@ -34,10 +34,10 @@ public class Criteria
 
 	private String name = null;
 	private Integer convertedManaCost = null;
-	private String subType = null;
-	private String series = null;
+	private Set<String> subTypes = new HashSet<>();
+	private Set<String> series = new HashSet<>();
 	private Set<Mana> colors = new HashSet<>();
-	private Rarity rarity = null;
+	private Set<Rarity> rarity = new HashSet<>();
 
 	//those are effectually not used
 //	private Boolean isLegendary = null;
@@ -92,20 +92,44 @@ public class Criteria
 			}
 		}
 
-		if(subType != null) {
-			listOfChecking.add( mtg.getSubType().equals( subType ) );
+		if(!this.subTypes.isEmpty()) {
+			boolean find = false;
+			for(String s: this.subTypes) {
+				if(mtg.getSubType().equals( s )) {
+					listOfChecking.add( true );
+					find = true;
+				}
+			}
+			if(!find)
+				listOfChecking.add( false );
 		}
 
-		if(series != null) {
-			listOfChecking.add( mtg.getSeries().equals( series ) );
+		if(!this.series.isEmpty()) {
+			boolean find = false;
+			for(String s: this.series) {
+				if(mtg.getSeries().equals( s )) {
+					listOfChecking.add( true );
+					find = true;
+				}
+			}
+			if(!find)
+				listOfChecking.add( false );
 		}
 
 		if(colors != null) {
 			listOfChecking.add( colors.equals( mtg.getCardColor().getColors() ) );
 		}
 
-		if(rarity != null) {
-			listOfChecking.add( mtg.getRarity().equals( rarity ) );
+		if(!this.rarity.isEmpty()) {
+			boolean find = false;
+			for(Rarity r: this.rarity) {
+				if(mtg.getRarity().equals( r )) {
+					listOfChecking.add( true );
+					find = true;
+				}
+			}
+			if(!find)
+				listOfChecking.add( false );
 		}
 
 		if(listOfChecking.isEmpty())
@@ -144,14 +168,18 @@ public class Criteria
 			}
 		}
 
-		if(subType != null) {
-			if(mtg.getSubType().equals( subType ))
-				return true;
+		if(!this.subTypes.isEmpty()) {
+			for(String s: this.subTypes) {
+				if(mtg.getSubType().equals( s ))
+					return true;
+			}
 		}
 
-		if(series != null) {
-			if(mtg.getSeries().equals( series ))
-				return true;
+		if(!this.series.isEmpty()) {
+			for(String s: this.series) {
+				if(mtg.getSeries().equals( s ))
+					return true;
+			}
 		}
 
 		for(Mana b: colors) {
@@ -159,9 +187,11 @@ public class Criteria
 				return true;
 		}
 
-		if(rarity != null) {
-			if(mtg.getRarity().equals( rarity ))
-				return true;
+		if(!this.rarity.isEmpty()) {
+			for(Rarity r: this.rarity) {
+				if(mtg.getRarity().equals( r ))
+					return true;
+			}
 		}
 
 		return false;
@@ -200,8 +230,12 @@ public class Criteria
 	 * @return {@link Criteria} with the sub type flag set.
 	 */
 	public Criteria bySubType(String t){
-		if(t != null && !t.isEmpty())
-			this.subType = t;
+		if(t != null) {
+			if(!this.subTypes.add( t ))
+				this.subTypes.remove( t );
+		} else {
+			this.subTypes.clear();
+		}
 		return this;
 	}
 
@@ -212,7 +246,12 @@ public class Criteria
 	 * @return {@link Criteria} with the series flag set.
 	 */
 	public Criteria bySeries(String s){
-		this.series = s;
+		if(s != null) {
+			if(!this.series.add( s ))
+				this.series.remove( s );
+		} else {
+			this.series.clear();
+		}
 		return this;
 	}
 
@@ -223,11 +262,8 @@ public class Criteria
 	 */
 	public Criteria byColors(Mana b){
 		if(b != null) {
-			if(this.colors.contains( b )) {
+			if(!this.colors.add( b ))
 				this.colors.remove( b );
-			} else {
-				this.colors.add( b );
-			}
 		} else {
 			this.colors.clear();
 		}
@@ -240,16 +276,21 @@ public class Criteria
 	 * @return {@link Criteria} with the rarity flag set.
 	 */
 	public Criteria byRarity(Rarity r){
-		this.rarity = r;
+		if(r != null) {
+			if(!this.rarity.add( r ))
+				this.rarity.remove( r );
+		} else {
+			this.rarity.clear();
+		}
 		return this;
 	}
 
-	/**
-	 * This method set the criteria by legendary card.<br>
-	 * Set to null to cancel the isLegendary criteria.
-	 * @param isLegendary {@link Boolean}.
-	 * @return {@link Criteria} with the legendary flag set.
-	 */
+//	/**
+//	 * This method set the criteria by legendary card.<br>
+//	 * Set to null to cancel the isLegendary criteria.
+//	 * @param isLegendary {@link Boolean}.
+//	 * @return {@link Criteria} with the legendary flag set.
+//	 */
 //	public Criteria byIsLegendary(Boolean isLegendary){
 //		this.isLegendary = isLegendary;
 //		return this;
@@ -293,8 +334,8 @@ public class Criteria
 	 * @return {@link Boolean} if there is no criteria inserted.
 	 */
 	public boolean isCriteriaEmpty(){
-		return (name == null) && (convertedManaCost == null) && (subType == null) && (series == null)
-				&& (colors.isEmpty()) && (rarity == null) /*&& (isLegendary == null) && (hasPrimaryEffect == null)
+		return (name == null) && (convertedManaCost == null) && (subTypes.isEmpty()) && (series.isEmpty())
+				&& (colors.isEmpty()) && (rarity.isEmpty()) /*&& (isLegendary == null) && (hasPrimaryEffect == null)
 															&& (hasEffect == null) && (hasAbility == null)*/;
 	}
 
@@ -312,12 +353,12 @@ public class Criteria
 	}
 
 	/** @return {@link String} the subType */
-	public String getSubType(){
-		return subType;
+	public Set<String> getSubType(){
+		return subTypes;
 	}
 
-	/** @return {@link String} the series */
-	public String getSeries(){
+	/** @return {@link Set} of string of the series */
+	public Set<String> getSeries(){
 		return series;
 	}
 
@@ -326,8 +367,8 @@ public class Criteria
 		return new ArrayList<>( colors );
 	}
 
-	/** @return {@link Rarity} the rarity */
-	public Rarity getRarity(){
+	/** @return {@link Set} the rarity */
+	public Set<Rarity> getRarity(){
 		return rarity;
 	}
 
@@ -354,79 +395,5 @@ public class Criteria
 //===========================================================================================
 // OVERRIDE
 //===========================================================================================
-	@Override
-	public int hashCode(){
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((colors == null) ? 0 : colors.hashCode());
-		result = prime * result + ((convertedManaCost == null) ? 0 : convertedManaCost.hashCode());
-//		result = prime * result + ((hasAbility == null) ? 0 : hasAbility.hashCode());
-//		result = prime * result + ((hasEffect == null) ? 0 : hasEffect.hashCode());
-//		result = prime * result + ((hasPrimaryEffect == null) ? 0 : hasPrimaryEffect.hashCode());
-//		result = prime * result + ((isLegendary == null) ? 0 : isLegendary.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((rarity == null) ? 0 : rarity.hashCode());
-		result = prime * result + ((series == null) ? 0 : series.hashCode());
-		result = prime * result + ((subType == null) ? 0 : subType.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj){
-		if(this == obj)
-			return true;
-		if(obj == null)
-			return false;
-		if(getClass() != obj.getClass())
-			return false;
-		Criteria other = (Criteria) obj;
-		if(colors == null) {
-			if(other.colors != null)
-				return false;
-		} else if(!colors.equals( other.colors ))
-			return false;
-		if(convertedManaCost == null) {
-			if(other.convertedManaCost != null)
-				return false;
-		} else if(!convertedManaCost.equals( other.convertedManaCost ))
-			return false;
-//		if(hasAbility == null) {
-//			if(other.hasAbility != null)
-//				return false;
-//		} else if(!hasAbility.equals( other.hasAbility ))
-//			return false;
-//		if(hasEffect == null) {
-//			if(other.hasEffect != null)
-//				return false;
-//		} else if(!hasEffect.equals( other.hasEffect ))
-//			return false;
-//		if(hasPrimaryEffect == null) {
-//			if(other.hasPrimaryEffect != null)
-//				return false;
-//		} else if(!hasPrimaryEffect.equals( other.hasPrimaryEffect ))
-//			return false;
-//		if(isLegendary == null) {
-//			if(other.isLegendary != null)
-//				return false;
-//		} else if(!isLegendary.equals( other.isLegendary ))
-//			return false;
-		if(name == null) {
-			if(other.name != null)
-				return false;
-		} else if(!name.equals( other.name ))
-			return false;
-		if(rarity != other.rarity)
-			return false;
-		if(series == null) {
-			if(other.series != null)
-				return false;
-		} else if(!series.equals( other.series ))
-			return false;
-		if(subType == null) {
-			if(other.subType != null)
-				return false;
-		} else if(!subType.equals( other.subType ))
-			return false;
-		return true;
-	}
+	//TODO generate equal and hash code
 }

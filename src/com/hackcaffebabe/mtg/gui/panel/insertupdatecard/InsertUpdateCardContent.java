@@ -218,8 +218,10 @@ public class InsertUpdateCardContent extends JPanel
 		this.txtPrimaryEffect = new JTextArea();
 		this.txtPrimaryEffect.setLineWrap( true );
 		this.txtPrimaryEffect.setWrapStyleWord( true );
-		this.txtPrimaryEffect.getInputMap().put( KeyboardAutoCompleteShortcuts.KEYSTROKE, KeyboardAutoCompleteShortcuts.KEY );
-		this.txtPrimaryEffect.getActionMap().put( KeyboardAutoCompleteShortcuts.KEY, new KeyboardAutoCompleteShortcuts( this.txtPrimaryEffect ) );
+		this.txtPrimaryEffect.getInputMap().put( KeyboardAutoCompleteShortcuts.KEYSTROKE,
+				KeyboardAutoCompleteShortcuts.KEY );
+		this.txtPrimaryEffect.getActionMap().put( KeyboardAutoCompleteShortcuts.KEY,
+				new KeyboardAutoCompleteShortcuts( this.txtPrimaryEffect ) );
 		pnlMTG.add( new JScrollPane( txtPrimaryEffect, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED ), "cell 1 6 6 2,grow" );
 
@@ -449,7 +451,6 @@ public class InsertUpdateCardContent extends JPanel
 						break;
 					}
 					case AC_LAND: {
-						pnlMTGBasicInfo.setIsArtifactEnable( false );
 						pnlMTGBasicInfo.setAllColorsEnable( false );
 						btnAddAbility.setEnabled( false );
 						btnDelAbility.setEnabled( false );
@@ -776,6 +777,10 @@ public class InsertUpdateCardContent extends JPanel
 				}
 				case AC_LAND: {
 					Land finalLand = new Land( mtgName, mtgRarity );
+					boolean isArtifact = pnlMTGBasicInfo.isArtifactSelected();
+					log.write( Tag.DEBUG, "is artifact = " + isArtifact );
+
+					finalLand.setArtifact( isArtifact );
 					finalLand.setPrimaryEffect( mtgPrimaryEffect );
 					finalLand.setSeries( mtgSeries );
 					finalLand.setSubType( mtgSubType );

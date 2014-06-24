@@ -25,20 +25,23 @@ import com.hackcaffebabe.mtg.model.MTGCard;
  */
 public class SelectionMTGCardList extends MouseAdapter implements ListSelectionListener
 {
+	private static final Integer SINGLE_CLICK = 1;
+	private static final Integer DOUBLE_CLICK = 2;
+
 	@Override
 	/*this method is called for Mouse Adapter event*/
 	public void mouseClicked(MouseEvent e){
 		if(SwingUtilities.isLeftMouseButton( e )) {
-			if(e.getClickCount() == 1) {
+			if(e.getClickCount() == SINGLE_CLICK) {
 				doSingleLeftClick( e );
 			}
-			if(e.getClickCount() == 2) {
+			if(e.getClickCount() == DOUBLE_CLICK) {
 				doDoubleLeftClick( e );
 			}
 		}
 
 		if(SwingUtilities.isRightMouseButton( e )) {
-			if(e.getClickCount() == 1) {
+			if(e.getClickCount() == SINGLE_CLICK) {
 				doSingleLeftClick( e );
 				doSingleRightClick( e );
 			}
