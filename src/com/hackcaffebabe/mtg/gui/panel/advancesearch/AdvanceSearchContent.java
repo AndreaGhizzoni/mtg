@@ -16,6 +16,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.SpinnerNumberModel;
@@ -64,7 +65,8 @@ public class AdvanceSearchContent extends JPanel
 	 */
 	public AdvanceSearchContent(){
 		super();
-		setLayout( new MigLayout( "", "[207.00][100.00:100.00][170.00,grow]", "[25.00][grow][grow][grow][35.00]" ) );
+		setLayout( new MigLayout( "", "[207.00][100.00:100.00][170.00,grow]",
+				"[25.00][60:60:60,grow][60:60:60,grow][60:60:60,grow][]" ) );
 		this.initContent();
 	}
 
@@ -85,12 +87,12 @@ public class AdvanceSearchContent extends JPanel
 		g.add( this.rdbtnSpecific );
 		pnlModeSelector.add( this.rdbtnLazy, "cell 0 0" );
 		pnlModeSelector.add( this.rdbtnSpecific, "cell 1 0,alignx right" );
-		add( pnlModeSelector, "cell 0 0 3 1,grow" );
+		add( pnlModeSelector, "cell 0 0 2 1,grow" );
 
 		// Color
 		JPanel pnlCardColor = new JPanel();
 		pnlCardColor.setBorder( new TitledBorder( "Color" ) );
-		pnlCardColor.setLayout( new MigLayout( "", "[grow][grow][grow][grow][grow]", "[grow]" ) );
+		pnlCardColor.setLayout( new MigLayout( "", "[grow][grow][grow][grow][grow]", "[]" ) );
 
 		this.chbRed = new JCheckBox( "Red" );
 		this.chbRed.setActionCommand( Mana.getAbbraviation( Mana.RED ) );
@@ -116,7 +118,7 @@ public class AdvanceSearchContent extends JPanel
 		// Rarity
 		JPanel pnlRarity = new JPanel();
 		pnlRarity.setBorder( new TitledBorder( null, "Rarity", TitledBorder.LEFT, TitledBorder.TOP, null, null ) );
-		pnlRarity.setLayout( new MigLayout( "", "[grow][grow][grow][grow]", "[grow]" ) );
+		pnlRarity.setLayout( new MigLayout( "", "[grow][grow][grow][grow]", "[]" ) );
 
 		this.chbNonCommon = new JCheckBox( Rarity.NON_COMMON.toString() );
 		pnlRarity.add( this.chbNonCommon, "cell 0 0" );
@@ -135,19 +137,19 @@ public class AdvanceSearchContent extends JPanel
 		JTabbedPane tabbedPane = new JTabbedPane( JTabbedPane.TOP );
 		JPanel tabpnlSeries = new JPanel( new MigLayout( "", "[grow]", "[grow]" ) );
 		this.loadCheckList( this.chlSeries, StoreManager.getInstance().getInsertedSeries(), 1 );
-		tabpnlSeries.add( this.chlSeries, "cell 0 0,growx,growy" );
+		tabpnlSeries.add( new JScrollPane( this.chlSeries ), "cell 0 0,growx,growy" );
 		tabbedPane.addTab( "Series", null, tabpnlSeries, null );
 
 		JPanel tabpnlAbilities = new JPanel( new MigLayout( "", "[grow]", "[grow]" ) );
 		this.loadCheckList( this.chlAbilities, AbilityFactory.getInstance().getAbilitiesAsList(), 0 );
-		tabpnlAbilities.add( this.chlAbilities, "cell 0 0,growx,growy" );
+		tabpnlAbilities.add( new JScrollPane( this.chlAbilities ), "cell 0 0,growx,growy" );
 		tabbedPane.addTab( "Abilities", null, tabpnlAbilities, null );
-		add( tabbedPane, "cell 2 1 1 3,grow" );
+		add( tabbedPane, "cell 2 0 1 4,grow" );
 
 		// Sub Type
 		JPanel pnlSubType = new JPanel();
 		pnlSubType.setBorder( new TitledBorder( "Sub Type" ) );
-		pnlSubType.setLayout( new MigLayout( "", "[grow]", "[grow]" ) );
+		pnlSubType.setLayout( new MigLayout( "", "[grow]", "[]" ) );
 		this.cmbSubType = new JComboBox<>( getCB( StoreManager.getInstance().getInsertedSubTypes() ) );
 		pnlSubType.add( this.cmbSubType, "cell 0 0,growx" );
 		add( pnlSubType, "cell 0 3,grow" );
@@ -156,7 +158,7 @@ public class AdvanceSearchContent extends JPanel
 		JPanel pnlConvertedManaCost = new JPanel();
 		pnlConvertedManaCost.setBorder( new TitledBorder( null, "Conv. Mana Cost", TitledBorder.LEFT, TitledBorder.TOP,
 				null, null ) );
-		pnlConvertedManaCost.setLayout( new MigLayout( "", "[168.00]", "[grow]" ) );
+		pnlConvertedManaCost.setLayout( new MigLayout( "", "[168.00]", "[]" ) );
 		this.spinManaCost = new JSpinner( new SpinnerNumberModel( 0, 0, 100, 1 ) );
 		JSpinner.DefaultEditor editor = (JSpinner.DefaultEditor) this.spinManaCost.getEditor();
 		editor.getTextField().setEditable( false );
@@ -172,12 +174,12 @@ public class AdvanceSearchContent extends JPanel
 			}
 		} );
 		btnClear.setMnemonic( KeyEvent.VK_C );
-		add( btnClear, "cell 0 4,growx,aligny center" );
+		add( btnClear, "cell 0 4,growx,aligny bottom" );
 
 		JButton btnApply = new JButton( "Apply" );
 		btnApply.addActionListener( new ApplyActionListener() );
 		btnApply.setMnemonic( KeyEvent.VK_A );
-		add( btnApply, "cell 1 4 2 1,growx,aligny center" );
+		add( btnApply, "cell 1 4 2 1,growx,aligny bottom" );
 	}
 
 	/*load check list passed with list of string given*/
@@ -260,6 +262,9 @@ public class AdvanceSearchContent extends JPanel
 
 			for(String i: chlSeries.getCheckedObjects())
 				criteria.bySeries( i );
+
+			for(String i: chlAbilities.getCheckedObjects())
+				criteria.byAbilities( i );
 
 			int val = (Integer) spinManaCost.getValue();
 			criteria.byConvertedManaCost( val == 0 ? null : val );

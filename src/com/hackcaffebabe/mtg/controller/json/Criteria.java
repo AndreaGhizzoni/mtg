@@ -12,6 +12,7 @@ import com.hackcaffebabe.mtg.model.Land;
 import com.hackcaffebabe.mtg.model.MTGCard;
 import com.hackcaffebabe.mtg.model.Planeswalker;
 import com.hackcaffebabe.mtg.model.Sorcery;
+import com.hackcaffebabe.mtg.model.card.Ability;
 import com.hackcaffebabe.mtg.model.card.Rarity;
 import com.hackcaffebabe.mtg.model.color.Mana;
 
@@ -38,6 +39,7 @@ public class Criteria
 	private Set<String> series = new HashSet<>();
 	private Set<Mana> colors = new HashSet<>();
 	private Set<Rarity> rarity = new HashSet<>();
+	private Set<String> aiblities = new HashSet<>();
 
 	//those are effectually not used
 //	private Boolean isLegendary = null;
@@ -132,6 +134,20 @@ public class Criteria
 				listOfChecking.add( false );
 		}
 
+		if(!this.aiblities.isEmpty()) {
+			boolean find = false;
+			for(String s: this.aiblities) {
+				for(Ability a: mtg.getAbilities()) {
+					if(s.equals( a.getName() )) {
+						listOfChecking.add( true );
+						find = true;
+					}
+				}
+			}
+			if(!find)
+				listOfChecking.add( false );
+		}
+
 		if(listOfChecking.isEmpty())
 			return false;
 		else if(listOfChecking.contains( false ))
@@ -179,6 +195,16 @@ public class Criteria
 			for(String s: this.series) {
 				if(mtg.getSeries().equals( s ))
 					return true;
+			}
+		}
+
+		if(!this.aiblities.isEmpty()) {
+			for(String s: this.aiblities) {
+				for(Ability a: mtg.getAbilities()) {
+					if(s.equals( a.getName() )) {
+						return true;
+					}
+				}
 			}
 		}
 
@@ -285,6 +311,21 @@ public class Criteria
 		return this;
 	}
 
+	/**
+	 * This method set the criteria by abilities. Set to null to cancel the abilities criteria.
+	 * @param a {@link String} the Abilities to search.
+	 * @return {@link Criteria} with the abilities set.
+	 */
+	public Criteria byAbilities(String a){
+		if(a != null) {
+			if(!this.aiblities.add( a ))
+				this.aiblities.remove( a );
+		} else {
+			this.aiblities.clear();
+		}
+		return this;
+	}
+
 //	/**
 //	 * This method set the criteria by legendary card.<br>
 //	 * Set to null to cancel the isLegendary criteria.
@@ -334,9 +375,9 @@ public class Criteria
 	 * @return {@link Boolean} if there is no criteria inserted.
 	 */
 	public boolean isCriteriaEmpty(){
-		return (name == null) && (convertedManaCost == null) && (subTypes.isEmpty()) && (series.isEmpty())
-				&& (colors.isEmpty()) && (rarity.isEmpty()) /*&& (isLegendary == null) && (hasPrimaryEffect == null)
-															&& (hasEffect == null) && (hasAbility == null)*/;
+		return (name == null) && (convertedManaCost == null) && (subTypes.isEmpty())
+				&& (series.isEmpty() && (aiblities.isEmpty())) && (colors.isEmpty()) && (rarity.isEmpty()) /*&& (isLegendary == null) && (hasPrimaryEffect == null) 
+																											&& (hasEffect == null) && (hasAbility == null)*/;
 	}
 
 //===========================================================================================
