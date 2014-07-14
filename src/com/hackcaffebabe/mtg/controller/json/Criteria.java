@@ -13,6 +13,7 @@ import com.hackcaffebabe.mtg.model.MTGCard;
 import com.hackcaffebabe.mtg.model.Planeswalker;
 import com.hackcaffebabe.mtg.model.Sorcery;
 import com.hackcaffebabe.mtg.model.card.Ability;
+import com.hackcaffebabe.mtg.model.card.AbilityFactory;
 import com.hackcaffebabe.mtg.model.card.Rarity;
 import com.hackcaffebabe.mtg.model.color.Mana;
 
@@ -35,18 +36,11 @@ public class Criteria
 
 	private String name = null;
 	private Integer convertedManaCost = null;
-	private Set<String> subTypes = new HashSet<>();
+	private String subTypes = null;
 	private Set<String> series = new HashSet<>();
 	private Set<Mana> colors = new HashSet<>();
 	private Set<Rarity> rarity = new HashSet<>();
 	private Set<String> aiblities = new HashSet<>();
-
-	//those are effectually not used
-//	private Boolean isLegendary = null;
-//	private Boolean hasPrimaryEffect = null;
-//
-//	private Boolean hasEffect = null;
-//	private Boolean hasAbility = null;//TODO maybe filter by ability
 
 //===========================================================================================
 // METHOD
@@ -94,16 +88,8 @@ public class Criteria
 			}
 		}
 
-		if(!this.subTypes.isEmpty()) {
-			boolean find = false;
-			for(String s: this.subTypes) {
-				if(mtg.getSubType().equals( s )) {
-					listOfChecking.add( true );
-					find = true;
-				}
-			}
-			if(!find)
-				listOfChecking.add( false );
+		if(this.subTypes != null) {
+			listOfChecking.add( mtg.getSubType().equals( this.subTypes ) );
 		}
 
 		if(!this.series.isEmpty()) {
@@ -118,7 +104,7 @@ public class Criteria
 				listOfChecking.add( false );
 		}
 
-		if(colors != null) {
+		if(!this.colors.isEmpty()) {
 			listOfChecking.add( colors.equals( mtg.getCardColor().getColors() ) );
 		}
 
@@ -137,11 +123,9 @@ public class Criteria
 		if(!this.aiblities.isEmpty()) {
 			boolean find = false;
 			for(String s: this.aiblities) {
-				for(Ability a: mtg.getAbilities()) {
-					if(s.equals( a.getName() )) {
-						listOfChecking.add( true );
-						find = true;
-					}
+				if(mtg.getAbilities().contains( AbilityFactory.getInstance().getAbility( s ) )) {
+					listOfChecking.add( true );
+					find = true;
 				}
 			}
 			if(!find)
@@ -184,11 +168,9 @@ public class Criteria
 			}
 		}
 
-		if(!this.subTypes.isEmpty()) {
-			for(String s: this.subTypes) {
-				if(mtg.getSubType().equals( s ))
-					return true;
-			}
+		if(this.subTypes != null) {
+			if(mtg.getSubType().equals( this.subTypes ))
+				return true;
 		}
 
 		if(!this.series.isEmpty()) {
@@ -256,12 +238,8 @@ public class Criteria
 	 * @return {@link Criteria} with the sub type flag set.
 	 */
 	public Criteria bySubType(String t){
-		if(t != null) {
-			if(!this.subTypes.add( t ))
-				this.subTypes.remove( t );
-		} else {
-			this.subTypes.clear();
-		}
+		if(t != null && !t.isEmpty())
+			this.subTypes = t;
 		return this;
 	}
 
@@ -326,56 +304,12 @@ public class Criteria
 		return this;
 	}
 
-//	/**
-//	 * This method set the criteria by legendary card.<br>
-//	 * Set to null to cancel the isLegendary criteria.
-//	 * @param isLegendary {@link Boolean}.
-//	 * @return {@link Criteria} with the legendary flag set.
-//	 */
-//	public Criteria byIsLegendary(Boolean isLegendary){
-//		this.isLegendary = isLegendary;
-//		return this;
-//	}
-//
-//	/**
-//	 * This method set the criteria by if has a primary effect.<br>
-//	 * Set to null to cancel the has primary effect criteria.
-//	 * @param hasPrimaryEffect {@link Boolean} .
-//	 * @return {@link Criteria} with has primary effect flag set.
-//	 */
-//	public Criteria byHasPrimaryEffect(Boolean hasPrimaryEffect){
-//		this.hasPrimaryEffect = hasPrimaryEffect;
-//		return this;
-//	}
-//
-//	/**
-//	 * This method set the criteria by if has at least one effect.<br>
-//	 * Set to null to cancel the has effect criteria.
-//	 * @param hasEffect {@link Boolean}.
-//	 * @return {@link Criteria} with has at least one effect flag set.
-//	 */
-//	public Criteria byHasEffect(Boolean hasEffect){
-//		this.hasEffect = hasEffect;
-//		return this;
-//	}
-//
-//	/**
-//	 * This method set the criteria by if has at least one ability.<br>
-//	 * Set to null to cancel the has ability criteria.
-//	 * @param hasAblility {@link Boolean}.
-//	 * @return {@link Criteria} with has at least one ability flag set.
-//	 */
-//	public Criteria byHasAbility(Boolean hasAblility){
-//		this.hasAbility = hasAblility;
-//		return this;
-//	}
-
 	/**
 	 * Check if criteria is void.
 	 * @return {@link Boolean} if there is no criteria inserted.
 	 */
 	public boolean isCriteriaEmpty(){
-		return (name == null) && (convertedManaCost == null) && (subTypes.isEmpty())
+		return (name == null) && (convertedManaCost == null) && (subTypes == null)
 				&& (series.isEmpty() && (aiblities.isEmpty())) && (colors.isEmpty()) && (rarity.isEmpty()) /*&& (isLegendary == null) && (hasPrimaryEffect == null) 
 																											&& (hasEffect == null) && (hasAbility == null)*/;
 	}
@@ -394,7 +328,7 @@ public class Criteria
 	}
 
 	/** @return {@link String} the subType */
-	public Set<String> getSubType(){
+	public String getSubType(){
 		return subTypes;
 	}
 
@@ -412,26 +346,6 @@ public class Criteria
 	public Set<Rarity> getRarity(){
 		return rarity;
 	}
-
-//	/** @return {@link Boolean} the isLegendary flag */
-//	public Boolean getIsLegendary(){
-//		return isLegendary;
-//	}
-//
-//	/** @return {@link Boolean} the has primary effect flag */
-//	public Boolean getHasPrimaryEffect(){
-//		return hasPrimaryEffect;
-//	}
-//
-//	/** @return {@link Boolean} the has effect flag */
-//	public Boolean getHasEffect(){
-//		return hasEffect;
-//	}
-//
-//	/** @return {@link Boolean} the has ability flag */
-//	public Boolean getHasAbility(){
-//		return hasAbility;
-//	}
 
 //===========================================================================================
 // OVERRIDE

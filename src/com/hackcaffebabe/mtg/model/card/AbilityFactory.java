@@ -124,6 +124,20 @@ public class AbilityFactory
 // GETTER
 //===========================================================================================
 	/**
+	 * This method returns the {@link Ability} object from his string name.
+	 * @param key {@link String} the ability name.
+	 * @return {@link Ability} the ability object.
+	 */
+	public final Ability getAbility(String key){
+		String ab = this.abilities.get( key );
+		if(ab != null) {
+			return new Ability( key, ab );
+		} else {
+			return null;
+		}
+	}
+
+	/**
 	 * Return the map of all abilities saved.
 	 * @return {@link HashMap} of all abilities saved.
 	 */
