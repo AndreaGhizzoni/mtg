@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import javax.swing.Box;
 import javax.swing.Icon;
 import javax.swing.JButton;
@@ -15,8 +17,10 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
+import javax.swing.WindowConstants;
 import javax.swing.text.DefaultEditorKit;
 import com.hackcaffebabe.mtg.gui.GUIUtils;
 import com.hackcaffebabe.mtg.gui.frame.listener.AboutActionListener;
@@ -42,6 +46,8 @@ public class DeckEditor extends JFrame
 		setLayout( new BorderLayout() );
 		setSize( GUIUtils.DIMENSION_DECK_EDITOR );
 		setMinimumSize( GUIUtils.DIMENSION_DECK_EDITOR );
+		setDefaultCloseOperation( WindowConstants.DO_NOTHING_ON_CLOSE );
+		addWindowListener( new WinListener() );
 
 		this.initMenuBar();
 		this.initToolBar();
@@ -255,5 +261,43 @@ public class DeckEditor extends JFrame
 				}
 			} );
 		}
+	}
+
+	/* windows closing listener */
+	private class WinListener implements WindowListener
+	{
+		@Override
+		public void windowClosing(WindowEvent e){
+			if(content.isAtLeastOneTabUnsaved()) {
+				int r = JOptionPane
+						.showConfirmDialog(
+								content,
+								"There are unsaved deck! If you close this window you modify will be lost!\nWould you continue?",
+								"Unsaved deck!", JOptionPane.OK_CANCEL_OPTION );
+				if(r == JOptionPane.OK_OPTION) {
+					dispose();
+				}
+			} else {
+				dispose();
+			}
+		}
+
+		@Override
+		public void windowOpened(WindowEvent e){}
+
+		@Override
+		public void windowClosed(WindowEvent e){}
+
+		@Override
+		public void windowIconified(WindowEvent e){}
+
+		@Override
+		public void windowDeiconified(WindowEvent e){}
+
+		@Override
+		public void windowActivated(WindowEvent e){}
+
+		@Override
+		public void windowDeactivated(WindowEvent e){}
 	}
 }

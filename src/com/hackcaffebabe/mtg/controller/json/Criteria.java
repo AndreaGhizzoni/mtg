@@ -94,11 +94,9 @@ public class Criteria
 
 		if(!this.series.isEmpty()) {
 			boolean find = false;
-			for(String s: this.series) {
-				if(mtg.getSeries().equals( s )) {
-					listOfChecking.add( true );
-					find = true;
-				}
+			if(this.series.contains( mtg.getSeries() )) {
+				listOfChecking.add( true );
+				find = true;
 			}
 			if(!find)
 				listOfChecking.add( false );
@@ -110,11 +108,9 @@ public class Criteria
 
 		if(!this.rarity.isEmpty()) {
 			boolean find = false;
-			for(Rarity r: this.rarity) {
-				if(mtg.getRarity().equals( r )) {
-					listOfChecking.add( true );
-					find = true;
-				}
+			if(this.rarity.contains( mtg.getRarity() )) {
+				listOfChecking.add( true );
+				find = true;
 			}
 			if(!find)
 				listOfChecking.add( false );

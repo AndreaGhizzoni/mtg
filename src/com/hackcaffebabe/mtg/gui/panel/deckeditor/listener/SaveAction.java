@@ -4,6 +4,7 @@ import it.hackcaffebabe.logger.Logger;
 import it.hackcaffebabe.logger.Tag;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import javax.swing.SwingUtilities;
 import com.hackcaffebabe.mtg.gui.panel.deckeditor.TabContent;
 
 
@@ -22,8 +23,22 @@ public class SaveAction extends AbstractAction
 	@Override
 	public void actionPerformed(ActionEvent e){
 		if(e.getSource() instanceof TabContent) {
-//			TabContent src = ((TabContent) e.getSource());
-			log.write( Tag.INFO, "Save action called..." );
+			log.write( Tag.DEBUG, "Save action called..." );
+
+			TabContent src = ((TabContent) e.getSource());
+			String nameOfDeck = src.getTabName();
+			log.write( Tag.DEBUG, "new modify has been detected on deck " + nameOfDeck );
+
+			doSave( src, nameOfDeck );
 		}
+	}
+
+	private void doSave(TabContent src, String name){
+		SwingUtilities.invokeLater( new Runnable(){
+			@Override
+			public void run(){
+				//TODO finish this
+			}
+		} );
 	}
 }

@@ -16,6 +16,7 @@ import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.plaf.basic.BasicButtonUI;
@@ -26,24 +27,28 @@ import javax.swing.plaf.basic.BasicButtonUI;
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
  */
-class TabTopRender extends JPanel
+public class TabTopRender extends JPanel
 {
 	private static final long serialVersionUID = 1L;
-	private final JTabbedPane pane;
+	private JLabel lblTabTitle;
+	private CloseButton btnClose;
 
+	/**
+	 * 
+	 * @param pane
+	 */
 	public TabTopRender(final JTabbedPane pane){
 		//set default FlowLayout' gaps
-		super( new FlowLayout( FlowLayout.LEFT, 0, 0 ) );
+		super( new FlowLayout( FlowLayout.LEFT, 0, 5 ) );
 		if(pane == null)
 			throw new NullPointerException( "TabbedPane is null" );
 
-		this.pane = pane;
 		setOpaque( false );
 		//add more space to the top of the component
 		setBorder( BorderFactory.createEmptyBorder( 2, 0, 0, 0 ) );
 
 		//make JLabel read titles from JTabbedPane
-		JLabel label = new JLabel(){
+		this.lblTabTitle = new JLabel(){
 			private static final long serialVersionUID = 1L;
 
 			public String getText(){
@@ -53,16 +58,49 @@ class TabTopRender extends JPanel
 				return null;
 			}
 		};
-
 		//add more space between the label and the button
-		label.setBorder( BorderFactory.createEmptyBorder( 0, 0, 0, 5 ) );
-		add( label );
+		this.lblTabTitle.setBorder( BorderFactory.createEmptyBorder( 0, 0, 0, 2 ) );
+		add( this.lblTabTitle );
 
 		//tab button
-		add( new CloseButton() );
+		this.btnClose = new CloseButton();
+		this.btnClose.addActionListener( new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				int i = pane.indexOfTabComponent( TabTopRender.this );
+				if(i != -1) {
+					TabContent text = (TabContent) pane.getComponentAt( i );
+					if(text.hasBeenModify()) {
+						int r = JOptionPane.showConfirmDialog( pane,
+								"You are closing an unsaved deck. All changes will be lost.\nWould you continue?",
+								"Deck unsaved!", JOptionPane.OK_CANCEL_OPTION );
+						if(r == JOptionPane.OK_OPTION) {
+							pane.remove( i );
+						}
+					} else {
+						pane.remove( i );
+					}
+				}
+			}
+		} );
+		add( this.btnClose );
 	}
 
-	class CloseButton extends JButton implements ActionListener
+//===========================================================================================
+// GETTER
+//===========================================================================================
+	/**
+	 * Returns the label that compose the tab top render.
+	 * @return {@link JLabel} the label.
+	 */
+	public JLabel getLabel(){
+		return this.lblTabTitle;
+	}
+
+//===========================================================================================
+// INNER CLASS
+//===========================================================================================
+	class CloseButton extends JButton
 	{
 		private static final long serialVersionUID = 1L;
 		private final MouseListener buttonMouseListener = new MouseAdapter(){
@@ -92,20 +130,10 @@ class TabTopRender extends JPanel
 			setBorder( BorderFactory.createEtchedBorder() );
 			setBorderPainted( false );
 			setRolloverEnabled( true );
-			addActionListener( this );//Close the proper tab by clicking the button
 			//Making nice roll over effect
 			//we use the same listener for all buttons
 			addMouseListener( buttonMouseListener );
 
-		}
-
-		public void actionPerformed(ActionEvent e){
-			int i = pane.indexOfTabComponent( TabTopRender.this );
-			//TODO check if the last file changes has been saved.
-			//if not: ask user if wants to save the changes or not.
-			if(i != -1) {
-				pane.remove( i );
-			}
 		}
 
 		//we don't want to update UI for this button

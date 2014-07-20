@@ -1,5 +1,7 @@
 package com.hackcaffebabe.mtg.gui.panel.deckeditor;
 
+import it.hackcaffebabe.logger.Logger;
+import it.hackcaffebabe.logger.Tag;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
@@ -22,7 +24,7 @@ public class TabContent extends JPanel
 	private static final long serialVersionUID = 1L;
 	private static final String SAVE_KEY = "save";
 
-	private JTabbedPane tabbedpaneParent;
+	private JTabbedPane parent;
 	private ModifyTextDocumentListener textDeckDocumentListener;
 	private JTextArea textDeck = new JTextArea();
 
@@ -34,12 +36,10 @@ public class TabContent extends JPanel
 		super();
 		setLayout( new MigLayout( "", "[grow]", "[grow]" ) );
 		this.initContent();
-		this.tabbedpaneParent = parent;
+		this.parent = parent;
 		this.textDeck.setText( (contOfTextArea == null || contOfTextArea.isEmpty()) ? "" : contOfTextArea );
-		this.textDeckDocumentListener = new ModifyTextDocumentListener( contOfTextArea );
+		this.textDeckDocumentListener = new ModifyTextDocumentListener( contOfTextArea, this.textDeck, this.parent );
 		this.textDeck.getDocument().addDocumentListener( this.textDeckDocumentListener );
-		this.textDeck.getDocument().putProperty( "src", this.textDeck );
-		this.textDeck.getDocument().putProperty( "parent", this.tabbedpaneParent );
 		this.requestFocus();
 	}
 
@@ -51,18 +51,36 @@ public class TabContent extends JPanel
 		this.textDeck.setWrapStyleWord( true );
 		this.textDeck.setLineWrap( true );
 		this.textDeck.setFont( new Font( Font.MONOSPACED, Font.PLAIN, 12 ) );
-		// don't uncomment this because crtl+s is already bind on frame that TabContent is content in.
+		//TODO don't uncomment this because crtl+s is already bind on frame that TabContent is content in.
 		//this.textDeckContent.getInputMap().put( KeyStroke.getKeyStroke( KeyEvent.VK_S, Event.CTRL_MASK ), SAVE_KEY );
 		this.textDeck.getActionMap().put( SAVE_KEY, new SaveAction() );
 		add( new JScrollPane( this.textDeck ), "cell 0 0,grow" );
 	}
 
 	/**
-	 * Entry point of tab pane to SaveAll action
+	 * Entry point of tab pane to Save and SaveAll action
 	 */
 	public void save(){
-		if(hasBeenModify())
+		if(hasBeenModify()) {
 			this.textDeck.getActionMap().get( SAVE_KEY ).actionPerformed( new ActionEvent( this, 1, SAVE_KEY ) );
+
+			Logger.getInstance().write( Tag.DEBUG, "reset initial text." );
+			this.textDeckDocumentListener.updateInitialText();
+		}
+	}
+
+//===========================================================================================
+// SETTER
+//===========================================================================================
+	/**
+	 * This method set the font of {@link JTextArea}.
+	 * @param f {@link Font} the font to set.
+	 */
+	public void modifyFont(Font f) throws IllegalArgumentException{
+		if(f == null)
+			throw new IllegalArgumentException( "Font to set cane not be null." );
+		if(f != this.textDeck.getFont())
+			this.textDeck.setFont( f );
 	}
 
 //===========================================================================================
@@ -78,9 +96,17 @@ public class TabContent extends JPanel
 		return getTextArea().getText();
 	}
 
-	/** @return {@link JTabbedPane} return the parent tabbed pane reference. */
+	/** @return {@link JTabbedPane} return the parent tab pane reference. */
 	public JTabbedPane getTabbedPane(){
-		return this.tabbedpaneParent;
+		return this.parent;
+	}
+
+	/** @return {@link String} return the tab name of this tab content is in. */
+	public String getTabName(){
+		String s = this.parent.getTitleAt( this.parent.getSelectedIndex() );
+		if(s.startsWith( "*" ))
+			return s.substring( 1, s.length() );
+		return s;
 	}
 
 	/** @return boolean if this tab has a changed text that is not already saved. */
