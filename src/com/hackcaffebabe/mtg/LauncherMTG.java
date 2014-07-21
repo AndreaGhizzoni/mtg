@@ -22,6 +22,7 @@ public class LauncherMTG
 {
 	public static void main(String... args){
 		try {
+			//TODO check JDK 8!
 			initHomeFolder();
 			initLogger();
 			initSubFolderStructure();
