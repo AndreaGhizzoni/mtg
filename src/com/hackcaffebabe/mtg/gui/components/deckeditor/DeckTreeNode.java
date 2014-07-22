@@ -16,7 +16,9 @@ public class DeckTreeNode extends DefaultMutableTreeNode
 
 	public enum TREENODE_TYPE
 	{
-		ROOT, GROUP, DECK;
+		ROOT,
+		//GROUP, 
+		DECK;
 	}
 
 	private TREENODE_TYPE type;

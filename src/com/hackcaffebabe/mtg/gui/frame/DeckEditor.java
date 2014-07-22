@@ -87,7 +87,7 @@ public class DeckEditor extends JFrame
 		paste.addActionListener( new DefaultEditorKit.PasteAction() );
 
 		MyButton delFile = new MyButton( "del" );
-		delFile.addActionListener( new DeleteFileActionListener() );
+		delFile.addActionListener( new DeleteSelectedDeckActionListener() );
 
 		MyButton renameFile = new MyButton( "r" );
 
@@ -114,6 +114,10 @@ public class DeckEditor extends JFrame
 		menuFileNewEmptyFile.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_N, Event.CTRL_MASK ) );
 		menuFileNewEmptyFile.addActionListener( new EmptyFileActionListener() );
 
+//		JMenuItem menuFileNewGroup = new JMenuItem( "New Group" );
+//		menuFileNewGroup.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_G, Event.CTRL_MASK ) );
+//		menuFileNewGroup.addActionListener(  );
+
 		JMenuItem menuFileSave = new JMenuItem( "Save" );
 		menuFileSave.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_S, Event.CTRL_MASK ) );
 		menuFileSave.addActionListener( new SaveCurrentActionListener() );
@@ -139,13 +143,25 @@ public class DeckEditor extends JFrame
 		menuFile.add( menuFileClose );
 
 		JMenu menuEdit = new JMenu( "Edit" );
-		JMenuItem menuEditDelCurrent = new JMenuItem( "Delete deck" );
+		JMenuItem menuEditDelCurrent = new JMenuItem( "Delete" );
 		menuEditDelCurrent.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_DELETE, Event.CTRL_MASK
 				+ Event.SHIFT_MASK ) );
-		menuEditDelCurrent.addActionListener( new DeleteFileActionListener() );
+		menuEditDelCurrent.addActionListener( new DeleteCurrentDeckActionListener() );
 
 		JMenuItem menuEditRename = new JMenuItem( "Rename" );
 		menuEditRename.setAccelerator( KeyStroke.getKeyStroke( "F2" ) );
+
+		JMenuItem menuEditCopy = new JMenuItem( "Copy" );
+		menuEditCopy.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_C, Event.CTRL_MASK ) );
+		menuEditCopy.addActionListener( new DefaultEditorKit.CopyAction() );
+
+		JMenuItem menuEditCut = new JMenuItem( "Cut" );
+		menuEditCut.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_X, Event.CTRL_MASK ) );
+		menuEditCut.addActionListener( new DefaultEditorKit.CutAction() );
+
+		JMenuItem menuEditPaste = new JMenuItem( "Paste" );
+		menuEditPaste.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_V, Event.CTRL_MASK ) );
+		menuEditPaste.addActionListener( new DefaultEditorKit.PasteAction() );
 
 		JMenuItem menuEditRefresh = new JMenuItem( "Refresh" );
 		menuEditRefresh.setAccelerator( KeyStroke.getKeyStroke( "F5" ) );
@@ -158,6 +174,10 @@ public class DeckEditor extends JFrame
 
 		menuEdit.add( menuEditDelCurrent );
 		menuEdit.add( menuEditRename );
+		menuEdit.addSeparator();
+		menuEdit.add( menuEditCopy );
+		menuEdit.add( menuEditCut );
+		menuEdit.add( menuEditPaste );
 		menuEdit.addSeparator();
 		menuEdit.add( menuEditRefresh );
 
@@ -181,16 +201,33 @@ public class DeckEditor extends JFrame
 	{
 		@Override
 		public void actionPerformed(ActionEvent e){
-			content.newEmptyDeckFile();
+			content.newEmptyDeck();
+		}
+	}
+
+	/* action listener to add new group */
+	class NewGroupActionListener implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent e){
+			content.newGroup();
 		}
 	}
 
 	/* action listener to delete current file */
-	class DeleteFileActionListener implements ActionListener
+	class DeleteCurrentDeckActionListener implements ActionListener
 	{
 		@Override
 		public void actionPerformed(ActionEvent e){
-			content.deleteCurrentFile();
+			content.deleteCurrentDeck();
+		}
+	}
+
+	class DeleteSelectedDeckActionListener implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent e){
+			content.deleteSelectedDeck();
 		}
 	}
 
@@ -268,7 +305,7 @@ public class DeckEditor extends JFrame
 	{
 		@Override
 		public void windowClosing(WindowEvent e){
-			if(content.isAtLeastOneTabUnsaved()) {
+			if(content.isAtLeastOneTabUnsaved() != -1) {
 				int r = JOptionPane
 						.showConfirmDialog(
 								content,

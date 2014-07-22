@@ -41,16 +41,12 @@ public class ModifyTextDocumentListener implements DocumentListener
 	public void insertUpdate(DocumentEvent e){
 		needToSave = checkIfTextHasBeenModify();
 		updateTabTopRender();
-
-		Logger.getInstance().write( Tag.DEBUG, "insert called. need to save ? " + needToSave );
 	}
 
 	@Override
 	public void removeUpdate(DocumentEvent e){
 		needToSave = checkIfTextHasBeenModify();
 		updateTabTopRender();
-
-		Logger.getInstance().write( Tag.DEBUG, "remove called. need to save ? " + needToSave );
 	}
 
 	@Override
@@ -86,6 +82,7 @@ public class ModifyTextDocumentListener implements DocumentListener
 	public void updateInitialText(){
 		this.initalText = textSource.getText();
 		this.needToSave = false;
+		Logger.getInstance().write( Tag.DEBUG, "reset initial text in modify text document listener" );
 		updateTabTopRender();
 	}
 

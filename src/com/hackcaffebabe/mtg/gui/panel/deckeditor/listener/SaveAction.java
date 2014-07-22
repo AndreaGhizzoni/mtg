@@ -1,10 +1,17 @@
 package com.hackcaffebabe.mtg.gui.panel.deckeditor.listener;
 
+import it.hackcaffebabe.ioutil.file.PathUtil;
 import it.hackcaffebabe.logger.Logger;
 import it.hackcaffebabe.logger.Tag;
 import java.awt.event.ActionEvent;
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import javax.swing.AbstractAction;
 import javax.swing.SwingUtilities;
+import com.hackcaffebabe.mtg.controller.DBCostants;
 import com.hackcaffebabe.mtg.gui.panel.deckeditor.TabContent;
 
 
@@ -23,21 +30,31 @@ public class SaveAction extends AbstractAction
 	@Override
 	public void actionPerformed(ActionEvent e){
 		if(e.getSource() instanceof TabContent) {
-			log.write( Tag.DEBUG, "Save action called..." );
+			log.write( Tag.DEBUG, "Save action called." );
 
-			TabContent src = ((TabContent) e.getSource());
-			String nameOfDeck = src.getTabName();
-			log.write( Tag.DEBUG, "new modify has been detected on deck " + nameOfDeck );
+			String nameOfDeck = ((TabContent) e.getSource()).getTabName();
+			log.write( Tag.DEBUG, "Modify has been detected on deck => " + nameOfDeck );
 
-			doSave( src, nameOfDeck );
+			//TODO check if already exists deck with the same name.
+			doSave( ((TabContent) e.getSource()), nameOfDeck );
 		}
 	}
 
-	private void doSave(TabContent src, String name){
+	/* method that write on stream */
+	private void doSave(final TabContent src, final String name){
 		SwingUtilities.invokeLater( new Runnable(){
 			@Override
 			public void run(){
-				//TODO finish this
+				String fileName = String.format( "%s.mtgdeck", name );
+				String deckPath = String.format( "%s" + PathUtil.FILE_SEPARATOR + "%s", DBCostants.DECK_PATH, fileName );
+				try {
+					Writer w = new BufferedWriter( new OutputStreamWriter( new FileOutputStream( deckPath ), "utf-8" ) );
+					w.write( src.getText() );
+					w.flush();
+					w.close();
+				} catch(IOException e) {
+					e.printStackTrace();//TODO add logger exception
+				}
 			}
 		} );
 	}

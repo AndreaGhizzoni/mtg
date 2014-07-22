@@ -1,7 +1,5 @@
 package com.hackcaffebabe.mtg.gui.panel.deckeditor;
 
-import it.hackcaffebabe.logger.Logger;
-import it.hackcaffebabe.logger.Tag;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
@@ -63,8 +61,6 @@ public class TabContent extends JPanel
 	public void save(){
 		if(hasBeenModify()) {
 			this.textDeck.getActionMap().get( SAVE_KEY ).actionPerformed( new ActionEvent( this, 1, SAVE_KEY ) );
-
-			Logger.getInstance().write( Tag.DEBUG, "reset initial text." );
 			this.textDeckDocumentListener.updateInitialText();
 		}
 	}
@@ -103,10 +99,7 @@ public class TabContent extends JPanel
 
 	/** @return {@link String} return the tab name of this tab content is in. */
 	public String getTabName(){
-		String s = this.parent.getTitleAt( this.parent.getSelectedIndex() );
-		if(s.startsWith( "*" ))
-			return s.substring( 1, s.length() );
-		return s;
+		return this.parent.getTitleAt( this.parent.getSelectedIndex() );
 	}
 
 	/** @return boolean if this tab has a changed text that is not already saved. */

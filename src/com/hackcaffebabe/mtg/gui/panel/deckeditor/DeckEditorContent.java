@@ -89,14 +89,16 @@ public class DeckEditorContent extends JPanel
 				List<File> files = Arrays.asList( new File( DBCostants.DECK_PATH ).listFiles() );
 				Collections.sort( files );
 
-				//TEST
-				DeckTreeNode g1 = new DeckTreeNode( "Group 1", TREENODE_TYPE.GROUP );
-				DeckTreeNode g2 = new DeckTreeNode( "Group 2", TREENODE_TYPE.GROUP );
+//				//TEST
+//				DeckTreeNode g1 = new DeckTreeNode( "Group 1", TREENODE_TYPE.GROUP );
+//				DeckTreeNode g2 = new DeckTreeNode( "Group 2", TREENODE_TYPE.GROUP );
+//				for(File f: files)
+//					g1.add( new DeckTreeNode( f.getName().split( "[.]" )[0], TREENODE_TYPE.DECK ) );// exclude the extension *.mtgdeck
+//				decks.add( g1 );
+//				decks.add( g2 );
 
 				for(File f: files)
-					g1.add( new DeckTreeNode( f.getName().split( "[.]" )[0], TREENODE_TYPE.DECK ) );// exclude the extension *.mtgdeck
-				decks.add( g1 );
-				decks.add( g2 );
+					decks.add( new DeckTreeNode( f.getName().split( "[.]" )[0], TREENODE_TYPE.DECK ) );// exclude the extension *.mtgdeck
 
 				treeSavedDeck.setModel( new DefaultTreeModel( decks ) );
 				Logger.getInstance().write( Tag.DEBUG, "Refreshing deck list done." );
@@ -104,7 +106,12 @@ public class DeckEditorContent extends JPanel
 		} );
 	}
 
-	//TODO write method to make a new group of decks.
+	/**
+	 * Crate a new Group of decks
+	 */
+	public void newGroup(){
+		Logger.getInstance().write( Tag.DEBUG, "TODO" );
+	}
 
 	/* open a new tab with given name and content. */
 	private void openTab(String tabName, String content){
@@ -112,7 +119,7 @@ public class DeckEditorContent extends JPanel
 		if(i != -1) {
 			tabDeckOpened.setSelectedIndex( i );
 		} else {
-			tabDeckOpened.add( tabName, new TabContent( this.tabDeckOpened, content ) );
+			tabDeckOpened.addTab( tabName, new TabContent( this.tabDeckOpened, content ) );
 			tabDeckOpened.setTabComponentAt( this.tabDeckOpened.getTabCount() - 1, new TabTopRender( tabDeckOpened ) );
 			tabDeckOpened.setSelectedIndex( this.tabDeckOpened.getTabCount() - 1 );// set focus on the last tab
 		}
@@ -121,7 +128,7 @@ public class DeckEditorContent extends JPanel
 	/**
 	 * Creates a new empty deck file.
 	 */
-	public void newEmptyDeckFile(){
+	public void newEmptyDeck(){
 		String deckName = JOptionPane.showInputDialog( this, "Insert new Deck's name:", "Deck's Name",
 				JOptionPane.QUESTION_MESSAGE );
 		if(deckName != null && !deckName.isEmpty()) {
@@ -132,7 +139,7 @@ public class DeckEditorContent extends JPanel
 	/**
 	 * Delete the current opened file.
 	 */
-	public void deleteCurrentFile(){
+	public void deleteCurrentDeck(){
 		if(tabDeckOpened.getTabCount() == 0)
 			return;
 
@@ -142,14 +149,40 @@ public class DeckEditorContent extends JPanel
 				JOptionPane.OK_CANCEL_OPTION );
 		if(r == JOptionPane.OK_OPTION) {
 			String f = String.format( DBCostants.DECK_PATH + PathUtil.FILE_SEPARATOR + "%s.mtgdeck", fileName );
-			new File( f ).delete();
+			File file = new File( f );
+			if(file.exists())
+				file.delete();
 			refreshSavedDeck();
 			closeCurrentTab();
 		}
 	}
 
 	/**
-	 * Close the current tab.
+	 * Delete the selected deck from the saved tree deck
+	 */
+	public void deleteSelectedDeck(){
+		DefaultMutableTreeNode node = (DefaultMutableTreeNode) treeSavedDeck.getLastSelectedPathComponent();
+		if(node == null)
+			return;
+
+		//0 = leaf, 1 = root with two row tree
+		if(node.getDepth() == 0) { //TODO when implementing group, change depth
+			String fileName = node.getUserObject().toString();
+			int r = JOptionPane.showConfirmDialog( this, "Are you really sure ?", "Delete " + fileName,
+					JOptionPane.OK_CANCEL_OPTION );
+			if(r == JOptionPane.OK_OPTION) {
+				String f = String.format( DBCostants.DECK_PATH + PathUtil.FILE_SEPARATOR + "%s.mtgdeck", fileName );
+				File file = new File( f );
+				if(file.exists())
+					file.delete();
+				refreshSavedDeck();
+				closeTab( fileName );
+			}
+		}
+	}
+
+	/**
+	 * Close the current tab. THIS METHOD DOES NOT CHECK IF IS UNSAVED.
 	 */
 	public void closeCurrentTab(){
 		int index = tabDeckOpened.getSelectedIndex();
@@ -158,12 +191,27 @@ public class DeckEditorContent extends JPanel
 	}
 
 	/**
+	 * Close a tab with his name given. THIS METHOD DOES NOT CHECK IF IS UNSAVED.
+	 * @param name {@link String} the name of the tab.
+	 */
+	public void closeTab(String name){
+		if(name != null && !name.isEmpty() && this.tabDeckOpened.getTabCount() != 0) {
+			int index = this.tabDeckOpened.indexOfTab( name );
+			if(index != -1) {
+				this.tabDeckOpened.remove( index );
+			}
+		}
+	}
+
+	/**
 	 * Entry point to call the save action for all opened tabs.
 	 */
 	public void saveAll(){
 		for(int i = 0; i < this.tabDeckOpened.getTabCount(); i++) {
-			((TabContent) this.tabDeckOpened.getComponentAt( i )).save();
+			this.tabDeckOpened.setSelectedIndex( i );
+			((TabContent) this.tabDeckOpened.getSelectedComponent()).save();
 		}
+		refreshSavedDeck();
 	}
 
 	/**
@@ -174,6 +222,7 @@ public class DeckEditorContent extends JPanel
 		if(selTab != -1) {
 			((TabContent) this.tabDeckOpened.getComponentAt( selTab )).save();
 		}
+		refreshSavedDeck();
 	}
 
 //===========================================================================================
@@ -187,18 +236,18 @@ public class DeckEditorContent extends JPanel
 	}
 
 	/**
-	 * @return boolean true if there is at least one tab that is has been modify but not saved.
+	 * @return integer the index of tab unsaved if there is at least one otherwise -1.
 	 */
-	public boolean isAtLeastOneTabUnsaved(){
+	public int isAtLeastOneTabUnsaved(){
 		if(!isAtLeastOneTabOpen())
-			return false;
+			return -1;
 		else {
 			for(int i = 0; i < this.tabDeckOpened.getTabCount(); i++) {
 				TabContent c = (TabContent) this.tabDeckOpened.getComponentAt( i );
 				if(c.hasBeenModify())
-					return true;
+					return i;
 			}
-			return false;
+			return -1;
 		}
 	}
 
@@ -217,9 +266,9 @@ public class DeckEditorContent extends JPanel
 				treeSavedDeck.setSelectionPath( treeSavedDeck.getPathForLocation( e.getPoint().x, e.getPoint().y ) );
 				if(isRoot()) {
 					performSingleRigthClickOnRoot( e );
-				} else if(isGroup()) {
+				} /*else if(isGroup()) {
 					performSingleRigthClickOnGroup( e );
-				}
+					}*/
 			}
 		}
 
@@ -243,16 +292,16 @@ public class DeckEditorContent extends JPanel
 		}
 
 		/* perform the single click with the right button on the group of decks */
-		private void performSingleRigthClickOnGroup(MouseEvent e){
-			JPopupMenu menu = new JPopupMenu();
-
-			JMenuItem rename = new JMenuItem( "Rename" );//TODO ...you need to finish this...
-			JMenuItem delete = new JMenuItem( "Delete" );
-
-			menu.add( rename );
-			menu.add( delete );
-			menu.show( e.getComponent(), e.getX(), e.getY() );
-		}
+//		private void performSingleRigthClickOnGroup(MouseEvent e){
+//			JPopupMenu menu = new JPopupMenu();
+//
+//			JMenuItem rename = new JMenuItem( "Rename" );//TODO ...you need to finish this...
+//			JMenuItem delete = new JMenuItem( "Delete" );
+//
+//			menu.add( rename );
+//			menu.add( delete );
+//			menu.show( e.getComponent(), e.getX(), e.getY() );
+//		}
 
 		/* check if current selected node is a deck */
 		private boolean isDeck(){
@@ -265,8 +314,8 @@ public class DeckEditorContent extends JPanel
 		}
 
 		/* check if current selected node is a group of deck */
-		private boolean isGroup(){
-			return ((DeckTreeNode) treeSavedDeck.getLastSelectedPathComponent()).getType() == TREENODE_TYPE.GROUP;
-		}
+//		private boolean isGroup(){
+//			return ((DeckTreeNode) treeSavedDeck.getLastSelectedPathComponent()).getType() == TREENODE_TYPE.GROUP;
+//		}
 	}
 }
