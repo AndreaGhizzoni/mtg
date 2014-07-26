@@ -13,7 +13,7 @@ import java.util.Map.Entry;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.hackcaffebabe.mtg.controller.DBCostants;
+import com.hackcaffebabe.mtg.controller.Paths;
 
 
 /**
@@ -26,7 +26,7 @@ public class AbilityFactory
 {
 	private static AbilityFactory factory;
 
-	private File abilityFile = new File( DBCostants.ABILITY_FILE_PATH );
+	private File abilityFile = new File( Paths.ABILITY_FILE_PATH );
 	private HashMap<String, String> abilities = new HashMap<>();
 	private JsonObject jsonAbilities = new JsonObject();
 

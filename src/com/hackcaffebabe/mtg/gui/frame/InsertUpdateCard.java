@@ -1,17 +1,6 @@
 package com.hackcaffebabe.mtg.gui.frame;
 
-import static com.hackcaffebabe.mtg.gui.GUIUtils.AC_ARTIFACT;
-import static com.hackcaffebabe.mtg.gui.GUIUtils.AC_CREATURE;
-import static com.hackcaffebabe.mtg.gui.GUIUtils.AC_ENCHANTMENT;
-import static com.hackcaffebabe.mtg.gui.GUIUtils.AC_INSTANT;
-import static com.hackcaffebabe.mtg.gui.GUIUtils.AC_LAND;
-import static com.hackcaffebabe.mtg.gui.GUIUtils.AC_PLANESWALKER;
-import static com.hackcaffebabe.mtg.gui.GUIUtils.AC_SORCERY;
-import static com.hackcaffebabe.mtg.gui.GUIUtils.DIMENSION_INSERT_CARD;
-import static com.hackcaffebabe.mtg.gui.GUIUtils.TITLE_INSERT_CARD;
-import static com.hackcaffebabe.mtg.gui.GUIUtils.TITLE_UPDATE_CARD;
 import java.awt.Event;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -24,6 +13,9 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.KeyStroke;
+import com.hackcaffebabe.mtg.gui.ActionCommand;
+import com.hackcaffebabe.mtg.gui.FramesDimensions;
+import com.hackcaffebabe.mtg.gui.FramesTitles;
 import com.hackcaffebabe.mtg.gui.panel.insertupdatecard.InsertUpdateCardContent;
 import com.hackcaffebabe.mtg.model.MTGCard;
 
@@ -44,10 +36,9 @@ public class InsertUpdateCard extends JFrame
 	 * @param cardToView {@link MTG} or null if user want to insert a card.
 	 */
 	public InsertUpdateCard(MTGCard cardToView){
-		super( cardToView == null ? TITLE_INSERT_CARD : TITLE_UPDATE_CARD );
-		setMinimumSize( DIMENSION_INSERT_CARD );
-		setLocation( (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - (DIMENSION_INSERT_CARD.width / 2),
-				(Toolkit.getDefaultToolkit().getScreenSize().height / 2) - (DIMENSION_INSERT_CARD.height / 2) );
+		super( cardToView == null ? FramesTitles.TITLE_INSERT_CARD : FramesTitles.TITLE_UPDATE_CARD );
+		setMinimumSize( FramesDimensions.DIMENSION_INSERT_CARD );
+		setLocation( FramesDimensions.getCenter( FramesDimensions.DIMENSION_INSERT_CARD ) );
 		this.cardToView = cardToView;
 		this.initMenuBar();
 		this.initContent( cardToView );
@@ -88,8 +79,9 @@ public class InsertUpdateCard extends JFrame
 			List<Integer> vks = Arrays.asList( KeyEvent.VK_1, KeyEvent.VK_2, KeyEvent.VK_3, KeyEvent.VK_4,
 					KeyEvent.VK_5, KeyEvent.VK_6, KeyEvent.VK_7 );
 			int i = 0;
-			for(final String s: Arrays.asList( AC_CREATURE, AC_ARTIFACT, AC_PLANESWALKER, AC_LAND, AC_ENCHANTMENT,
-					AC_SORCERY, AC_INSTANT )) {
+			for(final String s: Arrays.asList( ActionCommand.CREATURE, ActionCommand.ARTIFACT,
+					ActionCommand.PLANESWALKER, ActionCommand.LAND, ActionCommand.ENCHANTMENT,
+					ActionCommand.SORCERY, ActionCommand.INSTANT )) {
 				JRadioButtonMenuItem currentTypeSelector = new JRadioButtonMenuItem( s );
 				currentTypeSelector.addActionListener( new ActionListener(){
 					public void actionPerformed(ActionEvent e){

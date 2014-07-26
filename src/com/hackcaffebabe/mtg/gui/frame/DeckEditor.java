@@ -22,7 +22,8 @@ import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
 import javax.swing.text.DefaultEditorKit;
-import com.hackcaffebabe.mtg.gui.GUIUtils;
+import com.hackcaffebabe.mtg.gui.FramesDimensions;
+import com.hackcaffebabe.mtg.gui.FramesTitles;
 import com.hackcaffebabe.mtg.gui.frame.listener.AboutActionListener;
 import com.hackcaffebabe.mtg.gui.panel.deckeditor.DeckEditorContent;
 
@@ -42,10 +43,10 @@ public class DeckEditor extends JFrame
 	 * Instance the frame and all his content.
 	 */
 	public DeckEditor(){
-		super( GUIUtils.TITLE_DECK_EDITOR );
+		super( FramesTitles.TITLE_DECK_EDITOR );
 		setLayout( new BorderLayout() );
-		setSize( GUIUtils.DIMENSION_DECK_EDITOR );
-		setMinimumSize( GUIUtils.DIMENSION_DECK_EDITOR );
+		setSize( FramesDimensions.DIMENSION_DECK_EDITOR );
+		setMinimumSize( FramesDimensions.DIMENSION_DECK_EDITOR );
 		setDefaultCloseOperation( WindowConstants.DO_NOTHING_ON_CLOSE );
 		addWindowListener( new WinListener() );
 

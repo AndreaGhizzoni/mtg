@@ -1,7 +1,5 @@
 package com.hackcaffebabe.mtg.controller.json.adapter;
 
-import static com.hackcaffebabe.mtg.controller.DBCostants.JSON_TAG_COLORS;
-import static com.hackcaffebabe.mtg.controller.DBCostants.JSON_TAG_TYPE;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import com.google.gson.JsonArray;
@@ -13,6 +11,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
+import com.hackcaffebabe.mtg.controller.json.JSONTags;
 import com.hackcaffebabe.mtg.model.color.CardColor;
 import com.hackcaffebabe.mtg.model.color.Mana;
 import com.hackcaffebabe.mtg.model.color.TypeColor;
@@ -31,8 +30,8 @@ public class CardColorAdapter implements JsonSerializer<CardColor>, JsonDeserial
 		JsonArray colors = new JsonArray();
 		for(Mana i: arg0.getColors())
 			colors.add( new JsonPrimitive( i == null ? "null" : i.toString() ) );
-		result.add( JSON_TAG_COLORS, colors );
-		result.add( JSON_TAG_TYPE, new JsonPrimitive( arg0.getType().toString() ) );
+		result.add( JSONTags.COLORS, colors );
+		result.add( JSONTags.TYPE, new JsonPrimitive( arg0.getType().toString() ) );
 		return result;
 	}
 
@@ -42,12 +41,12 @@ public class CardColorAdapter implements JsonSerializer<CardColor>, JsonDeserial
 		CardColor result = null;
 
 		JsonObject cardColorAdJsonObject = arg0.getAsJsonObject();
-		JsonArray colors = cardColorAdJsonObject.get( JSON_TAG_COLORS ).getAsJsonArray();
+		JsonArray colors = cardColorAdJsonObject.get( JSONTags.COLORS ).getAsJsonArray();
 		ArrayList<Mana> list = new ArrayList<>();
 		for(JsonElement i: colors)
 			list.add( Mana.valueOf( i.getAsString() ) );
 
-		TypeColor type = TypeColor.valueOf( cardColorAdJsonObject.get( JSON_TAG_TYPE ).getAsString() );
+		TypeColor type = TypeColor.valueOf( cardColorAdJsonObject.get( JSONTags.TYPE ).getAsString() );
 		switch( type ) {
 			case COLOR_LESS: {
 				result = new CardColor();

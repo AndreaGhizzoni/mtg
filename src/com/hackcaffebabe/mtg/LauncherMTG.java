@@ -8,6 +8,7 @@ import java.io.PrintStream;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import com.hackcaffebabe.mtg.controller.DBCostants;
+import com.hackcaffebabe.mtg.controller.Paths;
 import com.hackcaffebabe.mtg.controller.json.StoreManager;
 import com.hackcaffebabe.mtg.gui.frame.MTG;
 
@@ -45,33 +46,33 @@ public class LauncherMTG
 	private static void initLogger() throws Exception{
 		Logger.getInstance();
 		if(DBCostants.DB_LOG_ON_FILE) {
-			Logger.getInstance().setPrintStream( new PrintStream( new File( DBCostants.LOG_FILE_PATH ) ) );
+			Logger.getInstance().setPrintStream( new PrintStream( new File( Paths.LOG_FILE_PATH ) ) );
 			Logger.getInstance().disableTag( Tag.DEBUG );
 		}
 		Logger.getInstance().write( Tag.INFO, "Logger initialized correctly." );
 	}
 
 	private static void initHomeFolder(){
-		File mtgHome = new File( DBCostants.mtgHome );
+		File mtgHome = new File( Paths.mtgHome );
 		if(!mtgHome.exists()) {
 			mtgHome.mkdirs();
 		}
 	}
 
 	private static void initSubFolderStructure(){
-		File mtgDataFile = new File( DBCostants.mtgDataHome );
+		File mtgDataFile = new File( Paths.mtgDataHome );
 		if(!mtgDataFile.exists()) {
 			mtgDataFile.mkdirs();
 			Logger.getInstance().write( Tag.INFO, "creating path: " + mtgDataFile.getAbsolutePath() );
 		}
 
-		File mtgJsonPath = new File( DBCostants.JSON_PATH );
+		File mtgJsonPath = new File( Paths.JSON_PATH );
 		if(!mtgJsonPath.exists()) {
 			mtgJsonPath.mkdirs();
 			Logger.getInstance().write( Tag.INFO, "creating path: " + mtgJsonPath.getAbsolutePath() );
 		}
 
-		File mtgDeckPath = new File( DBCostants.DECK_PATH );
+		File mtgDeckPath = new File( Paths.DECK_PATH );
 		if(!mtgDeckPath.exists()) {
 			mtgDeckPath.mkdirs();
 			Logger.getInstance().write( Tag.INFO, "creating path: " + mtgDeckPath.getAbsolutePath() );

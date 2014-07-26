@@ -1,6 +1,5 @@
 package com.hackcaffebabe.mtg.gui.panel.mtg;
 
-import static com.hackcaffebabe.mtg.gui.GUIUtils.DIMENSION_MAIN_FRAME;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.JXTABLE_MTG;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.JXTABLE_MTG_COLUMN_ADJUSTER;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.PNL_MTGPROPERTIES;
@@ -21,6 +20,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import net.miginfocom.swing.MigLayout;
+import com.hackcaffebabe.mtg.gui.FramesDimensions;
 import com.hackcaffebabe.mtg.gui.panel.mtg.listener.AdvanceSearchActionListener;
 import com.hackcaffebabe.mtg.gui.panel.mtg.listener.SelectionMTGCardList;
 import com.hackcaffebabe.mtg.model.MTGCard;
@@ -46,7 +46,7 @@ public class MTGContent extends JPanel
 	 */
 	public MTGContent(){
 		super();
-		setSize( DIMENSION_MAIN_FRAME );
+		setSize( FramesDimensions.DIMENSION_MAIN_FRAME );
 		setLayout( new MigLayout( "", "[698.00,grow][190!][190!]", "[grow][60!]" ) );
 		this.initContent();
 		this.initShortcut();

@@ -31,9 +31,6 @@ public class ManaCostAdapter implements JsonSerializer<ManaCost>, JsonDeserializ
 			result.add( t.getFirstObj().toString(), new JsonPrimitive( t.getSecondObj() ) );
 		}
 		return result;
-
-//		for(Map.Entry<OLD_BasicColors, Integer> i: arg0.getCost().entrySet())
-//			result.add( i.getKey() == null ? "null" : i.getKey().toString(), new JsonPrimitive( i.getValue() ) );
 	}
 
 	@Override
@@ -44,13 +41,5 @@ public class ManaCostAdapter implements JsonSerializer<ManaCost>, JsonDeserializ
 			mana.add( new Tuple<Mana, Integer>( Mana.valueOf( i.getKey() ), i.getValue().getAsInt() ) );
 		}
 		return new ManaCost( mana );
-
-//		HashMap<OLD_BasicColors, Integer> mana = new HashMap<>();
-//		for(Map.Entry<String, JsonElement> i: manaCostAsJsonObject.entrySet()) {
-//			mana.put( i.getKey().equals( "null" ) ? null : OLD_BasicColors.valueOf( i.getKey() ), i.getValue()
-//					.getAsInt() );
-//		}
-//		result = new ManaCost( mana );
-//		return result;
 	}
 }

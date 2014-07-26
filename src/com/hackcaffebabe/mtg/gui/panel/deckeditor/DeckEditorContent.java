@@ -26,8 +26,8 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeSelectionModel;
 import net.miginfocom.swing.MigLayout;
-import com.hackcaffebabe.mtg.controller.DBCostants;
-import com.hackcaffebabe.mtg.gui.GUIUtils;
+import com.hackcaffebabe.mtg.controller.Paths;
+import com.hackcaffebabe.mtg.gui.FramesDimensions;
 import com.hackcaffebabe.mtg.gui.components.deckeditor.DeckTreeNode;
 import com.hackcaffebabe.mtg.gui.components.deckeditor.DeckTreeNode.TREENODE_TYPE;
 
@@ -50,7 +50,7 @@ public class DeckEditorContent extends JPanel
 	 */
 	public DeckEditorContent(){
 		super();
-		setSize( GUIUtils.DIMENSION_DECK_EDITOR );
+		setSize( FramesDimensions.DIMENSION_DECK_EDITOR );
 		setLayout( new MigLayout( "", "[grow][120:120:120,grow][120:120:120]", "[grow]" ) );
 		this.initContent();
 		this.refreshSavedDeck();
@@ -88,7 +88,7 @@ public class DeckEditorContent extends JPanel
 			@Override
 			public void run(){
 				DeckTreeNode decks = new DeckTreeNode( "Decks", TREENODE_TYPE.ROOT );
-				List<File> files = Arrays.asList( new File( DBCostants.DECK_PATH ).listFiles() );
+				List<File> files = Arrays.asList( new File( Paths.DECK_PATH ).listFiles() );
 				Collections.sort( files );
 
 //				//TEST
@@ -151,7 +151,7 @@ public class DeckEditorContent extends JPanel
 		int r = JOptionPane.showConfirmDialog( this, "Are you really sure ?", "Delete " + fileName,
 				JOptionPane.OK_CANCEL_OPTION );
 		if(r == JOptionPane.OK_OPTION) {
-			String f = String.format( DBCostants.DECK_PATH + PathUtil.FILE_SEPARATOR + "%s.mtgdeck", fileName );
+			String f = String.format( Paths.DECK_PATH + PathUtil.FILE_SEPARATOR + "%s.mtgdeck", fileName );
 			File file = new File( f );
 			if(file.exists())
 				file.delete();
@@ -176,7 +176,7 @@ public class DeckEditorContent extends JPanel
 			int r = JOptionPane.showConfirmDialog( this, "Are you really sure ?", "Delete " + fileName,
 					JOptionPane.OK_CANCEL_OPTION );
 			if(r == JOptionPane.OK_OPTION) {
-				String f = String.format( DBCostants.DECK_PATH + PathUtil.FILE_SEPARATOR + "%s.mtgdeck", fileName );
+				String f = String.format( Paths.DECK_PATH + PathUtil.FILE_SEPARATOR + "%s.mtgdeck", fileName );
 				File file = new File( f );
 				if(file.exists())
 					file.delete();
@@ -199,7 +199,7 @@ public class DeckEditorContent extends JPanel
 		if(newName != null) {
 			String oldName = tabDeckOpened.getTitleAt( tabDeckOpened.getSelectedIndex() );
 
-			String f = String.format( DBCostants.DECK_PATH + PathUtil.FILE_SEPARATOR + "%s.mtgdeck", oldName );
+			String f = String.format( Paths.DECK_PATH + PathUtil.FILE_SEPARATOR + "%s.mtgdeck", oldName );
 			File file = new File( f );
 			if(file.exists())
 				file.delete();
@@ -225,8 +225,8 @@ public class DeckEditorContent extends JPanel
 			String oldName = node.getUserObject().toString();
 			String newName = JOptionPane.showInputDialog( this, "Insert new deck's name:" );
 
-			String f = String.format( DBCostants.DECK_PATH + PathUtil.FILE_SEPARATOR + "%s.mtgdeck", oldName );
-			String n = String.format( DBCostants.DECK_PATH + PathUtil.FILE_SEPARATOR + "%s.mtgdeck", newName );
+			String f = String.format( Paths.DECK_PATH + PathUtil.FILE_SEPARATOR + "%s.mtgdeck", oldName );
+			String n = String.format( Paths.DECK_PATH + PathUtil.FILE_SEPARATOR + "%s.mtgdeck", newName );
 			new File( f ).renameTo( new File( n ) );
 			closeTab( oldName );
 
@@ -333,7 +333,7 @@ public class DeckEditorContent extends JPanel
 			//TODO try to implements locked files on decks
 			DefaultMutableTreeNode node = (DefaultMutableTreeNode) treeSavedDeck.getLastSelectedPathComponent();
 			String fileName = (String) node.getUserObject();
-			String f = String.format( DBCostants.DECK_PATH + PathUtil.FILE_SEPARATOR + "%s.mtgdeck", fileName );
+			String f = String.format( Paths.DECK_PATH + PathUtil.FILE_SEPARATOR + "%s.mtgdeck", fileName );
 			openTab( fileName, PathUtil.forceReadContent( new File( f ) ) );
 		}
 

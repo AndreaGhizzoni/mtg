@@ -5,7 +5,8 @@ import it.hackcaffebabe.jx.table.model.DisplayableObject;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import com.hackcaffebabe.mtg.controller.DBCostants;
+import com.hackcaffebabe.mtg.controller.Paths;
+import com.hackcaffebabe.mtg.controller.StringNormalizer;
 import com.hackcaffebabe.mtg.model.card.Ability;
 import com.hackcaffebabe.mtg.model.card.Effect;
 import com.hackcaffebabe.mtg.model.card.PlanesAbility;
@@ -234,10 +235,10 @@ public abstract class MTGCard extends DisplayableObject implements Serializable
 	 */
 	public String getJSONFileName(){
 		StringBuilder r = new StringBuilder();
-		String name = DBCostants.normalizeForStorage( getName().toLowerCase().replaceAll( " ", "" ) );
-		String series = DBCostants.normalizeForStorage( getSeries().toLowerCase().replaceAll( " ", "" ) );
+		String name = StringNormalizer.normalizeForStorage( getName().toLowerCase().replaceAll( " ", "" ) );
+		String series = StringNormalizer.normalizeForStorage( getSeries().toLowerCase().replaceAll( " ", "" ) );
 		String name_series = String.format( "%s_%s.json", name, series );
-		r.append( DBCostants.JSON_PATH );
+		r.append( Paths.JSON_PATH );
 		r.append( PathUtil.FILE_SEPARATOR );
 		r.append( name_series );
 

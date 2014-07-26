@@ -21,7 +21,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.filechooser.FileFilter;
-import com.hackcaffebabe.mtg.controller.DBCostants;
+import com.hackcaffebabe.mtg.controller.Paths;
 import com.hackcaffebabe.mtg.controller.json.StoreManager;
 import com.hackcaffebabe.mtg.gui.GUIUtils;
 
@@ -72,7 +72,7 @@ public class ImportActionListener implements ActionListener
 				switch( whatToImport ) {
 					case ALL_CARDS: {
 						log.write( Tag.INFO, "Try to Import all from backup: " + lastFileSelected );
-						File jsonPath = new File( DBCostants.JSON_PATH );
+						File jsonPath = new File( Paths.JSON_PATH );
 						List<File> lst = new UnZipper( lastFileSelected, jsonPath ).unZipAll( false );
 						log.write( Tag.DEBUG, "File unzipped: " + lst );
 						completeAction( lst );
@@ -83,7 +83,7 @@ public class ImportActionListener implements ActionListener
 					}
 					case SELECTIVE_CARDS: {
 						log.write( Tag.INFO, "Try to Selected Import from backup: " + lastFileSelected );
-						UnZipper unzip = new UnZipper( lastFileSelected, new File( DBCostants.JSON_PATH ) );
+						UnZipper unzip = new UnZipper( lastFileSelected, new File( Paths.JSON_PATH ) );
 						log.write( Tag.DEBUG, "unzipper created correctly" );
 						DefaultListModel<JXCheckListEntry<String>> model = JXCheckList.convertToModel(
 								unzip.listZipContent(), true );
@@ -130,10 +130,10 @@ public class ImportActionListener implements ActionListener
 			@Override
 			public boolean accept(File f){
 				if(whatToImport.equals( WhatToImport.ALL_CARDS ) || whatToImport.equals( WhatToImport.SELECTIVE_CARDS ))
-					return f.isDirectory() || f.getName().endsWith( DBCostants.BCK_CARDS_EXT );
+					return f.isDirectory() || f.getName().endsWith( Paths.BCK_CARDS_EXT );
 
 				if(whatToImport.equals( WhatToImport.ALL_DECKS ) || whatToImport.equals( WhatToImport.SELECTIVE_DECKS ))
-					return f.isDirectory() || f.getName().endsWith( DBCostants.BCK_DECKS_EXT );
+					return f.isDirectory() || f.getName().endsWith( Paths.BCK_DECKS_EXT );
 
 				return false;
 			}

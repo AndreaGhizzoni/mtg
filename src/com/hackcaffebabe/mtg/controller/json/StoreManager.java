@@ -1,6 +1,5 @@
 package com.hackcaffebabe.mtg.controller.json;
 
-import static com.hackcaffebabe.mtg.controller.DBCostants.JSON_PATH;
 import it.hackcaffebabe.ioutil.file.Zipper;
 import it.hackcaffebabe.logger.Logger;
 import it.hackcaffebabe.logger.Tag;
@@ -15,6 +14,7 @@ import java.util.HashSet;
 import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.hackcaffebabe.mtg.controller.Paths;
 import com.hackcaffebabe.mtg.controller.json.adapter.AbilityAdapter;
 import com.hackcaffebabe.mtg.controller.json.adapter.CardColorAdapter;
 import com.hackcaffebabe.mtg.controller.json.adapter.EffectAdapter;
@@ -76,7 +76,7 @@ public class StoreManager
 //===========================================================================================
 	/** Initialize the entire class **/
 	private void init() throws IOException{
-		File store = new File( JSON_PATH );
+		File store = new File( Paths.JSON_PATH );
 		if(!store.exists())
 			store.mkdirs();
 		if(!store.canWrite())
@@ -100,7 +100,7 @@ public class StoreManager
 		EventQueue.invokeLater( new Runnable(){
 			@Override
 			public void run(){
-				for(File f: new File( JSON_PATH ).listFiles()) {
+				for(File f: new File( Paths.JSON_PATH ).listFiles()) {
 					MTGCard c = loadFile( f );
 					if(c != null) {//if null continue
 						mtgSet.add( c );
@@ -265,7 +265,7 @@ public class StoreManager
 			log.write( Tag.ERRORS, "Error on delete exists backup." );
 		}
 
-		Zipper zip = new Zipper( destinationFile, new File( JSON_PATH ).listFiles() );
+		Zipper zip = new Zipper( destinationFile, new File( Paths.JSON_PATH ).listFiles() );
 		zip.forceZip();
 		log.write( Tag.INFO, "Backup closed and create correctly." );
 	}

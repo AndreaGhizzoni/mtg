@@ -1,9 +1,6 @@
 package com.hackcaffebabe.mtg.gui.frame;
 
-import static com.hackcaffebabe.mtg.gui.GUIUtils.DIMENSION_MAIN_FRAME;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.STATUS_BAR_MAIN_FRAME;
-import static com.hackcaffebabe.mtg.gui.GUIUtils.TITLE_MAIN_FRAME;
-import static com.hackcaffebabe.mtg.gui.GUIUtils.VERSION;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.refreshMTGTable;
 import it.hackcaffebabe.jx.statusbar.JXStatusBar;
 import it.hackcaffebabe.logger.Logger;
@@ -11,7 +8,6 @@ import it.hackcaffebabe.logger.Tag;
 import java.awt.BorderLayout;
 import java.awt.Event;
 import java.awt.Font;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -23,6 +19,9 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
+import com.hackcaffebabe.mtg.Version;
+import com.hackcaffebabe.mtg.gui.FramesDimensions;
+import com.hackcaffebabe.mtg.gui.FramesTitles;
 import com.hackcaffebabe.mtg.gui.frame.listener.AboutActionListener;
 import com.hackcaffebabe.mtg.gui.frame.listener.DeckEditorActionListener;
 import com.hackcaffebabe.mtg.gui.frame.listener.ExportActionListener;
@@ -49,11 +48,10 @@ public class MTG extends JFrame
 	 * Create the frame.
 	 */
 	public MTG(){
-		super( TITLE_MAIN_FRAME );
+		super( FramesTitles.TITLE_MAIN_FRAME );
 		setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-		setMinimumSize( DIMENSION_MAIN_FRAME );
-		setLocation( (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - (DIMENSION_MAIN_FRAME.width / 2),
-				(Toolkit.getDefaultToolkit().getScreenSize().height / 2) - (DIMENSION_MAIN_FRAME.height / 2) );
+		setMinimumSize( FramesDimensions.DIMENSION_MAIN_FRAME );
+		setLocation( FramesDimensions.getCenter( FramesDimensions.DIMENSION_MAIN_FRAME ) );
 		addWindowListener( new WinListener() );
 		this.initContent();
 		this.initMenuBar();
@@ -64,7 +62,7 @@ public class MTG extends JFrame
 //===========================================================================================
 	/* initialize all components */
 	private void initContent(){
-		STATUS_BAR_MAIN_FRAME = new JXStatusBar( this, "Ready!", VERSION, 10 );
+		STATUS_BAR_MAIN_FRAME = new JXStatusBar( this, "Ready!", Version.VERSION, 10 );
 		STATUS_BAR_MAIN_FRAME.setTextFont( new Font( Font.MONOSPACED, Font.PLAIN, 11 ) );
 		this.content = new MTGContent();
 		this.content.setOpaque( true );

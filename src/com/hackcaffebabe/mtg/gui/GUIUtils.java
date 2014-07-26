@@ -7,7 +7,6 @@ import it.hackcaffebabe.jx.table.model.JXObjectModel;
 import it.hackcaffebabe.logger.Logger;
 import it.hackcaffebabe.logger.Tag;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -36,7 +35,7 @@ import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
-import com.hackcaffebabe.mtg.controller.DBCostants;
+import com.hackcaffebabe.mtg.controller.StringNormalizer;
 import com.hackcaffebabe.mtg.controller.json.StoreManager;
 import com.hackcaffebabe.mtg.gui.panel.mtg.MTGProperties;
 import com.hackcaffebabe.mtg.model.MTGCard;
@@ -57,38 +56,6 @@ import com.hackcaffebabe.mtg.model.cost.Tuple;
  */
 public class GUIUtils
 {
-	/** Current software version */
-	public static final String VERSION = "BETA_0.3025";
-
-	/** Title of main frame */
-	public static final String TITLE_MAIN_FRAME = "MTG Card Manager!";
-	/** Title of insert card frame */
-	public static final String TITLE_INSERT_CARD = "MTG Insert Card!";
-	/** Title of update card frame */
-	public static final String TITLE_UPDATE_CARD = "MTG Update Card!";
-	/** Title of advance search frame */
-	public static final String TITLE_ADVANCE_SEARCH = "Advance Search";
-	/** Title of Deck Editor frame */
-	public static final String TITLE_DECK_EDITOR = "Deck Editor!";
-
-	/** Dimension of main frame */
-	public static final Dimension DIMENSION_MAIN_FRAME = new Dimension( 1150, 655 );
-	/** Dimension of insert card frame */
-	public static final Dimension DIMENSION_INSERT_CARD = new Dimension( 660, 700 );
-	/** Dimension of advance search frame */
-	public static final Dimension DIMENSION_ADVANCE_SEARCH = new Dimension( 655, 150 );
-	/** Dimension of Deck editor */
-	public static final Dimension DIMENSION_DECK_EDITOR = new Dimension( 700, 720 );
-
-	/* Action Command */
-	public static final String AC_CREATURE = "Creature";
-	public static final String AC_ARTIFACT = "Artifact";
-	public static final String AC_PLANESWALKER = "Planeswalker";
-	public static final String AC_LAND = "Land";
-	public static final String AC_INSTANT = "Instant";
-	public static final String AC_SORCERY = "Sorcery";
-	public static final String AC_ENCHANTMENT = "Enchantment";
-
 	/** Public access of JXStatsBar of Main frame */
 	public static JXStatusBar STATUS_BAR_MAIN_FRAME;
 	/** Public access of JXTable of Main frame */
@@ -249,7 +216,7 @@ public class GUIUtils
 		if(i == JOptionPane.CANCEL_OPTION || i == JOptionPane.CLOSED_OPTION)
 			return null;
 		try {
-			return new Effect( action.cost, DBCostants.removeAccentCharacters( txtDescription.getText() ) );
+			return new Effect( action.cost, StringNormalizer.removeAccentCharacters( txtDescription.getText() ) );
 		} catch(Exception ex) {
 			return null;
 		}
@@ -306,8 +273,8 @@ public class GUIUtils
 		if(i == JOptionPane.CANCEL_OPTION || i == JOptionPane.CLOSED_OPTION)
 			return null;
 
-		String ability = DBCostants.removeAccentCharacters( txtAbilty.getText() );
-		String description = DBCostants.removeAccentCharacters( txtDescription.getText() );
+		String ability = StringNormalizer.removeAccentCharacters( txtAbilty.getText() );
+		String description = StringNormalizer.removeAccentCharacters( txtDescription.getText() );
 		try {
 			if(set.isEmpty()) {// no ability saved
 				return new Ability( ability, description );
@@ -346,7 +313,7 @@ public class GUIUtils
 		JOptionPane.showMessageDialog( parent, input, "Insert Planes Ability", JOptionPane.INFORMATION_MESSAGE );
 
 		try {
-			String description = DBCostants.removeAccentCharacters( txtDescription.getText() );
+			String description = StringNormalizer.removeAccentCharacters( txtDescription.getText() );
 			return new PlanesAbility( (Integer) spinLifeCost.getValue(), description );
 		} catch(Exception e) {
 			return null;

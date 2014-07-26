@@ -11,7 +11,7 @@ import java.io.IOException;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
-import com.hackcaffebabe.mtg.controller.DBCostants;
+import com.hackcaffebabe.mtg.controller.Paths;
 import com.hackcaffebabe.mtg.controller.json.StoreManager;
 
 
@@ -118,9 +118,9 @@ public class ExportActionListener implements ActionListener
 	/* this method creates the appropriate File object according to the mode and the last location user selection */
 	private File makeBackupFile(){
 		if(whatToExport.equals( WhatToExport.ALL_DECKS )) {
-			return new File( lastLocationUserSelection + PathUtil.FILE_SEPARATOR + DBCostants.BCK_DECKS_NAME );
+			return new File( lastLocationUserSelection + PathUtil.FILE_SEPARATOR + Paths.BCK_DECKS_NAME );
 		} else if(whatToExport.equals( WhatToExport.ALL_CARDS )) {
-			return new File( lastLocationUserSelection + PathUtil.FILE_SEPARATOR + DBCostants.BCK_CARDS_NAME );
+			return new File( lastLocationUserSelection + PathUtil.FILE_SEPARATOR + Paths.BCK_CARDS_NAME );
 		} else {
 			return null;
 		}
