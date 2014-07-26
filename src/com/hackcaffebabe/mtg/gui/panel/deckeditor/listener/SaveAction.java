@@ -12,6 +12,7 @@ import java.io.Writer;
 import javax.swing.AbstractAction;
 import javax.swing.SwingUtilities;
 import com.hackcaffebabe.mtg.controller.Paths;
+import com.hackcaffebabe.mtg.gui.GUIUtils;
 import com.hackcaffebabe.mtg.gui.panel.deckeditor.TabContent;
 
 
@@ -53,7 +54,7 @@ public class SaveAction extends AbstractAction
 					w.flush();
 					w.close();
 				} catch(IOException e) {
-					e.printStackTrace();//TODO add logger exception
+					GUIUtils.displayError( null, e );
 				}
 			}
 		} );

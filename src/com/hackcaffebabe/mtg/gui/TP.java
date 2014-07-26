@@ -1,8 +1,7 @@
 package com.hackcaffebabe.mtg.gui;
 
 /**
- * Tool Tip TODO maybe add some TP around the program
- *  
+ * Tool Tip
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
  */

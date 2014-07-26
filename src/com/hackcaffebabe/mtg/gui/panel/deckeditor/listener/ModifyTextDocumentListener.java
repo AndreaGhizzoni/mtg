@@ -13,7 +13,10 @@ import com.hackcaffebabe.mtg.gui.panel.deckeditor.TabTopRender;
 
 
 /**
- * TODO add description
+ * This class is used by Deck Editor.<br>
+ * This class provide the listener to determinate if the document needs to be saved or not.<br>
+ * If the document needs to be saved, this class will change the title color of tab pane (witch is contained) in red,<br>
+ * otherwise will be black.
  *  
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0

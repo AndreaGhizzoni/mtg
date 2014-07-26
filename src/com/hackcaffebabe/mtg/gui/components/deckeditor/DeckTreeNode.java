@@ -4,9 +4,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 
 /**
- * TODO ADD DOCS AND DESCRIPTION!!!
- * This class is made to make more easy the management the click event on deck tree
- *  
+ * This class is made to make more easy the management the click event on deck tree (DeckEditor)
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
  */
@@ -14,6 +12,11 @@ public class DeckTreeNode extends DefaultMutableTreeNode
 {
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * This enumerator need to classify the node.
+	 * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
+	 * @version 1.0
+	 */
 	public enum TREENODE_TYPE
 	{
 		ROOT,

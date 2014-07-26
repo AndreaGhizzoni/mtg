@@ -23,7 +23,7 @@ public class LauncherMTG
 {
 	public static void main(String... args){
 		try {
-			//TODO check JDK 8!
+			checkJDKVersion();
 			initHomeFolder();
 			initLogger();
 			initSubFolderStructure();
@@ -40,6 +40,12 @@ public class LauncherMTG
 
 		} catch(Exception e) {
 			displayError( null, e );
+		}
+	}
+
+	private static void checkJDKVersion() throws Exception{
+		if(Integer.parseInt( System.getProperty( "java.version" ).split( "\\." )[1] ) < Version.MIN_JDK) {
+			throw new Exception( "Java version Error. To run this program Java " + Version.MIN_JDK + " is required!" );
 		}
 	}
 

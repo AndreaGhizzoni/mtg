@@ -72,7 +72,7 @@ public class DeckEditorContent extends JPanel
 		((DefaultTreeCellRenderer) this.treeSavedDeck.getCellRenderer()).setBackgroundNonSelectionColor( UIManager
 				.getColor( "windowBorder" ) );//TODO switch to JXTreeRender when finish
 		this.treeSavedDeck.getSelectionModel().setSelectionMode( TreeSelectionModel.SINGLE_TREE_SELECTION );
-		this.treeSavedDeck.addMouseListener( new DeckClickListener() );//TODO finish it
+		this.treeSavedDeck.addMouseListener( new DeckClickListener() );
 		JScrollPane scrollPane = new JScrollPane( this.treeSavedDeck );
 		scrollPane.setBorder( null );
 
@@ -107,13 +107,6 @@ public class DeckEditorContent extends JPanel
 			}
 		} );
 	}
-
-//	/**
-//	 * Crate a new Group of decks
-//	 */
-//	public void newGroup(){
-//		Logger.getInstance().write( Tag.DEBUG, "TODO" );
-//	}
 
 	/* open a new tab with given name and content. */
 	private void openTab(String tabName, String content){
@@ -216,7 +209,7 @@ public class DeckEditorContent extends JPanel
 	 */
 	public void renameSelectedDeck(){
 		Logger.getInstance().write( Tag.DEBUG, "Rename selected deck called" );
-		DefaultMutableTreeNode node = (DefaultMutableTreeNode) treeSavedDeck.getLastSelectedPathComponent();
+		DeckTreeNode node = (DeckTreeNode) treeSavedDeck.getLastSelectedPathComponent();
 		if(node == null)
 			return;
 
@@ -314,14 +307,14 @@ public class DeckEditorContent extends JPanel
 		@Override
 		public void mouseClicked(MouseEvent e){
 			if(e.getClickCount() == 2 && SwingUtilities.isLeftMouseButton( e ) && isDeck()) {
-				performDoulbleLeftClickOnLeaf( e );
+				doulbleLeftClickOnLeaf( e );
 			} else if(e.getClickCount() == 1 && SwingUtilities.isRightMouseButton( e )) {
 				treeSavedDeck.clearSelection();
 				treeSavedDeck.setSelectionPath( treeSavedDeck.getPathForLocation( e.getPoint().x, e.getPoint().y ) );
 				if(isRoot()) {
-					performSingleRigthClickOnRoot( e );
+					singleRigthClickOnRoot( e );
 				} else if(isDeck()) {
-					performSingleRigthClickOnDeck( e );
+					singleRigthClickOnDeck( e );
 				}/*else if(isGroup()) {
 					performSingleRigthClickOnGroup( e );
 					}*/
@@ -329,16 +322,16 @@ public class DeckEditorContent extends JPanel
 		}
 
 		/* perform the double click with the left button on decks */
-		private void performDoulbleLeftClickOnLeaf(MouseEvent e){
+		private void doulbleLeftClickOnLeaf(MouseEvent e){
 			//TODO try to implements locked files on decks
-			DefaultMutableTreeNode node = (DefaultMutableTreeNode) treeSavedDeck.getLastSelectedPathComponent();
+			DeckTreeNode node = (DeckTreeNode) treeSavedDeck.getLastSelectedPathComponent();
 			String fileName = (String) node.getUserObject();
 			String f = String.format( Paths.DECK_PATH + PathUtil.FILE_SEPARATOR + "%s.mtgdeck", fileName );
 			openTab( fileName, PathUtil.forceReadContent( new File( f ) ) );
 		}
 
 		/* perform the single click with the right button on the deck's root */
-		private void performSingleRigthClickOnRoot(MouseEvent e){
+		private void singleRigthClickOnRoot(MouseEvent e){
 //			JPopupMenu menu = new JPopupMenu();
 //			JMenuItem rename = new JMenuItem( "New Group" );
 //			menu.add( rename );
@@ -346,7 +339,7 @@ public class DeckEditorContent extends JPanel
 		}
 
 		/* perform the single click with the right button on the group of decks */
-		private void performSingleRigthClickOnDeck(MouseEvent e){
+		private void singleRigthClickOnDeck(MouseEvent e){
 			JPopupMenu menu = new JPopupMenu();
 
 			JMenuItem rename = new JMenuItem( "Rename" );

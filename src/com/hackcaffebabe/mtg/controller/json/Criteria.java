@@ -306,8 +306,7 @@ public class Criteria
 	 */
 	public boolean isCriteriaEmpty(){
 		return (name == null) && (convertedManaCost == null) && (subTypes == null)
-				&& (series.isEmpty() && (aiblities.isEmpty())) && (colors.isEmpty()) && (rarity.isEmpty()) /*&& (isLegendary == null) && (hasPrimaryEffect == null) 
-																											&& (hasEffect == null) && (hasAbility == null)*/;
+				&& (series.isEmpty() && (aiblities.isEmpty())) && (colors.isEmpty()) && (rarity.isEmpty());
 	}
 
 //===========================================================================================
@@ -346,5 +345,64 @@ public class Criteria
 //===========================================================================================
 // OVERRIDE
 //===========================================================================================
-	//TODO generate equal and hash code
+	@Override
+	public int hashCode(){
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((aiblities == null) ? 0 : aiblities.hashCode());
+		result = prime * result + ((colors == null) ? 0 : colors.hashCode());
+		result = prime * result + ((convertedManaCost == null) ? 0 : convertedManaCost.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((rarity == null) ? 0 : rarity.hashCode());
+		result = prime * result + ((series == null) ? 0 : series.hashCode());
+		result = prime * result + ((subTypes == null) ? 0 : subTypes.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj){
+		if(this == obj)
+			return true;
+		if(obj == null)
+			return false;
+		if(getClass() != obj.getClass())
+			return false;
+		Criteria other = (Criteria) obj;
+		if(aiblities == null) {
+			if(other.aiblities != null)
+				return false;
+		} else if(!aiblities.equals( other.aiblities ))
+			return false;
+		if(colors == null) {
+			if(other.colors != null)
+				return false;
+		} else if(!colors.equals( other.colors ))
+			return false;
+		if(convertedManaCost == null) {
+			if(other.convertedManaCost != null)
+				return false;
+		} else if(!convertedManaCost.equals( other.convertedManaCost ))
+			return false;
+		if(name == null) {
+			if(other.name != null)
+				return false;
+		} else if(!name.equals( other.name ))
+			return false;
+		if(rarity == null) {
+			if(other.rarity != null)
+				return false;
+		} else if(!rarity.equals( other.rarity ))
+			return false;
+		if(series == null) {
+			if(other.series != null)
+				return false;
+		} else if(!series.equals( other.series ))
+			return false;
+		if(subTypes == null) {
+			if(other.subTypes != null)
+				return false;
+		} else if(!subTypes.equals( other.subTypes ))
+			return false;
+		return true;
+	}
 }
