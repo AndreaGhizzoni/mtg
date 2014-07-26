@@ -62,9 +62,8 @@ public class SelectionMTGCardList extends MouseAdapter implements ListSelectionL
 	/* dispatcher event when mouse do left click on JXTABLE_MTG */
 	@SuppressWarnings("unchecked")
 	private void doSingleLeftClick(MouseEvent e){
-		int r = JXTABLE_MTG.rowAtPoint( e.getPoint() );
+		int r = JXTABLE_MTG.getSelectedModelRow();
 		if(r != -1) {
-			JXTABLE_MTG.getSelectionModel().setSelectionInterval( r, r );
 			MTGCard c = ((JXObjectModel<MTGCard>) JXTABLE_MTG.getModel()).getObject( r );
 			PNL_MTGPROPERTIES.setMTGCardToView( c );
 		}

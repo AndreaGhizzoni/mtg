@@ -61,7 +61,6 @@ import com.hackcaffebabe.mtg.model.card.Rarity;
 import com.hackcaffebabe.mtg.model.card.Strength;
 import com.hackcaffebabe.mtg.model.color.CardColor;
 import com.hackcaffebabe.mtg.model.cost.ManaCost;
-import com.hackcaffebabe.mtg.trash.OLD_Effect;
 
 
 /**
@@ -570,7 +569,7 @@ public class InsertUpdateCardContent extends JPanel
 			// =============== get land basic effect
 			if(mtgCardType.equals( AC_LAND )) {
 				@SuppressWarnings("unchecked")
-				List<OLD_Effect> mtgEffects = ((JXObjectModel<OLD_Effect>) tableEffects.getModel()).getObjects();
+				List<Effect> mtgEffects = ((JXObjectModel<Effect>) tableEffects.getModel()).getObjects();
 				if(mtgEffects.isEmpty()) {
 					displayError( null, new Exception( "Land must have at least one effect." ) );
 					tableEffects.requestFocus();

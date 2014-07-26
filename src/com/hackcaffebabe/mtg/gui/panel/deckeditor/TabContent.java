@@ -65,6 +65,14 @@ public class TabContent extends JPanel
 		}
 	}
 
+	/**
+	 * Force the save action.
+	 */
+	public void forceSave(){
+		this.textDeck.getActionMap().get( SAVE_KEY ).actionPerformed( new ActionEvent( this, 1, SAVE_KEY ) );
+		this.textDeckDocumentListener.updateInitialText();
+	}
+
 //===========================================================================================
 // SETTER
 //===========================================================================================

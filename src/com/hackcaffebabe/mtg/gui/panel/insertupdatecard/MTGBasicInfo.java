@@ -17,7 +17,6 @@ import com.hackcaffebabe.mtg.model.MTGCard;
 import com.hackcaffebabe.mtg.model.card.Rarity;
 import com.hackcaffebabe.mtg.model.color.CardColor;
 import com.hackcaffebabe.mtg.model.color.Mana;
-import com.hackcaffebabe.mtg.trash.OLD_CardColor;
 
 
 /**

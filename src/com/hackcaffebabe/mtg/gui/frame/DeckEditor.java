@@ -90,6 +90,7 @@ public class DeckEditor extends JFrame
 		delFile.addActionListener( new DeleteSelectedDeckActionListener() );
 
 		MyButton renameFile = new MyButton( "r" );
+		renameFile.addActionListener( new RenameSelectedDeckActionListener() );
 
 		toolBar.add( newFile );
 		toolBar.add( save );
@@ -149,6 +150,7 @@ public class DeckEditor extends JFrame
 		menuEditDelCurrent.addActionListener( new DeleteCurrentDeckActionListener() );
 
 		JMenuItem menuEditRename = new JMenuItem( "Rename" );
+		menuEditRename.addActionListener( new RenameCurrentDeckActionListener() );
 		menuEditRename.setAccelerator( KeyStroke.getKeyStroke( "F2" ) );
 
 		JMenuItem menuEditCopy = new JMenuItem( "Copy" );
@@ -210,7 +212,7 @@ public class DeckEditor extends JFrame
 	{
 		@Override
 		public void actionPerformed(ActionEvent e){
-			content.newGroup();
+//			content.newGroup();
 		}
 	}
 
@@ -228,6 +230,22 @@ public class DeckEditor extends JFrame
 		@Override
 		public void actionPerformed(ActionEvent e){
 			content.deleteSelectedDeck();
+		}
+	}
+
+	class RenameCurrentDeckActionListener implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent e){
+			content.renameCurrentDeck();
+		}
+	}
+
+	class RenameSelectedDeckActionListener implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent e){
+			content.renameSelectedDeck();
 		}
 	}
 

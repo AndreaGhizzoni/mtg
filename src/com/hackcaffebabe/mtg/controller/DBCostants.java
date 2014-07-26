@@ -24,7 +24,7 @@ public class DBCostants
 	public static final String ABILITY_FILE_PATH = mtgDataHome + PathUtil.FILE_SEPARATOR + "ability.json";
 
 	/** Flag for logging on file */
-	public static final boolean DB_LOG_ON_FILE = false;
+	public static final boolean DB_LOG_ON_FILE = true;
 
 	/** cardsbck */
 	public static final String BCK_CARDS_EXT = "zip";

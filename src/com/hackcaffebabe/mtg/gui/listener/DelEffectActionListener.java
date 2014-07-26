@@ -5,7 +5,7 @@ import it.hackcaffebabe.jx.table.JXTableColumnAdjuster;
 import it.hackcaffebabe.jx.table.model.JXObjectModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import com.hackcaffebabe.mtg.trash.OLD_Effect;
+import com.hackcaffebabe.mtg.model.card.Effect;
 
 
 /**
@@ -29,7 +29,7 @@ public class DelEffectActionListener implements ActionListener
 	public void actionPerformed(ActionEvent e){
 		int i = tableEffects.getSelectedModelRow();
 		if(i != -1) {
-			JXObjectModel<OLD_Effect> model = (JXObjectModel<OLD_Effect>) tableEffects.getModel();
+			JXObjectModel<Effect> model = (JXObjectModel<Effect>) tableEffects.getModel();
 			model.removeObject( i );
 			tableEffectsColumnAdjuster.adjustColumns();
 		}
