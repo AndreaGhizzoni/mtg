@@ -47,7 +47,7 @@ public class SaveAction extends AbstractAction
 			@Override
 			public void run(){
 				String fileName = String.format( "%s.mtgdeck", name );
-				String deckPath = String.format( "%s" + PathUtil.FILE_SEPARATOR + "%s", Paths.DECK_PATH, fileName );
+				String deckPath = String.format( "%s" + PathUtil.FILE_SEPARATOR + "%s", Paths.DECKS_PATH, fileName );
 				try {
 					Writer w = new BufferedWriter( new OutputStreamWriter( new FileOutputStream( deckPath ), "utf-8" ) );
 					w.write( src.getText() );

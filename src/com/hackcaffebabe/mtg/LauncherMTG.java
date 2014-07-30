@@ -78,7 +78,7 @@ public class LauncherMTG
 			Logger.getInstance().write( Tag.INFO, "creating path: " + mtgJsonPath.getAbsolutePath() );
 		}
 
-		File mtgDeckPath = new File( Paths.DECK_PATH );
+		File mtgDeckPath = new File( Paths.DECKS_PATH );
 		if(!mtgDeckPath.exists()) {
 			mtgDeckPath.mkdirs();
 			Logger.getInstance().write( Tag.INFO, "creating path: " + mtgDeckPath.getAbsolutePath() );

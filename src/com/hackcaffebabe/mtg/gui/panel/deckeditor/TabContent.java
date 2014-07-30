@@ -28,6 +28,7 @@ public class TabContent extends JPanel
 
 	/**
 	 * Instance the tab content whit his string content.
+	 * @param parent {@link JTabbedPane} the tab pane content.
 	 * @param contOfTextArea {@link String} the content.
 	 */
 	public TabContent(JTabbedPane parent, String contOfTextArea){

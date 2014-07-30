@@ -88,7 +88,7 @@ public class DeckEditorContent extends JPanel
 			@Override
 			public void run(){
 				DeckTreeNode decks = new DeckTreeNode( "Decks", TREENODE_TYPE.ROOT );
-				List<File> files = Arrays.asList( new File( Paths.DECK_PATH ).listFiles() );
+				List<File> files = Arrays.asList( new File( Paths.DECKS_PATH ).listFiles() );
 				Collections.sort( files );
 
 //				//TEST
@@ -144,7 +144,7 @@ public class DeckEditorContent extends JPanel
 		int r = JOptionPane.showConfirmDialog( this, "Are you really sure ?", "Delete " + fileName,
 				JOptionPane.OK_CANCEL_OPTION );
 		if(r == JOptionPane.OK_OPTION) {
-			String f = String.format( Paths.DECK_PATH + PathUtil.FILE_SEPARATOR + "%s.mtgdeck", fileName );
+			String f = String.format( Paths.DECKS_PATH + PathUtil.FILE_SEPARATOR + "%s.mtgdeck", fileName );
 			File file = new File( f );
 			if(file.exists())
 				file.delete();
@@ -169,7 +169,7 @@ public class DeckEditorContent extends JPanel
 			int r = JOptionPane.showConfirmDialog( this, "Are you really sure ?", "Delete " + fileName,
 					JOptionPane.OK_CANCEL_OPTION );
 			if(r == JOptionPane.OK_OPTION) {
-				String f = String.format( Paths.DECK_PATH + PathUtil.FILE_SEPARATOR + "%s.mtgdeck", fileName );
+				String f = String.format( Paths.DECKS_PATH + PathUtil.FILE_SEPARATOR + "%s.mtgdeck", fileName );
 				File file = new File( f );
 				if(file.exists())
 					file.delete();
@@ -192,7 +192,7 @@ public class DeckEditorContent extends JPanel
 		if(newName != null) {
 			String oldName = tabDeckOpened.getTitleAt( tabDeckOpened.getSelectedIndex() );
 
-			String f = String.format( Paths.DECK_PATH + PathUtil.FILE_SEPARATOR + "%s.mtgdeck", oldName );
+			String f = String.format( Paths.DECKS_PATH + PathUtil.FILE_SEPARATOR + "%s.mtgdeck", oldName );
 			File file = new File( f );
 			if(file.exists())
 				file.delete();
@@ -218,8 +218,8 @@ public class DeckEditorContent extends JPanel
 			String oldName = node.getUserObject().toString();
 			String newName = JOptionPane.showInputDialog( this, "Insert new deck's name:" );
 
-			String f = String.format( Paths.DECK_PATH + PathUtil.FILE_SEPARATOR + "%s.mtgdeck", oldName );
-			String n = String.format( Paths.DECK_PATH + PathUtil.FILE_SEPARATOR + "%s.mtgdeck", newName );
+			String f = String.format( Paths.DECKS_PATH + PathUtil.FILE_SEPARATOR + "%s.mtgdeck", oldName );
+			String n = String.format( Paths.DECKS_PATH + PathUtil.FILE_SEPARATOR + "%s.mtgdeck", newName );
 			new File( f ).renameTo( new File( n ) );
 			closeTab( oldName );
 
@@ -326,7 +326,7 @@ public class DeckEditorContent extends JPanel
 			//TODO try to implements locked files on decks
 			DeckTreeNode node = (DeckTreeNode) treeSavedDeck.getLastSelectedPathComponent();
 			String fileName = (String) node.getUserObject();
-			String f = String.format( Paths.DECK_PATH + PathUtil.FILE_SEPARATOR + "%s.mtgdeck", fileName );
+			String f = String.format( Paths.DECKS_PATH + PathUtil.FILE_SEPARATOR + "%s.mtgdeck", fileName );
 			openTab( fileName, PathUtil.forceReadContent( new File( f ) ) );
 		}
 
