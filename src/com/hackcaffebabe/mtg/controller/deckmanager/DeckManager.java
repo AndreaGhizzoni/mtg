@@ -101,7 +101,7 @@ public class DeckManager
 		SwingUtilities.invokeLater( new Runnable(){
 			@Override
 			public void run(){
-				log.write( Tag.DEBUG, "Save action called." );
+				log.write( Tag.DEBUG, "Save action called..." );
 
 				String deckPath = String.format( "%s%s%s.mtgdeck", Paths.DECKS_PATH, PathUtil.FILE_SEPARATOR,
 						nameOfDeck );
@@ -118,11 +118,51 @@ public class DeckManager
 					GUIUtils.displayError( null, e );
 				}
 
-				log.write( Tag.DEBUG, String.format( "Deck %s saved correctly", nameOfDeck ) );
+				log.write( Tag.DEBUG, String.format( "Deck %s saved correctly.", nameOfDeck ) );
 			}
 		} );
 	}
 
+	/**
+	 * 
+	 * @param deckName
+	 * @throws IllegalArgumentException
+	 */
+	public void delete(String deckName) throws IllegalArgumentException{
+		if(deckName == null || deckName.isEmpty())
+			throw new IllegalArgumentException( "" );
+
+		log.write( Tag.DEBUG, "Delete deck called..." );
+		String path = String.format( "%s%s%s.mtgdeck", Paths.DECKS_PATH, PathUtil.FILE_SEPARATOR, deckName );
+		File fileName = new File( path );
+		if(this.savedDecks.contains( fileName )) {
+			this.savedDecks.remove( fileName );
+			fileName.delete();
+			log.write( Tag.DEBUG, fileName + " delete properly." );
+		}
+		log.write( Tag.DEBUG, "No file name found for deck " + fileName );
+	}
+
+	/**
+	 * TODO add doc and finish exception
+	 * @param deckName
+	 * @throws IllegalArgumentException
+	 * @throws IOException
+	 */
+	public void rename(String deckName, String newName) throws IllegalArgumentException{
+		if(deckName == null || deckName.isEmpty())
+			throw new IllegalArgumentException( "" );
+
+		log.write( Tag.DEBUG, "Rename deck called..." );
+		String f = String.format( "%s%s%s.mtgdeck", Paths.DECKS_PATH, PathUtil.FILE_SEPARATOR, deckName );
+		String n = String.format( "%s%s%s.mtgdeck", Paths.DECKS_PATH, PathUtil.FILE_SEPARATOR, newName );
+		new File( f ).renameTo( new File( n ) );
+		log.write( Tag.DEBUG, "Rename " + deckName + " -> " + newName );
+	}
+
+//===========================================================================================
+// GETTER
+//===========================================================================================
 	/**
 	 * TODO add doc and finish exception
 	 * @param deckName
@@ -143,11 +183,4 @@ public class DeckManager
 			return null;
 		}
 	}
-//===========================================================================================
-// SETTER
-//===========================================================================================
-
-//===========================================================================================
-// GETTER
-//===========================================================================================
 }
