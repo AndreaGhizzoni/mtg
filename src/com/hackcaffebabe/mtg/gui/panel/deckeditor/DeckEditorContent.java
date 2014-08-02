@@ -2,16 +2,11 @@ package com.hackcaffebabe.mtg.gui.panel.deckeditor;
 
 import it.hackcaffebabe.ioutil.file.PathUtil;
 import it.hackcaffebabe.jx.tree.JXTree;
-import it.hackcaffebabe.logger.Logger;
-import it.hackcaffebabe.logger.Tag;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -27,6 +22,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeSelectionModel;
 import net.miginfocom.swing.MigLayout;
 import com.hackcaffebabe.mtg.controller.Paths;
+import com.hackcaffebabe.mtg.controller.deckmanager.DeckManager;
 import com.hackcaffebabe.mtg.gui.FramesDimensions;
 import com.hackcaffebabe.mtg.gui.components.deckeditor.DeckTreeNode;
 import com.hackcaffebabe.mtg.gui.components.deckeditor.DeckTreeNode.TREENODE_TYPE;
@@ -41,6 +37,7 @@ import com.hackcaffebabe.mtg.gui.components.deckeditor.DeckTreeNode.TREENODE_TYP
 public class DeckEditorContent extends JPanel
 {
 	private static final long serialVersionUID = 1L;
+	private DeckManager manager = DeckManager.getInstance();
 
 	private JXTree treeSavedDeck;
 	private JTabbedPane tabDeckOpened = new JTabbedPane( JTabbedPane.TOP );
@@ -84,28 +81,7 @@ public class DeckEditorContent extends JPanel
 	 * Refresh and read all the saved deck into.
 	 */
 	public void refreshSavedDeck(){
-		SwingUtilities.invokeLater( new Runnable(){
-			@Override
-			public void run(){
-				DeckTreeNode decks = new DeckTreeNode( "Decks", TREENODE_TYPE.ROOT );
-				List<File> files = Arrays.asList( new File( Paths.DECKS_PATH ).listFiles() );
-				Collections.sort( files );
-
-//				//TEST
-//				DeckTreeNode g1 = new DeckTreeNode( "Group 1", TREENODE_TYPE.GROUP );
-//				DeckTreeNode g2 = new DeckTreeNode( "Group 2", TREENODE_TYPE.GROUP );
-//				for(File f: files)
-//					g1.add( new DeckTreeNode( f.getName().split( "[.]" )[0], TREENODE_TYPE.DECK ) );// exclude the extension *.mtgdeck
-//				decks.add( g1 );
-//				decks.add( g2 );
-
-				for(File f: files)
-					decks.add( new DeckTreeNode( f.getName().split( "[.]" )[0], TREENODE_TYPE.DECK ) );// exclude the extension *.mtgdeck
-
-				treeSavedDeck.setModel( new DefaultTreeModel( decks ) );
-				Logger.getInstance().write( Tag.DEBUG, "Refreshing deck list done." );
-			}
-		} );
+		this.manager.refreshDecks( this.treeSavedDeck );
 	}
 
 	/* open a new tab with given name and content. */
@@ -135,7 +111,6 @@ public class DeckEditorContent extends JPanel
 	 * Delete the current opened file.
 	 */
 	public void deleteCurrentDeck(){
-		Logger.getInstance().write( Tag.DEBUG, "Delete current deck called" );
 		if(tabDeckOpened.getTabCount() == 0)
 			return;
 
@@ -144,13 +119,9 @@ public class DeckEditorContent extends JPanel
 		int r = JOptionPane.showConfirmDialog( this, "Are you really sure ?", "Delete " + fileName,
 				JOptionPane.OK_CANCEL_OPTION );
 		if(r == JOptionPane.OK_OPTION) {
-			String f = String.format( Paths.DECKS_PATH + PathUtil.FILE_SEPARATOR + "%s.mtgdeck", fileName );
-			File file = new File( f );
-			if(file.exists())
-				file.delete();
+			this.manager.delete( fileName );
 			refreshSavedDeck();
 			closeCurrentTab();
-			Logger.getInstance().write( Tag.DEBUG, fileName + " delete properly." );
 		}
 	}
 
@@ -158,7 +129,6 @@ public class DeckEditorContent extends JPanel
 	 * Delete the selected deck from the saved tree deck
 	 */
 	public void deleteSelectedDeck(){
-		Logger.getInstance().write( Tag.DEBUG, "Delete selected deck called" );
 		DefaultMutableTreeNode node = (DefaultMutableTreeNode) treeSavedDeck.getLastSelectedPathComponent();
 		if(node == null)
 			return;
@@ -169,13 +139,9 @@ public class DeckEditorContent extends JPanel
 			int r = JOptionPane.showConfirmDialog( this, "Are you really sure ?", "Delete " + fileName,
 					JOptionPane.OK_CANCEL_OPTION );
 			if(r == JOptionPane.OK_OPTION) {
-				String f = String.format( Paths.DECKS_PATH + PathUtil.FILE_SEPARATOR + "%s.mtgdeck", fileName );
-				File file = new File( f );
-				if(file.exists())
-					file.delete();
+				this.manager.delete( fileName );
 				refreshSavedDeck();
 				closeTab( fileName );
-				Logger.getInstance().write( Tag.DEBUG, fileName + " delete properly." );
 			}
 		}
 	}
@@ -184,22 +150,14 @@ public class DeckEditorContent extends JPanel
 	 * Rename the selected deck.
 	 */
 	public void renameCurrentDeck(){
-		Logger.getInstance().write( Tag.DEBUG, "Rename current deck called" );
 		if(tabDeckOpened.getTabCount() == 0)
 			return;
 
 		String newName = JOptionPane.showInputDialog( this, "Insert new deck's name:" );
 		if(newName != null) {
 			String oldName = tabDeckOpened.getTitleAt( tabDeckOpened.getSelectedIndex() );
-
-			String f = String.format( Paths.DECKS_PATH + PathUtil.FILE_SEPARATOR + "%s.mtgdeck", oldName );
-			File file = new File( f );
-			if(file.exists())
-				file.delete();
+			this.manager.rename( oldName, newName );
 			this.tabDeckOpened.setTitleAt( tabDeckOpened.getSelectedIndex(), newName );
-			((TabContent) this.tabDeckOpened.getComponentAt( tabDeckOpened.getSelectedIndex() )).forceSave();
-
-			Logger.getInstance().write( Tag.DEBUG, "Rename " + oldName + " -> " + newName );
 			refreshSavedDeck();
 		}
 	}
@@ -208,7 +166,6 @@ public class DeckEditorContent extends JPanel
 	 * Rename the selected deck on saved deck
 	 */
 	public void renameSelectedDeck(){
-		Logger.getInstance().write( Tag.DEBUG, "Rename selected deck called" );
 		DeckTreeNode node = (DeckTreeNode) treeSavedDeck.getLastSelectedPathComponent();
 		if(node == null)
 			return;
@@ -217,13 +174,8 @@ public class DeckEditorContent extends JPanel
 		if(node.getDepth() == 0) {
 			String oldName = node.getUserObject().toString();
 			String newName = JOptionPane.showInputDialog( this, "Insert new deck's name:" );
-
-			String f = String.format( Paths.DECKS_PATH + PathUtil.FILE_SEPARATOR + "%s.mtgdeck", oldName );
-			String n = String.format( Paths.DECKS_PATH + PathUtil.FILE_SEPARATOR + "%s.mtgdeck", newName );
-			new File( f ).renameTo( new File( n ) );
+			this.manager.rename( oldName, newName );
 			closeTab( oldName );
-
-			Logger.getInstance().write( Tag.DEBUG, "Rename " + oldName + " -> " + newName );
 			refreshSavedDeck();
 		}
 	}

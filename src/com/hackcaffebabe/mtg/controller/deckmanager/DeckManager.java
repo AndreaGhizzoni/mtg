@@ -13,7 +13,6 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 import javax.swing.SwingUtilities;
 import javax.swing.tree.DefaultTreeModel;
 import com.hackcaffebabe.mtg.controller.Paths;
@@ -23,7 +22,7 @@ import com.hackcaffebabe.mtg.gui.components.deckeditor.DeckTreeNode.TREENODE_TYP
 
 
 /**
- * TODO add description  
+ * This class manage the saving, deleting and renaming of all decks saved on disk.
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
  */
@@ -32,11 +31,11 @@ public class DeckManager
 	private static DeckManager instance = null;
 
 	private Logger log;
-	private List<File> savedDecks;
+	private ArrayList<File> savedDecks;
 
 	/**
-	 * TODO add doc
-	 * @return
+	 * Returns the instance of deck manager.
+	 * @return {@link DeckManager} the instance of deck manager.
 	 */
 	public static DeckManager getInstance(){
 		if(instance == null)
@@ -48,15 +47,15 @@ public class DeckManager
 	private DeckManager(){
 		this.log = Logger.getInstance();
 		this.savedDecks = new ArrayList<>();
-		this.refreshDecks( null );
 	}
 
 //===========================================================================================
 // METHOD
 //===========================================================================================
 	/**
-	 * TODO add doc
-	 * @param tree
+	 * This method check the deck folder and read only the mtgdeck file.<br>
+	 * If is passed an instance of {@link JXTree}, all the deck folder will be printed on the tree.
+	 * @param tree {@link JXTree} the tree to print the deck folder.
 	 */
 	public void refreshDecks(final JXTree tree){
 		SwingUtilities.invokeLater( new Runnable(){
@@ -64,7 +63,11 @@ public class DeckManager
 			public void run(){
 				log.write( Tag.DEBUG, "Refreshing deck list..." );
 
-				savedDecks = Arrays.asList( new File( Paths.DECKS_PATH ).listFiles() );
+				savedDecks.clear();
+				for(File f: Arrays.asList( new File( Paths.DECKS_PATH ).listFiles() )) {
+					if(f.getName().endsWith( "mtgdeck" ))
+						savedDecks.add( f );
+				}
 				Collections.sort( savedDecks );
 				if(tree != null) {
 					printDecks( tree );
@@ -76,8 +79,8 @@ public class DeckManager
 	}
 
 	/**
-	 * TODO add doc
-	 * @param tree
+	 * This method prints only the current list of decks on a {@link JXTree}.
+	 * @param tree {@link JXTree} the tree to print the deck folder.
 	 */
 	public void printDecks(JXTree tree){
 		DeckTreeNode decks = new DeckTreeNode( "Decks", TREENODE_TYPE.ROOT );
@@ -87,27 +90,27 @@ public class DeckManager
 	}
 
 	/**
-	 * TODO add doc and finish exceptions
-	 * @param nameOfDeck
-	 * @param content
-	 * @throws IllegalArgumentException
+	 * This method save a deck with a name and his content.<br>
+	 * This method spawn a a thread that effectually do the save.
+	 * @param nameOfDeck {@link String} the name of the file deck.
+	 * @param content {@link String} the deck content.
+	 * @throws IllegalArgumentException if argument given are null or empty string.
 	 */
 	public void save(final String nameOfDeck, final String content) throws IllegalArgumentException{
 		if(nameOfDeck == null || nameOfDeck.isEmpty())
-			throw new IllegalArgumentException( "" );
+			throw new IllegalArgumentException( "Deck name can not be null or empty string." );
 		if(content == null)
-			throw new IllegalArgumentException( "" );
+			throw new IllegalArgumentException( "New name can not be null or empty string." );
 
 		SwingUtilities.invokeLater( new Runnable(){
 			@Override
 			public void run(){
 				log.write( Tag.DEBUG, "Save action called..." );
 
-				String deckPath = String.format( "%s%s%s.mtgdeck", Paths.DECKS_PATH, PathUtil.FILE_SEPARATOR,
-						nameOfDeck );
+				String deckPath = getPath( nameOfDeck );
 				File f = new File( deckPath );
 				if(!savedDecks.contains( f ))
-					savedDecks.add( f );
+					savedDecks.add( f );//TODO check if file already exists?
 
 				try {
 					Writer w = new BufferedWriter( new OutputStreamWriter( new FileOutputStream( deckPath ), "utf-8" ) );
@@ -124,38 +127,42 @@ public class DeckManager
 	}
 
 	/**
-	 * 
-	 * @param deckName
-	 * @throws IllegalArgumentException
+	 * This method delete a deck giving the deck name. If there isn't deck whit that name, this method do nothing.
+	 * @param deckName {@link String} the deck name to delete.
+	 * @throws IllegalArgumentException if deck name is null or empty string.
 	 */
 	public void delete(String deckName) throws IllegalArgumentException{
 		if(deckName == null || deckName.isEmpty())
-			throw new IllegalArgumentException( "" );
+			throw new IllegalArgumentException( "Deck name can not be null or empty string." );
 
 		log.write( Tag.DEBUG, "Delete deck called..." );
-		String path = String.format( "%s%s%s.mtgdeck", Paths.DECKS_PATH, PathUtil.FILE_SEPARATOR, deckName );
+		String path = getPath( deckName );
 		File fileName = new File( path );
 		if(this.savedDecks.contains( fileName )) {
 			this.savedDecks.remove( fileName );
 			fileName.delete();
 			log.write( Tag.DEBUG, fileName + " delete properly." );
+		} else {
+			log.write( Tag.DEBUG, "No file name found for deck " + fileName );
 		}
-		log.write( Tag.DEBUG, "No file name found for deck " + fileName );
 	}
 
 	/**
-	 * TODO add doc and finish exception
-	 * @param deckName
-	 * @throws IllegalArgumentException
-	 * @throws IOException
+	 * This method rename the deck name as first argument with the name as second argument.
+	 * @param deckName {@link String} the name of file to rename.
+	 * @param newName {@link String} the new name of the file.
+	 * @throws IllegalArgumentException if some argument is null or empty string.
 	 */
 	public void rename(String deckName, String newName) throws IllegalArgumentException{
 		if(deckName == null || deckName.isEmpty())
-			throw new IllegalArgumentException( "" );
+			throw new IllegalArgumentException( "Deck name can not be null or empty string." );
+
+		if(newName == null || newName.isEmpty())
+			throw new IllegalArgumentException( "New name can not be null or empty string." );
 
 		log.write( Tag.DEBUG, "Rename deck called..." );
-		String f = String.format( "%s%s%s.mtgdeck", Paths.DECKS_PATH, PathUtil.FILE_SEPARATOR, deckName );
-		String n = String.format( "%s%s%s.mtgdeck", Paths.DECKS_PATH, PathUtil.FILE_SEPARATOR, newName );
+		String f = getPath( deckName );
+		String n = getPath( newName );
 		new File( f ).renameTo( new File( n ) );
 		log.write( Tag.DEBUG, "Rename " + deckName + " -> " + newName );
 	}
@@ -164,17 +171,18 @@ public class DeckManager
 // GETTER
 //===========================================================================================
 	/**
-	 * TODO add doc and finish exception
-	 * @param deckName
-	 * @return
-	 * @throws IllegalArgumentException
-	 * @throws IOException
+	 * This method returns the deck content from a name of the deck.<br>
+	 * If there is no deck with this name, null is returned.
+	 * @param deckName {@link String} the deck name.
+	 * @return {@link String} the content of deck passed as argument, or null.
+	 * @throws IllegalArgumentException if arguments are null or empty string.
+	 * @throws IOException if errors encounter while reading the file.
 	 */
 	public String get(String deckName) throws IllegalArgumentException, IOException{
 		if(deckName == null || deckName.isEmpty())
-			throw new IllegalArgumentException( "" );
+			throw new IllegalArgumentException( "Deck name can not be null or empty string." );
 
-		String path = String.format( "%s%s%s.mtgdeck", Paths.DECKS_PATH, PathUtil.FILE_SEPARATOR, deckName );
+		String path = getPath( deckName );
 		File f = new File( path );
 
 		if(this.savedDecks.contains( f )) {
@@ -182,5 +190,10 @@ public class DeckManager
 		} else {
 			return null;
 		}
+	}
+
+	/* lol */
+	private String getPath(String s){
+		return String.format( "%s%s%s.%s", Paths.DECKS_PATH, PathUtil.FILE_SEPARATOR, s, "mtgdeck" );//TODO check if there is a constant for extension
 	}
 }

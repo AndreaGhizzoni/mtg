@@ -1,14 +1,13 @@
 package com.hackcaffebabe.mtg.gui.panel.deckeditor;
 
 import java.awt.Font;
-import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import net.miginfocom.swing.MigLayout;
+import com.hackcaffebabe.mtg.controller.deckmanager.DeckManager;
 import com.hackcaffebabe.mtg.gui.panel.deckeditor.listener.ModifyTextDocumentListener;
-import com.hackcaffebabe.mtg.gui.panel.deckeditor.listener.SaveAction;
 
 
 /**
@@ -20,7 +19,6 @@ import com.hackcaffebabe.mtg.gui.panel.deckeditor.listener.SaveAction;
 public class TabContent extends JPanel
 {
 	private static final long serialVersionUID = 1L;
-	private static final String SAVE_KEY = "save";
 
 	private JTabbedPane parent;
 	private ModifyTextDocumentListener textDeckDocumentListener;
@@ -52,7 +50,6 @@ public class TabContent extends JPanel
 		this.textDeck.setFont( new Font( Font.MONOSPACED, Font.PLAIN, 12 ) );
 		//TODO don't uncomment this because crtl+s is already bind on frame that TabContent is content in.
 		//this.textDeckContent.getInputMap().put( KeyStroke.getKeyStroke( KeyEvent.VK_S, Event.CTRL_MASK ), SAVE_KEY );
-		this.textDeck.getActionMap().put( SAVE_KEY, new SaveAction() );
 		add( new JScrollPane( this.textDeck ), "cell 0 0,grow" );
 	}
 
@@ -61,7 +58,7 @@ public class TabContent extends JPanel
 	 */
 	public void save(){
 		if(hasBeenModify()) {
-			this.textDeck.getActionMap().get( SAVE_KEY ).actionPerformed( new ActionEvent( this, 1, SAVE_KEY ) );
+			DeckManager.getInstance().save( getTabName(), getText() );
 			this.textDeckDocumentListener.updateInitialText();
 		}
 	}
@@ -70,7 +67,7 @@ public class TabContent extends JPanel
 	 * Force the save action.
 	 */
 	public void forceSave(){
-		this.textDeck.getActionMap().get( SAVE_KEY ).actionPerformed( new ActionEvent( this, 1, SAVE_KEY ) );
+		DeckManager.getInstance().save( getTabName(), getText() );
 		this.textDeckDocumentListener.updateInitialText();
 	}
 

@@ -36,7 +36,6 @@ public class SaveAction extends AbstractAction
 			String nameOfDeck = ((TabContent) e.getSource()).getTabName();
 			log.write( Tag.DEBUG, "Modify has been detected on deck => " + nameOfDeck );
 
-			//TODO check if already exists deck with the same name.
 			doSave( ((TabContent) e.getSource()), nameOfDeck );
 		}
 	}
