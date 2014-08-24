@@ -140,6 +140,7 @@ public class StoreManager
 		if(mtgSet.contains( c ))
 			return false;
 
+		long start = System.currentTimeMillis();
 		log.write( Tag.DEBUG, "store initialized." );
 
 		String json = g.toJson( c, MTGCard.class );
@@ -151,7 +152,9 @@ public class StoreManager
 		this.setSeries.add( c.getSeries() );
 		this.setSubType.add( c.getSubType() );
 
-		log.write( Tag.INFO, String.format( "MTG card json file %s saved correctly.", c.getName() ) );
+		long end = System.currentTimeMillis();
+		log.write( Tag.INFO,
+				String.format( "MTG card json file %s saved correctly in %dms.", c.getName(), (end - start) ) );
 		return true;
 	}
 
@@ -167,28 +170,30 @@ public class StoreManager
 		if(!this.mtgSet.contains( c ))
 			return false;
 
+		long start = System.currentTimeMillis();
 		log.write( Tag.DEBUG, "delete card initialized." );
 
 		this.mtgSet.remove( c );
-		log.write( Tag.DEBUG, c.getName() + " removed correctly from data structure." );
+		log.write( Tag.DEBUG, String.format( "%s removed correctly from data structure.", c.getName() ) );
 
 		//update series list
 		if(searchBy( new Criteria().bySeries( c.getSeries() ), Criteria.Mode.LAZY ).isEmpty()) {
 			this.setSeries.remove( c.getSeries() );
-			log.write( Tag.DEBUG, c.getSeries() + " removed because its frequency == 1" );
+			log.write( Tag.DEBUG, String.format( "%s removed because its frequency == 1", c.getSeries() ) );
 		}
 		//update sub type list
 		if(c.getSubType() != null && !c.getSubType().isEmpty()) {
 			if(searchBy( new Criteria().bySubType( c.getSubType() ), Criteria.Mode.LAZY ).isEmpty()) {
 				this.setSubType.remove( c.getSubType() );
-				log.write( Tag.DEBUG, c.getSubType() + " removed because its frequency == 1" );
+				log.write( Tag.DEBUG, String.format( "%s removed because its frequency == 1", c.getSubType() ) );
 			}
 		}
 
 		String path = c.getJSONFileName();
 		new File( path ).delete();
 
-		log.write( Tag.INFO, path + " deleted correctly." );
+		long end = System.currentTimeMillis();
+		log.write( Tag.INFO, String.format( "%s deleted correctly in %dms.", path, (end - start) ) );
 		return true;
 	}
 
@@ -214,12 +219,14 @@ public class StoreManager
 		if(this.mtgSet.contains( nevv ) || !this.mtgSet.contains( old ))
 			return false;
 
+		long start = System.currentTimeMillis();
 		log.write( Tag.DEBUG, "apply difference initialized." );
 
 		delete( old );
 		store( nevv );
 
-		log.write( Tag.INFO, "Card was updated correctly." );
+		long end = System.currentTimeMillis();
+		log.write( Tag.INFO, String.format( "Card was updated correctly in %dms", (end - start) ) );
 		return true;
 	}
 
@@ -260,14 +267,17 @@ public class StoreManager
 		if(destinationFile == null)
 			return;
 
-		log.write( Tag.INFO, "Try to backup of all stored files on :" + destinationFile.getAbsolutePath() );
+		long start = System.currentTimeMillis();
+		log.write( Tag.INFO,
+				String.format( "Try to backup of all stored files on :%s", destinationFile.getAbsolutePath() ) );
 		if(destinationFile.exists() && !destinationFile.delete()) {
 			log.write( Tag.ERRORS, "Error on delete exists backup." );
 		}
 
 		Zipper zip = new Zipper( destinationFile, new File( Paths.JSON_PATH ).listFiles() );
 		zip.forceZip();
-		log.write( Tag.INFO, "Backup closed and create correctly." );
+		long end = System.currentTimeMillis();
+		log.write( Tag.INFO, String.format( "Backup closed and create correctly in %dms", (end - start) ) );
 	}
 
 //===========================================================================================

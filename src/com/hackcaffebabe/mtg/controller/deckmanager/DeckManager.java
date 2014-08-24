@@ -61,6 +61,7 @@ public class DeckManager
 		SwingUtilities.invokeLater( new Runnable(){
 			@Override
 			public void run(){
+				long start = System.currentTimeMillis();
 				log.write( Tag.DEBUG, "Refreshing deck list..." );
 
 				savedDecks.clear();
@@ -73,7 +74,8 @@ public class DeckManager
 					printDecks( tree );
 				}
 
-				log.write( Tag.DEBUG, "Refreshing deck list done." );
+				long end = System.currentTimeMillis();
+				log.write( Tag.DEBUG, String.format( "Refreshing deck list done in %d", (end - start) ) );
 			}
 		} );
 	}
@@ -105,6 +107,7 @@ public class DeckManager
 		SwingUtilities.invokeLater( new Runnable(){
 			@Override
 			public void run(){
+				long start = System.currentTimeMillis();
 				log.write( Tag.DEBUG, "Save action called..." );
 
 				String deckPath = getPath( nameOfDeck );
@@ -121,7 +124,8 @@ public class DeckManager
 					GUIUtils.displayError( null, e );
 				}
 
-				log.write( Tag.DEBUG, String.format( "Deck %s saved correctly.", nameOfDeck ) );
+				long end = System.currentTimeMillis();
+				log.write( Tag.DEBUG, String.format( "Deck %s saved correctly in %dms.", nameOfDeck, (end - start) ) );
 			}
 		} );
 	}
@@ -135,15 +139,17 @@ public class DeckManager
 		if(deckName == null || deckName.isEmpty())
 			throw new IllegalArgumentException( "Deck name can not be null or empty string." );
 
+		long start = System.currentTimeMillis();
 		log.write( Tag.DEBUG, "Delete deck called..." );
 		String path = getPath( deckName );
 		File fileName = new File( path );
 		if(this.savedDecks.contains( fileName )) {
 			this.savedDecks.remove( fileName );
 			fileName.delete();
-			log.write( Tag.DEBUG, fileName + " delete properly." );
+			long end = System.currentTimeMillis();
+			log.write( Tag.DEBUG, String.format( "%s delete properly in %d", fileName, (end - start) ) );
 		} else {
-			log.write( Tag.DEBUG, "No file name found for deck " + fileName );
+			log.write( Tag.DEBUG, String.format( "No file name found for deck %s", fileName ) );
 		}
 	}
 
@@ -160,11 +166,13 @@ public class DeckManager
 		if(newName == null || newName.isEmpty())
 			throw new IllegalArgumentException( "New name can not be null or empty string." );
 
+		long start = System.currentTimeMillis();
 		log.write( Tag.DEBUG, "Rename deck called..." );
 		String f = getPath( deckName );
 		String n = getPath( newName );
 		new File( f ).renameTo( new File( n ) );
-		log.write( Tag.DEBUG, "Rename " + deckName + " -> " + newName );
+		long end = System.currentTimeMillis();
+		log.write( Tag.DEBUG, String.format( "Rename %s -> %s in %dms", deckName, newName, (end - start) ) );
 	}
 
 //===========================================================================================
