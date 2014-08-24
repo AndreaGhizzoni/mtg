@@ -34,7 +34,7 @@ public class SaveAction extends AbstractAction
 			log.write( Tag.DEBUG, "Save action called." );
 
 			String nameOfDeck = ((TabContent) e.getSource()).getTabName();
-			log.write( Tag.DEBUG, "Modify has been detected on deck => " + nameOfDeck );
+			log.write( Tag.DEBUG, String.format( "Modify has been detected on deck => %s", nameOfDeck ) );
 
 			doSave( ((TabContent) e.getSource()), nameOfDeck );
 		}

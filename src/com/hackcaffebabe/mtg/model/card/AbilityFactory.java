@@ -66,7 +66,7 @@ public class AbilityFactory
 		this.abilities.put( name, descrption );
 		this.jsonAbilities.addProperty( name, descrption );
 		this.flush();
-		Logger.getInstance().write( Tag.INFO, "ability saved = " + name );
+		Logger.getInstance().write( Tag.INFO, String.format( "ability saved = %s", name ) );
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class AbilityFactory
 		this.abilities.remove( name );
 		this.jsonAbilities.remove( name );
 		this.flush();
-		Logger.getInstance().write( Tag.INFO, "ability removed = " + name );
+		Logger.getInstance().write( Tag.INFO, String.format( "ability removed = %s", name ) );
 	}
 
 	/**
@@ -102,7 +102,8 @@ public class AbilityFactory
 				}
 			}
 		} catch(Exception e) {
-			Logger.getInstance().write( Tag.ERRORS, "error to open " + this.abilityFile.getAbsolutePath() );
+			Logger.getInstance().write( Tag.ERRORS,
+					String.format( "error to open %s", this.abilityFile.getAbsolutePath() ) );
 		}
 	}
 

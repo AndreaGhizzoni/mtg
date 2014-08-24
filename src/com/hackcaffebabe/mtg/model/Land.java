@@ -91,23 +91,28 @@ public class Land extends MTGCard implements Serializable
 	@Override
 	public Object[] getDisplayRow(){
 		String color = String.format( "%s %s", getCardColor(), getCardColor().getType() );
-		String type = "Land";
+		StringBuilder type = new StringBuilder();
+		type.append( "Land" );
+		if(isArtifact())
+			type.append( " Art." );
 		if(isLegendary())
-			type += " Leg.";
-		return new Object[] { getName(), color, type, getSubType() == null ? "" : getSubType(), getRarity().toString() };
+			type.append( " Leg." );
+		return new Object[] { getName(), color, type.toString(), getSubType() == null ? "" : getSubType(),
+				getRarity().toString() };
 	}
 
 	@Override
 	public String toString(){
 		String pattern = "%s [%s %s %s - %s %s]";
-		String type = "Land";
+		StringBuilder type = new StringBuilder();
+		type.append( "Land" );
 		if(isArtifact())
-			type += " Artifact";
+			type.append( " Art." );
 		if(isLegendary())
-			type += " Legendary";
+			type.append( " Leg." );
 		if(getSubType() != null && !getSubType().isEmpty())
-			type += " - " + getSubType();
-		return String.format( pattern, getName(), getCardColor(), getCardColor().getType(), type, getRarity(),
-				getSeries() );
+			type.append( String.format( " - %s", getSubType() ) );
+		return String.format( pattern, getName(), getCardColor(), getCardColor().getType(), type.toString(),
+				getRarity(), getSeries() );
 	}
 }

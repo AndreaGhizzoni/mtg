@@ -98,21 +98,24 @@ public class Artifact extends MTGCard implements Serializable
 
 	public Object[] getDisplayRow(){
 		String color = String.format( "%s %s", getCardColor(), getCardColor().getType() );
-		String type = "Artifact";
+		StringBuilder type = new StringBuilder();
+		type.append( "Artifact" );
 		if(isLegendary())
-			type += " Leg.";
-		return new Object[] { getName(), color, type, getSubType() == null ? "" : getSubType(), getRarity().toString() };
+			type.append( " Leg." );
+		return new Object[] { getName(), color, type.toString(), getSubType() == null ? "" : getSubType(),
+				getRarity().toString() };
 	}
 
 	@Override
 	public String toString(){
 		String pattern = "%s [%s %s %s %s - %s %s]";
-		String type = "Artifact";
+		StringBuilder type = new StringBuilder();
+		type.append( "Artifact" );
 		if(isLegendary())
-			type += " Legendary";
+			type.append( " Leg." );
 		if(getSubType() != null && !getSubType().isEmpty())
-			type += " - " + getSubType();
-		return String.format( pattern, getName(), getCardColor(), getCardColor().getType(), getManaCost(), type,
-				getRarity(), getSeries() );
+			type.append( String.format( " - %s", getSubType() ) );
+		return String.format( pattern, getName(), getCardColor(), getCardColor().getType(), getManaCost(),
+				type.toString(), getRarity(), getSeries() );
 	}
 }

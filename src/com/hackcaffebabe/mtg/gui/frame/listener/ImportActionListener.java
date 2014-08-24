@@ -71,10 +71,10 @@ public class ImportActionListener implements ActionListener
 			try {
 				switch( whatToImport ) {
 					case ALL_CARDS: {
-						log.write( Tag.INFO, "Try to Import all from backup: " + lastFileSelected );
+						log.write( Tag.INFO, String.format( "Try to Import all from backup: %s", lastFileSelected ) );
 						File jsonPath = new File( Paths.JSON_PATH );
 						List<File> lst = new UnZipper( lastFileSelected, jsonPath ).unZipAll( false );
-						log.write( Tag.DEBUG, "File unzipped: " + lst );
+						log.write( Tag.DEBUG, String.format( "File unzipped: %s", lst ) );
 						completeAction( lst );
 						break;
 					}
@@ -82,7 +82,7 @@ public class ImportActionListener implements ActionListener
 						break;
 					}
 					case SELECTIVE_CARDS: {
-						log.write( Tag.INFO, "Try to Selected Import from backup: " + lastFileSelected );
+						log.write( Tag.INFO, String.format( "Try to Selected Import from backup: %s", lastFileSelected ) );
 						UnZipper unzip = new UnZipper( lastFileSelected, new File( Paths.JSON_PATH ) );
 						log.write( Tag.DEBUG, "unzipper created correctly" );
 						DefaultListModel<JXCheckListEntry<String>> model = JXCheckList.convertToModel(
@@ -94,9 +94,10 @@ public class ImportActionListener implements ActionListener
 						int r = JOptionPane.showConfirmDialog( null, input, "Selected Import",
 								JOptionPane.OK_CANCEL_OPTION );
 						if(r == JOptionPane.OK_OPTION) {
-							log.write( Tag.DEBUG, "Selected Objects: " + lstCheckList.getCheckedObjects() );
+							log.write( Tag.DEBUG,
+									String.format( "Selected Objects: %s", lstCheckList.getCheckedObjects() ) );
 							List<File> lst = unzip.unZipSelective( lstCheckList.getCheckedObjects() );
-							log.write( Tag.DEBUG, "File unzipped: " + lst );
+							log.write( Tag.DEBUG, String.format( "File unzipped: %s", lst ) );
 							completeAction( lst );
 						}
 						break;
@@ -107,7 +108,8 @@ public class ImportActionListener implements ActionListener
 
 				}
 			} catch(IOException ex) {
-				GUIUtils.displayError( null, new Exception( "Error while reading backup file.\n" + ex.getMessage() ) );
+				GUIUtils.displayError( null,
+						new Exception( String.format( "Error while reading backup file.\n%s", ex.getMessage() ) ) );
 			}
 
 			enableDisableSource( e.getSource(), true );

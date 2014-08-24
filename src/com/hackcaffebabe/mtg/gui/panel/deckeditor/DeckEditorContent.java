@@ -116,7 +116,7 @@ public class DeckEditorContent extends JPanel
 
 		int index = tabDeckOpened.getSelectedIndex();
 		String fileName = tabDeckOpened.getTitleAt( index );
-		int r = JOptionPane.showConfirmDialog( this, "Are you really sure ?", "Delete " + fileName,
+		int r = JOptionPane.showConfirmDialog( this, "Are you really sure ?", String.format( "Delete %s", fileName ),
 				JOptionPane.OK_CANCEL_OPTION );
 		if(r == JOptionPane.OK_OPTION) {
 			this.manager.delete( fileName );
@@ -136,8 +136,8 @@ public class DeckEditorContent extends JPanel
 		//0 = leaf, 1 = root with two row tree
 		if(node.getDepth() == 0) { //TODO when implementing group, change depth
 			String fileName = node.getUserObject().toString();
-			int r = JOptionPane.showConfirmDialog( this, "Are you really sure ?", "Delete " + fileName,
-					JOptionPane.OK_CANCEL_OPTION );
+			int r = JOptionPane.showConfirmDialog( this, "Are you really sure ?",
+					String.format( "Delete %s", fileName ), JOptionPane.OK_CANCEL_OPTION );
 			if(r == JOptionPane.OK_OPTION) {
 				this.manager.delete( fileName );
 				refreshSavedDeck();

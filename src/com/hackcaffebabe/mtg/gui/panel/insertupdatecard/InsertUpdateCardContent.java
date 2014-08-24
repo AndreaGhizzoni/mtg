@@ -608,52 +608,52 @@ public class InsertUpdateCardContent extends JPanel
 			String mtgCardType = MTGTypeListener.lastActionCommand;
 
 			log.write( Tag.INFO, "New card start to save..." );
-			log.write( Tag.DEBUG, "type to save = " + mtgCardType );
+			log.write( Tag.DEBUG, String.format( "type to save = %s", mtgCardType ) );
 
 			String mtgName = StringNormalizer.normalizeForStorage( pnlMTGBasicInfo.getNames() ).trim();
-			log.write( Tag.DEBUG, "name = " + mtgName );
+			log.write( Tag.DEBUG, String.format( "name = %s", mtgName ) );
 
 			Rarity mtgRarity = pnlMTGBasicInfo.getRarity();
-			log.write( Tag.DEBUG, "rarity = " + mtgRarity );
+			log.write( Tag.DEBUG, String.format( "rarity = %s", mtgRarity ) );
 
 			CardColor mtgCardColor = pnlMTGBasicInfo.getCardColor();
-			log.write( Tag.DEBUG, "card color = " + mtgCardColor.toString() );
+			log.write( Tag.DEBUG, String.format( "card color = %s", mtgCardColor.toString() ) );
 
 			boolean isLegendary = pnlMTGBasicInfo.isLegendarySelected();
-			log.write( Tag.DEBUG, "is legendary = " + isLegendary );
+			log.write( Tag.DEBUG, String.format( "is legendary = %s", isLegendary ) );
 
 			String mtgSeries = StringNormalizer.normalizeForStorage( pnlMTGBasicInfo.getSeries() ).trim();
-			log.write( Tag.DEBUG, "series = " + mtgSeries );
+			log.write( Tag.DEBUG, String.format( "series = %s", mtgSeries ) );
 
 			String mtgSubType = StringNormalizer.removeAccentCharacters( pnlMTGBasicInfo.getSubType() );
 			if(mtgSubType == null)
 				mtgSubType = "";
 			else mtgSubType = mtgSubType.trim();
-			log.write( Tag.DEBUG, "sub type = " + mtgSubType );
+			log.write( Tag.DEBUG, String.format( "sub type = %s", mtgSubType ) );
 
 			// if no text is inserted, "" is returned by getText()
 			String mtgPrimaryEffect = StringNormalizer.removeAccentCharacters( txtPrimaryEffect.getText() );
-			log.write( Tag.DEBUG, "primary effect = " + mtgPrimaryEffect );
+			log.write( Tag.DEBUG, String.format( "primary effect = %s", mtgPrimaryEffect ) );
 
 			List<Effect> mtgEffects = ((JXObjectModel<Effect>) tableEffects.getModel()).getObjects();
-			log.write( Tag.DEBUG, "effects = " + mtgEffects.toString() );
+			log.write( Tag.DEBUG, String.format( "effects = %s", mtgEffects.toString() ) );
 
 			ManaCost mtgManaCost = null;
 			if(!mtgCardType.equals( ActionCommand.LAND )) {
 				mtgManaCost = pnlManaCost.getManaCost();
-				log.write( Tag.DEBUG, "mana cost = " + mtgManaCost );
+				log.write( Tag.DEBUG, String.format( "mana cost = %s", mtgManaCost ) );
 			}
 
 			switch( mtgCardType ) {
 				case ActionCommand.CREATURE: {
 					Strength creatureStrength = pnlCreatureInfo.getStrength();
-					log.write( Tag.DEBUG, "creature strength = " + creatureStrength );
+					log.write( Tag.DEBUG, String.format( "creature strength = %s", creatureStrength ) );
 
 					boolean isArtifact = pnlMTGBasicInfo.isArtifactSelected();
-					log.write( Tag.DEBUG, "is artifact = " + isArtifact );
+					log.write( Tag.DEBUG, String.format( "is artifact = %s", isArtifact ) );
 
 					List<Ability> mtgAbility = ((JXObjectModel<Ability>) tableAbility.getModel()).getObjects();
-					log.write( Tag.DEBUG, "ability = " + mtgAbility.toString() );
+					log.write( Tag.DEBUG, String.format( "ability = ", mtgAbility.toString() ) );
 
 					Creature finalCreature = new Creature( mtgName, mtgCardColor, creatureStrength, mtgManaCost,
 							mtgSubType, mtgRarity );
@@ -674,7 +674,7 @@ public class InsertUpdateCardContent extends JPanel
 				}
 				case ActionCommand.ARTIFACT: {
 					List<Ability> mtgAbility = ((JXObjectModel<Ability>) tableAbility.getModel()).getObjects();
-					log.write( Tag.DEBUG, "ability = " + mtgAbility.toString() );
+					log.write( Tag.DEBUG, String.format( "ability = ", mtgAbility.toString() ) );
 
 					Artifact finalArtifact = new Artifact( mtgName, mtgManaCost, mtgCardColor, mtgRarity );
 					finalArtifact.setLegendary( isLegendary );
@@ -693,11 +693,11 @@ public class InsertUpdateCardContent extends JPanel
 				}
 				case ActionCommand.PLANESWALKER: {
 					int mtgLife = pnlPlaneswalkerInfo.getPlaneswalkerLife();
-					log.write( Tag.DEBUG, "planeswalker life = " + mtgLife );
+					log.write( Tag.DEBUG, String.format( "planeswalker life = ", mtgLife ) );
 
 					List<PlanesAbility> mtgAbility = ((JXObjectModel<PlanesAbility>) tableAbility.getModel())
 							.getObjects();
-					log.write( Tag.DEBUG, "ability = " + mtgAbility.toString() );
+					log.write( Tag.DEBUG, String.format( "ability = ", mtgAbility.toString() ) );
 
 					Planeswalker finalPlaneswalker = new Planeswalker( mtgName, mtgManaCost, mtgLife, mtgCardColor,
 							mtgRarity );
@@ -712,7 +712,7 @@ public class InsertUpdateCardContent extends JPanel
 				}
 				case ActionCommand.INSTANT: {
 					List<Ability> mtgAbility = ((JXObjectModel<Ability>) tableAbility.getModel()).getObjects();
-					log.write( Tag.DEBUG, "ability = " + mtgAbility.toString() );
+					log.write( Tag.DEBUG, String.format( "ability = %s", mtgAbility.toString() ) );
 
 					Instant finalInstant = new Instant( mtgName, mtgManaCost, mtgCardColor, mtgRarity );
 					finalInstant.setPrimaryEffect( mtgPrimaryEffect );
@@ -731,7 +731,7 @@ public class InsertUpdateCardContent extends JPanel
 				}
 				case ActionCommand.SORCERY: {
 					List<Ability> mtgAbility = ((JXObjectModel<Ability>) tableAbility.getModel()).getObjects();
-					log.write( Tag.DEBUG, "ability = " + mtgAbility.toString() );
+					log.write( Tag.DEBUG, String.format( "ability = %s", mtgAbility.toString() ) );
 
 					Sorcery finalSorcery = new Sorcery( mtgName, mtgManaCost, mtgCardColor, mtgRarity );
 					finalSorcery.setPrimaryEffect( mtgPrimaryEffect );
@@ -750,7 +750,7 @@ public class InsertUpdateCardContent extends JPanel
 				}
 				case ActionCommand.ENCHANTMENT: {
 					List<Ability> mtgAbility = ((JXObjectModel<Ability>) tableAbility.getModel()).getObjects();
-					log.write( Tag.DEBUG, "ability = " + mtgAbility.toString() );
+					log.write( Tag.DEBUG, String.format( "ability = %s", mtgAbility.toString() ) );
 
 					Enchantment finalEnchantment = new Enchantment( mtgName, mtgManaCost, mtgCardColor, mtgRarity );
 					finalEnchantment.setPrimaryEffect( mtgPrimaryEffect );
@@ -770,7 +770,7 @@ public class InsertUpdateCardContent extends JPanel
 				case ActionCommand.LAND: {
 					Land finalLand = new Land( mtgName, mtgRarity );
 					boolean isArtifact = pnlMTGBasicInfo.isArtifactSelected();
-					log.write( Tag.DEBUG, "is artifact = " + isArtifact );
+					log.write( Tag.DEBUG, String.format( "is artifact = %s", isArtifact ) );
 
 					finalLand.setArtifact( isArtifact );
 					finalLand.setPrimaryEffect( mtgPrimaryEffect );
