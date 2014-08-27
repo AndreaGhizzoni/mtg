@@ -3,6 +3,7 @@ package com.hackcaffebabe.mtg;
 import static com.hackcaffebabe.mtg.gui.GUIUtils.displayError;
 import it.hackcaffebabe.logger.Logger;
 import it.hackcaffebabe.logger.Tag;
+import it.hackcaffebabe.rm.ResourceMonitor;
 import java.io.File;
 import java.io.PrintStream;
 import javax.swing.SwingUtilities;
@@ -37,7 +38,7 @@ public class LauncherMTG
 					g.setVisible( true );
 				}
 			} );
-
+			initRM();
 		} catch(Exception e) {
 			displayError( null, e );
 		}
@@ -45,8 +46,13 @@ public class LauncherMTG
 
 	private static void checkJDKVersion() throws Exception{
 		if(Integer.parseInt( System.getProperty( "java.version" ).split( "\\." )[1] ) < Version.MIN_JDK) {
-			throw new Exception( "Java version Error. To run this program Java " + Version.MIN_JDK + " is required!" );
+			String s = String.format( "Java version Error. To run this program Java $s is required!", Version.MIN_JDK );
+			throw new Exception( s );
 		}
+	}
+
+	private static void initRM(){
+		new ResourceMonitor( true ).run();
 	}
 
 	private static void initLogger() throws Exception{
