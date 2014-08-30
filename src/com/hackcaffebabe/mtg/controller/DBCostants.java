@@ -10,5 +10,5 @@ public class DBCostants
 	/** Flag for logging on file */
 	public static final boolean DB_LOG_ON_FILE = false;
 	/** Flag for turn on/off the resource manager */
-	public static final boolean RM = false;
+	public static final boolean RM = true;
 }
