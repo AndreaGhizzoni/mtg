@@ -37,7 +37,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 import com.hackcaffebabe.mtg.controller.StringNormalizer;
 import com.hackcaffebabe.mtg.controller.json.StoreManager;
-import com.hackcaffebabe.mtg.gui.panel.listener.ShortCutterV2;
+import com.hackcaffebabe.mtg.gui.panel.listener.ShortCutter;
 import com.hackcaffebabe.mtg.gui.panel.mtg.MTGProperties;
 import com.hackcaffebabe.mtg.model.MTGCard;
 import com.hackcaffebabe.mtg.model.card.Ability;
@@ -210,9 +210,9 @@ public class GUIUtils
 		txtDescription.setWrapStyleWord( true );
 		txtDescription.setLineWrap( true );
 		txtDescription.setText( e == null ? "" : e.getText() );
-		ShortCutterV2.getInstance().add( txtDescription );
-		txtDescription.getInputMap().put( ShortCutterV2.KEYSTROKE, ShortCutterV2.KEY );
-		txtDescription.getActionMap().put( ShortCutterV2.KEY, ShortCutterV2.getInstance() );
+		ShortCutter.getInstance().add( txtDescription );
+		txtDescription.getInputMap().put( ShortCutter.KEYSTROKE, ShortCutter.KEY );
+		txtDescription.getActionMap().put( ShortCutter.KEY, ShortCutter.getInstance() );
 
 		JPanel p = new JPanel();
 		p.add( txtMana );
@@ -239,9 +239,9 @@ public class GUIUtils
 		final JTextArea txtDescription = new JTextArea( 10, 20 );
 		txtDescription.setWrapStyleWord( true );
 		txtDescription.setLineWrap( true );
-		ShortCutterV2.getInstance().add( txtDescription );
-		txtDescription.getInputMap().put( ShortCutterV2.KEYSTROKE, ShortCutterV2.KEY );
-		txtDescription.getActionMap().put( ShortCutterV2.KEY, ShortCutterV2.getInstance() );
+		ShortCutter.getInstance().add( txtDescription );
+		txtDescription.getInputMap().put( ShortCutter.KEYSTROKE, ShortCutter.KEY );
+		txtDescription.getActionMap().put( ShortCutter.KEY, ShortCutter.getInstance() );
 
 		final JCheckBox chbNewAbility = new JCheckBox( "New Ability" );
 
@@ -315,9 +315,9 @@ public class GUIUtils
 
 		JTextArea txtDescription = new JTextArea( 5, 10 );
 		txtDescription.setLineWrap( true );
-		ShortCutterV2.getInstance().add( txtDescription );
-		txtDescription.getInputMap().put( ShortCutterV2.KEYSTROKE, ShortCutterV2.KEY );
-		txtDescription.getActionMap().put( ShortCutterV2.KEY, ShortCutterV2.getInstance() );
+		ShortCutter.getInstance().add( txtDescription );
+		txtDescription.getInputMap().put( ShortCutter.KEYSTROKE, ShortCutter.KEY );
+		txtDescription.getActionMap().put( ShortCutter.KEY, ShortCutter.getInstance() );
 
 		JPanel a = new JPanel();
 		a.add( new JLabel( "Life Cost:" ) );

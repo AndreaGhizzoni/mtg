@@ -40,7 +40,7 @@ import com.hackcaffebabe.mtg.gui.listener.AddEffectActionListener;
 import com.hackcaffebabe.mtg.gui.listener.DelAbilityActionListener;
 import com.hackcaffebabe.mtg.gui.listener.DelEffectActionListener;
 import com.hackcaffebabe.mtg.gui.panel.insertupdatecard.listener.EditEffectsMouseAdapter;
-import com.hackcaffebabe.mtg.gui.panel.listener.ShortCutterV2;
+import com.hackcaffebabe.mtg.gui.panel.listener.ShortCutter;
 import com.hackcaffebabe.mtg.model.Artifact;
 import com.hackcaffebabe.mtg.model.Creature;
 import com.hackcaffebabe.mtg.model.Enchantment;
@@ -257,9 +257,9 @@ public class InsertUpdateCardContent extends JPanel
 
 	/* this method initialize the shortcut */
 	private void initShortcut(){
-		ShortCutterV2.getInstance().add( this.txtPrimaryEffect );
-		this.txtPrimaryEffect.getInputMap().put( ShortCutterV2.KEYSTROKE, ShortCutterV2.KEY );
-		this.txtPrimaryEffect.getActionMap().put( ShortCutterV2.KEY, ShortCutterV2.getInstance() );
+		ShortCutter.getInstance().add( this.txtPrimaryEffect );
+		this.txtPrimaryEffect.getInputMap().put( ShortCutter.KEYSTROKE, ShortCutter.KEY );
+		this.txtPrimaryEffect.getActionMap().put( ShortCutter.KEY, ShortCutter.getInstance() );
 		this.txtPrimaryEffect.setFocusAccelerator( 'p' );
 
 		this.btnAddAbility.setMnemonic( KeyEvent.VK_A );
@@ -336,7 +336,7 @@ public class InsertUpdateCardContent extends JPanel
 		this.btnDelAbility.setEnabled( true );
 		this.txtPrimaryEffect.setText( "" );
 		this.txtPrimaryEffect.setEditable( true );
-		ShortCutterV2.getInstance().clearMenu();
+		ShortCutter.getInstance().clearMenu();
 	}
 
 	/**

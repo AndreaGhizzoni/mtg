@@ -17,8 +17,8 @@ import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.JTextComponent;
+import com.hackcaffebabe.mtg.gui.GUIUtils;
 import com.hackcaffebabe.mtg.model.color.Mana;
-import com.hackcaffebabe.mtg.trash.ShortCutter;
 
 
 /**
@@ -28,10 +28,10 @@ import com.hackcaffebabe.mtg.trash.ShortCutter;
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
  */
-public final class ShortCutterV2 extends AbstractAction
+public final class ShortCutter extends AbstractAction
 {
 	private static final long serialVersionUID = 1L;
-	private static ShortCutterV2 instance;
+	private static ShortCutter instance;
 	private final String DEFAULT_PATTERN = "[%s]";
 
 	public static final KeyStroke KEYSTROKE = KeyStroke.getKeyStroke( KeyEvent.VK_SPACE, InputEvent.CTRL_DOWN_MASK );
@@ -43,15 +43,15 @@ public final class ShortCutterV2 extends AbstractAction
 
 	/**
 	 * Return the instance of ShortCutter class.
-	 * @return {@link ShortCutterV2}
+	 * @return {@link ShortCutter}
 	 */
-	public static ShortCutterV2 getInstance(){
+	public static ShortCutter getInstance(){
 		if(instance == null)
-			instance = new ShortCutterV2();
+			instance = new ShortCutter();
 		return instance;
 	}
 
-	private ShortCutterV2(){
+	private ShortCutter(){
 		putMana();
 	}
 
@@ -151,8 +151,8 @@ public final class ShortCutterV2 extends AbstractAction
 					}
 					this.lastComponentWithFocus = i;
 					getMenu().show( i, x, y );
-				} catch(BadLocationException e1) {
-					e1.printStackTrace(); //hope never catch this TODO add error message
+				} catch(BadLocationException ex) {
+					GUIUtils.displayError( i, ex );
 				}
 			}
 		}

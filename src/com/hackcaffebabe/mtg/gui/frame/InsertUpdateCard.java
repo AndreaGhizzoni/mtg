@@ -17,7 +17,7 @@ import com.hackcaffebabe.mtg.gui.ActionCommand;
 import com.hackcaffebabe.mtg.gui.FramesDimensions;
 import com.hackcaffebabe.mtg.gui.FramesTitles;
 import com.hackcaffebabe.mtg.gui.panel.insertupdatecard.InsertUpdateCardContent;
-import com.hackcaffebabe.mtg.gui.panel.listener.ShortCutterV2;
+import com.hackcaffebabe.mtg.gui.panel.listener.ShortCutter;
 import com.hackcaffebabe.mtg.model.MTGCard;
 
 
@@ -115,7 +115,7 @@ public class InsertUpdateCard extends JFrame
 	 * Close the frame
 	 */
 	public void close(){
-		ShortCutterV2.getInstance().clearAll();
+		ShortCutter.getInstance().clearAll();
 		dispose();
 	}
 }

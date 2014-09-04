@@ -26,8 +26,8 @@ public class TextToShortCutterFocusListener implements FocusListener
 			JTextField t = ((JTextField) src);
 			String content = t.getText();
 			if(content != null && !content.isEmpty())
-				ShortCutterV2.getInstance().put( key, content, "%s" );
-			else ShortCutterV2.getInstance().remove( key );
+				ShortCutter.getInstance().put( key, content, "%s" );
+			else ShortCutter.getInstance().remove( key );
 		}
 	}
 
