@@ -77,7 +77,7 @@ public class GUIUtils
 			@Override
 			public void run(){
 				long start = System.currentTimeMillis();
-				Logger.getInstance().write( Tag.DEBUG, "Refreshing mtg card list..." );
+				Logger.getInstance().write( Tag.INFO, "Refreshing mtg card list..." );
 				STATUS_BAR_MAIN_FRAME.setStatus( "Refreshing mtg card list..." );
 				List<MTGCard> lst = StoreManager.getInstance().getAllCardsAsList();
 				if(!lst.isEmpty()) {
@@ -88,7 +88,7 @@ public class GUIUtils
 					JXTABLE_MTG.setModel( new JXObjectModel<>() );
 				}
 				long end = System.currentTimeMillis();
-				Logger.getInstance().write( Tag.DEBUG,
+				Logger.getInstance().write( Tag.INFO,
 						String.format( "Refreshing mtg card list done %d ms", (end - start) ) );
 				STATUS_BAR_MAIN_FRAME.setStatus( "MTG Cards list refreshed correctly!" );
 			}

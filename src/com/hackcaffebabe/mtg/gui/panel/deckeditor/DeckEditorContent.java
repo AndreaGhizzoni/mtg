@@ -103,6 +103,14 @@ public class DeckEditorContent extends JPanel
 		String deckName = JOptionPane.showInputDialog( this, "Insert new Deck's name:", "Deck's Name",
 				JOptionPane.QUESTION_MESSAGE );
 		if(deckName != null && !deckName.isEmpty()) {
+			if(DeckManager.getInstance().exists( deckName )) {
+				String msg = "You have another deck with the same name!\nThe oldest %s deck file will be overwritten!\nDo you want to continue?";
+				String title = "Duplication of %s found!";
+				int r = JOptionPane.showConfirmDialog( this, String.format( msg, deckName ),
+						String.format( title, deckName ), JOptionPane.YES_NO_OPTION );
+				if(r == JOptionPane.NO_OPTION)
+					return;
+			}
 			openTab( deckName, "" );
 		}
 	}

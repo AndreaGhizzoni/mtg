@@ -22,6 +22,8 @@ public class Paths
 	public static final String JSON_PATH = String.format( pattern, mtgDataHome, PathUtil.FILE_SEPARATOR, "card" );
 	/** user home directory/.mtg/data/deck */
 	public static final String DECKS_PATH = String.format( pattern, mtgDataHome, PathUtil.FILE_SEPARATOR, "deck" );
+	/** extension of deck files */
+	public static final String DECKS_EXT = "mtgdeck";
 	/** user home directory/.mtg/data/ability.json */
 	public static final String ABILITY_FILE_PATH = String.format( pattern, mtgDataHome, PathUtil.FILE_SEPARATOR,
 			"ability.json" );

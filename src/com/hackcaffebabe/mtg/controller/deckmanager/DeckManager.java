@@ -62,7 +62,7 @@ public class DeckManager
 			@Override
 			public void run(){
 				long start = System.currentTimeMillis();
-				log.write( Tag.DEBUG, "Refreshing deck list..." );
+				log.write( Tag.INFO, "Refreshing deck list..." );
 
 				savedDecks.clear();
 				for(File f: Arrays.asList( new File( Paths.DECKS_PATH ).listFiles() )) {
@@ -75,7 +75,7 @@ public class DeckManager
 				}
 
 				long end = System.currentTimeMillis();
-				log.write( Tag.DEBUG, String.format( "Refreshing deck list done in %d", (end - start) ) );
+				log.write( Tag.INFO, String.format( "Refreshing deck list done in %dms", (end - start) ) );
 			}
 		} );
 	}
@@ -93,7 +93,8 @@ public class DeckManager
 
 	/**
 	 * This method save a deck with a name and his content.<br>
-	 * This method spawn a a thread that effectually do the save.
+	 * This method spawn a a thread that effectually do the save.<br>
+	 * If there is a deck with the same name, this method WILL OVERRIDE the oldest!.
 	 * @param nameOfDeck {@link String} the name of the file deck.
 	 * @param content {@link String} the deck content.
 	 * @throws IllegalArgumentException if argument given are null or empty string.
@@ -108,15 +109,14 @@ public class DeckManager
 			@Override
 			public void run(){
 				long start = System.currentTimeMillis();
-				log.write( Tag.DEBUG, "Save action called..." );
+				log.write( Tag.INFO, "Save action called..." );
 
-				String deckPath = getPath( nameOfDeck );
-				File f = new File( deckPath );
+				File f = new File( getPath( nameOfDeck ) );
 				if(!savedDecks.contains( f ))
-					savedDecks.add( f );//TODO check if file already exists?
+					savedDecks.add( f );
 
 				try {
-					Writer w = new BufferedWriter( new OutputStreamWriter( new FileOutputStream( deckPath ), "utf-8" ) );
+					Writer w = new BufferedWriter( new OutputStreamWriter( new FileOutputStream( f ), "utf-8" ) );
 					w.write( content );
 					w.flush();
 					w.close();
@@ -125,7 +125,7 @@ public class DeckManager
 				}
 
 				long end = System.currentTimeMillis();
-				log.write( Tag.DEBUG, String.format( "Deck %s saved correctly in %dms.", nameOfDeck, (end - start) ) );
+				log.write( Tag.INFO, String.format( "Deck %s saved correctly in %dms.", nameOfDeck, (end - start) ) );
 			}
 		} );
 	}
@@ -140,16 +140,16 @@ public class DeckManager
 			throw new IllegalArgumentException( "Deck name can not be null or empty string." );
 
 		long start = System.currentTimeMillis();
-		log.write( Tag.DEBUG, "Delete deck called..." );
+		log.write( Tag.INFO, "Delete deck called..." );
 		String path = getPath( deckName );
 		File fileName = new File( path );
 		if(this.savedDecks.contains( fileName )) {
 			this.savedDecks.remove( fileName );
 			fileName.delete();
 			long end = System.currentTimeMillis();
-			log.write( Tag.DEBUG, String.format( "%s delete properly in %d", fileName, (end - start) ) );
+			log.write( Tag.INFO, String.format( "%s delete properly in %dms", deckName, (end - start) ) );
 		} else {
-			log.write( Tag.DEBUG, String.format( "No file name found for deck %s", fileName ) );
+			log.write( Tag.INFO, String.format( "No file name found for deck %s", deckName ) );
 		}
 	}
 
@@ -167,12 +167,12 @@ public class DeckManager
 			throw new IllegalArgumentException( "New name can not be null or empty string." );
 
 		long start = System.currentTimeMillis();
-		log.write( Tag.DEBUG, "Rename deck called..." );
+		log.write( Tag.INFO, "Rename deck called..." );
 		String f = getPath( deckName );
 		String n = getPath( newName );
 		new File( f ).renameTo( new File( n ) );
 		long end = System.currentTimeMillis();
-		log.write( Tag.DEBUG, String.format( "Rename %s -> %s in %dms", deckName, newName, (end - start) ) );
+		log.write( Tag.INFO, String.format( "Rename %s -> %s in %dms", deckName, newName, (end - start) ) );
 	}
 
 //===========================================================================================
@@ -200,8 +200,19 @@ public class DeckManager
 		}
 	}
 
-	/* lol */
+	/**
+	 * This method check if specific deck is already saved or not.
+	 * @param deckName {@link String} the deck's name.
+	 * @return true if decks already exists on disk, otherwise false.
+	 */
+	public boolean exists(String deckName){
+		if(deckName == null || deckName.isEmpty() || !this.savedDecks.contains( new File( getPath( deckName ) ) ))
+			return false;
+		return true;
+	}
+
+	/* helper method */
 	private String getPath(String s){
-		return String.format( "%s%s%s.%s", Paths.DECKS_PATH, PathUtil.FILE_SEPARATOR, s, "mtgdeck" );//TODO check if there is a constant for extension
+		return String.format( "%s%s%s.%s", Paths.DECKS_PATH, PathUtil.FILE_SEPARATOR, s, Paths.DECKS_EXT );
 	}
 }
