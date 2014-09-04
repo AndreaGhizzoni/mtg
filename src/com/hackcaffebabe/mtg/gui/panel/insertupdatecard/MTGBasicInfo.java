@@ -13,6 +13,7 @@ import javax.swing.border.TitledBorder;
 import net.miginfocom.swing.MigLayout;
 import com.hackcaffebabe.mtg.controller.json.StoreManager;
 import com.hackcaffebabe.mtg.gui.listener.BasicColorActionListener;
+import com.hackcaffebabe.mtg.gui.panel.listener.TextToShortCutterFocusListener;
 import com.hackcaffebabe.mtg.model.MTGCard;
 import com.hackcaffebabe.mtg.model.card.Rarity;
 import com.hackcaffebabe.mtg.model.color.CardColor;
@@ -55,6 +56,7 @@ public class MTGBasicInfo extends JPanel
 		setBorder( new TitledBorder( "Basic Info" ) );
 		setLayout( new MigLayout( "", "[][][][][][grow][][47.00,grow][grow]", "[][][]" ) );
 		this.initContent();
+		this.initShortCutter();
 	}
 
 	/* initialize all components */
@@ -113,6 +115,10 @@ public class MTGBasicInfo extends JPanel
 		this.txtSubType.getInputMap().put( KeyStroke.getKeyStroke( "ENTER" ), "commit" );
 		this.txtSubType.getActionMap().put( "commit", new CommitAction( this.txtSubTypeAutocomplete ) );
 		add( this.txtSubType, "cell 7 2 2 1,growx" );
+	}
+
+	private void initShortCutter(){
+		this.txtName.addFocusListener( new TextToShortCutterFocusListener( "name" ) );
 	}
 
 //===========================================================================================

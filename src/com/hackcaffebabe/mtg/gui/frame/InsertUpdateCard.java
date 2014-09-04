@@ -17,6 +17,7 @@ import com.hackcaffebabe.mtg.gui.ActionCommand;
 import com.hackcaffebabe.mtg.gui.FramesDimensions;
 import com.hackcaffebabe.mtg.gui.FramesTitles;
 import com.hackcaffebabe.mtg.gui.panel.insertupdatecard.InsertUpdateCardContent;
+import com.hackcaffebabe.mtg.gui.panel.listener.ShortCutterV2;
 import com.hackcaffebabe.mtg.model.MTGCard;
 
 
@@ -80,8 +81,8 @@ public class InsertUpdateCard extends JFrame
 					KeyEvent.VK_5, KeyEvent.VK_6, KeyEvent.VK_7 );
 			int i = 0;
 			for(final String s: Arrays.asList( ActionCommand.CREATURE, ActionCommand.ARTIFACT,
-					ActionCommand.PLANESWALKER, ActionCommand.LAND, ActionCommand.ENCHANTMENT,
-					ActionCommand.SORCERY, ActionCommand.INSTANT )) {
+					ActionCommand.PLANESWALKER, ActionCommand.LAND, ActionCommand.ENCHANTMENT, ActionCommand.SORCERY,
+					ActionCommand.INSTANT )) {
 				JRadioButtonMenuItem currentTypeSelector = new JRadioButtonMenuItem( s );
 				currentTypeSelector.addActionListener( new ActionListener(){
 					public void actionPerformed(ActionEvent e){
@@ -114,6 +115,7 @@ public class InsertUpdateCard extends JFrame
 	 * Close the frame
 	 */
 	public void close(){
+		ShortCutterV2.getInstance().clearAll();
 		dispose();
 	}
 }

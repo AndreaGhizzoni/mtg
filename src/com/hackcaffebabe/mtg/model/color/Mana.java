@@ -8,7 +8,7 @@ package com.hackcaffebabe.mtg.model.color;
  */
 public enum Mana
 {
-	BLACK, RED, WHITE, GREEN, BLUE, COLOR_LESS, X, TAP;
+	BLACK, RED, WHITE, GREEN, BLUE, COLOR_LESS, X, TAP, STAP;
 
 	/**
 	 * This method converts a {@link Mana} in short string.
@@ -33,6 +33,8 @@ public enum Mana
 				return "X";
 			case TAP:
 				return "TAP";
+			case STAP:
+				return "STAP";
 			default:
 				return null;
 		}

@@ -1,4 +1,4 @@
-package com.hackcaffebabe.mtg.gui.panel.insertupdatecard.listener;
+package com.hackcaffebabe.mtg.trash;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,24 +23,24 @@ import com.hackcaffebabe.mtg.model.color.Mana;
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
  */
-public class KeyboardAutoCompleteShortcuts extends AbstractAction
+public class ShortCutter extends AbstractAction
 {
 	private static final long serialVersionUID = 1L;
 	// [!!!] this keystroke works with CRTL+SPACE and SPACE+CTRL [!!!]
 	public static final KeyStroke KEYSTROKE = KeyStroke.getKeyStroke( KeyEvent.VK_SPACE, InputEvent.CTRL_DOWN_MASK );
 	// for simplicity the key of action is the name of this class
-	public static final String KEY = KeyboardAutoCompleteShortcuts.class.getName();
+	public static final String KEY = ShortCutter.class.getName();
 
 	private JTextComponent text;
 	private JPopupMenu menu;
 
 	/**
-	 * Instance a KeyboardAutocompleteShortcuts object with his {@link JTextArea}.
-	 * @param t {@link JTextArea} to launch the menu.
+	 * Instance a KeyboardAutocompleteShortcuts object with his {@link JTextComponent}.
+	 * @param t {@link JTextComponent} to launch the menu.
 	 */
-	public KeyboardAutoCompleteShortcuts(JTextComponent t) throws IllegalArgumentException{
+	public ShortCutter(JTextComponent t) throws IllegalArgumentException{
 		if(t == null)
-			throw new IllegalArgumentException( "JTextArea given can not be null." );
+			throw new IllegalArgumentException( "JTextComponent given can not be null." );
 
 		text = t;
 		menu = this.getMenu();

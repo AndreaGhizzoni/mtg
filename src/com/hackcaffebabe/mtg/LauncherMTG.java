@@ -1,6 +1,5 @@
 package com.hackcaffebabe.mtg;
 
-import static com.hackcaffebabe.mtg.gui.GUIUtils.displayError;
 import it.hackcaffebabe.logger.Logger;
 import it.hackcaffebabe.logger.Tag;
 import it.hackcaffebabe.rm.ResourceMonitor;
@@ -11,6 +10,7 @@ import javax.swing.UIManager;
 import com.hackcaffebabe.mtg.controller.DBCostants;
 import com.hackcaffebabe.mtg.controller.Paths;
 import com.hackcaffebabe.mtg.controller.json.StoreManager;
+import com.hackcaffebabe.mtg.gui.GUIUtils;
 import com.hackcaffebabe.mtg.gui.frame.MTG;
 
 
@@ -40,13 +40,13 @@ public class LauncherMTG
 			} );
 			initRM();
 		} catch(Exception e) {
-			displayError( null, e );
+			GUIUtils.displayError( null, e );
 		}
 	}
 
 	private static void checkJDKVersion() throws Exception{
 		if(Integer.parseInt( System.getProperty( "java.version" ).split( "\\." )[1] ) < Version.MIN_JDK) {
-			String s = String.format( "Java version Error. To run this program Java $s is required!", Version.MIN_JDK );
+			String s = String.format( "Java version Error. To run this program Java %s is required!", Version.MIN_JDK );
 			throw new Exception( s );
 		}
 	}

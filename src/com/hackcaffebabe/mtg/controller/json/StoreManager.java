@@ -100,12 +100,13 @@ public class StoreManager
 		EventQueue.invokeLater( new Runnable(){
 			@Override
 			public void run(){
+				MTGCard tmp = null;
 				for(File f: new File( Paths.JSON_PATH ).listFiles()) {
-					MTGCard c = loadFile( f );
-					if(c != null) {//if null continue
-						mtgSet.add( c );
-						setSeries.add( c.getSeries() );
-						setSubType.add( c.getSubType() );
+					tmp = loadFile( f );
+					if(tmp != null) {//if null continue
+						mtgSet.add( tmp );
+						setSeries.add( tmp.getSeries() );
+						setSubType.add( tmp.getSubType() );
 					}
 				}
 			}

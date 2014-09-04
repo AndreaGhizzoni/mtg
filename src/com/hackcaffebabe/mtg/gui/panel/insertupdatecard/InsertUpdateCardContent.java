@@ -40,7 +40,7 @@ import com.hackcaffebabe.mtg.gui.listener.AddEffectActionListener;
 import com.hackcaffebabe.mtg.gui.listener.DelAbilityActionListener;
 import com.hackcaffebabe.mtg.gui.listener.DelEffectActionListener;
 import com.hackcaffebabe.mtg.gui.panel.insertupdatecard.listener.EditEffectsMouseAdapter;
-import com.hackcaffebabe.mtg.gui.panel.insertupdatecard.listener.KeyboardAutoCompleteShortcuts;
+import com.hackcaffebabe.mtg.gui.panel.listener.ShortCutterV2;
 import com.hackcaffebabe.mtg.model.Artifact;
 import com.hackcaffebabe.mtg.model.Creature;
 import com.hackcaffebabe.mtg.model.Enchantment;
@@ -212,10 +212,7 @@ public class InsertUpdateCardContent extends JPanel
 		this.txtPrimaryEffect = new JTextArea();
 		this.txtPrimaryEffect.setLineWrap( true );
 		this.txtPrimaryEffect.setWrapStyleWord( true );
-		this.txtPrimaryEffect.getInputMap().put( KeyboardAutoCompleteShortcuts.KEYSTROKE,
-				KeyboardAutoCompleteShortcuts.KEY );
-		this.txtPrimaryEffect.getActionMap().put( KeyboardAutoCompleteShortcuts.KEY,
-				new KeyboardAutoCompleteShortcuts( this.txtPrimaryEffect ) );
+
 		pnlMTG.add( new JScrollPane( txtPrimaryEffect, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED ), "cell 1 6 6 2,grow" );
 
@@ -260,8 +257,12 @@ public class InsertUpdateCardContent extends JPanel
 
 	/* this method initialize the shortcut */
 	private void initShortcut(){
-		this.btnAddAbility.setMnemonic( KeyEvent.VK_A );
+		ShortCutterV2.getInstance().add( this.txtPrimaryEffect );
+		this.txtPrimaryEffect.getInputMap().put( ShortCutterV2.KEYSTROKE, ShortCutterV2.KEY );
+		this.txtPrimaryEffect.getActionMap().put( ShortCutterV2.KEY, ShortCutterV2.getInstance() );
 		this.txtPrimaryEffect.setFocusAccelerator( 'p' );
+
+		this.btnAddAbility.setMnemonic( KeyEvent.VK_A );
 		this.btnAddEffect.setMnemonic( KeyEvent.VK_E );
 		this.btnSaveOrUpdate.setMnemonic( cardToUpdate == null ? KeyEvent.VK_S : KeyEvent.VK_U );
 		this.btnClear.setMnemonic( KeyEvent.VK_L );
@@ -335,6 +336,7 @@ public class InsertUpdateCardContent extends JPanel
 		this.btnDelAbility.setEnabled( true );
 		this.txtPrimaryEffect.setText( "" );
 		this.txtPrimaryEffect.setEditable( true );
+		ShortCutterV2.getInstance().clearMenu();
 	}
 
 	/**
@@ -809,215 +811,6 @@ public class InsertUpdateCardContent extends JPanel
 					return null;
 			}
 		}
-
-//		@SuppressWarnings("unchecked")
-//		private MTGCard getInsertedUserCard(){
-//			HashMap<String, Object> map = new HashMap<>();
-//
-//			//at this point all the data are correct and ready to store or update.
-//			map.put( JSONTags.TYPE, MTGTypeListener.lastActionCommand );
-//
-//			log.write( Tag.INFO, "New card start to save..." );
-//			log.write( Tag.DEBUG, String.format( "type to save = %s", map.get( JSONTags.TYPE ) ) );
-//
-//			map.put( JSONTags.NAME, StringNormalizer.normalizeForStorage( pnlMTGBasicInfo.getNames() ).trim() );
-//			log.write( Tag.DEBUG, String.format( "name = %s", map.get( JSONTags.NAME ) ) );
-//
-//			map.put( JSONTags.RARITY, pnlMTGBasicInfo.getRarity() );
-//			log.write( Tag.DEBUG, String.format( "rarity = %s", (Rarity) map.get( JSONTags.RARITY ) ) );
-//
-//			map.put( JSONTags.COLOR, pnlMTGBasicInfo.getCardColor() );
-//			log.write( Tag.DEBUG, String.format( "card color = %s", (CardColor) map.get( JSONTags.COLOR ) ) );
-//
-//			map.put( JSONTags.LEGENDARY, pnlMTGBasicInfo.isLegendarySelected() );
-//			log.write( Tag.DEBUG, String.format( "is legendary = %s", (boolean) map.get( JSONTags.LEGENDARY ) ) );
-//
-//			map.put( JSONTags.SERIES, StringNormalizer.normalizeForStorage( pnlMTGBasicInfo.getSeries() ).trim() );
-//			log.write( Tag.DEBUG, String.format( "series = %s", map.get( JSONTags.SERIES ) ) );
-//
-//			String tmp = StringNormalizer.removeAccentCharacters( pnlMTGBasicInfo.getSubType() );
-//			if(tmp == null)
-//				map.put( JSONTags.SUB_TYPE, "" );
-//			else map.put( JSONTags.SUB_TYPE, tmp.trim() );
-//			log.write( Tag.DEBUG, String.format( "sub type = %s", map.get( JSONTags.SUB_TYPE ) ) );
-//
-//			// if no text is inserted, "" is returned by getText()
-//			map.put( JSONTags.PRIMARY_EFFECT, StringNormalizer.removeAccentCharacters( txtPrimaryEffect.getText() ) );
-//			log.write( Tag.DEBUG, String.format( "primary effect = %s", map.get( JSONTags.PRIMARY_EFFECT ) ) );
-//
-//			map.put( JSONTags.EFFECTS, ((JXObjectModel<Effect>) tableEffects.getModel()).getObjects() );
-//			log.write( Tag.DEBUG,
-//					String.format( "effects = %s", ((List<Effect>) map.get( JSONTags.EFFECTS )).toString() ) );
-//
-//			map.put( JSONTags.MANA_COST, null );
-//			if(!((String) map.get( JSONTags.TYPE )).equals( ActionCommand.LAND )) {
-//				map.put( JSONTags.MANA_COST, pnlManaCost.getManaCost() );
-//				log.write( Tag.DEBUG,
-//						String.format( "mana cost = %s", ((ManaCost) map.get( JSONTags.MANA_COST )).toString() ) );
-//			}
-//
-//			switch( (String) map.get( JSONTags.TYPE ) ) {
-//				case ActionCommand.CREATURE: {
-//					map.put( JSONTags.STRENGTH, pnlCreatureInfo.getStrength() );
-//					log.write( Tag.DEBUG,
-//							String.format( "creature strength = %s", (Strength) map.get( JSONTags.STRENGTH ) ) );
-//
-//					map.put( JSONTags.ARTIFACT, pnlMTGBasicInfo.isArtifactSelected() );
-//					log.write( Tag.DEBUG, String.format( "is artifact = %s", map.get( JSONTags.ARTIFACT ) ) );
-//
-//					map.put( JSONTags.ABILITIES, ((JXObjectModel<Ability>) tableAbility.getModel()).getObjects() );
-//					log.write( Tag.DEBUG,
-//							String.format( "ability = %s", ((List<Ability>) map.get( JSONTags.ABILITIES )).toString() ) );
-//
-//					Creature finalCreature = new Creature( (String) map.get( JSONTags.NAME ),
-//							(CardColor) map.get( JSONTags.COLOR ), (Strength) map.get( JSONTags.STRENGTH ),
-//							(ManaCost) map.get( JSONTags.MANA_COST ), (String) map.get( JSONTags.SUB_TYPE ),
-//							(Rarity) map.get( JSONTags.RARITY ) );
-//					finalCreature.setArtifact( (boolean) map.get( JSONTags.ARTIFACT ) );
-//					finalCreature.setSeries( (String) map.get( JSONTags.SERIES ) );
-//					finalCreature.setSubType( (String) map.get( JSONTags.SUB_TYPE ) );
-//					finalCreature.setLegendary( (boolean) map.get( JSONTags.LEGENDARY ) );
-//					finalCreature.setPrimaryEffect( (String) map.get( JSONTags.PRIMARY_EFFECT ) );
-//					for(Effect eff: (List<Effect>) map.get( JSONTags.EFFECTS )) {
-//						finalCreature.addEffect( eff );
-//					}
-//					for(Ability abi: (List<Ability>) map.get( JSONTags.ABILITIES )) {
-//						finalCreature.addAbility( abi );
-//					}
-//
-//					log.write( Tag.DEBUG, finalCreature.toString() );
-//					return finalCreature;
-//				}
-//				case ActionCommand.ARTIFACT: {
-//					map.put( JSONTags.ABILITIES, ((JXObjectModel<Ability>) tableAbility.getModel()).getObjects() );
-//					log.write( Tag.DEBUG,
-//							String.format( "ability = %s", ((List<Ability>) map.get( JSONTags.ABILITIES )).toString() ) );
-//
-//					Artifact finalArtifact = new Artifact( (String) map.get( JSONTags.NAME ),
-//							(ManaCost) map.get( JSONTags.MANA_COST ), (CardColor) map.get( JSONTags.COLOR ),
-//							(Rarity) map.get( JSONTags.RARITY ) );
-//					finalArtifact.setLegendary( (boolean) map.get( JSONTags.LEGENDARY ) );
-//					finalArtifact.setSeries( (String) map.get( JSONTags.SERIES ) );
-//					finalArtifact.setSubType( (String) map.get( JSONTags.SUB_TYPE ) );
-//					finalArtifact.setPrimaryEffect( (String) map.get( JSONTags.PRIMARY_EFFECT ) );
-//					for(Effect eff: (List<Effect>) map.get( JSONTags.EFFECTS )) {
-//						finalArtifact.addEffect( eff );
-//					}
-//					for(Ability abi: (List<Ability>) map.get( JSONTags.ABILITIES )) {
-//						finalArtifact.addAbility( abi );
-//					}
-//
-//					log.write( Tag.DEBUG, finalArtifact.toString() );
-//					return finalArtifact;
-//				}
-//				case ActionCommand.PLANESWALKER: {
-//					map.put( JSONTags.LIFE, pnlPlaneswalkerInfo.getPlaneswalkerLife() );
-//					log.write( Tag.DEBUG, String.format( "planeswalker life = %d", (int) map.get( JSONTags.LIFE ) ) );
-//
-//					map.put( JSONTags.PLANES_ABILITY,
-//							((JXObjectModel<PlanesAbility>) tableAbility.getModel()).getObjects() );
-//					log.write( Tag.DEBUG,
-//							String.format( "ability = %s", (List<PlanesAbility>) map.get( JSONTags.PLANES_ABILITY ) ) );
-//
-//					Planeswalker finalPlaneswalker = new Planeswalker( (String) map.get( JSONTags.NAME ),
-//							(ManaCost) map.get( JSONTags.MANA_COST ), (int) map.get( JSONTags.LIFE ),
-//							(CardColor) map.get( JSONTags.COLOR ), (Rarity) map.get( JSONTags.RARITY ) );
-//					finalPlaneswalker.setSeries( (String) map.get( JSONTags.SERIES ) );
-//					finalPlaneswalker.setSubType( (String) map.get( JSONTags.SUB_TYPE ) );
-//					for(PlanesAbility abi: (List<PlanesAbility>) map.get( JSONTags.PLANES_ABILITY )) {
-//						finalPlaneswalker.addAbility( abi );
-//					}
-//
-//					log.write( Tag.DEBUG, finalPlaneswalker.toString() );
-//					return finalPlaneswalker;
-//				}
-//				case ActionCommand.INSTANT: {
-//					map.put( JSONTags.ABILITIES, ((JXObjectModel<Ability>) tableAbility.getModel()).getObjects() );
-//					log.write( Tag.DEBUG,
-//							String.format( "ability = %s", ((List<Ability>) map.get( JSONTags.ABILITIES )).toString() ) );
-//
-//					Instant finalInstant = new Instant( (String) map.get( JSONTags.NAME ),
-//							(ManaCost) map.get( JSONTags.MANA_COST ), (CardColor) map.get( JSONTags.COLOR ),
-//							(Rarity) map.get( JSONTags.RARITY ) );
-//					finalInstant.setPrimaryEffect( (String) map.get( JSONTags.PRIMARY_EFFECT ) );
-//					finalInstant.setSeries( (String) map.get( JSONTags.SERIES ) );
-//					finalInstant.setSubType( (String) map.get( JSONTags.SUB_TYPE ) );
-//					finalInstant.setLegendary( (boolean) map.get( JSONTags.LEGENDARY ) );
-//					for(Ability abi: (List<Ability>) map.get( JSONTags.ABILITIES )) {
-//						finalInstant.addAbility( abi );
-//					}
-//					for(Effect ef: (List<Effect>) map.get( JSONTags.EFFECTS )) {
-//						finalInstant.addEffect( ef );
-//					}
-//
-//					log.write( Tag.DEBUG, finalInstant.toString() );
-//					return finalInstant;
-//				}
-//				case ActionCommand.SORCERY: {
-//					map.put( JSONTags.ABILITIES, ((JXObjectModel<Ability>) tableAbility.getModel()).getObjects() );
-//					log.write( Tag.DEBUG,
-//							String.format( "ability = %s", ((List<Ability>) map.get( JSONTags.ABILITIES )).toString() ) );
-//
-//					Sorcery finalSorcery = new Sorcery( (String) map.get( JSONTags.NAME ),
-//							(ManaCost) map.get( JSONTags.MANA_COST ), (CardColor) map.get( JSONTags.COLOR ),
-//							(Rarity) map.get( JSONTags.RARITY ) );
-//					finalSorcery.setPrimaryEffect( (String) map.get( JSONTags.PRIMARY_EFFECT ) );
-//					finalSorcery.setSeries( (String) map.get( JSONTags.SERIES ) );
-//					finalSorcery.setSubType( (String) map.get( JSONTags.SUB_TYPE ) );
-//					finalSorcery.setLegendary( (boolean) map.get( JSONTags.LEGENDARY ) );
-//					for(Ability abi: (List<Ability>) map.get( JSONTags.ABILITIES )) {
-//						finalSorcery.addAbility( abi );
-//					}
-//					for(Effect ef: (List<Effect>) map.get( JSONTags.EFFECTS )) {
-//						finalSorcery.addEffect( ef );
-//					}
-//
-//					log.write( Tag.DEBUG, finalSorcery.toString() );
-//					return finalSorcery;
-//				}
-//				case ActionCommand.ENCHANTMENT: {
-//					map.put( JSONTags.ABILITIES, ((JXObjectModel<Ability>) tableAbility.getModel()).getObjects() );
-//					log.write( Tag.DEBUG,
-//							String.format( "ability = %s", ((List<Ability>) map.get( JSONTags.ABILITIES )).toString() ) );
-//
-//					Enchantment finalEnchantment = new Enchantment( (String) map.get( JSONTags.NAME ),
-//							(ManaCost) map.get( JSONTags.MANA_COST ), (CardColor) map.get( JSONTags.COLOR ),
-//							(Rarity) map.get( JSONTags.RARITY ) );
-//					finalEnchantment.setPrimaryEffect( (String) map.get( JSONTags.PRIMARY_EFFECT ) );
-//					finalEnchantment.setSeries( (String) map.get( JSONTags.SERIES ) );
-//					finalEnchantment.setSubType( (String) map.get( JSONTags.SUB_TYPE ) );
-//					finalEnchantment.setLegendary( (boolean) map.get( JSONTags.LEGENDARY ) );
-//					for(Ability abi: (List<Ability>) map.get( JSONTags.ABILITIES )) {
-//						finalEnchantment.addAbility( abi );
-//					}
-//					for(Effect eff: (List<Effect>) map.get( JSONTags.EFFECTS )) {
-//						finalEnchantment.addEffect( eff );
-//					}
-//
-//					log.write( Tag.DEBUG, finalEnchantment.toString() );
-//					return finalEnchantment;
-//				}
-//				case ActionCommand.LAND: {
-//					Land finalLand = new Land( (String) map.get( JSONTags.NAME ), (Rarity) map.get( JSONTags.RARITY ) );
-//
-//					map.put( JSONTags.ARTIFACT, pnlMTGBasicInfo.isArtifactSelected() );
-//					log.write( Tag.DEBUG, String.format( "is artifact = %s", (boolean) map.get( JSONTags.ARTIFACT ) ) );
-//
-//					finalLand.setArtifact( (boolean) map.get( JSONTags.ARTIFACT ) );
-//					finalLand.setPrimaryEffect( (String) map.get( JSONTags.PRIMARY_EFFECT ) );
-//					finalLand.setSeries( (String) map.get( JSONTags.SERIES ) );
-//					finalLand.setSubType( (String) map.get( JSONTags.SUB_TYPE ) );
-//					for(Effect eff: (List<Effect>) map.get( JSONTags.EFFECTS )) {
-//						finalLand.addEffect( eff );
-//					}
-//
-//					log.write( Tag.DEBUG, finalLand.toString() );
-//					return finalLand;
-//				}
-//				default:
-//					return null;
-//			}
-//		}
 	}
 
 	/* inner class that describe the action on btnAddActivity; */

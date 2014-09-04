@@ -8,7 +8,7 @@ package com.hackcaffebabe.mtg;
 public class Version
 {
 	/** Current software version */
-	public static final String VERSION = "BETA_0.3029";
+	public static final String VERSION = "BETA_0.3031";
 
 	public static final Integer MIN_JDK = 8;
 }
