@@ -101,7 +101,8 @@ public class StoreManager
 			@Override
 			public void run(){
 				MTGCard tmp = null;
-				for(File f: new File( Paths.JSON_PATH ).listFiles()) {
+				File[] files = new File( Paths.JSON_PATH ).listFiles();
+				for(File f: files) {
 					tmp = loadFile( f );
 					if(tmp != null) {//if null continue
 						mtgSet.add( tmp );

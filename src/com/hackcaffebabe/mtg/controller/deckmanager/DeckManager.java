@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import javax.swing.SwingUtilities;
 import javax.swing.tree.DefaultTreeModel;
@@ -65,7 +64,8 @@ public class DeckManager
 				log.write( Tag.INFO, "Refreshing deck list..." );
 
 				savedDecks.clear();
-				for(File f: Arrays.asList( new File( Paths.DECKS_PATH ).listFiles() )) {
+				File[] files = new File( Paths.DECKS_PATH ).listFiles();
+				for(File f: files) {
 					if(f.getName().endsWith( "mtgdeck" ))
 						savedDecks.add( f );
 				}
