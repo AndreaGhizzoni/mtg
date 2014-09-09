@@ -53,7 +53,7 @@ public class ManaCostInfo extends JPanel
 		add( txtManaCost, "cell 0 0,growx" );
 
 		this.btnSetManaCost = new JButton( "Set Mana Cost" );
-		this.btnSetManaCost.addActionListener( new ManaActionListener() );
+		this.btnSetManaCost.addActionListener( new ManaActionListener( this ) );
 		add( this.btnSetManaCost, "cell 1 0" );
 	}
 
@@ -120,9 +120,15 @@ public class ManaCostInfo extends JPanel
 	/** Inner class that describe the action on btnManaCost */
 	private class ManaActionListener implements ActionListener
 	{
+		private JPanel c;
+
+		public ManaActionListener(JPanel cs){
+			this.c = cs;
+		}
+
 		@Override
 		public void actionPerformed(ActionEvent e){
-			viewManaCost = showManaCost( null, true );
+			viewManaCost = showManaCost( this.c, true );
 			txtManaCost.setText( viewManaCost.toString() );
 		}
 	}

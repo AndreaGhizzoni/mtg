@@ -249,7 +249,7 @@ public class InsertUpdateCardContent extends JPanel
 		pnlOptions.add( this.btnClear, "cell 0 0,growx" );
 
 		this.btnSaveOrUpdate = new JButton();// strings of button is set later than initContent
-		this.btnSaveOrUpdate.addActionListener( new SaveOrUpdateActionListener() );
+		this.btnSaveOrUpdate.addActionListener( new SaveOrUpdateActionListener( this ) );
 		pnlOptions.add( this.btnSaveOrUpdate, "cell 2 0,growx" );
 
 		add( pnlOptions, "cell 0 2 2 1,grow" );
@@ -492,6 +492,12 @@ public class InsertUpdateCardContent extends JPanel
 	/* inner class that describe the action on btnSave */
 	private class SaveOrUpdateActionListener implements ActionListener
 	{
+		private JPanel p;
+
+		public SaveOrUpdateActionListener(JPanel p){
+			this.p = p;
+		}
+
 		@Override
 		public void actionPerformed(ActionEvent e){
 			if(!checkUserCard())
@@ -587,9 +593,9 @@ public class InsertUpdateCardContent extends JPanel
 						resetTheForm();
 						refreshMTGTable();
 
-						displaySuccessMessage( null, "Card saved correctly!" );
+						displaySuccessMessage( this.p, "Card saved correctly!" );
 					} else {
-						displayWarningMessage( null, "Card is already saved!" );
+						displayWarningMessage( this.p, "Card is already saved!" );
 					}
 				} else {
 					// cardToUpdate is the oldest card, m is the newest.
@@ -597,14 +603,14 @@ public class InsertUpdateCardContent extends JPanel
 						refreshMTGTable();
 						PNL_MTGPROPERTIES.clearAll();
 
-						displaySuccessMessage( null, "Card updated correctly!" );
+						displaySuccessMessage( this.p, "Card updated correctly!" );
 						parent.close();
 					} else {
-						displayWarningMessage( null, "No changes found.\nNothing to update." );
+						displayWarningMessage( this.p, "No changes found.\nNothing to update." );
 					}
 				}
 			} catch(Exception e) {
-				displayError( null, e );
+				displayError( this.p, e );
 			}
 		}
 
