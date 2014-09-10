@@ -2,6 +2,7 @@ package com.hackcaffebabe.mtg.model.card;
 
 import it.hackcaffebabe.jx.table.model.DisplayableObject;
 import java.io.Serializable;
+import com.hackcaffebabe.mtg.controller.StringNormalizer;
 
 
 /**
@@ -25,9 +26,11 @@ public class Ability extends DisplayableObject implements Serializable
 		super( Ability.class );
 		setColumnNames( new String[] { "Name", "Description" } );
 
-		this.setName( name );
-		this.setDescription( description );
-		AbilityFactory.getInstance().add( name, description );
+		String nameN = StringNormalizer.normalizeForStorage( name );
+		String descriptionN = StringNormalizer.normalizeForStorage( description );
+		this.setName( nameN );
+		this.setDescription( descriptionN );
+		AbilityFactory.getInstance().add( nameN, descriptionN );
 	}
 
 //===========================================================================================

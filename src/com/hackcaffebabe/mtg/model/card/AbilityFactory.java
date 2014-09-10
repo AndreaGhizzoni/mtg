@@ -22,7 +22,7 @@ import com.hackcaffebabe.mtg.controller.Paths;
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
  */
-public class AbilityFactory
+public final class AbilityFactory
 {
 	private static AbilityFactory factory;
 
@@ -63,10 +63,12 @@ public class AbilityFactory
 		if(this.abilities.containsKey( name ))
 			return;
 
+		long start = System.currentTimeMillis();
 		this.abilities.put( name, descrption );
 		this.jsonAbilities.addProperty( name, descrption );
 		this.flush();
-		Logger.getInstance().write( Tag.INFO, String.format( "ability saved = %s", name ) );
+		long end = System.currentTimeMillis();
+		Logger.getInstance().write( Tag.INFO, String.format( "ability saved = %s in %dms", name, (end - start) ) );
 	}
 
 	/**
@@ -82,10 +84,12 @@ public class AbilityFactory
 		if(!this.abilities.containsKey( name ))
 			return;
 
+		long start = System.currentTimeMillis();
 		this.abilities.remove( name );
 		this.jsonAbilities.remove( name );
 		this.flush();
-		Logger.getInstance().write( Tag.INFO, String.format( "ability removed = %s", name ) );
+		long end = System.currentTimeMillis();
+		Logger.getInstance().write( Tag.INFO, String.format( "ability removed = %s in %dms", name, (end - start) ) );
 	}
 
 	/**
