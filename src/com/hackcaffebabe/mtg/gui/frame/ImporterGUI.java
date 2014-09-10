@@ -9,9 +9,10 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
-import com.hackcaffebabe.mtg.controller.impoexpo.Importer;
 import com.hackcaffebabe.mtg.controller.impoexpo.ImpoExpoWhat;
+import com.hackcaffebabe.mtg.controller.impoexpo.Importer;
 import com.hackcaffebabe.mtg.gui.FramesDimensions;
 import com.hackcaffebabe.mtg.gui.FramesTitles;
 
@@ -50,6 +51,8 @@ public class ImporterGUI extends JFrame
 		contentPane.setLayout( new BorderLayout( 2, 2 ) );
 
 		this.textArea = new JTextArea();
+		this.textArea.setEditable( false );
+		this.textArea.setBackground( UIManager.getColor( "windowBorder" ) );
 		contentPane.add( new JScrollPane( this.textArea ) );
 
 		JPanel tmp = new JPanel();

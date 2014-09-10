@@ -59,61 +59,19 @@ public class Importer extends SwingWorker<Void, String>
 	@Override
 	protected Void doInBackground() throws Exception{
 		File zipFile = ImpoExpoUtils.showUserLocationChooser( 1, whatToImport );
-		int tot, count;
-		ZipInputStream zis;
-		ZipEntry ze;
-		File tmp;
 		if(zipFile != null) {
 			switch( this.whatToImport ) {
 				case ALL_CARDS:
-					log.write( Tag.INFO, String.format( "Try to Selected Import from backup: %s", zipFile.getName() ) );
-					tot = count( zipFile );
-					count = 1;
-					zis = new ZipInputStream( new FileInputStream( zipFile ) );
-					ze = zis.getNextEntry();
-					while( ze != null ) {
-						tmp = read( ze, zis );
-						ze = zis.getNextEntry();
-
-						publish( tmp.getName() );
-						setProgress( (count++ * 100) / tot );
-					}
-					zis.closeEntry();
-					zis.close();
+					importAllCard( zipFile );
 					break;
 				case ALL_DECKS:
+					//TODO import all deck goes here.
 					break;
 				case SELECTIVE_CARDS:
-					log.write( Tag.INFO, String.format( "Try to Selected Import from backup: %s", zipFile.getName() ) );
-					DefaultListModel<JXCheckListEntry<String>> model = JXCheckList.convertToModel( listFile( zipFile ),
-							true );
-					JXCheckList<String> lstCheckList = new JXCheckList<>();
-					lstCheckList.setModel( model );
-					JComponent[] input = { new JLabel( "Select wich card you want to import:" ),
-							new JScrollPane( lstCheckList ) };
-					int r = JOptionPane
-							.showConfirmDialog( null, input, "Selected Import", JOptionPane.OK_CANCEL_OPTION );
-					if(r == JOptionPane.OK_OPTION) {
-						List<String> list = lstCheckList.getCheckedObjects();
-						tot = list.size();
-						if(tot == 0)
-							return null;
-						count = 1;
-						zis = new ZipInputStream( new FileInputStream( zipFile ) );
-						ze = zis.getNextEntry();
-						while( ze != null ) {
-							if(list.contains( ze.getName() )) {
-								tmp = read( ze, zis );
-								publish( tmp.getName() );
-								setProgress( (count++ * 100) / tot );
-							}
-							ze = zis.getNextEntry();
-						}
-						zis.closeEntry();
-						zis.close();
-					}
+					importSelectedCards( zipFile );
 					break;
 				case SELECTIVE_DECKS:
+					//TODO import selective deck goes here.
 					break;
 				default:
 					break;
@@ -135,6 +93,65 @@ public class Importer extends SwingWorker<Void, String>
 //===========================================================================================
 // METHOD
 //===========================================================================================
+	/* method to import selected cards. */
+	private void importSelectedCards(File fromZip) throws Exception{
+		long start = System.currentTimeMillis();
+		log.write( Tag.INFO, String.format( "Try to selected cards Import from backup: %s", fromZip.getName() ) );
+
+		DefaultListModel<JXCheckListEntry<String>> model = JXCheckList.convertToModel( listFile( fromZip ), true );
+		JXCheckList<String> lstCheckList = new JXCheckList<>();
+		lstCheckList.setModel( model );
+		JComponent[] input = { new JLabel( "Select wich card you want to import:" ), new JScrollPane( lstCheckList ) };
+		int r = JOptionPane.showConfirmDialog( null, input, "Selected Import", JOptionPane.OK_CANCEL_OPTION );
+		if(r == JOptionPane.OK_OPTION) {
+			List<String> list = lstCheckList.getCheckedObjects();
+			int tot = list.size();
+			if(tot == 0)
+				return;
+			int count = 1;
+			ZipInputStream zis = new ZipInputStream( new FileInputStream( fromZip ) );
+			ZipEntry ze = zis.getNextEntry();
+			File tmp;
+			while( ze != null ) {
+				if(list.contains( ze.getName() )) {
+					tmp = read( ze, zis );
+					publish( tmp.getName() );
+					setProgress( (count++ * 100) / tot );
+				}
+				ze = zis.getNextEntry();
+			}
+			zis.closeEntry();
+			zis.close();
+		}
+
+		long end = System.currentTimeMillis();
+		log.write( Tag.INFO, String.format( "Selected import from backup zip file correctly in : %dms", (end - start) ) );
+	}
+
+	/* method to import all the cards */
+	private void importAllCard(File fromZip) throws Exception{
+		long start = System.currentTimeMillis();
+		log.write( Tag.INFO, String.format( "Try to Import from backup: %s", fromZip.getName() ) );
+
+		int tot = count( fromZip );
+		int count = 1;
+		ZipInputStream zis = new ZipInputStream( new FileInputStream( fromZip ) );
+		ZipEntry ze = zis.getNextEntry();
+		File tmp;
+		while( ze != null ) {
+			tmp = read( ze, zis );
+			ze = zis.getNextEntry();
+
+			publish( tmp.getName() );
+			setProgress( (count++ * 100) / tot );
+		}
+		zis.closeEntry();
+		zis.close();
+
+		long end = System.currentTimeMillis();
+		log.write( Tag.INFO, String.format( "Import from backup zip file correctly in : %dms", (end - start) ) );
+	}
+
 	/* read the zip entry from zip input stream and extract his content into new file. */
 	private File read(ZipEntry ze, ZipInputStream zis) throws Exception{
 		File tmp = new File( getRigthPath( ze.getName() ) );
