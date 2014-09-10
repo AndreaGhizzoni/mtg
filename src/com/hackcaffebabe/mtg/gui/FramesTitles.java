@@ -17,4 +17,8 @@ public class FramesTitles
 	public static final String TITLE_ADVANCE_SEARCH = "Advance Search";
 	/** Title of Deck Editor frame */
 	public static final String TITLE_DECK_EDITOR = "Deck Editor!";
+	/** Title of importer frame */
+	public static final String TITLE_IMPORTER = "Importer!";
+	/** Title of exporter frame */
+	public static final String TITLE_EXPORTER = "Exporter!";
 }

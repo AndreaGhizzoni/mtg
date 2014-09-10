@@ -1,6 +1,6 @@
 package com.hackcaffebabe.mtg.controller.impoexpo;
 
-public enum What
+public enum ImpoExpoWhat
 {
 	/** import all cards */
 	ALL_CARDS,

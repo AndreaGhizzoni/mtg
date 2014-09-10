@@ -10,7 +10,7 @@ import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
-import com.hackcaffebabe.mtg.controller.impoexpo.Importer;
+import com.hackcaffebabe.mtg.controller.impoexpo.Exporter;
 import com.hackcaffebabe.mtg.controller.impoexpo.ImpoExpoWhat;
 import com.hackcaffebabe.mtg.gui.FramesDimensions;
 import com.hackcaffebabe.mtg.gui.FramesTitles;
@@ -22,7 +22,7 @@ import com.hackcaffebabe.mtg.gui.FramesTitles;
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
  */
-public class ImporterGUI extends JFrame
+public class ExporterGUI extends JFrame
 {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -31,8 +31,8 @@ public class ImporterGUI extends JFrame
 	private JProgressBar bar;
 
 	/** Create the frame. */
-	public ImporterGUI(ImpoExpoWhat what){
-		super( FramesTitles.TITLE_IMPORTER );
+	public ExporterGUI(ImpoExpoWhat what){
+		super( FramesTitles.TITLE_EXPORTER );
 		this.initContent();
 		setContentPane( contentPane );
 		setSize( FramesDimensions.DIMENSION_IMPOEXPO );
@@ -40,7 +40,7 @@ public class ImporterGUI extends JFrame
 		setUndecorated( true );
 		toFront();
 		setVisible( true );
-		new Importer( what, this ).execute();
+		new Exporter( what, this ).execute();
 	}
 
 	/* initialize all the components */

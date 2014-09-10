@@ -1,6 +1,5 @@
 package com.hackcaffebabe.mtg.controller.json;
 
-import it.hackcaffebabe.ioutil.file.Zipper;
 import it.hackcaffebabe.logger.Logger;
 import it.hackcaffebabe.logger.Tag;
 import java.awt.EventQueue;
@@ -258,28 +257,6 @@ public class StoreManager
 				set.add( m );
 		}
 		return new ArrayList<>( set );
-	}
-
-	/**
-	 * This method creates a backup file in .zip format of all stored card.
-	 * @param destinationFile {@link File} the file represents .zip.
-	 * @throws IOException if backup creation fail.
-	 */
-	public void createCardsBackup(File destinationFile) throws IOException{
-		if(destinationFile == null)
-			return;
-
-		long start = System.currentTimeMillis();
-		log.write( Tag.INFO,
-				String.format( "Try to backup of all stored files on :%s", destinationFile.getAbsolutePath() ) );
-		if(destinationFile.exists() && !destinationFile.delete()) {
-			log.write( Tag.ERRORS, "Error on delete exists backup." );
-		}
-
-		Zipper zip = new Zipper( destinationFile, new File( Paths.JSON_PATH ).listFiles() );
-		zip.forceZip();
-		long end = System.currentTimeMillis();
-		log.write( Tag.INFO, String.format( "Backup closed and create correctly in %dms", (end - start) ) );
 	}
 
 //===========================================================================================
