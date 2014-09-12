@@ -66,14 +66,14 @@ public class LauncherMTG
 	}
 
 	private static void initHomeFolder(){
-		File mtgHome = new File( Paths.mtgHome );
+		File mtgHome = new File( Paths.MTG_HOME );
 		if(!mtgHome.exists()) {
 			mtgHome.mkdirs();
 		}
 	}
 
 	private static void initSubFolderStructure(){
-		File mtgDataFile = new File( Paths.mtgDataHome );
+		File mtgDataFile = new File( Paths.MTG_DATA_HOME );
 		if(!mtgDataFile.exists()) {
 			mtgDataFile.mkdirs();
 			Logger.getInstance().write( Tag.INFO, "creating path: " + mtgDataFile.getAbsolutePath() );

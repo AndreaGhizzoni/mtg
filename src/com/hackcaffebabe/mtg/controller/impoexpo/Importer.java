@@ -25,9 +25,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
 import com.hackcaffebabe.mtg.controller.Paths;
+import com.hackcaffebabe.mtg.controller.StringNormalizer;
 import com.hackcaffebabe.mtg.controller.json.StoreManager;
 import com.hackcaffebabe.mtg.gui.GUIUtils;
 import com.hackcaffebabe.mtg.gui.frame.ImporterGUI;
+import com.hackcaffebabe.mtg.model.MTGCard;
 
 
 /**
@@ -87,7 +89,7 @@ public class Importer extends SwingWorker<Void, String>
 	@Override
 	protected void process(List<String> chunks){
 		for(String i: chunks)
-			textArea.append( String.format( "%s\n", i ) );
+			textArea.append( String.format( "%-51sOK\n", i ) );
 	}
 
 //===========================================================================================
@@ -112,11 +114,16 @@ public class Importer extends SwingWorker<Void, String>
 			ZipInputStream zis = new ZipInputStream( new FileInputStream( fromZip ) );
 			ZipEntry ze = zis.getNextEntry();
 			File tmp;
+			MTGCard c;
 			while( ze != null ) {
 				if(list.contains( ze.getName() )) {
 					tmp = read( ze, zis );
-					publish( tmp.getName() );
-					setProgress( (count++ * 100) / tot );
+					c = StoreManager.getInstance().loadFile( tmp );
+					if(c != null) {
+						StoreManager.getInstance().add( c );
+						publish( StringNormalizer.removeExtension( tmp.getName() ) );
+						setProgress( (count++ * 100) / tot );
+					}
 				}
 				ze = zis.getNextEntry();
 			}
@@ -138,12 +145,17 @@ public class Importer extends SwingWorker<Void, String>
 		ZipInputStream zis = new ZipInputStream( new FileInputStream( fromZip ) );
 		ZipEntry ze = zis.getNextEntry();
 		File tmp;
+		MTGCard c;
 		while( ze != null ) {
 			tmp = read( ze, zis );
-			ze = zis.getNextEntry();
+			c = StoreManager.getInstance().loadFile( tmp );
+			if(c != null) {
+				StoreManager.getInstance().add( c );
+			}
 
-			publish( tmp.getName() );
+			publish( StringNormalizer.removeExtension( tmp.getName() ) );
 			setProgress( (count++ * 100) / tot );
+			ze = zis.getNextEntry();
 		}
 		zis.closeEntry();
 		zis.close();
@@ -228,7 +240,7 @@ public class Importer extends SwingWorker<Void, String>
 						case DONE:
 							if(whatToImport.equals( ImpoExpoWhat.ALL_CARDS )
 									|| whatToImport.equals( ImpoExpoWhat.SELECTIVE_CARDS )) {
-								StoreManager.getInstance().refresh();
+//								StoreManager.getInstance().refresh();
 								GUIUtils.refreshMTGTable();
 							} else if(whatToImport.equals( ImpoExpoWhat.ALL_DECKS )
 									|| whatToImport.equals( ImpoExpoWhat.SELECTIVE_DECKS )) {
@@ -242,7 +254,6 @@ public class Importer extends SwingWorker<Void, String>
 							break;
 						case STARTED:
 							publish( "Importing files..." );
-							log.write( Tag.INFO, "Importing files..." );
 							break;
 						default:
 							break;

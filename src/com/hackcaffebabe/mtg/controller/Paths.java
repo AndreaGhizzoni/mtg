@@ -13,19 +13,19 @@ public class Paths
 	private static final String pattern = "%s%s%s";
 
 	/** user home directory/.mtg */
-	public static final String mtgHome = String.format( pattern, PathUtil.USER_HOME, PathUtil.FILE_SEPARATOR, ".mtg" );
+	public static final String MTG_HOME = String.format( pattern, PathUtil.USER_HOME, PathUtil.FILE_SEPARATOR, ".mtg" );
 	/** user home directory/.mtg/data */
-	public static final String mtgDataHome = String.format( pattern, mtgHome, PathUtil.FILE_SEPARATOR, "data" );
+	public static final String MTG_DATA_HOME = String.format( pattern, MTG_HOME, PathUtil.FILE_SEPARATOR, "data" );
 	/** user home directory/.mtg/log.txt */
-	public static final String LOG_FILE_PATH = String.format( pattern, mtgHome, PathUtil.FILE_SEPARATOR, "log.txt" );
+	public static final String LOG_FILE_PATH = String.format( pattern, MTG_HOME, PathUtil.FILE_SEPARATOR, "log.txt" );
 	/** user home directory/.mtg/data/card */
-	public static final String JSON_PATH = String.format( pattern, mtgDataHome, PathUtil.FILE_SEPARATOR, "card" );
+	public static final String JSON_PATH = String.format( pattern, MTG_DATA_HOME, PathUtil.FILE_SEPARATOR, "card" );
 	/** user home directory/.mtg/data/deck */
-	public static final String DECKS_PATH = String.format( pattern, mtgDataHome, PathUtil.FILE_SEPARATOR, "deck" );
+	public static final String DECKS_PATH = String.format( pattern, MTG_DATA_HOME, PathUtil.FILE_SEPARATOR, "deck" );
 	/** extension of deck files */
 	public static final String DECKS_EXT = "mtgdeck";
 	/** user home directory/.mtg/data/ability.json */
-	public static final String ABILITY_FILE_PATH = String.format( pattern, mtgDataHome, PathUtil.FILE_SEPARATOR,
+	public static final String ABILITY_FILE_PATH = String.format( pattern, MTG_DATA_HOME, PathUtil.FILE_SEPARATOR,
 			"ability.json" );
 
 	/** cardsbck */

@@ -6,6 +6,7 @@ import it.hackcaffebabe.logger.Tag;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -17,6 +18,7 @@ import javax.swing.JProgressBar;
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
 import com.hackcaffebabe.mtg.controller.Paths;
+import com.hackcaffebabe.mtg.controller.StringNormalizer;
 import com.hackcaffebabe.mtg.gui.frame.ExporterGUI;
 
 
@@ -79,7 +81,7 @@ public class Exporter extends SwingWorker<Void, String>
 	@Override
 	protected void process(List<String> chunks){
 		for(String i: chunks)
-			textArea.append( String.format( "%s\n", i ) );
+			textArea.append( String.format( "%-51sOK\n", i ) );
 	}
 
 //===========================================================================================
@@ -91,9 +93,18 @@ public class Exporter extends SwingWorker<Void, String>
 		log.write( Tag.INFO, "Try to backup of all stored files on : " + destinationFile.getAbsolutePath() );
 		if(destinationFile.exists() && !destinationFile.delete()) {
 			log.write( Tag.ERRORS, "Error on delete exists backup." );
+		} else {
+			log.write( Tag.INFO, "Old backup file has been delete." );
 		}
 
-		File[] files = new File( Paths.JSON_PATH ).listFiles();
+		File[] files = new File( Paths.JSON_PATH ).listFiles( new FileFilter(){
+			@Override
+			public boolean accept(File pathname){
+				if(pathname.getName().endsWith( ".json" ))
+					return true;
+				return false;
+			}
+		} );
 		int tot = files.length;
 		int count = 1;
 		ZipOutputStream zos = new ZipOutputStream( new FileOutputStream( destinationFile ) );
@@ -110,7 +121,7 @@ public class Exporter extends SwingWorker<Void, String>
 				in.close();
 				zos.closeEntry();
 
-				publish( f.getName() );
+				publish( StringNormalizer.removeExtension( f.getName() ) );
 				setProgress( (count++ * 100) / tot );
 			}
 		}

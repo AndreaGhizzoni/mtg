@@ -1,6 +1,7 @@
 package com.hackcaffebabe.mtg.gui.frame;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -51,6 +52,7 @@ public class ImporterGUI extends JFrame
 		contentPane.setLayout( new BorderLayout( 2, 2 ) );
 
 		this.textArea = new JTextArea();
+		this.textArea.setFont( new Font( Font.MONOSPACED, Font.PLAIN, 12 ) );
 		this.textArea.setEditable( false );
 		this.textArea.setBackground( UIManager.getColor( "windowBorder" ) );
 		contentPane.add( new JScrollPane( this.textArea ) );

@@ -104,9 +104,7 @@ public class StoreManager
 				for(File f: files) {
 					tmp = loadFile( f );
 					if(tmp != null) {//if null continue
-						mtgSet.add( tmp );
-						setSeries.add( tmp.getSeries() );
-						setSubType.add( tmp.getSubType() );
+						add( tmp );
 					}
 				}
 			}
@@ -130,6 +128,18 @@ public class StoreManager
 	}
 
 	/**
+	 * This method simply add a {@link MTGCard} card given.
+	 * @param card {@link MTGCard} to add if not null.
+	 */
+	public void add(MTGCard card){
+		if(card != null) {
+			mtgSet.add( card );
+			setSeries.add( card.getSeries() );
+			setSubType.add( card.getSubType() );
+		}
+	}
+
+	/**
 	 * This method save the give {@link MTGCard} on disk.
 	 * @param c {@link MTGCard} to save
 	 * @throws IllegalArgumentException if argument given is null
@@ -149,13 +159,10 @@ public class StoreManager
 		f.write( json );
 		f.flush();
 		f.close();
-		this.mtgSet.add( c );
-		this.setSeries.add( c.getSeries() );
-		this.setSubType.add( c.getSubType() );
+		add( c );
 
 		long end = System.currentTimeMillis();
-		log.write( Tag.INFO,
-				String.format( "MTG card json file %s saved correctly in %dms.", c.getName(), (end - start) ) );
+		log.write( Tag.INFO, String.format( "MTG card file %s saved correctly in %dms.", c.getName(), (end - start) ) );
 		return true;
 	}
 

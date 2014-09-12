@@ -62,4 +62,13 @@ public class StringNormalizer
 			return s;
 		}
 	}
+
+	/**
+	 * Remove extension from a file name.
+	 * @param s {@link String} that represents a filename
+	 * @return {@link String} the name of the file without the extension.
+	 */
+	public static String removeExtension(String s){
+		return s.split( "[.]" )[0];
+	}
 }
