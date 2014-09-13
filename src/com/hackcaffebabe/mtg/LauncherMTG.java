@@ -9,6 +9,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import com.hackcaffebabe.mtg.controller.DBCostants;
 import com.hackcaffebabe.mtg.controller.Paths;
+import com.hackcaffebabe.mtg.controller.infocollecter.InfoCollecter;
 import com.hackcaffebabe.mtg.controller.json.StoreManager;
 import com.hackcaffebabe.mtg.gui.GUIUtils;
 import com.hackcaffebabe.mtg.gui.frame.MTG;
@@ -38,6 +39,7 @@ public class LauncherMTG
 					g.setVisible( true );
 				}
 			} );
+			initCollecter();
 			initRM();
 		} catch(Exception e) {
 			GUIUtils.displayError( null, e );
@@ -54,6 +56,10 @@ public class LauncherMTG
 	private static void initRM(){
 		if(DBCostants.RM)
 			new ResourceMonitor( true ).run();
+	}
+
+	private static void initCollecter(){
+		InfoCollecter.collect();
 	}
 
 	private static void initLogger() throws Exception{

@@ -16,6 +16,8 @@ public class Paths
 	public static final String MTG_HOME = String.format( pattern, PathUtil.USER_HOME, PathUtil.FILE_SEPARATOR, ".mtg" );
 	/** user home directory/.mtg/data */
 	public static final String MTG_DATA_HOME = String.format( pattern, MTG_HOME, PathUtil.FILE_SEPARATOR, "data" );
+	/** user hardware/software/jvm specification */
+	public static final String SPEC_INFO_PATH = String.format( pattern, MTG_HOME, PathUtil.FILE_SEPARATOR, "spec.info" );
 	/** user home directory/.mtg/log.txt */
 	public static final String LOG_FILE_PATH = String.format( pattern, MTG_HOME, PathUtil.FILE_SEPARATOR, "log.txt" );
 	/** user home directory/.mtg/data/card */
