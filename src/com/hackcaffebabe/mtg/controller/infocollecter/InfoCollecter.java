@@ -21,6 +21,9 @@ public final class InfoCollecter
 {
 	private InfoCollecter(){}
 
+	/**
+	 * This method collect hardware/software/jvm information from {@link RuntimeMXBean} object
+	 */
 	public static void collect(){
 		long start = System.currentTimeMillis();
 		try {
