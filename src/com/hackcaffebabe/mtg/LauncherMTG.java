@@ -1,15 +1,16 @@
 package com.hackcaffebabe.mtg;
 
+import it.hackcaffebabe.infocollecter.InfoCollecter;
 import it.hackcaffebabe.logger.Logger;
 import it.hackcaffebabe.logger.Tag;
 import it.hackcaffebabe.rm.ResourceMonitor;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.PrintStream;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import com.hackcaffebabe.mtg.controller.DBCostants;
 import com.hackcaffebabe.mtg.controller.Paths;
-import com.hackcaffebabe.mtg.controller.infocollecter.InfoCollecter;
 import com.hackcaffebabe.mtg.controller.json.StoreManager;
 import com.hackcaffebabe.mtg.gui.GUIUtils;
 import com.hackcaffebabe.mtg.gui.frame.MTG;
@@ -25,7 +26,6 @@ public class LauncherMTG
 {
 	public static void main(String... args){
 		try {
-			checkJDKVersion();
 			initHomeFolder();
 			initLogger();
 			initSubFolderStructure();
@@ -46,20 +46,13 @@ public class LauncherMTG
 		}
 	}
 
-	private static void checkJDKVersion() throws Exception{
-		if(Integer.parseInt( System.getProperty( "java.version" ).split( "\\." )[1] ) < Version.MIN_JDK) {
-			String s = String.format( "Java version Error. To run this program Java %s is required!", Version.MIN_JDK );
-			throw new Exception( s );
-		}
-	}
-
 	private static void initRM(){
 		if(DBCostants.RM)
 			new ResourceMonitor( true ).run();
 	}
 
-	private static void initCollecter(){
-		InfoCollecter.collect();
+	private static void initCollecter() throws Exception{
+		InfoCollecter.collect( new FileWriter( new File( Paths.SPEC_INFO_PATH ) ) );
 	}
 
 	private static void initLogger() throws Exception{
