@@ -28,6 +28,7 @@ import com.hackcaffebabe.mtg.controller.Paths;
 import com.hackcaffebabe.mtg.controller.StringNormalizer;
 import com.hackcaffebabe.mtg.controller.json.StoreManager;
 import com.hackcaffebabe.mtg.gui.GUIUtils;
+import com.hackcaffebabe.mtg.gui.frame.ExporterGUI;
 import com.hackcaffebabe.mtg.gui.frame.ImporterGUI;
 import com.hackcaffebabe.mtg.model.MTGCard;
 
@@ -42,12 +43,17 @@ public class Importer extends SwingWorker<Void, String>
 {
 	private Logger log = Logger.getInstance();
 
-	private ImpoExpoWhat whatToImport;
+	private WhatImpoExpo whatToImport;
 	private JTextArea textArea;
 	private JProgressBar bar;
 	private JButton btnClosedButton;
 
-	public Importer(ImpoExpoWhat what, ImporterGUI parent){
+	/**
+	 * Instance a importer with what to import and his {@link ImporterGUI} to trace the process.
+	 * @param what {@link WhatImpoExpo} what to export.
+	 * @param parent {@link ExporterGUI} to trace the process.
+	 */
+	public Importer(WhatImpoExpo what, ImporterGUI parent){
 		addPropertyChangeListener( new PCL() );
 		this.whatToImport = what;
 		this.textArea = parent.getTextArea();
@@ -215,9 +221,9 @@ public class Importer extends SwingWorker<Void, String>
 
 	/* return the right path of the file according to whatToImport enum. */
 	private String getRigthPath(String name){
-		if(whatToImport.equals( ImpoExpoWhat.ALL_CARDS ) || whatToImport.equals( ImpoExpoWhat.SELECTIVE_CARDS ))
+		if(whatToImport.equals( WhatImpoExpo.ALL_CARDS ) || whatToImport.equals( WhatImpoExpo.SELECTIVE_CARDS ))
 			return String.format( "%s%s%s", Paths.JSON_PATH, PathUtil.FILE_SEPARATOR, name );
-		else if(whatToImport.equals( ImpoExpoWhat.ALL_DECKS ) || whatToImport.equals( ImpoExpoWhat.SELECTIVE_DECKS ))
+		else if(whatToImport.equals( WhatImpoExpo.ALL_DECKS ) || whatToImport.equals( WhatImpoExpo.SELECTIVE_DECKS ))
 			return String.format( "%s%s%s", Paths.DECKS_PATH, PathUtil.FILE_SEPARATOR, name );
 		else return "";
 	}
@@ -238,12 +244,12 @@ public class Importer extends SwingWorker<Void, String>
 				case "state":
 					switch( (StateValue) evt.getNewValue() ) {
 						case DONE:
-							if(whatToImport.equals( ImpoExpoWhat.ALL_CARDS )
-									|| whatToImport.equals( ImpoExpoWhat.SELECTIVE_CARDS )) {
+							if(whatToImport.equals( WhatImpoExpo.ALL_CARDS )
+									|| whatToImport.equals( WhatImpoExpo.SELECTIVE_CARDS )) {
 //								StoreManager.getInstance().refresh();
 								GUIUtils.refreshMTGTable();
-							} else if(whatToImport.equals( ImpoExpoWhat.ALL_DECKS )
-									|| whatToImport.equals( ImpoExpoWhat.SELECTIVE_DECKS )) {
+							} else if(whatToImport.equals( WhatImpoExpo.ALL_DECKS )
+									|| whatToImport.equals( WhatImpoExpo.SELECTIVE_DECKS )) {
 								//refreshing decks goes here
 							}
 							btnClosedButton.setEnabled( true );

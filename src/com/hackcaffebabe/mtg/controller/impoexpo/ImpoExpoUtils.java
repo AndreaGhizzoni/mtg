@@ -18,11 +18,11 @@ public final class ImpoExpoUtils
 	/**
 	 * This method let the user to select the location to import/export according to the first argument.
 	 * @param impoexpo 1 for import, 0 for export
-	 * @param w {@link ImpoExpoWhat} what to import or export.
+	 * @param w {@link WhatImpoExpo} what to import or export.
 	 * @return {@link File} the file representing a directory (export mode) or a zip file (import mode), 
 	 * null if cancel is pressed.
 	 */
-	public static final File showUserLocationChooser(final int impoexpo, final ImpoExpoWhat w){
+	public static final File showUserLocationChooser(final int impoexpo, final WhatImpoExpo w){
 		JFileChooser f = new JFileChooser( PathUtil.USER_HOME );
 		if(impoexpo == 1) {
 			f.setDialogTitle( "Select backup file" );
@@ -42,18 +42,18 @@ public final class ImpoExpoUtils
 	/* internal file filter for importer file chooser. */
 	private static class ImporterFileFilter extends FileFilter
 	{
-		private ImpoExpoWhat w;
+		private WhatImpoExpo w;
 
-		public ImporterFileFilter(ImpoExpoWhat w){
+		public ImporterFileFilter(WhatImpoExpo w){
 			this.w = w;
 		}
 
 		@Override
 		public boolean accept(File f){
-			if(w.equals( ImpoExpoWhat.ALL_CARDS ) || w.equals( ImpoExpoWhat.SELECTIVE_CARDS ))
+			if(w.equals( WhatImpoExpo.ALL_CARDS ) || w.equals( WhatImpoExpo.SELECTIVE_CARDS ))
 				return f.isDirectory() || f.getName().endsWith( Paths.BCK_CARDS_EXT );
 
-			if(w.equals( ImpoExpoWhat.ALL_DECKS ) || w.equals( ImpoExpoWhat.SELECTIVE_DECKS ))
+			if(w.equals( WhatImpoExpo.ALL_DECKS ) || w.equals( WhatImpoExpo.SELECTIVE_DECKS ))
 				return f.isDirectory() || f.getName().endsWith( Paths.BCK_DECKS_EXT );
 
 			return false;

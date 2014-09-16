@@ -6,7 +6,7 @@ package com.hackcaffebabe.mtg.controller.impoexpo;
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
  */
-public enum ImpoExpoWhat
+public enum WhatImpoExpo
 {
 	/** import/export all cards */
 	ALL_CARDS,

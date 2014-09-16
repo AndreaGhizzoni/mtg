@@ -20,7 +20,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
 import com.hackcaffebabe.mtg.Version;
-import com.hackcaffebabe.mtg.controller.impoexpo.ImpoExpoWhat;
+import com.hackcaffebabe.mtg.controller.impoexpo.Exporter;
+import com.hackcaffebabe.mtg.controller.impoexpo.Importer;
+import com.hackcaffebabe.mtg.controller.impoexpo.WhatImpoExpo;
 import com.hackcaffebabe.mtg.gui.FramesDimensions;
 import com.hackcaffebabe.mtg.gui.FramesTitles;
 import com.hackcaffebabe.mtg.gui.frame.listener.AboutActionListener;
@@ -77,7 +79,7 @@ public class MTG extends JFrame
 		fileImport.addActionListener( new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e){
-				new ImporterGUI( ImpoExpoWhat.ALL_CARDS );
+				new Importer( WhatImpoExpo.ALL_CARDS, new ImporterGUI() ).execute();
 			}
 		} );
 		file.add( fileImport );
@@ -87,7 +89,7 @@ public class MTG extends JFrame
 		fileImportSelected.addActionListener( new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e){
-				new ImporterGUI( ImpoExpoWhat.SELECTIVE_CARDS );
+				new Importer( WhatImpoExpo.SELECTIVE_CARDS, new ImporterGUI() ).execute();
 			}
 		} );
 		file.add( fileImportSelected );
@@ -97,7 +99,7 @@ public class MTG extends JFrame
 		fileExport.addActionListener( new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e){
-				new ExporterGUI( ImpoExpoWhat.ALL_CARDS );
+				new Exporter( WhatImpoExpo.ALL_CARDS, new ExporterGUI() ).execute();
 			}
 		} );
 		file.add( fileExport );

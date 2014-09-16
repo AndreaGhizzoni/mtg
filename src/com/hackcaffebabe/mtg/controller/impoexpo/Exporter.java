@@ -23,7 +23,7 @@ import com.hackcaffebabe.mtg.gui.frame.ExporterGUI;
 
 
 /**
- * TODO add doc
+ * This class provide the common support for exporting cards and decks.
  *  
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
@@ -32,12 +32,17 @@ public class Exporter extends SwingWorker<Void, String>
 {
 	private Logger log = Logger.getInstance();
 
-	private ImpoExpoWhat whatToExport;
+	private WhatImpoExpo whatToExport;
 	private JTextArea textArea;
 	private JProgressBar bar;
 	private JButton btnClosedButton;
 
-	public Exporter(ImpoExpoWhat what, ExporterGUI parent){
+	/**
+	 * Instance a exporter with what to export and his {@link ExporterGUI} to trace the process.
+	 * @param what {@link WhatImpoExpo} what to export.
+	 * @param parent {@link ExporterGUI} to trace the process.
+	 */
+	public Exporter(WhatImpoExpo what, ExporterGUI parent){
 		addPropertyChangeListener( new PCL() );
 		this.whatToExport = what;
 		this.textArea = parent.getTextArea();
@@ -133,9 +138,9 @@ public class Exporter extends SwingWorker<Void, String>
 
 	/* this method creates the appropriate File object according with the file passed as arguemnt*/
 	private File makeBackupFile(File base){
-		if(whatToExport.equals( ImpoExpoWhat.ALL_DECKS ) || whatToExport.equals( ImpoExpoWhat.SELECTIVE_DECKS )) {
+		if(whatToExport.equals( WhatImpoExpo.ALL_DECKS ) || whatToExport.equals( WhatImpoExpo.SELECTIVE_DECKS )) {
 			return new File( base + PathUtil.FILE_SEPARATOR + Paths.BCK_DECKS_NAME );
-		} else if(whatToExport.equals( ImpoExpoWhat.ALL_CARDS ) || whatToExport.equals( ImpoExpoWhat.SELECTIVE_CARDS )) {
+		} else if(whatToExport.equals( WhatImpoExpo.ALL_CARDS ) || whatToExport.equals( WhatImpoExpo.SELECTIVE_CARDS )) {
 			return new File( base + PathUtil.FILE_SEPARATOR + Paths.BCK_CARDS_NAME );
 		} else {
 			return null;

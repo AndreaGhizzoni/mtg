@@ -53,6 +53,7 @@ public class LauncherMTG
 
 	private static void initCollecter() throws Exception{
 		InfoCollecter.collect( new FileWriter( new File( Paths.SPEC_INFO_PATH ) ) );
+		Logger.getInstance().write( Tag.INFO, "Collecter info done." );
 	}
 
 	private static void initLogger() throws Exception{

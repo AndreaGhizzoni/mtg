@@ -73,7 +73,9 @@ public class MTGContent extends JPanel
 
 		JXTABLE_MTG = new JXTable( new JXObjectModel<MTGCard>() );
 		JXTABLE_MTG.setFillsViewportHeight( true );
-		JXTABLE_MTG.setShowVerticalLines( false );
+		JXTABLE_MTG.setShowGrid( false );
+		JXTABLE_MTG.setGridColor( new Color( 0xd9d9d9 ) );
+		JXTABLE_MTG.setOpaque( false );
 		JXTABLE_MTG.setRowSorter( this.txtSearch );
 		JXTABLE_MTG_COLUMN_ADJUSTER = new JXTableColumnAdjuster( JXTABLE_MTG, 5 );
 
