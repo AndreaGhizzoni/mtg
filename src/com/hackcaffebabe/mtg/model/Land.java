@@ -97,8 +97,7 @@ public class Land extends MTGCard implements Serializable
 			type.append( " Art." );
 		if(isLegendary())
 			type.append( " Leg." );
-		return new Object[] { getName(), color, type.toString(), getSubType() == null ? "" : getSubType(),
-				getRarity().toString() };
+		return new Object[] { getName(), color, type.toString(), getRarity().toString() };
 	}
 
 	@Override

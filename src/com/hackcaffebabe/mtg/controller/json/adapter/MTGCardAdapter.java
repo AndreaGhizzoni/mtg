@@ -97,7 +97,7 @@ public class MTGCardAdapter implements JsonSerializer<MTGCard>, JsonDeserializer
 			CardColor cc = context.deserialize( json.getAsJsonObject().get( JSONTags.COLOR ),
 					Class.forName( "com.hackcaffebabe.mtg.model.color.CardColor" ) );
 			c.setCardColor( cc );
-			c.setColumnNames( new String[] { "Name", "Card Color", "Type", "Sub Type", "Rarity" } );
+			c.setColumnNames( new String[] { "Name", "Card Color", "Type", "Rarity" } );
 			c.setLegendary( json.getAsJsonObject().get( JSONTags.LEGENDARY ).getAsBoolean() );
 			c.setArtifact( json.getAsJsonObject().get( JSONTags.ARTIFACT ).getAsBoolean() );
 			String subType = json.getAsJsonObject().get( JSONTags.SUB_TYPE ).getAsString();

@@ -46,7 +46,7 @@ public abstract class MTGCard extends DisplayableObject implements Serializable
 	 */
 	public MTGCard(String name, CardColor color, Rarity rarity) throws IllegalArgumentException{
 		super( MTGCard.class );
-		setColumnNames( new String[] { "Name", "Card Color", "Type", "Sub Type", "Rarity" } );
+		setColumnNames( new String[] { "Name", "Card Color", "Type", "Rarity" } );
 
 		this.setName( name );
 		this.setCardColor( color );
