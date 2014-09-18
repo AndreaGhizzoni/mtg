@@ -1,1 +1,1 @@
-java -XX:+UseConcMarkSweepGC -jar MTGLauncher_debug_0.3043.jar
+jave -jar MTG_debug_0.3043.jar
