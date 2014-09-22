@@ -1,5 +1,12 @@
 bin/
 .classpath
 .project
+.gradle
+.settings
 src/TODO
-*.sh
+build/classes
+build/dependency-cache
+build/libs
+build/resources
+build/scripts
+build/tmp
