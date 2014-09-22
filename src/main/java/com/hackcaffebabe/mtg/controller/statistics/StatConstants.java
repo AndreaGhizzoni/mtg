@@ -22,9 +22,10 @@ enum StatConstants
 	COMMONS("Number of Common cards"),
 	NON_COMMON("Number of NON Common cards"),
 	RARE("Number of Rare cards"),
-	MYTHIC("Number of Mythic cards"),
+	MYTHICAL("Number of Mythic cards"),
 	
 	// colors
+	COLOR_LESS("Number of Color Less card"),
 	RED("Number of Red cards"),
 	BLACK("Number of Black cards"),
 	BLUE("Number of Blue cards"),

@@ -10,3 +10,4 @@ build/libs
 build/resources
 build/scripts
 build/tmp
+build/install
