@@ -57,10 +57,11 @@ public class LauncherMTG
 	}
 
 	private static void initLogger() throws Exception{
-		Logger.getInstance();
+		Logger.getInstance().showCaller( true );
 		if(DBCostants.DB_LOG_ON_FILE) {
 			Logger.getInstance().setPrintStream( new PrintStream( new File( Paths.LOG_FILE_PATH ) ) );
 			Logger.getInstance().disableTag( Tag.DEBUG );
+			Logger.getInstance().showCaller( false );
 		}
 		Logger.getInstance().write( Tag.INFO, "Logger initialized correctly." );
 	}

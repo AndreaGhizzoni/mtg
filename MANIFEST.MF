@@ -1,4 +1,7 @@
 Manifest-Version: 1.0
-Class-Path: lib/miglayout15-swing.jar lib/gson.jar lib/about-2.0.jar lib/ioutil-1.3.jar lib/monitoring-1.0.1.jar lib/jxcomponents-1.5.3.jar
+Class-Path: lib/miglayout15-swing.jar lib/gson.jar lib/about-2.0.jar l
+ ib/ioutil-1.3.jar lib/monitoring-1.0.1.jar lib/jxcomponents-1.5.3.jar
+Created-By: 1.8.0_20 (Oracle Corporation)
 SplashScreen-Image: img/splash.jpg
 Main-Class: com.hackcaffebabe.mtg.LauncherMTG
+

@@ -246,11 +246,10 @@ public class Importer extends SwingWorker<Void, String>
 						case DONE:
 							if(whatToImport.equals( WhatImpoExpo.ALL_CARDS )
 									|| whatToImport.equals( WhatImpoExpo.SELECTIVE_CARDS )) {
-//								StoreManager.getInstance().refresh();
 								GUIUtils.refreshMTGTable();
 							} else if(whatToImport.equals( WhatImpoExpo.ALL_DECKS )
 									|| whatToImport.equals( WhatImpoExpo.SELECTIVE_DECKS )) {
-								//refreshing decks goes here
+								//TODO refreshing decks goes here
 							}
 							btnClosedButton.setEnabled( true );
 							break;

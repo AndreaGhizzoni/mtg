@@ -129,7 +129,7 @@ public class AdvanceSearchContent extends JPanel
 		this.chbRare = new JCheckBox( Rarity.RARE.toString() );
 		pnlRarity.add( this.chbRare, "cell 2 0" );
 
-		this.chbMythic = new JCheckBox( Rarity.MYTHIC.toString() );
+		this.chbMythic = new JCheckBox( Rarity.MYTHICAL.toString() );
 		pnlRarity.add( this.chbMythic, "cell 3 0" );
 		add( pnlRarity, "cell 0 2 2 1,grow" );
 
@@ -255,7 +255,7 @@ public class AdvanceSearchContent extends JPanel
 			if(chbRare.isSelected())
 				criteria.byRarity( Rarity.RARE );
 			if(chbMythic.isSelected())
-				criteria.byRarity( Rarity.MYTHIC );
+				criteria.byRarity( Rarity.MYTHICAL );
 			if(!chbNonCommon.isSelected() && !chbCommon.isSelected() && !chbRare.isSelected()
 					&& !chbMythic.isSelected())
 				criteria.byRarity( null );

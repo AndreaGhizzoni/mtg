@@ -48,8 +48,6 @@ public class TabContent extends JPanel
 		this.textDeck.setWrapStyleWord( true );
 		this.textDeck.setLineWrap( true );
 		this.textDeck.setFont( new Font( Font.MONOSPACED, Font.PLAIN, 12 ) );
-		//TODO don't uncomment this because crtl+s is already bind on frame that TabContent is content in.
-		//this.textDeckContent.getInputMap().put( KeyStroke.getKeyStroke( KeyEvent.VK_S, Event.CTRL_MASK ), SAVE_KEY );
 		add( new JScrollPane( this.textDeck ), "cell 0 0,grow" );
 	}
 

@@ -18,8 +18,8 @@ public enum Rarity
 	NON_COMMON(1),
 	/**The MTG Rare Rarity*/
 	RARE(2),
-	/**The MTG Mythic Rarity*/
-	MYTHIC(3);
+	/**The MTG Mythical Rarity*/
+	MYTHICAL(3);
 
 	private int value;
 
@@ -40,7 +40,7 @@ public enum Rarity
 	 * @return {@link List} of the Rarity of MTG card.
 	 */
 	public static List<Rarity> getAllRarity(){
-		return Arrays.asList( COMMON, NON_COMMON, RARE, MYTHIC );
+		return Arrays.asList( COMMON, NON_COMMON, RARE, MYTHICAL );
 	}
 
 	/**
@@ -48,6 +48,6 @@ public enum Rarity
 	 * @return {@link List} of the Rarity of MTG card.
 	 */
 	public static List<String> getAllRarityAsStrings(){
-		return Arrays.asList( COMMON.toString(), NON_COMMON.toString(), RARE.toString(), MYTHIC.toString() );
+		return Arrays.asList( COMMON.toString(), NON_COMMON.toString(), RARE.toString(), MYTHICAL.toString() );
 	}
 }
