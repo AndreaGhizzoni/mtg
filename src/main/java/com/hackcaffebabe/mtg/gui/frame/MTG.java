@@ -23,6 +23,7 @@ import main.java.com.hackcaffebabe.mtg.Version;
 import main.java.com.hackcaffebabe.mtg.controller.impoexpo.Exporter;
 import main.java.com.hackcaffebabe.mtg.controller.impoexpo.Importer;
 import main.java.com.hackcaffebabe.mtg.controller.impoexpo.WhatImpoExpo;
+import main.java.com.hackcaffebabe.mtg.controller.statistics.Statistics;
 import main.java.com.hackcaffebabe.mtg.gui.FramesDimensions;
 import main.java.com.hackcaffebabe.mtg.gui.FramesTitles;
 import main.java.com.hackcaffebabe.mtg.gui.frame.listener.AboutActionListener;
@@ -103,6 +104,15 @@ public class MTG extends JFrame
 			}
 		} );
 		file.add( fileExport );
+
+		JMenuItem fileStatistocs = new JMenuItem( "Generate Statistics" );
+		fileStatistocs.addActionListener( new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				new StatisticsGUI().show( Statistics.getInstance() );
+			}
+		} );
+		file.add( fileStatistocs );
 
 		file.add( new JSeparator() );
 		JMenuItem fileExit = new JMenuItem( "Exit" );

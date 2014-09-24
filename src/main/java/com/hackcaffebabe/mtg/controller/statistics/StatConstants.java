@@ -6,7 +6,7 @@ package main.java.com.hackcaffebabe.mtg.controller.statistics;
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
  */
-enum StatConstants
+public enum StatConstants
 {
 	// common statistics
 	CARDS("Number of Cards"),

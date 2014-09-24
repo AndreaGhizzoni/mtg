@@ -1,14 +1,15 @@
 package main.java.com.hackcaffebabe.mtg.gui.frame;
 
 import java.awt.BorderLayout;
-import java.awt.Font;
+import java.awt.GridLayout;
+import java.util.Map;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+import main.java.com.hackcaffebabe.mtg.controller.statistics.StatConstants;
+import main.java.com.hackcaffebabe.mtg.controller.statistics.Statistics;
+import main.java.com.hackcaffebabe.mtg.gui.FramesDimensions;
 
 
 /**
@@ -20,45 +21,53 @@ import javax.swing.border.EmptyBorder;
 public class StatisticsGUI extends JFrame
 {
 	private static final long serialVersionUID = 1L;
-	private JProgressBar progress;
-	private JTextArea text;
+	private JPanel contentPane;
 
 	/** Create the frame. */
 	public StatisticsGUI(){
 		this.init();
-		setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE ); //TODO remove when finish
-		setSize( 450, 550 );
-		setVisible( true );
+		setSize( FramesDimensions.DIMENSION_STATISTICS );
+		setLocation( FramesDimensions.getRigth( FramesDimensions.DIMENSION_STATISTICS ) );
 	}
 
 	/* initialize all the components */
 	private void init(){
-		JPanel contentPane = new JPanel();
+		contentPane = new JPanel();
 		contentPane.setBorder( new EmptyBorder( 5, 5, 5, 5 ) );
-		contentPane.setLayout( new BorderLayout( 0, 0 ) );
-
-		this.progress = new JProgressBar();
-		this.progress.setStringPainted( true );
-		this.text = new JTextArea();
-		this.text.setEditable( false );
-		this.text.setFont( new Font( Font.MONOSPACED, Font.PLAIN, 12 ) );
-		this.text.setBackground( UIManager.getColor( "windowBorder" ) );
-
-		contentPane.add( new JScrollPane( this.text ) );
-		contentPane.add( this.progress, BorderLayout.SOUTH );
 		setContentPane( contentPane );
 	}
 
-//===========================================================================================
-// GETTER
-//===========================================================================================
-	/** @return {@link JProgressBar} the progress bar for the task */
-	public JProgressBar getProgress(){
-		return this.progress;
+	/**
+	 * This method show the statics and set visible to true.
+	 * @param s {@link Statistics} to show up.
+	 */
+	public void show(Statistics s){
+		int t = s.getStats().size();
+		setLayout( new GridLayout( t, 1 ) );
+		for(Map.Entry<StatConstants, Integer> i: s.getStats().entrySet()) {
+			contentPane.add( new Stat( i.getKey().getName(), i.getValue() ) );
+			contentPane.revalidate();
+			validate();
+		}
+		setVisible( true );
 	}
 
-	/** @return {@link JTextArea} the text area to display what collected. */
-	public JTextArea getTextArea(){
-		return this.text;
+//===========================================================================================
+// INNER cLASS
+//===========================================================================================
+	class Stat extends JPanel
+	{
+		private static final long serialVersionUID = 1L;
+		JLabel lblValue = new JLabel();
+		JLabel lblDesc = new JLabel();
+
+		Stat(String n, int stat){
+			setLayout( new BorderLayout() );
+			lblDesc.setText( n );
+			lblValue.setHorizontalAlignment( JLabel.RIGHT );
+			lblValue.setText( String.valueOf( stat ) );
+			add( lblDesc, BorderLayout.WEST );
+			add( lblValue );
+		}
 	}
 }

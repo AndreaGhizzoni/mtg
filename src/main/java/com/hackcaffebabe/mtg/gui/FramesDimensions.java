@@ -22,6 +22,8 @@ public class FramesDimensions
 	public static final Dimension DIMENSION_DECK_EDITOR = new Dimension( 700, 720 );
 	/** Dimension of importer/exporter */
 	public static final Dimension DIMENSION_IMPOEXPO = new Dimension( 400, 250 );
+	/** Dimension of statistics frame */
+	public static final Dimension DIMENSION_STATISTICS = new Dimension( 300, 450 );
 
 	/**
 	 * This method returns a point witch is the starting point to paint a frame in the center of the screen<br> 
@@ -33,5 +35,15 @@ public class FramesDimensions
 		int sw = Toolkit.getDefaultToolkit().getScreenSize().width;
 		int sh = Toolkit.getDefaultToolkit().getScreenSize().height;
 		return new Point( (sw / 2) - (d.width / 2), (sh / 2) - (d.height / 2) );
+	}
+
+	/**
+	 * This method returns a point witch is the starting point to paint a frame in the right corner of the screen.
+	 * @param d {@link Dimension} the dimension of the frame.
+	 * @return {@link Point} the starting point to paint a frame in the right corner of the screen.
+	 */
+	public static Point getRigth(Dimension d){
+		int sw = Toolkit.getDefaultToolkit().getScreenSize().width;
+		return new Point( sw - d.width, 0 );
 	}
 }

@@ -19,6 +19,7 @@ import main.java.com.hackcaffebabe.mtg.controller.json.adapter.MTGCardAdapter;
 import main.java.com.hackcaffebabe.mtg.controller.json.adapter.ManaCostAdapter;
 import main.java.com.hackcaffebabe.mtg.controller.json.adapter.PlanesAbilityAdapter;
 import main.java.com.hackcaffebabe.mtg.controller.json.adapter.StrengthAdapter;
+import main.java.com.hackcaffebabe.mtg.controller.statistics.Statistics;
 import main.java.com.hackcaffebabe.mtg.model.MTGCard;
 import main.java.com.hackcaffebabe.mtg.model.card.Ability;
 import main.java.com.hackcaffebabe.mtg.model.card.Effect;
@@ -47,6 +48,7 @@ public class StoreManager
 	private static StoreManager manager;
 
 	private Logger log = Logger.getInstance();
+	private Statistics stat = Statistics.getInstance();
 
 	/**
 	 * Returns the instance of Store Manager.<br>
@@ -123,7 +125,7 @@ public class StoreManager
 			f.close();
 			return toReturn;
 		} catch(Exception e) {
-			return null;
+			return null;//TODO MAYBE LOG THIS!!!!
 		}
 	}
 
@@ -136,6 +138,7 @@ public class StoreManager
 			mtgSet.add( card );
 			setSeries.add( card.getSeries() );
 			setSubType.add( card.getSubType() );
+			stat.collect( card );
 		}
 	}
 
