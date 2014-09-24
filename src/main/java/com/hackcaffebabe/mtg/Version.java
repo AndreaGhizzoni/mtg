@@ -8,5 +8,5 @@ package main.java.com.hackcaffebabe.mtg;
 public class Version
 {
 	/** Current software version */
-	public static final String VERSION = "BETA_0.3043";
+	public static final String VERSION = "BETA_0.3044";
 }
