@@ -7,6 +7,8 @@ import it.hackcaffebabe.rm.ResourceMonitor;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintStream;
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import main.java.com.hackcaffebabe.mtg.controller.DBCostants;
@@ -29,6 +31,7 @@ public class LauncherMTG
 			initHomeFolder();
 			initLogger();
 			initSubFolderStructure();
+			dumpJVMargs();
 			initDB();
 			initUIManager();
 			SwingUtilities.invokeLater( new Runnable(){
@@ -43,6 +46,14 @@ public class LauncherMTG
 			initRM();
 		} catch(Exception e) {
 			GUIUtils.displayError( null, e );
+		}
+	}
+
+	private static void dumpJVMargs(){
+		Logger.getInstance().write( Tag.INFO, "JVM args:" );
+		RuntimeMXBean runtimeMxBean = ManagementFactory.getRuntimeMXBean();
+		for(String s: runtimeMxBean.getInputArguments()) {
+			Logger.getInstance().write( Tag.INFO, s );
 		}
 	}
 
