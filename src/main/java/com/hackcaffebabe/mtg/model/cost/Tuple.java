@@ -1,4 +1,4 @@
-package main.java.com.hackcaffebabe.mtg.model.cost;
+package com.hackcaffebabe.mtg.model.cost;
 
 /**
  * Represents the Tuple object.

@@ -1,10 +1,10 @@
-package main.java.com.hackcaffebabe.mtg.controller.impoexpo;
+package com.hackcaffebabe.mtg.controller.impoexpo;
 
 import it.hackcaffebabe.ioutil.file.PathUtil;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
-import main.java.com.hackcaffebabe.mtg.controller.Paths;
+import com.hackcaffebabe.mtg.controller.Paths;
 
 
 /**

@@ -1,14 +1,14 @@
-package main.java.com.hackcaffebabe.mtg.model;
+package com.hackcaffebabe.mtg.model;
 
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import main.java.com.hackcaffebabe.mtg.model.card.Ability;
-import main.java.com.hackcaffebabe.mtg.model.card.Effect;
-import main.java.com.hackcaffebabe.mtg.model.card.PlanesAbility;
-import main.java.com.hackcaffebabe.mtg.model.card.Rarity;
-import main.java.com.hackcaffebabe.mtg.model.color.CardColor;
-import main.java.com.hackcaffebabe.mtg.model.cost.ManaCost;
+import com.hackcaffebabe.mtg.model.card.Ability;
+import com.hackcaffebabe.mtg.model.card.Effect;
+import com.hackcaffebabe.mtg.model.card.PlanesAbility;
+import com.hackcaffebabe.mtg.model.card.Rarity;
+import com.hackcaffebabe.mtg.model.color.CardColor;
+import com.hackcaffebabe.mtg.model.cost.ManaCost;
 
 
 /**

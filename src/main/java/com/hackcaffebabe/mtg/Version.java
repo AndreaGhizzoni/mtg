@@ -1,4 +1,4 @@
-package main.java.com.hackcaffebabe.mtg;
+package com.hackcaffebabe.mtg;
 
 /**
  * This class holds the version of the program ONLY!

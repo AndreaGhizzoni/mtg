@@ -1,6 +1,6 @@
-package main.java.com.hackcaffebabe.mtg.gui.panel.mtg;
+package com.hackcaffebabe.mtg.gui.panel.mtg;
 
-import static main.java.com.hackcaffebabe.mtg.gui.GUIUtils.STATUS_BAR_MAIN_FRAME;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.STATUS_BAR_MAIN_FRAME;
 import it.hackcaffebabe.jx.table.JXTable;
 import it.hackcaffebabe.jx.table.JXTableColumnAdjuster;
 import it.hackcaffebabe.jx.table.model.DisplayableObject;
@@ -19,21 +19,21 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
-import main.java.com.hackcaffebabe.mtg.gui.frame.InsertUpdateCard;
-import main.java.com.hackcaffebabe.mtg.model.Artifact;
-import main.java.com.hackcaffebabe.mtg.model.Creature;
-import main.java.com.hackcaffebabe.mtg.model.Enchantment;
-import main.java.com.hackcaffebabe.mtg.model.Instant;
-import main.java.com.hackcaffebabe.mtg.model.Land;
-import main.java.com.hackcaffebabe.mtg.model.MTGCard;
-import main.java.com.hackcaffebabe.mtg.model.Planeswalker;
-import main.java.com.hackcaffebabe.mtg.model.Sorcery;
-import main.java.com.hackcaffebabe.mtg.model.card.Ability;
-import main.java.com.hackcaffebabe.mtg.model.card.Effect;
-import main.java.com.hackcaffebabe.mtg.model.card.PlanesAbility;
-import main.java.com.hackcaffebabe.mtg.model.card.Strength;
-import main.java.com.hackcaffebabe.mtg.model.cost.ManaCost;
 import net.miginfocom.swing.MigLayout;
+import com.hackcaffebabe.mtg.gui.frame.InsertUpdateCard;
+import com.hackcaffebabe.mtg.model.Artifact;
+import com.hackcaffebabe.mtg.model.Creature;
+import com.hackcaffebabe.mtg.model.Enchantment;
+import com.hackcaffebabe.mtg.model.Instant;
+import com.hackcaffebabe.mtg.model.Land;
+import com.hackcaffebabe.mtg.model.MTGCard;
+import com.hackcaffebabe.mtg.model.Planeswalker;
+import com.hackcaffebabe.mtg.model.Sorcery;
+import com.hackcaffebabe.mtg.model.card.Ability;
+import com.hackcaffebabe.mtg.model.card.Effect;
+import com.hackcaffebabe.mtg.model.card.PlanesAbility;
+import com.hackcaffebabe.mtg.model.card.Strength;
+import com.hackcaffebabe.mtg.model.cost.ManaCost;
 
 
 /**

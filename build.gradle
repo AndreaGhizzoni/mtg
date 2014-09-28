@@ -1,11 +1,13 @@
 apply plugin:'application'
+apply plugin:'eclipse'
 
-mainClassName = "main.java.com.hackcaffebabe.mtg.LauncherMTG"
-applicationDefaultJvmArgs = ['-XX:+UseConcMarkSweepGC']
+sourceCompatibility = 1.8
 version = '0.3044'
+mainClassName = "com.hackcaffebabe.mtg.LauncherMTG"
+applicationDefaultJvmArgs = ['-XX:+UseConcMarkSweepGC']
 
 dependencies {
-	compile fileTree(dir: 'lib', include: ['*.jar'])
+	compile fileTree(dir: 'lib', include: ['*.jar'], exclude:['junit*', 'hamcrest*'])
 }
 
 jar {

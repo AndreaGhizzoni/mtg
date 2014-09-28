@@ -1,9 +1,9 @@
-package main.java.com.hackcaffebabe.mtg.gui.panel.mtg.listener;
+package com.hackcaffebabe.mtg.gui.panel.mtg.listener;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import main.java.com.hackcaffebabe.mtg.gui.frame.AdvanceSearch;
-import main.java.com.hackcaffebabe.mtg.gui.panel.mtg.MTGContent;
+import com.hackcaffebabe.mtg.gui.frame.AdvanceSearch;
+import com.hackcaffebabe.mtg.gui.panel.mtg.MTGContent;
 
 
 /**

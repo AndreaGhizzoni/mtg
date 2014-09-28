@@ -1,8 +1,8 @@
-package main.java.com.hackcaffebabe.mtg.model.cost;
+package com.hackcaffebabe.mtg.model.cost;
 
 import java.util.HashSet;
 import java.util.Set;
-import main.java.com.hackcaffebabe.mtg.model.color.Mana;
+import com.hackcaffebabe.mtg.model.color.Mana;
 
 
 /**

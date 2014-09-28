@@ -1,4 +1,4 @@
-package main.java.com.hackcaffebabe.mtg.gui;
+package com.hackcaffebabe.mtg.gui;
 
 /**
  * This class holds the fames titles ONLY!
@@ -21,4 +21,6 @@ public class FramesTitles
 	public static final String TITLE_IMPORTER = "Importer!";
 	/** Title of exporter frame */
 	public static final String TITLE_EXPORTER = "Exporter!";
+	/** Title of Statistics frame */
+	public static final String TITLE_STATISTICS = "Statistics Generator";
 }

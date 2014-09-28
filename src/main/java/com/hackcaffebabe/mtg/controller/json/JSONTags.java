@@ -1,4 +1,4 @@
-package main.java.com.hackcaffebabe.mtg.controller.json;
+package com.hackcaffebabe.mtg.controller.json;
 
 /**
  * This class holds all the json tags.

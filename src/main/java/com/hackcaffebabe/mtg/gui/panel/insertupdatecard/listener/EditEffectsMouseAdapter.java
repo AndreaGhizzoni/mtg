@@ -1,12 +1,12 @@
-package main.java.com.hackcaffebabe.mtg.gui.panel.insertupdatecard.listener;
+package com.hackcaffebabe.mtg.gui.panel.insertupdatecard.listener;
 
 import it.hackcaffebabe.jx.table.JXTable;
 import it.hackcaffebabe.jx.table.model.JXObjectModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.SwingUtilities;
-import main.java.com.hackcaffebabe.mtg.gui.GUIUtils;
-import main.java.com.hackcaffebabe.mtg.model.card.Effect;
+import com.hackcaffebabe.mtg.gui.GUIUtils;
+import com.hackcaffebabe.mtg.model.card.Effect;
 
 
 /**

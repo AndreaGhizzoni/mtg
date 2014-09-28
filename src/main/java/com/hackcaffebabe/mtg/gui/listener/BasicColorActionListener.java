@@ -1,14 +1,14 @@
-package main.java.com.hackcaffebabe.mtg.gui.listener;
+package com.hackcaffebabe.mtg.gui.listener;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComboBox;
-import main.java.com.hackcaffebabe.mtg.gui.GUIUtils;
-import main.java.com.hackcaffebabe.mtg.model.color.CardColor;
-import main.java.com.hackcaffebabe.mtg.model.color.Mana;
-import main.java.com.hackcaffebabe.mtg.model.color.TypeColor;
+import com.hackcaffebabe.mtg.gui.GUIUtils;
+import com.hackcaffebabe.mtg.model.color.CardColor;
+import com.hackcaffebabe.mtg.model.color.Mana;
+import com.hackcaffebabe.mtg.model.color.TypeColor;
 
 
 /**

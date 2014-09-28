@@ -1,4 +1,4 @@
-package main.java.com.hackcaffebabe.mtg.gui.panel.listener;
+package com.hackcaffebabe.mtg.gui.panel.listener;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,8 +17,8 @@ import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.JTextComponent;
-import main.java.com.hackcaffebabe.mtg.gui.GUIUtils;
-import main.java.com.hackcaffebabe.mtg.model.color.Mana;
+import com.hackcaffebabe.mtg.gui.GUIUtils;
+import com.hackcaffebabe.mtg.model.color.Mana;
 
 
 /**

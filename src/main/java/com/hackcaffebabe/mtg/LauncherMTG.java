@@ -1,4 +1,4 @@
-package main.java.com.hackcaffebabe.mtg;
+package com.hackcaffebabe.mtg;
 
 import it.hackcaffebabe.infocollecter.InfoCollecter;
 import it.hackcaffebabe.logger.Logger;
@@ -11,11 +11,11 @@ import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import main.java.com.hackcaffebabe.mtg.controller.DBCostants;
-import main.java.com.hackcaffebabe.mtg.controller.Paths;
-import main.java.com.hackcaffebabe.mtg.controller.json.StoreManager;
-import main.java.com.hackcaffebabe.mtg.gui.GUIUtils;
-import main.java.com.hackcaffebabe.mtg.gui.frame.MTG;
+import com.hackcaffebabe.mtg.controller.DBCostants;
+import com.hackcaffebabe.mtg.controller.Paths;
+import com.hackcaffebabe.mtg.controller.json.StoreManager;
+import com.hackcaffebabe.mtg.gui.GUIUtils;
+import com.hackcaffebabe.mtg.gui.frame.MTG;
 
 
 /**
@@ -63,8 +63,10 @@ public class LauncherMTG
 	}
 
 	private static void initCollecter() throws Exception{
+		long start = System.currentTimeMillis();
 		InfoCollecter.collect( new FileWriter( new File( Paths.SPEC_INFO_PATH ) ) );
-		Logger.getInstance().write( Tag.INFO, "Collecter info done." );
+		long end = System.currentTimeMillis();
+		Logger.getInstance().write( Tag.INFO, String.format( "Collecter info done in %dms", (end - start) ) );
 	}
 
 	private static void initLogger() throws Exception{

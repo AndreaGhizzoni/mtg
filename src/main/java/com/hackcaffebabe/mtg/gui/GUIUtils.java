@@ -1,4 +1,4 @@
-package main.java.com.hackcaffebabe.mtg.gui;
+package com.hackcaffebabe.mtg.gui;
 
 import it.hackcaffebabe.jx.statusbar.JXStatusBar;
 import it.hackcaffebabe.jx.table.JXTable;
@@ -35,18 +35,18 @@ import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
-import main.java.com.hackcaffebabe.mtg.controller.StringNormalizer;
-import main.java.com.hackcaffebabe.mtg.controller.json.StoreManager;
-import main.java.com.hackcaffebabe.mtg.gui.panel.listener.ShortCutter;
-import main.java.com.hackcaffebabe.mtg.gui.panel.mtg.MTGProperties;
-import main.java.com.hackcaffebabe.mtg.model.MTGCard;
-import main.java.com.hackcaffebabe.mtg.model.card.Ability;
-import main.java.com.hackcaffebabe.mtg.model.card.AbilityFactory;
-import main.java.com.hackcaffebabe.mtg.model.card.Effect;
-import main.java.com.hackcaffebabe.mtg.model.card.PlanesAbility;
-import main.java.com.hackcaffebabe.mtg.model.color.Mana;
-import main.java.com.hackcaffebabe.mtg.model.cost.ManaCost;
-import main.java.com.hackcaffebabe.mtg.model.cost.Tuple;
+import com.hackcaffebabe.mtg.controller.StringNormalizer;
+import com.hackcaffebabe.mtg.controller.json.StoreManager;
+import com.hackcaffebabe.mtg.gui.panel.listener.ShortCutter;
+import com.hackcaffebabe.mtg.gui.panel.mtg.MTGProperties;
+import com.hackcaffebabe.mtg.model.MTGCard;
+import com.hackcaffebabe.mtg.model.card.Ability;
+import com.hackcaffebabe.mtg.model.card.AbilityFactory;
+import com.hackcaffebabe.mtg.model.card.Effect;
+import com.hackcaffebabe.mtg.model.card.PlanesAbility;
+import com.hackcaffebabe.mtg.model.color.Mana;
+import com.hackcaffebabe.mtg.model.cost.ManaCost;
+import com.hackcaffebabe.mtg.model.cost.Tuple;
 
 
 /**

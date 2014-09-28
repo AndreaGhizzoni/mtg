@@ -1,4 +1,4 @@
-package main.java.com.hackcaffebabe.mtg.controller;
+package com.hackcaffebabe.mtg.controller;
 
 /**
  * This class holds all method that needs to save a card in JSON.

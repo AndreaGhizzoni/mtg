@@ -1,4 +1,4 @@
-package main.java.com.hackcaffebabe.mtg.gui.panel.deckeditor;
+package com.hackcaffebabe.mtg.gui.panel.deckeditor;
 
 import java.awt.BasicStroke;
 import java.awt.Color;

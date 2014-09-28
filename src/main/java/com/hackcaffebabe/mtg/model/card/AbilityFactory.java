@@ -1,4 +1,4 @@
-package main.java.com.hackcaffebabe.mtg.model.card;
+package com.hackcaffebabe.mtg.model.card;
 
 import it.hackcaffebabe.logger.Logger;
 import it.hackcaffebabe.logger.Tag;
@@ -10,10 +10,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import main.java.com.hackcaffebabe.mtg.controller.Paths;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.hackcaffebabe.mtg.controller.Paths;
 
 
 /**

@@ -1,4 +1,4 @@
-package main.java.com.hackcaffebabe.mtg.gui.frame;
+package com.hackcaffebabe.mtg.gui.frame;
 
 import java.awt.BorderLayout;
 import java.awt.Event;
@@ -22,10 +22,10 @@ import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
 import javax.swing.text.DefaultEditorKit;
-import main.java.com.hackcaffebabe.mtg.gui.FramesDimensions;
-import main.java.com.hackcaffebabe.mtg.gui.FramesTitles;
-import main.java.com.hackcaffebabe.mtg.gui.frame.listener.AboutActionListener;
-import main.java.com.hackcaffebabe.mtg.gui.panel.deckeditor.DeckEditorContent;
+import com.hackcaffebabe.mtg.gui.FramesDimensions;
+import com.hackcaffebabe.mtg.gui.FramesTitles;
+import com.hackcaffebabe.mtg.gui.frame.listener.AboutActionListener;
+import com.hackcaffebabe.mtg.gui.panel.deckeditor.DeckEditorContent;
 
 
 /**

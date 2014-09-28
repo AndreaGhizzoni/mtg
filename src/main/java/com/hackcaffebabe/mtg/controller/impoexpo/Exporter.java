@@ -1,4 +1,4 @@
-package main.java.com.hackcaffebabe.mtg.controller.impoexpo;
+package com.hackcaffebabe.mtg.controller.impoexpo;
 
 import it.hackcaffebabe.ioutil.file.PathUtil;
 import it.hackcaffebabe.logger.Logger;
@@ -17,9 +17,9 @@ import javax.swing.JButton;
 import javax.swing.JProgressBar;
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
-import main.java.com.hackcaffebabe.mtg.controller.Paths;
-import main.java.com.hackcaffebabe.mtg.controller.StringNormalizer;
-import main.java.com.hackcaffebabe.mtg.gui.frame.ExporterGUI;
+import com.hackcaffebabe.mtg.controller.Paths;
+import com.hackcaffebabe.mtg.controller.StringNormalizer;
+import com.hackcaffebabe.mtg.gui.frame.ExporterUI;
 
 
 /**
@@ -38,11 +38,11 @@ public class Exporter extends SwingWorker<Void, String>
 	private JButton btnClosedButton;
 
 	/**
-	 * Instance a exporter with what to export and his {@link ExporterGUI} to trace the process.
+	 * Instance a exporter with what to export and his {@link Exporter} to trace the process.
 	 * @param what {@link WhatImpoExpo} what to export.
-	 * @param parent {@link ExporterGUI} to trace the process.
+	 * @param parent {@link Exporter} to trace the process.
 	 */
-	public Exporter(WhatImpoExpo what, ExporterGUI parent){
+	public Exporter(WhatImpoExpo what, ExporterUI parent){
 		addPropertyChangeListener( new PCL() );
 		this.whatToExport = what;
 		this.textArea = parent.getTextArea();

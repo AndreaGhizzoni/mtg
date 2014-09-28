@@ -1,20 +1,8 @@
-package main.java.com.hackcaffebabe.mtg.controller.json.adapter;
+package com.hackcaffebabe.mtg.controller.json.adapter;
 
 import java.lang.reflect.Type;
 import java.util.HashSet;
 import java.util.Set;
-import main.java.com.hackcaffebabe.mtg.controller.json.JSONTags;
-import main.java.com.hackcaffebabe.mtg.model.Artifact;
-import main.java.com.hackcaffebabe.mtg.model.Creature;
-import main.java.com.hackcaffebabe.mtg.model.Enchantment;
-import main.java.com.hackcaffebabe.mtg.model.Instant;
-import main.java.com.hackcaffebabe.mtg.model.MTGCard;
-import main.java.com.hackcaffebabe.mtg.model.Planeswalker;
-import main.java.com.hackcaffebabe.mtg.model.Sorcery;
-import main.java.com.hackcaffebabe.mtg.model.card.PlanesAbility;
-import main.java.com.hackcaffebabe.mtg.model.card.Strength;
-import main.java.com.hackcaffebabe.mtg.model.color.CardColor;
-import main.java.com.hackcaffebabe.mtg.model.cost.ManaCost;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -23,6 +11,18 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
+import com.hackcaffebabe.mtg.controller.json.JSONTags;
+import com.hackcaffebabe.mtg.model.Artifact;
+import com.hackcaffebabe.mtg.model.Creature;
+import com.hackcaffebabe.mtg.model.Enchantment;
+import com.hackcaffebabe.mtg.model.Instant;
+import com.hackcaffebabe.mtg.model.MTGCard;
+import com.hackcaffebabe.mtg.model.Planeswalker;
+import com.hackcaffebabe.mtg.model.Sorcery;
+import com.hackcaffebabe.mtg.model.card.PlanesAbility;
+import com.hackcaffebabe.mtg.model.card.Strength;
+import com.hackcaffebabe.mtg.model.color.CardColor;
+import com.hackcaffebabe.mtg.model.cost.ManaCost;
 
 
 /**
@@ -93,7 +93,7 @@ public class MTGCardAdapter implements JsonSerializer<MTGCard>, JsonDeserializer
 		String type = json.getAsJsonObject().get( JSONTags.TYPE ).getAsString();
 		json.getAsJsonObject().remove( JSONTags.TYPE );// remove this otherwise class dosn't full fit the class.
 		try {
-			MTGCard c = context.deserialize( json, Class.forName( "main.java.com.hackcaffebabe.mtg.model." + type ) );
+			MTGCard c = context.deserialize( json, Class.forName( "com.hackcaffebabe.mtg.model." + type ) );
 			CardColor cc = context.deserialize( json.getAsJsonObject().get( JSONTags.COLOR ),
 					Class.forName( CardColor.class.getCanonicalName() ) );
 			c.setCardColor( cc );

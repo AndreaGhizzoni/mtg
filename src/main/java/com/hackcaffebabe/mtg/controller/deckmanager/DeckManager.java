@@ -1,4 +1,4 @@
-package main.java.com.hackcaffebabe.mtg.controller.deckmanager;
+package com.hackcaffebabe.mtg.controller.deckmanager;
 
 import it.hackcaffebabe.ioutil.file.PathUtil;
 import it.hackcaffebabe.jx.tree.JXTree;
@@ -14,10 +14,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import javax.swing.SwingUtilities;
 import javax.swing.tree.DefaultTreeModel;
-import main.java.com.hackcaffebabe.mtg.controller.Paths;
-import main.java.com.hackcaffebabe.mtg.gui.GUIUtils;
-import main.java.com.hackcaffebabe.mtg.gui.components.deckeditor.DeckTreeNode;
-import main.java.com.hackcaffebabe.mtg.gui.components.deckeditor.DeckTreeNode.TREENODE_TYPE;
+import com.hackcaffebabe.mtg.controller.Paths;
+import com.hackcaffebabe.mtg.gui.GUIUtils;
+import com.hackcaffebabe.mtg.gui.components.deckeditor.DeckTreeNode;
+import com.hackcaffebabe.mtg.gui.components.deckeditor.DeckTreeNode.TREENODE_TYPE;
 
 
 /**

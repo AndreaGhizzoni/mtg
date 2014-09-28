@@ -11,3 +11,5 @@ build/resources
 build/scripts
 build/tmp
 build/install
+build/test-results
+build/reports

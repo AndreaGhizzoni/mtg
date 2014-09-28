@@ -1,9 +1,10 @@
-package main.java.com.hackcaffebabe.mtg.controller.json;
+package com.hackcaffebabe.mtg.controller.json;
 
 import it.hackcaffebabe.logger.Logger;
 import it.hackcaffebabe.logger.Tag;
 import java.awt.EventQueue;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -11,24 +12,24 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import main.java.com.hackcaffebabe.mtg.controller.Paths;
-import main.java.com.hackcaffebabe.mtg.controller.json.adapter.AbilityAdapter;
-import main.java.com.hackcaffebabe.mtg.controller.json.adapter.CardColorAdapter;
-import main.java.com.hackcaffebabe.mtg.controller.json.adapter.EffectAdapter;
-import main.java.com.hackcaffebabe.mtg.controller.json.adapter.MTGCardAdapter;
-import main.java.com.hackcaffebabe.mtg.controller.json.adapter.ManaCostAdapter;
-import main.java.com.hackcaffebabe.mtg.controller.json.adapter.PlanesAbilityAdapter;
-import main.java.com.hackcaffebabe.mtg.controller.json.adapter.StrengthAdapter;
-import main.java.com.hackcaffebabe.mtg.controller.statistics.Statistics;
-import main.java.com.hackcaffebabe.mtg.model.MTGCard;
-import main.java.com.hackcaffebabe.mtg.model.card.Ability;
-import main.java.com.hackcaffebabe.mtg.model.card.Effect;
-import main.java.com.hackcaffebabe.mtg.model.card.PlanesAbility;
-import main.java.com.hackcaffebabe.mtg.model.card.Strength;
-import main.java.com.hackcaffebabe.mtg.model.color.CardColor;
-import main.java.com.hackcaffebabe.mtg.model.cost.ManaCost;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.hackcaffebabe.mtg.controller.Paths;
+import com.hackcaffebabe.mtg.controller.json.adapter.AbilityAdapter;
+import com.hackcaffebabe.mtg.controller.json.adapter.CardColorAdapter;
+import com.hackcaffebabe.mtg.controller.json.adapter.EffectAdapter;
+import com.hackcaffebabe.mtg.controller.json.adapter.MTGCardAdapter;
+import com.hackcaffebabe.mtg.controller.json.adapter.ManaCostAdapter;
+import com.hackcaffebabe.mtg.controller.json.adapter.PlanesAbilityAdapter;
+import com.hackcaffebabe.mtg.controller.json.adapter.StrengthAdapter;
+import com.hackcaffebabe.mtg.controller.statistics.Statistics;
+import com.hackcaffebabe.mtg.model.MTGCard;
+import com.hackcaffebabe.mtg.model.card.Ability;
+import com.hackcaffebabe.mtg.model.card.Effect;
+import com.hackcaffebabe.mtg.model.card.PlanesAbility;
+import com.hackcaffebabe.mtg.model.card.Strength;
+import com.hackcaffebabe.mtg.model.color.CardColor;
+import com.hackcaffebabe.mtg.model.cost.ManaCost;
 
 
 /**
@@ -124,8 +125,12 @@ public class StoreManager
 			MTGCard toReturn = g.fromJson( f, MTGCard.class );
 			f.close();
 			return toReturn;
-		} catch(Exception e) {
-			return null;//TODO MAYBE LOG THIS!!!!
+		} catch(FileNotFoundException e) {
+			log.write( Tag.ERRORS, String.format( "Error to find given file: %s", jsonMTGFile.getName() ) );
+			return null;
+		} catch(IOException ex) {
+			log.write( Tag.ERRORS, String.format( "Error to parse the file card: %s", jsonMTGFile.getName() ) );
+			return null;
 		}
 	}
 
@@ -258,14 +263,17 @@ public class StoreManager
 	 * @return {@link List} of {@link MTGCard}
 	 */
 	public List<MTGCard> searchBy(Criteria criteria, Criteria.Mode mode){
-		if(criteria == null || criteria.isCriteriaEmpty())
+		if(criteria == null || criteria.isEmpty())
 			return getAllCardsAsList();
 
+		long start = System.currentTimeMillis();
 		HashSet<MTGCard> set = new HashSet<>();
 		for(MTGCard m: this.mtgSet) {
 			if(criteria.match( m, mode ))
 				set.add( m );
 		}
+		long end = System.currentTimeMillis();
+		log.write( Tag.INFO, String.format( "Criteria -query executed in %dms", (end - start) ) );
 		return new ArrayList<>( set );
 	}
 

@@ -1,4 +1,4 @@
-package main.java.com.hackcaffebabe.mtg.gui.frame;
+package com.hackcaffebabe.mtg.gui.frame;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
@@ -12,8 +12,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
-import main.java.com.hackcaffebabe.mtg.gui.FramesDimensions;
-import main.java.com.hackcaffebabe.mtg.gui.FramesTitles;
+import com.hackcaffebabe.mtg.gui.FramesDimensions;
+import com.hackcaffebabe.mtg.gui.FramesTitles;
 
 
 /**
@@ -22,7 +22,7 @@ import main.java.com.hackcaffebabe.mtg.gui.FramesTitles;
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
  */
-public class ExporterGUI extends JFrame
+public class ExporterUI extends JFrame
 {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -31,7 +31,7 @@ public class ExporterGUI extends JFrame
 	private JProgressBar bar;
 
 	/** Create the frame. */
-	public ExporterGUI(){
+	public ExporterUI(){
 		super( FramesTitles.TITLE_EXPORTER );
 		this.initContent();
 		setContentPane( contentPane );

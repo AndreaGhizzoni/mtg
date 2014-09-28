@@ -1,6 +1,6 @@
-package main.java.com.hackcaffebabe.mtg.gui.panel.insertupdatecard;
+package com.hackcaffebabe.mtg.gui.panel.insertupdatecard;
 
-import static main.java.com.hackcaffebabe.mtg.gui.GUIUtils.showManaCost;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.showManaCost;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -8,17 +8,17 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
-import main.java.com.hackcaffebabe.mtg.model.Artifact;
-import main.java.com.hackcaffebabe.mtg.model.Creature;
-import main.java.com.hackcaffebabe.mtg.model.Enchantment;
-import main.java.com.hackcaffebabe.mtg.model.Instant;
-import main.java.com.hackcaffebabe.mtg.model.Land;
-import main.java.com.hackcaffebabe.mtg.model.MTGCard;
-import main.java.com.hackcaffebabe.mtg.model.Planeswalker;
-import main.java.com.hackcaffebabe.mtg.model.Sorcery;
-import main.java.com.hackcaffebabe.mtg.model.card.Strength;
-import main.java.com.hackcaffebabe.mtg.model.cost.ManaCost;
 import net.miginfocom.swing.MigLayout;
+import com.hackcaffebabe.mtg.model.Artifact;
+import com.hackcaffebabe.mtg.model.Creature;
+import com.hackcaffebabe.mtg.model.Enchantment;
+import com.hackcaffebabe.mtg.model.Instant;
+import com.hackcaffebabe.mtg.model.Land;
+import com.hackcaffebabe.mtg.model.MTGCard;
+import com.hackcaffebabe.mtg.model.Planeswalker;
+import com.hackcaffebabe.mtg.model.Sorcery;
+import com.hackcaffebabe.mtg.model.card.Strength;
+import com.hackcaffebabe.mtg.model.cost.ManaCost;
 
 
 /**

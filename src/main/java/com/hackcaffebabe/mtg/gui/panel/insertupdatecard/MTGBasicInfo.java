@@ -1,4 +1,4 @@
-package main.java.com.hackcaffebabe.mtg.gui.panel.insertupdatecard;
+package com.hackcaffebabe.mtg.gui.panel.insertupdatecard;
 
 import it.hackcaffebabe.jx.typeahead.CommitAction;
 import it.hackcaffebabe.jx.typeahead.JXAutocomplete;
@@ -10,14 +10,14 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.border.TitledBorder;
-import main.java.com.hackcaffebabe.mtg.controller.json.StoreManager;
-import main.java.com.hackcaffebabe.mtg.gui.listener.BasicColorActionListener;
-import main.java.com.hackcaffebabe.mtg.gui.panel.listener.TextToShortCutterFocusListener;
-import main.java.com.hackcaffebabe.mtg.model.MTGCard;
-import main.java.com.hackcaffebabe.mtg.model.card.Rarity;
-import main.java.com.hackcaffebabe.mtg.model.color.CardColor;
-import main.java.com.hackcaffebabe.mtg.model.color.Mana;
 import net.miginfocom.swing.MigLayout;
+import com.hackcaffebabe.mtg.controller.json.StoreManager;
+import com.hackcaffebabe.mtg.gui.listener.BasicColorActionListener;
+import com.hackcaffebabe.mtg.gui.panel.listener.TextToShortCutterFocusListener;
+import com.hackcaffebabe.mtg.model.MTGCard;
+import com.hackcaffebabe.mtg.model.card.Rarity;
+import com.hackcaffebabe.mtg.model.color.CardColor;
+import com.hackcaffebabe.mtg.model.color.Mana;
 
 
 /**

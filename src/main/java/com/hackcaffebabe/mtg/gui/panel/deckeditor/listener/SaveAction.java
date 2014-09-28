@@ -1,4 +1,4 @@
-package main.java.com.hackcaffebabe.mtg.gui.panel.deckeditor.listener;
+package com.hackcaffebabe.mtg.gui.panel.deckeditor.listener;
 
 import it.hackcaffebabe.ioutil.file.PathUtil;
 import it.hackcaffebabe.logger.Logger;
@@ -11,9 +11,9 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import javax.swing.AbstractAction;
 import javax.swing.SwingUtilities;
-import main.java.com.hackcaffebabe.mtg.controller.Paths;
-import main.java.com.hackcaffebabe.mtg.gui.GUIUtils;
-import main.java.com.hackcaffebabe.mtg.gui.panel.deckeditor.TabContent;
+import com.hackcaffebabe.mtg.controller.Paths;
+import com.hackcaffebabe.mtg.gui.GUIUtils;
+import com.hackcaffebabe.mtg.gui.panel.deckeditor.TabContent;
 
 
 /**

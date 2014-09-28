@@ -1,7 +1,7 @@
-package main.java.com.hackcaffebabe.mtg.gui.panel.mtg.listener;
+package com.hackcaffebabe.mtg.gui.panel.mtg.listener;
 
-import static main.java.com.hackcaffebabe.mtg.gui.GUIUtils.JXTABLE_MTG;
-import static main.java.com.hackcaffebabe.mtg.gui.GUIUtils.PNL_MTGPROPERTIES;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.JXTABLE_MTG;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.PNL_MTGPROPERTIES;
 import it.hackcaffebabe.jx.table.model.JXObjectModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,9 +12,9 @@ import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import main.java.com.hackcaffebabe.mtg.gui.frame.InsertUpdateCard;
-import main.java.com.hackcaffebabe.mtg.gui.listener.DeleteCardActionListener;
-import main.java.com.hackcaffebabe.mtg.model.MTGCard;
+import com.hackcaffebabe.mtg.gui.frame.InsertUpdateCard;
+import com.hackcaffebabe.mtg.gui.listener.DeleteCardActionListener;
+import com.hackcaffebabe.mtg.model.MTGCard;
 
 
 /**

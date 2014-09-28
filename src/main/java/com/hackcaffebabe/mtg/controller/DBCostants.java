@@ -1,4 +1,4 @@
-package main.java.com.hackcaffebabe.mtg.controller;
+package com.hackcaffebabe.mtg.controller;
 
 /**
  * Constants for storing data 

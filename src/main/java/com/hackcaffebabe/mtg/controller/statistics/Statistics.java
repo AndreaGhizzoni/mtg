@@ -1,11 +1,11 @@
-package main.java.com.hackcaffebabe.mtg.controller.statistics;
+package com.hackcaffebabe.mtg.controller.statistics;
 
 import java.util.LinkedHashMap;
 import java.util.Set;
-import main.java.com.hackcaffebabe.mtg.model.MTGCard;
-import main.java.com.hackcaffebabe.mtg.model.card.Rarity;
-import main.java.com.hackcaffebabe.mtg.model.color.Mana;
-import main.java.com.hackcaffebabe.mtg.model.color.TypeColor;
+import com.hackcaffebabe.mtg.model.MTGCard;
+import com.hackcaffebabe.mtg.model.card.Rarity;
+import com.hackcaffebabe.mtg.model.color.Mana;
+import com.hackcaffebabe.mtg.model.color.TypeColor;
 
 
 /**
@@ -32,15 +32,15 @@ public final class Statistics
 
 	/* Instance the Statistics card collector */
 	private Statistics(){
-		install();
+		init();
 	}
 
 //===========================================================================================
 // METHOD
 //===========================================================================================
 	/**
-	 * TODO add doc
-	 * @param m
+	 * This method collects data from {@link MTGCard} given.
+	 * @param m {@link MTGCard} the card to collect data.
 	 */
 	public void collect(MTGCard m){
 		if(m == null)
@@ -52,26 +52,26 @@ public final class Statistics
 	}
 
 	/**
-	 * TODO add doc
-	 * @param tot
+	 * Set the total saved card.
+	 * @param tot int
 	 */
 	public void tot(int tot){
 		this.stat.replace( StatConstants.CREATURE, tot );
 	}
 
-	/** TODO add doc */
+	/** reinitialize the map */
 	public void clear(){
-		install();
+		init();
 	}
 
-	/* TODO doc */
-	private void install(){
+	/* initialize the map */
+	private void init(){
 		this.stat.clear();
 		for(StatConstants i: StatConstants.values())
 			stat.put( i, 0 );
 	}
 
-	/* TODO doc */
+	/* count the rarity */
 	private void count(Rarity r){
 		int tmp;
 		switch( r ) {
@@ -94,7 +94,7 @@ public final class Statistics
 		}
 	}
 
-	/* TODO doc */
+	/* count the mana color */
 	private void count(Set<Mana> l){
 		int tmp;
 		if(l.contains( Mana.RED )) {
@@ -119,7 +119,7 @@ public final class Statistics
 		}
 	}
 
-	/* TODO doc */
+	/* count the color type */
 	private void count(TypeColor t){
 		int tmp;
 		switch( t ) {
@@ -142,7 +142,7 @@ public final class Statistics
 		}
 	}
 
-	/* TODO doc */
+	/* count the legendary cards */
 	private void countLeggendary(boolean leg){
 		if(leg) {
 			int tmp = this.stat.get( StatConstants.LEGENDARY );
@@ -154,8 +154,8 @@ public final class Statistics
 // GETTER
 //===========================================================================================
 	/**
-	 * TODO add doc
-	 * @return
+	 * Returns the map of collected statistics.
+	 * @return {@link LinkedHashMap} the map with all the statistics.
 	 */
 	public LinkedHashMap<StatConstants, Integer> getStats(){
 		return this.stat;

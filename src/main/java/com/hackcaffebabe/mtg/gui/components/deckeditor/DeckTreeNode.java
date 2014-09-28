@@ -1,4 +1,4 @@
-package main.java.com.hackcaffebabe.mtg.gui.components.deckeditor;
+package com.hackcaffebabe.mtg.gui.components.deckeditor;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 

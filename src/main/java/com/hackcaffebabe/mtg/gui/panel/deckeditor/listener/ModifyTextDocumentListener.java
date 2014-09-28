@@ -1,4 +1,4 @@
-package main.java.com.hackcaffebabe.mtg.gui.panel.deckeditor.listener;
+package com.hackcaffebabe.mtg.gui.panel.deckeditor.listener;
 
 import it.hackcaffebabe.logger.Logger;
 import it.hackcaffebabe.logger.Tag;
@@ -9,7 +9,7 @@ import javax.swing.JTextArea;
 import javax.swing.UIManager;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import main.java.com.hackcaffebabe.mtg.gui.panel.deckeditor.TabTopRender;
+import com.hackcaffebabe.mtg.gui.panel.deckeditor.TabTopRender;
 
 
 /**

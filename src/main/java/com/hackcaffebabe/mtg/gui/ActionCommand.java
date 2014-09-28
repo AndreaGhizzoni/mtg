@@ -1,4 +1,4 @@
-package main.java.com.hackcaffebabe.mtg.gui;
+package com.hackcaffebabe.mtg.gui;
 
 /**
  * This class holds the action commands ONLY! 

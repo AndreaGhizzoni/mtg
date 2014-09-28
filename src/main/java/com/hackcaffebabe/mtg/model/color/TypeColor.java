@@ -1,4 +1,4 @@
-package main.java.com.hackcaffebabe.mtg.model.color;
+package com.hackcaffebabe.mtg.model.color;
 
 /**
  * Represents the type of color combination in MTG.

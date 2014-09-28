@@ -1,4 +1,4 @@
-package main.java.com.hackcaffebabe.mtg.gui.panel.listener;
+package com.hackcaffebabe.mtg.gui.panel.listener;
 
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;

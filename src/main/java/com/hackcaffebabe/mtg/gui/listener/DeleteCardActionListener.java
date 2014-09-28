@@ -1,17 +1,17 @@
-package main.java.com.hackcaffebabe.mtg.gui.listener;
+package com.hackcaffebabe.mtg.gui.listener;
 
-import static main.java.com.hackcaffebabe.mtg.gui.GUIUtils.PNL_MTGPROPERTIES;
-import static main.java.com.hackcaffebabe.mtg.gui.GUIUtils.displayError;
-import static main.java.com.hackcaffebabe.mtg.gui.GUIUtils.displaySuccessMessage;
-import static main.java.com.hackcaffebabe.mtg.gui.GUIUtils.refreshMTGTable;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.PNL_MTGPROPERTIES;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.displayError;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.displaySuccessMessage;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.refreshMTGTable;
 import it.hackcaffebabe.logger.Logger;
 import it.hackcaffebabe.logger.Tag;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
-import main.java.com.hackcaffebabe.mtg.controller.json.StoreManager;
-import main.java.com.hackcaffebabe.mtg.model.MTGCard;
+import com.hackcaffebabe.mtg.controller.json.StoreManager;
+import com.hackcaffebabe.mtg.model.MTGCard;
 
 
 /**

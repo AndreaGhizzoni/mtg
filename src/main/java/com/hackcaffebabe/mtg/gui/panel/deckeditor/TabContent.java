@@ -1,13 +1,13 @@
-package main.java.com.hackcaffebabe.mtg.gui.panel.deckeditor;
+package com.hackcaffebabe.mtg.gui.panel.deckeditor;
 
 import java.awt.Font;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
-import main.java.com.hackcaffebabe.mtg.controller.deckmanager.DeckManager;
-import main.java.com.hackcaffebabe.mtg.gui.panel.deckeditor.listener.ModifyTextDocumentListener;
 import net.miginfocom.swing.MigLayout;
+import com.hackcaffebabe.mtg.controller.deckmanager.DeckManager;
+import com.hackcaffebabe.mtg.gui.panel.deckeditor.listener.ModifyTextDocumentListener;
 
 
 /**

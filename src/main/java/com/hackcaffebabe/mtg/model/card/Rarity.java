@@ -1,4 +1,4 @@
-package main.java.com.hackcaffebabe.mtg.model.card;
+package com.hackcaffebabe.mtg.model.card;
 
 import java.util.Arrays;
 import java.util.List;

@@ -1,6 +1,6 @@
-package main.java.com.hackcaffebabe.mtg.gui.panel.advancesearch;
+package com.hackcaffebabe.mtg.gui.panel.advancesearch;
 
-import static main.java.com.hackcaffebabe.mtg.gui.GUIUtils.JXTABLE_MTG;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.JXTABLE_MTG;
 import it.hackcaffebabe.jx.checklist.JXCheckList;
 import it.hackcaffebabe.jx.checklist.JXCheckListEntry;
 import it.hackcaffebabe.jx.table.model.JXObjectModel;
@@ -21,14 +21,14 @@ import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.TitledBorder;
-import main.java.com.hackcaffebabe.mtg.controller.json.Criteria;
-import main.java.com.hackcaffebabe.mtg.controller.json.StoreManager;
-import main.java.com.hackcaffebabe.mtg.gui.frame.AdvanceSearch;
-import main.java.com.hackcaffebabe.mtg.model.MTGCard;
-import main.java.com.hackcaffebabe.mtg.model.card.AbilityFactory;
-import main.java.com.hackcaffebabe.mtg.model.card.Rarity;
-import main.java.com.hackcaffebabe.mtg.model.color.Mana;
 import net.miginfocom.swing.MigLayout;
+import com.hackcaffebabe.mtg.controller.json.Criteria;
+import com.hackcaffebabe.mtg.controller.json.StoreManager;
+import com.hackcaffebabe.mtg.gui.frame.AdvanceSearch;
+import com.hackcaffebabe.mtg.model.MTGCard;
+import com.hackcaffebabe.mtg.model.card.AbilityFactory;
+import com.hackcaffebabe.mtg.model.card.Rarity;
+import com.hackcaffebabe.mtg.model.color.Mana;
 
 
 /**

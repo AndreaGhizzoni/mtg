@@ -1,4 +1,4 @@
-package main.java.com.hackcaffebabe.mtg.gui.panel.mtg;
+package com.hackcaffebabe.mtg.gui.panel.mtg;
 
 import java.awt.Component;
 import javax.swing.JTable;

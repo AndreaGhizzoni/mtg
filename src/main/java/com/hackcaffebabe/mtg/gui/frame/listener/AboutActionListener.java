@@ -1,11 +1,11 @@
-package main.java.com.hackcaffebabe.mtg.gui.frame.listener;
+package com.hackcaffebabe.mtg.gui.frame.listener;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JMenuItem;
-import main.java.com.hackcaffebabe.mtg.Version;
-import main.java.com.hackcaffebabe.mtg.gui.frame.MTG;
 import com.hackcaffebabe.about.About;
+import com.hackcaffebabe.mtg.Version;
+import com.hackcaffebabe.mtg.gui.frame.MTG;
 
 
 /**

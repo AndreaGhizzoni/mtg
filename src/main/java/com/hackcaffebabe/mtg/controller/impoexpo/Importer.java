@@ -1,4 +1,4 @@
-package main.java.com.hackcaffebabe.mtg.controller.impoexpo;
+package com.hackcaffebabe.mtg.controller.impoexpo;
 
 import it.hackcaffebabe.ioutil.file.PathUtil;
 import it.hackcaffebabe.jx.checklist.JXCheckList;
@@ -24,13 +24,13 @@ import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
-import main.java.com.hackcaffebabe.mtg.controller.Paths;
-import main.java.com.hackcaffebabe.mtg.controller.StringNormalizer;
-import main.java.com.hackcaffebabe.mtg.controller.json.StoreManager;
-import main.java.com.hackcaffebabe.mtg.gui.GUIUtils;
-import main.java.com.hackcaffebabe.mtg.gui.frame.ExporterGUI;
-import main.java.com.hackcaffebabe.mtg.gui.frame.ImporterGUI;
-import main.java.com.hackcaffebabe.mtg.model.MTGCard;
+import com.hackcaffebabe.mtg.controller.Paths;
+import com.hackcaffebabe.mtg.controller.StringNormalizer;
+import com.hackcaffebabe.mtg.controller.json.StoreManager;
+import com.hackcaffebabe.mtg.gui.GUIUtils;
+import com.hackcaffebabe.mtg.gui.frame.ExporterUI;
+import com.hackcaffebabe.mtg.gui.frame.ImporterUI;
+import com.hackcaffebabe.mtg.model.MTGCard;
 
 
 /**
@@ -49,11 +49,11 @@ public class Importer extends SwingWorker<Void, String>
 	private JButton btnClosedButton;
 
 	/**
-	 * Instance a importer with what to import and his {@link ImporterGUI} to trace the process.
+	 * Instance a importer with what to import and his {@link Importer} to trace the process.
 	 * @param what {@link WhatImpoExpo} what to export.
-	 * @param parent {@link ExporterGUI} to trace the process.
+	 * @param parent {@link ExporterUI} to trace the process.
 	 */
-	public Importer(WhatImpoExpo what, ImporterGUI parent){
+	public Importer(WhatImpoExpo what, ImporterUI parent){
 		addPropertyChangeListener( new PCL() );
 		this.whatToImport = what;
 		this.textArea = parent.getTextArea();

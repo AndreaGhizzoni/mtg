@@ -1,4 +1,4 @@
-package main.java.com.hackcaffebabe.mtg.gui.panel.insertupdatecard;
+package com.hackcaffebabe.mtg.gui.panel.insertupdatecard;
 
 import java.awt.Component;
 import javax.swing.JLabel;
@@ -6,9 +6,9 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.TitledBorder;
-import main.java.com.hackcaffebabe.mtg.model.MTGCard;
-import main.java.com.hackcaffebabe.mtg.model.Planeswalker;
 import net.miginfocom.swing.MigLayout;
+import com.hackcaffebabe.mtg.model.MTGCard;
+import com.hackcaffebabe.mtg.model.Planeswalker;
 
 
 /**

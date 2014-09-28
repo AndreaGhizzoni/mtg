@@ -1,4 +1,4 @@
-package main.java.com.hackcaffebabe.mtg.model.card;
+package com.hackcaffebabe.mtg.model.card;
 
 import java.io.Serializable;
 import java.util.StringTokenizer;

@@ -1,4 +1,4 @@
-package main.java.com.hackcaffebabe.mtg.controller.statistics;
+package com.hackcaffebabe.mtg.controller.statistics;
 
 /**
  * This class provide all the constants that is used to collect card's informations

@@ -1,4 +1,4 @@
-package main.java.com.hackcaffebabe.mtg.gui.panel;
+package com.hackcaffebabe.mtg.gui.panel;
 
 import java.awt.Component;
 import java.awt.Container;

@@ -1,4 +1,4 @@
-package main.java.com.hackcaffebabe.mtg.gui.frame;
+package com.hackcaffebabe.mtg.gui.frame;
 
 import java.awt.Event;
 import java.awt.event.ActionEvent;
@@ -13,12 +13,12 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.KeyStroke;
-import main.java.com.hackcaffebabe.mtg.gui.ActionCommand;
-import main.java.com.hackcaffebabe.mtg.gui.FramesDimensions;
-import main.java.com.hackcaffebabe.mtg.gui.FramesTitles;
-import main.java.com.hackcaffebabe.mtg.gui.panel.insertupdatecard.InsertUpdateCardContent;
-import main.java.com.hackcaffebabe.mtg.gui.panel.listener.ShortCutter;
-import main.java.com.hackcaffebabe.mtg.model.MTGCard;
+import com.hackcaffebabe.mtg.gui.ActionCommand;
+import com.hackcaffebabe.mtg.gui.FramesDimensions;
+import com.hackcaffebabe.mtg.gui.FramesTitles;
+import com.hackcaffebabe.mtg.gui.panel.insertupdatecard.InsertUpdateCardContent;
+import com.hackcaffebabe.mtg.gui.panel.listener.ShortCutter;
+import com.hackcaffebabe.mtg.model.MTGCard;
 
 
 /**

@@ -1,11 +1,11 @@
-package main.java.com.hackcaffebabe.mtg.gui.listener;
+package com.hackcaffebabe.mtg.gui.listener;
 
 import it.hackcaffebabe.jx.table.JXTable;
 import it.hackcaffebabe.jx.table.JXTableColumnAdjuster;
 import it.hackcaffebabe.jx.table.model.JXObjectModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import main.java.com.hackcaffebabe.mtg.model.card.Effect;
+import com.hackcaffebabe.mtg.model.card.Effect;
 
 
 /**

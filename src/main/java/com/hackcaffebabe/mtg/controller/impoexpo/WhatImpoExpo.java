@@ -1,4 +1,4 @@
-package main.java.com.hackcaffebabe.mtg.controller.impoexpo;
+package com.hackcaffebabe.mtg.controller.impoexpo;
 
 /**
  * Enumerator to select what to import/export

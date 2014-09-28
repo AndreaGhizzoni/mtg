@@ -1,8 +1,8 @@
-package main.java.com.hackcaffebabe.mtg.gui.listener;
+package com.hackcaffebabe.mtg.gui.listener;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import main.java.com.hackcaffebabe.mtg.gui.frame.InsertUpdateCard;
+import com.hackcaffebabe.mtg.gui.frame.InsertUpdateCard;
 
 
 /**

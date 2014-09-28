@@ -1,14 +1,9 @@
-package main.java.com.hackcaffebabe.mtg.controller.json.adapter;
+package com.hackcaffebabe.mtg.controller.json.adapter;
 
 import java.lang.reflect.Type;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import main.java.com.hackcaffebabe.mtg.controller.json.JSONTags;
-import main.java.com.hackcaffebabe.mtg.model.card.Effect;
-import main.java.com.hackcaffebabe.mtg.model.color.Mana;
-import main.java.com.hackcaffebabe.mtg.model.cost.ManaCost;
-import main.java.com.hackcaffebabe.mtg.model.cost.Tuple;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -17,6 +12,11 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
+import com.hackcaffebabe.mtg.controller.json.JSONTags;
+import com.hackcaffebabe.mtg.model.card.Effect;
+import com.hackcaffebabe.mtg.model.color.Mana;
+import com.hackcaffebabe.mtg.model.cost.ManaCost;
+import com.hackcaffebabe.mtg.model.cost.Tuple;
 
 
 /**

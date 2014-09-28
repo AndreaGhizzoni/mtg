@@ -1,7 +1,7 @@
-package main.java.com.hackcaffebabe.mtg.gui.frame;
+package com.hackcaffebabe.mtg.gui.frame;
 
-import static main.java.com.hackcaffebabe.mtg.gui.GUIUtils.STATUS_BAR_MAIN_FRAME;
-import static main.java.com.hackcaffebabe.mtg.gui.GUIUtils.refreshMTGTable;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.STATUS_BAR_MAIN_FRAME;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.refreshMTGTable;
 import it.hackcaffebabe.jx.statusbar.JXStatusBar;
 import it.hackcaffebabe.logger.Logger;
 import it.hackcaffebabe.logger.Tag;
@@ -19,18 +19,18 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
-import main.java.com.hackcaffebabe.mtg.Version;
-import main.java.com.hackcaffebabe.mtg.controller.impoexpo.Exporter;
-import main.java.com.hackcaffebabe.mtg.controller.impoexpo.Importer;
-import main.java.com.hackcaffebabe.mtg.controller.impoexpo.WhatImpoExpo;
-import main.java.com.hackcaffebabe.mtg.controller.statistics.Statistics;
-import main.java.com.hackcaffebabe.mtg.gui.FramesDimensions;
-import main.java.com.hackcaffebabe.mtg.gui.FramesTitles;
-import main.java.com.hackcaffebabe.mtg.gui.frame.listener.AboutActionListener;
-import main.java.com.hackcaffebabe.mtg.gui.frame.listener.DeckEditorActionListener;
-import main.java.com.hackcaffebabe.mtg.gui.listener.DeleteCardActionListener;
-import main.java.com.hackcaffebabe.mtg.gui.listener.NewCardActionListener;
-import main.java.com.hackcaffebabe.mtg.gui.panel.mtg.MTGContent;
+import com.hackcaffebabe.mtg.Version;
+import com.hackcaffebabe.mtg.controller.impoexpo.Exporter;
+import com.hackcaffebabe.mtg.controller.impoexpo.Importer;
+import com.hackcaffebabe.mtg.controller.impoexpo.WhatImpoExpo;
+import com.hackcaffebabe.mtg.controller.statistics.Statistics;
+import com.hackcaffebabe.mtg.gui.FramesDimensions;
+import com.hackcaffebabe.mtg.gui.FramesTitles;
+import com.hackcaffebabe.mtg.gui.frame.listener.AboutActionListener;
+import com.hackcaffebabe.mtg.gui.frame.listener.DeckEditorActionListener;
+import com.hackcaffebabe.mtg.gui.listener.DeleteCardActionListener;
+import com.hackcaffebabe.mtg.gui.listener.NewCardActionListener;
+import com.hackcaffebabe.mtg.gui.panel.mtg.MTGContent;
 
 
 /**
@@ -80,7 +80,7 @@ public class MTG extends JFrame
 		fileImport.addActionListener( new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e){
-				new Importer( WhatImpoExpo.ALL_CARDS, new ImporterGUI() ).execute();
+				new Importer( WhatImpoExpo.ALL_CARDS, new ImporterUI() ).execute();
 			}
 		} );
 		file.add( fileImport );
@@ -90,7 +90,7 @@ public class MTG extends JFrame
 		fileImportSelected.addActionListener( new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e){
-				new Importer( WhatImpoExpo.SELECTIVE_CARDS, new ImporterGUI() ).execute();
+				new Importer( WhatImpoExpo.SELECTIVE_CARDS, new ImporterUI() ).execute();
 			}
 		} );
 		file.add( fileImportSelected );
@@ -100,7 +100,7 @@ public class MTG extends JFrame
 		fileExport.addActionListener( new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e){
-				new Exporter( WhatImpoExpo.ALL_CARDS, new ExporterGUI() ).execute();
+				new Exporter( WhatImpoExpo.ALL_CARDS, new ExporterUI() ).execute();
 			}
 		} );
 		file.add( fileExport );
@@ -109,7 +109,7 @@ public class MTG extends JFrame
 		fileStatistocs.addActionListener( new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e){
-				new StatisticsGUI().show( Statistics.getInstance() );
+				new StatisticsUI().show( Statistics.getInstance() );
 			}
 		} );
 		file.add( fileStatistocs );

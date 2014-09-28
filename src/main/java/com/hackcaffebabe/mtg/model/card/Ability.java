@@ -1,8 +1,8 @@
-package main.java.com.hackcaffebabe.mtg.model.card;
+package com.hackcaffebabe.mtg.model.card;
 
 import it.hackcaffebabe.jx.table.model.DisplayableObject;
 import java.io.Serializable;
-import main.java.com.hackcaffebabe.mtg.controller.StringNormalizer;
+import com.hackcaffebabe.mtg.controller.StringNormalizer;
 
 
 /**

@@ -1,4 +1,4 @@
-package main.java.com.hackcaffebabe.mtg.gui.frame;
+package com.hackcaffebabe.mtg.gui.frame;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -7,9 +7,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import main.java.com.hackcaffebabe.mtg.controller.statistics.StatConstants;
-import main.java.com.hackcaffebabe.mtg.controller.statistics.Statistics;
-import main.java.com.hackcaffebabe.mtg.gui.FramesDimensions;
+import com.hackcaffebabe.mtg.controller.statistics.StatConstants;
+import com.hackcaffebabe.mtg.controller.statistics.Statistics;
+import com.hackcaffebabe.mtg.gui.FramesDimensions;
+import com.hackcaffebabe.mtg.gui.FramesTitles;
 
 
 /**
@@ -18,14 +19,16 @@ import main.java.com.hackcaffebabe.mtg.gui.FramesDimensions;
  * @author Andrea Ghizzoni. More info at andrea.ghz@gmail.com
  * @version 1.0
  */
-public class StatisticsGUI extends JFrame
+public class StatisticsUI extends JFrame
 {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
 	/** Create the frame. */
-	public StatisticsGUI(){
+	public StatisticsUI(){
+		super( FramesTitles.TITLE_STATISTICS );
 		this.init();
+		setResizable( false );
 		setSize( FramesDimensions.DIMENSION_STATISTICS );
 		setLocation( FramesDimensions.getRigth( FramesDimensions.DIMENSION_STATISTICS ) );
 	}
@@ -53,7 +56,7 @@ public class StatisticsGUI extends JFrame
 	}
 
 //===========================================================================================
-// INNER cLASS
+// INNER CLASS
 //===========================================================================================
 	class Stat extends JPanel
 	{

@@ -1,4 +1,4 @@
-package main.java.com.hackcaffebabe.mtg.gui.panel.insertupdatecard;
+package com.hackcaffebabe.mtg.gui.panel.insertupdatecard;
 
 import java.awt.Component;
 import javax.swing.JLabel;
@@ -10,11 +10,11 @@ import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
-import main.java.com.hackcaffebabe.mtg.gui.TP;
-import main.java.com.hackcaffebabe.mtg.model.Creature;
-import main.java.com.hackcaffebabe.mtg.model.MTGCard;
-import main.java.com.hackcaffebabe.mtg.model.card.Strength;
 import net.miginfocom.swing.MigLayout;
+import com.hackcaffebabe.mtg.gui.TP;
+import com.hackcaffebabe.mtg.model.Creature;
+import com.hackcaffebabe.mtg.model.MTGCard;
+import com.hackcaffebabe.mtg.model.card.Strength;
 
 
 /**

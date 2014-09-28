@@ -1,21 +1,21 @@
-package main.java.com.hackcaffebabe.mtg.controller.json;
+package com.hackcaffebabe.mtg.controller.json;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import main.java.com.hackcaffebabe.mtg.model.Artifact;
-import main.java.com.hackcaffebabe.mtg.model.Creature;
-import main.java.com.hackcaffebabe.mtg.model.Enchantment;
-import main.java.com.hackcaffebabe.mtg.model.Instant;
-import main.java.com.hackcaffebabe.mtg.model.Land;
-import main.java.com.hackcaffebabe.mtg.model.MTGCard;
-import main.java.com.hackcaffebabe.mtg.model.Planeswalker;
-import main.java.com.hackcaffebabe.mtg.model.Sorcery;
-import main.java.com.hackcaffebabe.mtg.model.card.Ability;
-import main.java.com.hackcaffebabe.mtg.model.card.AbilityFactory;
-import main.java.com.hackcaffebabe.mtg.model.card.Rarity;
-import main.java.com.hackcaffebabe.mtg.model.color.Mana;
+import com.hackcaffebabe.mtg.model.Artifact;
+import com.hackcaffebabe.mtg.model.Creature;
+import com.hackcaffebabe.mtg.model.Enchantment;
+import com.hackcaffebabe.mtg.model.Instant;
+import com.hackcaffebabe.mtg.model.Land;
+import com.hackcaffebabe.mtg.model.MTGCard;
+import com.hackcaffebabe.mtg.model.Planeswalker;
+import com.hackcaffebabe.mtg.model.Sorcery;
+import com.hackcaffebabe.mtg.model.card.Ability;
+import com.hackcaffebabe.mtg.model.card.AbilityFactory;
+import com.hackcaffebabe.mtg.model.card.Rarity;
+import com.hackcaffebabe.mtg.model.color.Mana;
 
 
 /**
@@ -61,7 +61,7 @@ public class Criteria
 
 	/* match the given card in specific mode */
 	private boolean exactlyMatch(MTGCard mtg){
-		if(mtg == null || isCriteriaEmpty())
+		if(mtg == null || isEmpty())
 			return true;// if no criteria was set, every card matches
 
 		ArrayList<Boolean> listOfChecking = new ArrayList<>();
@@ -137,7 +137,7 @@ public class Criteria
 
 	/* match the card given in lazy mode */
 	private boolean lazyMatch(MTGCard mtg){
-		if(mtg == null || isCriteriaEmpty())
+		if(mtg == null || isEmpty())
 			return true;// if no criteria was set, every card matches
 
 		if(name != null) {
@@ -304,7 +304,7 @@ public class Criteria
 	 * Check if criteria is void.
 	 * @return {@link Boolean} if there is no criteria inserted.
 	 */
-	public boolean isCriteriaEmpty(){
+	public boolean isEmpty(){
 		return (name == null) && (convertedManaCost == null) && (subTypes == null)
 				&& (series.isEmpty() && (aiblities.isEmpty())) && (colors.isEmpty()) && (rarity.isEmpty());
 	}

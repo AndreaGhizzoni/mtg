@@ -1,9 +1,9 @@
-package main.java.com.hackcaffebabe.mtg.gui.panel.mtg;
+package com.hackcaffebabe.mtg.gui.panel.mtg;
 
-import static main.java.com.hackcaffebabe.mtg.gui.GUIUtils.JXTABLE_MTG;
-import static main.java.com.hackcaffebabe.mtg.gui.GUIUtils.JXTABLE_MTG_COLUMN_ADJUSTER;
-import static main.java.com.hackcaffebabe.mtg.gui.GUIUtils.PNL_MTGPROPERTIES;
-import static main.java.com.hackcaffebabe.mtg.gui.GUIUtils.refreshMTGTable;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.JXTABLE_MTG;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.JXTABLE_MTG_COLUMN_ADJUSTER;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.PNL_MTGPROPERTIES;
+import static com.hackcaffebabe.mtg.gui.GUIUtils.refreshMTGTable;
 import it.hackcaffebabe.jx.table.JXTable;
 import it.hackcaffebabe.jx.table.JXTableColumnAdjuster;
 import it.hackcaffebabe.jx.table.model.JXObjectModel;
@@ -19,11 +19,11 @@ import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
-import main.java.com.hackcaffebabe.mtg.gui.FramesDimensions;
-import main.java.com.hackcaffebabe.mtg.gui.panel.mtg.listener.AdvanceSearchActionListener;
-import main.java.com.hackcaffebabe.mtg.gui.panel.mtg.listener.SelectionMTGCardList;
-import main.java.com.hackcaffebabe.mtg.model.MTGCard;
 import net.miginfocom.swing.MigLayout;
+import com.hackcaffebabe.mtg.gui.FramesDimensions;
+import com.hackcaffebabe.mtg.gui.panel.mtg.listener.AdvanceSearchActionListener;
+import com.hackcaffebabe.mtg.gui.panel.mtg.listener.SelectionMTGCardList;
+import com.hackcaffebabe.mtg.model.MTGCard;
 
 
 /**

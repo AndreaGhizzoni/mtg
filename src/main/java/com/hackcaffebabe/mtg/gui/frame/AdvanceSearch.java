@@ -1,10 +1,10 @@
-package main.java.com.hackcaffebabe.mtg.gui.frame;
+package com.hackcaffebabe.mtg.gui.frame;
 
 import it.hackcaffebabe.jx.table.JXTable;
 import javax.swing.JFrame;
-import main.java.com.hackcaffebabe.mtg.gui.FramesDimensions;
-import main.java.com.hackcaffebabe.mtg.gui.FramesTitles;
-import main.java.com.hackcaffebabe.mtg.gui.panel.advancesearch.AdvanceSearchContent;
+import com.hackcaffebabe.mtg.gui.FramesDimensions;
+import com.hackcaffebabe.mtg.gui.FramesTitles;
+import com.hackcaffebabe.mtg.gui.panel.advancesearch.AdvanceSearchContent;
 
 
 /**
