@@ -660,7 +660,7 @@ public class InsertUpdateCardContent extends JPanel
 						String.format( "mana cost = %s", ((ManaCost) map.get( JSONTags.MANA_COST )).toString() ) );
 			}
 
-			if((String) map.get( JSONTags.TYPE ) == ActionCommand.CREATURE) {
+			if(((String) map.get( JSONTags.TYPE )).equals( ActionCommand.CREATURE )) {
 				map.put( JSONTags.STRENGTH, pnlCreatureInfo.getStrength() );
 				log.write( Tag.DEBUG, String.format( "creature strength = %s", (Strength) map.get( JSONTags.STRENGTH ) ) );
 
@@ -668,13 +668,13 @@ public class InsertUpdateCardContent extends JPanel
 				log.write( Tag.DEBUG, String.format( "is artifact = %s", map.get( JSONTags.ARTIFACT ) ) );
 			}
 
-			if((String) map.get( JSONTags.TYPE ) != ActionCommand.ARTIFACT
-					|| (String) map.get( JSONTags.TYPE ) != ActionCommand.PLANESWALKER) {
+			if(!((String) map.get( JSONTags.TYPE )).equals( ActionCommand.ARTIFACT )
+					|| !((String) map.get( JSONTags.TYPE )).equals( ActionCommand.PLANESWALKER )) {
 				map.put( JSONTags.ARTIFACT, pnlMTGBasicInfo.isArtifactSelected() );
 				log.write( Tag.DEBUG, String.format( "is artifact = %s", map.get( JSONTags.ARTIFACT ) ) );
 			}
 
-			if((String) map.get( JSONTags.TYPE ) == ActionCommand.PLANESWALKER) {
+			if(((String) map.get( JSONTags.TYPE )).equals( ActionCommand.PLANESWALKER )) {
 				map.put( JSONTags.LIFE, pnlPlaneswalkerInfo.getPlaneswalkerLife() );
 				log.write( Tag.DEBUG, String.format( "planeswalker life = %d", (int) map.get( JSONTags.LIFE ) ) );
 
@@ -683,8 +683,8 @@ public class InsertUpdateCardContent extends JPanel
 						String.format( "ability = %s", (List<PlanesAbility>) map.get( JSONTags.PLANES_ABILITY ) ) );
 			}
 
-			if((String) map.get( JSONTags.TYPE ) != ActionCommand.PLANESWALKER
-					|| (String) map.get( JSONTags.TYPE ) != ActionCommand.LAND) {
+			if(!((String) map.get( JSONTags.TYPE )).equals( ActionCommand.PLANESWALKER )
+					|| !((String) map.get( JSONTags.TYPE )).equals( ActionCommand.LAND )) {
 				map.put( JSONTags.ABILITIES, ((JXObjectModel<Ability>) tableAbility.getModel()).getObjects() );
 				log.write( Tag.DEBUG,
 						String.format( "ability = %s", ((List<Ability>) map.get( JSONTags.ABILITIES )).toString() ) );
