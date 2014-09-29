@@ -42,7 +42,8 @@ public class SelectionMTGCardList extends MouseAdapter implements ListSelectionL
 
 		if(SwingUtilities.isRightMouseButton( e )) {
 			if(e.getClickCount() == SINGLE_CLICK) {
-				doSingleLeftClick( e );
+				int r = JXTABLE_MTG.rowAtPoint( e.getPoint() );
+				JXTABLE_MTG.setRowSelectionInterval( r, r );
 				doSingleRightClick( e );
 			}
 		}
@@ -60,13 +61,9 @@ public class SelectionMTGCardList extends MouseAdapter implements ListSelectionL
 	}
 
 	/* dispatcher event when mouse do left click on JXTABLE_MTG */
-	@SuppressWarnings("unchecked")
 	private void doSingleLeftClick(MouseEvent e){
-		int r = JXTABLE_MTG.getSelectedModelRow();
-		if(r != -1) {
-			MTGCard c = ((JXObjectModel<MTGCard>) JXTABLE_MTG.getModel()).getObject( r );
-			PNL_MTGPROPERTIES.setMTGCardToView( c );
-		}
+		int r = JXTABLE_MTG.rowAtPoint( e.getPoint() );
+		JXTABLE_MTG.setRowSelectionInterval( r, r );
 	}
 
 	/* dispatcher event when mouse do double left click on JXTABLE_MTG */

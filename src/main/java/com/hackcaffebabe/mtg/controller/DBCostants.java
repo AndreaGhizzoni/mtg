@@ -8,7 +8,7 @@ package com.hackcaffebabe.mtg.controller;
 public class DBCostants
 {
 	/** Flag for logging on file */
-	public static final boolean DB_LOG_ON_FILE = false;
+	public static final boolean DB_LOG_ON_FILE = true;
 	/** Flag for turn on/off the resource manager */
-	public static final boolean RM = true;
+	public static final boolean RM = false;
 }
