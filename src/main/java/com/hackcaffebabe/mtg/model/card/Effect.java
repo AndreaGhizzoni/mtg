@@ -33,7 +33,7 @@ public class Effect extends DisplayableObject implements Serializable
 // SETTER
 //===========================================================================================
 	/**
-	 * Set the mana cost of Effect.
+	 * Set the mana cost of Effect. If no cost pass null.
 	 * @param c {@link ManaCost} the cost of effect. 
 	 */
 	private void setManaCost(ManaCost c){
