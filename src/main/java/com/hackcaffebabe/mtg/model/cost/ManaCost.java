@@ -14,7 +14,7 @@ import com.hackcaffebabe.mtg.model.color.Mana;
 public class ManaCost implements Comparable<ManaCost>
 {
 	private Set<Tuple<Mana, Integer>> cost = new HashSet<>();
-	private Integer cmc = 0;
+	private int cmc = 0;
 
 	/**
 	 * Instance a mana cost with {@link Tuple} of Mana and his occurrences.
@@ -70,6 +70,26 @@ public class ManaCost implements Comparable<ManaCost>
 		}
 	}
 
+	/**
+	 * Add Mana.TAP
+	 */
+	public void addTAP(){
+		Tuple<Mana, Integer> t = new Tuple<Mana, Integer>( Mana.TAP, -1 );
+		this.checkTuple( t );
+		this.cost.add( t );
+		this.calculateCMC();
+	}
+
+	/**
+	 * Add Mana.STAP
+	 */
+	public void addSTAP(){
+		Tuple<Mana, Integer> t = new Tuple<Mana, Integer>( Mana.STAP, -1 );
+		this.checkTuple( t );
+		this.cost.add( t );
+		this.calculateCMC();
+	}
+
 //===========================================================================================
 // GETTER
 //===========================================================================================
@@ -82,11 +102,23 @@ public class ManaCost implements Comparable<ManaCost>
 	}
 
 	/**
+	 * Check if contains Mana.STAP action.
+	 * @return {@link Boolean}
+	 */
+	public boolean containsSTAP(){
+		return getCost().contains( new Tuple<Mana, Integer>( Mana.STAP, -1 ) );
+	}
+
+	/**
 	 * Check if contains Mana.X action.
 	 * @return {@link Boolean}
 	 */
 	public boolean containsX(){
-		return getCost().contains( new Tuple<Mana, Integer>( Mana.X, -1 ) );
+		for(Tuple<Mana, Integer> i: this.cost) {
+			if(i.getFirstObj().equals( Mana.X ))
+				return true;
+		}
+		return false;
 	}
 
 	/**
@@ -101,7 +133,7 @@ public class ManaCost implements Comparable<ManaCost>
 	 * Return an integer represents the converted mana cost.
 	 * @return {@link Integer}
 	 */
-	public final Integer getConvertedManaCost(){
+	public final int getConvertedManaCost(){
 		return this.cmc;
 	}
 
@@ -129,7 +161,11 @@ public class ManaCost implements Comparable<ManaCost>
 		if(TequalstoTAP && t.getSecondObj() != -1)
 			throw new IllegalArgumentException( "Mana malformed for tap action with value " + t.getSecondObj() );
 
-		boolean isAcolorOrX = !TequalstoTAP /*&& !TequalstoX*/;
+		boolean TequalstoSTAP = t.getFirstObj().equals( Mana.STAP );
+		if(TequalstoSTAP && t.getSecondObj() != -1)
+			throw new IllegalArgumentException( "Mana malformed for stap action with value " + t.getSecondObj() );
+
+		boolean isAcolorOrX = !TequalstoTAP && !TequalstoSTAP /*&& !TequalstoX*/;
 		if(isAcolorOrX && t.getSecondObj() < 0)
 			throw new IllegalArgumentException( "Mana malformed for color" );
 	}

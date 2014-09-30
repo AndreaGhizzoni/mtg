@@ -68,7 +68,9 @@ public class CardColor implements Serializable
 		}
 
 		this.colors.addAll( c );
-		this.type = TypeColor.MULTI_COLOR;
+		if(this.colors.size() == 1)
+			this.type = TypeColor.MONO_COLOR;
+		else this.type = TypeColor.MULTI_COLOR;
 	}
 
 //===========================================================================================
@@ -84,6 +86,8 @@ public class CardColor implements Serializable
 			String msg = null;
 			if(m.equals( Mana.TAP ))
 				msg = "Mana malformed for color card: TAP action";
+			else if(m.equals( Mana.STAP ))
+				msg = "Mana malformed for color card: STAP action";
 			else if(m.equals( Mana.X ))
 				msg = "Mana malformed for color card: X action";
 			else if(m.equals( Mana.COLOR_LESS ))

@@ -13,26 +13,30 @@ import java.util.List;
 public enum Rarity
 {
 	/**The MTG Common Rarity*/
-	COMMON(0),
+	COMMON(0, "Common"),
 	/**The MTG Non-Common Rarity*/
-	NON_COMMON(1),
+	NON_COMMON(1, "Not Common"),
 	/**The MTG Rare Rarity*/
-	RARE(2),
+	RARE(2, "Rare"),
 	/**The MTG Mythical Rarity*/
-	MYTHICAL(3);
+	MYTHICAL(3, "Mythical");
 
 	private int value;
+	private String fancy;
 
-	Rarity(int i){
+	Rarity(int i, String fancy){
 		this.value = i;
+		this.fancy = fancy;
 	}
 
-	/**
-	 * Returns the amount of Rarity.
-	 * @return {@link Integer} the amount value.
-	 */
+	/** @return {@link Integer} the amount value. */
 	public int getValue(){
 		return this.value;
+	}
+
+	/** @return {@link String} the fancy string for the rarity. */
+	public String getFancy(){
+		return this.fancy;
 	}
 
 	/**
@@ -48,6 +52,14 @@ public enum Rarity
 	 * @return {@link List} of the Rarity of MTG card.
 	 */
 	public static List<String> getAllRarityAsStrings(){
-		return Arrays.asList( COMMON.toString(), NON_COMMON.toString(), RARE.toString(), MYTHICAL.toString() );
+		return Arrays.asList( COMMON.getFancy(), NON_COMMON.getFancy(), RARE.getFancy(), MYTHICAL.getFancy() );
+	}
+
+//===========================================================================================
+// OVERRIDE
+//===========================================================================================
+	@Override
+	public String toString(){
+		return this.fancy;
 	}
 }

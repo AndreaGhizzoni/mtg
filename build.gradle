@@ -6,8 +6,13 @@ version = '0.3046'
 mainClassName = "com.hackcaffebabe.mtg.LauncherMTG"
 applicationDefaultJvmArgs = ['-XX:+UseConcMarkSweepGC']
 
+repositories {
+	mavenCentral()
+}
+
 dependencies {
 	compile fileTree(dir: 'lib', include: ['*.jar'], exclude:['junit*', 'hamcrest*'])
+	testCompile fileTree( dir: 'lib', include:['junit*', 'hamcrest*'] )
 }
 
 jar {

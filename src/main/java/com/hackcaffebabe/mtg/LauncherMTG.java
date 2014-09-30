@@ -59,7 +59,7 @@ public class LauncherMTG
 
 	private static void initRM(){
 		if(DBCostants.RM)
-			new ResourceMonitor().run();
+			new ResourceMonitor( 1000, true ).run();
 	}
 
 	private static void initCollecter() throws Exception{

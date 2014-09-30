@@ -103,7 +103,7 @@ public class Sorcery extends MTGCard implements Serializable
 		type.append( "Sorcery" );
 		if(isLegendary())
 			type.append( " Leg." );
-		return new Object[] { getName(), color, type.toString(), getRarity().toString() };
+		return new Object[] { getName(), color, type.toString(), getRarity().getFancy() };
 	}
 
 	@Override
