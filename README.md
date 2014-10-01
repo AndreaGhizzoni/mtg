@@ -6,9 +6,13 @@
 [Download](http://github.com/AndreaGhizzoni/mtg/releases)
 
 ## Run MTG
-For Linux user: untar the archive and
+Use the link above to download the latest version, then extract the project.
+The distributions version is in build/distributions directory.
+For Linux user:
 
-    cd MTGProject/bin
+    cd mtg-vX/build/distributions
+    tar -xvf MTGProject-X.tar
+    cd MTGProject-X/bin
     ./MTGProject
     
-For Windows users: navigate into MTGProject -> bin and double click on MTGProject.bat.
+For Windows users: extract all the content in mtg-vX/build/distributions/MTGProject-X.zip and double click on bin/MTGProject.bat

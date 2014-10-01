@@ -36,9 +36,7 @@ public class Ability extends DisplayableObject implements Serializable
 //===========================================================================================
 // SETTER
 //===========================================================================================
-	/**
-	 * Set the name of ability 
-	 */
+	/* Set the name of ability */
 	private void setName(String name) throws IllegalArgumentException{
 		if(name == null || name.isEmpty())
 			throw new IllegalArgumentException( "Name of ability can not be null or empty string." );
@@ -46,9 +44,7 @@ public class Ability extends DisplayableObject implements Serializable
 		this.name = name;
 	}
 
-	/**
-	 * Set the description of ability
-	 */
+	/* Set the description of ability */
 	private void setDescription(String description) throws IllegalArgumentException{
 		if(description == null || description.isEmpty())
 			throw new IllegalArgumentException( "Description of ability can not be null." );
