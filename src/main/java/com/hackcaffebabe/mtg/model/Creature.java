@@ -50,8 +50,8 @@ public class Creature extends MTGCard implements Serializable
 		if(cost == null)
 			throw new IllegalArgumentException( "Mana Cost of Creature can not be null." );
 
-		if(cost.containsTAP())
-			throw new IllegalArgumentException( "Mana cost of Enchantment can not be TAP action." );
+		if(cost.containsTAP() || cost.containsSTAP())
+			throw new IllegalArgumentException( "Mana cost of Creature can not be TAP|STAP action." );
 
 		this.cost = cost;
 	}

@@ -65,10 +65,10 @@ public class Planeswalker extends MTGCard implements Serializable
 	 */
 	public void setManaCost(ManaCost cost) throws IllegalArgumentException{
 		if(cost == null)
-			throw new IllegalArgumentException( "Mana cost of Artifact can not be null." );
+			throw new IllegalArgumentException( "Mana cost of Planeswalker can not be null." );
 
 		if(cost.containsTAP() || cost.containsX())
-			throw new IllegalArgumentException( "Mana cost of Artifact can not be TAP action." );
+			throw new IllegalArgumentException( "Mana cost of Planeswalker can not be TAP/STAP action." );
 
 		this.cost = cost;
 	}
