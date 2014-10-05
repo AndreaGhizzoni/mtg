@@ -160,7 +160,7 @@ public class StoreManager
 			return false;
 
 		long start = System.currentTimeMillis();
-		log.write( Tag.DEBUG, "store initialized." );
+		log.write( Tag.INFO, "Store initialized..." );
 
 		String json = g.toJson( c, MTGCard.class );
 		FileWriter f = new FileWriter( new File( c.getJSONFileName() ) );
@@ -170,7 +170,7 @@ public class StoreManager
 		add( c );
 
 		long end = System.currentTimeMillis();
-		log.write( Tag.INFO, String.format( "MTG card file %s saved correctly in %dms.", c.getName(), (end - start) ) );
+		log.write( Tag.INFO, String.format( "Card %s saved correctly in %dms.", c.getName(), (end - start) ) );
 		return true;
 	}
 
@@ -187,7 +187,7 @@ public class StoreManager
 			return false;
 
 		long start = System.currentTimeMillis();
-		log.write( Tag.DEBUG, "delete card initialized." );
+		log.write( Tag.INFO, "Delete card initialized..." );
 
 		this.mtgSet.remove( c );
 		log.write( Tag.DEBUG, String.format( "%s removed correctly from data structure.", c.getName() ) );
@@ -205,11 +205,10 @@ public class StoreManager
 			}
 		}
 
-		String path = c.getJSONFileName();
-		new File( path ).delete();
+		new File( c.getJSONFileName() ).delete();
 
 		long end = System.currentTimeMillis();
-		log.write( Tag.INFO, String.format( "%s deleted correctly in %dms.", path, (end - start) ) );
+		log.write( Tag.INFO, String.format( "Deleted correctly in %dms.", (end - start) ) );
 		return true;
 	}
 
@@ -236,13 +235,13 @@ public class StoreManager
 			return false;
 
 		long start = System.currentTimeMillis();
-		log.write( Tag.DEBUG, "apply difference initialized." );
+		log.write( Tag.INFO, "Updating card initialized..." );
 
 		delete( old );
 		store( nevv );
 
 		long end = System.currentTimeMillis();
-		log.write( Tag.INFO, String.format( "Card was updated correctly in %dms", (end - start) ) );
+		log.write( Tag.INFO, String.format( "Updating card done in %dms", (end - start) ) );
 		return true;
 	}
 
