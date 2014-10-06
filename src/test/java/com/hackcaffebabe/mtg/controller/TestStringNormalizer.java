@@ -27,21 +27,21 @@ public class TestStringNormalizer
 	}
 
 	@Test
-	public void canRemoveNewLineTabPipeDash(){
-		String t = StringNormalizer.normalize( "\t|-\n--asd" );
+	public void canRemovePathCharacters(){
+		String t = StringNormalizer.removePathCharacters( "\\/\t|-\n--asd" );
 		String exp = "asd";
 		Assert.assertEquals( exp, t );
 	}
 
 	@Test
 	public void canRemoveAccentedCharactersFromEmptyString(){
-		String t = StringNormalizer.normalize( "" );
+		String t = StringNormalizer.removeAccentCharacters( "" );
 		Assert.assertTrue( t.isEmpty() );
 	}
 
 	@Test
 	public void canRemoveAccentedCharactersFromNullString(){
-		String t = StringNormalizer.normalize( null );
+		String t = StringNormalizer.removeAccentCharacters( null );
 		Assert.assertTrue( t == null );
 	}
 
@@ -58,14 +58,14 @@ public class TestStringNormalizer
 	}
 
 	@Test
-	public void canRemoveNewLineTabPipeDashFromEmptyString(){
-		String t = StringNormalizer.normalize( "" );
+	public void canRemovePathCharactersFromEmptyString(){
+		String t = StringNormalizer.removePathCharacters( "" );
 		Assert.assertTrue( t.isEmpty() );
 	}
 
 	@Test
-	public void canRemoveNewLineTabPipeDashFromNullString(){
-		String t = StringNormalizer.normalize( null );
+	public void canRemovePathCharactersFromNullString(){
+		String t = StringNormalizer.removePathCharacters( null );
 		Assert.assertTrue( t == null );
 	}
 }
