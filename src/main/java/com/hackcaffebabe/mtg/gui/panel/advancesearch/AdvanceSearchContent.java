@@ -120,7 +120,7 @@ public class AdvanceSearchContent extends JPanel
 		pnlRarity.setBorder( new TitledBorder( null, "Rarity", TitledBorder.LEFT, TitledBorder.TOP, null, null ) );
 		pnlRarity.setLayout( new MigLayout( "", "[grow][grow][grow][grow]", "[]" ) );
 
-		this.chbNonCommon = new JCheckBox( Rarity.NON_COMMON.toString() );
+		this.chbNonCommon = new JCheckBox( Rarity.UNCOMMON.toString() );
 		pnlRarity.add( this.chbNonCommon, "cell 0 0" );
 
 		this.chbCommon = new JCheckBox( Rarity.COMMON.toString() );
@@ -249,7 +249,7 @@ public class AdvanceSearchContent extends JPanel
 				criteria.byColors( null );
 
 			if(chbNonCommon.isSelected())
-				criteria.byRarity( Rarity.NON_COMMON );
+				criteria.byRarity( Rarity.UNCOMMON );
 			if(chbCommon.isSelected())
 				criteria.byRarity( Rarity.COMMON );
 			if(chbRare.isSelected())

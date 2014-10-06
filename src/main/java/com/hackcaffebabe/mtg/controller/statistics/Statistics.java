@@ -83,7 +83,7 @@ public final class Statistics
 				tmp = this.stat.get( StatConstants.MYTHICAL );
 				this.stat.replace( StatConstants.MYTHICAL, tmp + 1 );
 				break;
-			case NON_COMMON:
+			case UNCOMMON:
 				tmp = this.stat.get( StatConstants.NON_COMMON );
 				this.stat.replace( StatConstants.NON_COMMON, tmp + 1 );
 				break;

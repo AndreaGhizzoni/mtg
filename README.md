@@ -15,4 +15,4 @@ For Linux user:
     cd MTGProject-X/bin
     ./MTGProject
     
-For Windows users: extract all the content in mtg-vX/build/distributions/MTGProject-X.zip and double click on bin/MTGProject.bat
+For Windows users: extract all the content from mtg-vX/build/distributions/MTGProject-X.zip and double click on bin/MTGProject.bat
