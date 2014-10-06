@@ -14,7 +14,7 @@ public class StringNormalizer
 	 */
 	public static String removeAccentCharacters(String s){
 		if(s != null && !s.isEmpty()) {
-			return s.replace( "à", "a" ).replace( "è", "e" ).replace( "é", "e" ).replace( "ù", "u" ).replace( "ì", "" )
+			return s.replace( "à", "a" ).replace( "è", "e" ).replace( "é", "e" ).replace( "ù", "u" ).replace( "ì", "i" )
 					.replaceAll( "ò", "o" );
 		} else {
 			return s;
@@ -69,6 +69,9 @@ public class StringNormalizer
 	 * @return {@link String} the name of the file without the extension.
 	 */
 	public static String removeExtension(String s){
+		if(s == null || s.isEmpty())
+			return s;
+
 		return s.split( "[.]" )[0];
 	}
 }
